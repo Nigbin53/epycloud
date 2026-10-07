@@ -36,7 +36,7 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
    supabase link --project-ref ВАШ_REF
    supabase db push
    export WEBHOOK_SECRET=$(openssl rand -hex 32); echo $WEBHOOK_SECRET   # сохраните это значение — понадобится в шаге 4
-   supabase secrets set BOT_TOKEN=ТОКЕН_БОТА WEBHOOK_SECRET=$WEBHOOK_SECRET MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ALLOWED_ORIGIN=https://nigbin53.github.io
+   supabase secrets set BOT_TOKEN=ТОКЕН_БОТА WEBHOOK_SECRET=$WEBHOOK_SECRET MINIAPP_URL=https://nigbin53.github.io/epycloud/ ALLOWED_ORIGIN=https://nigbin53.github.io
    supabase functions deploy state --no-verify-jwt
    supabase functions deploy telegram-bot --no-verify-jwt
    supabase functions deploy food-ai --no-verify-jwt
@@ -50,10 +50,10 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
    Необязательно: `GEMINI_MODEL` (по умолчанию `gemini-flash-lite-latest`), `GEMINI_FALLBACK_MODEL` (по умолчанию `gemini-flash-latest`, если основная перегружена), `AI_DAILY_LIMIT` (по умолчанию 40 запросов на человека в день).
 
 ### 3. GitHub
-1. На github.com (аккаунт Nigbin53) создайте **пустой** репозиторий `gym-tracker`: без README, .gitignore и лицензии. Для бесплатного GitHub Pages он должен быть **public**, приватный требует платного тарифа. Секретов в репозитории нет: токены лежат только в Supabase.
+1. На github.com (аккаунт Nigbin53) создайте **пустой** репозиторий `epycloud`: без README, .gitignore и лицензии. Для бесплатного GitHub Pages он должен быть **public**, приватный требует платного тарифа. Секретов в репозитории нет: токены лежат только в Supabase.
 2. В папке `08_release` уже есть готовый git-репозиторий с коммитом. Отправить его может Claude (после того как вы создадите пустой репозиторий) или вы сами:
    ```bash
-   git remote add origin https://github.com/Nigbin53/gym-tracker.git
+   git remote add origin https://github.com/Nigbin53/epycloud.git
    git push -u origin main
    ```
 3. Settings → Pages → Source: **GitHub Actions**. Через минуту приложение будет по адресу из `MINIAPP_URL`.
@@ -62,7 +62,7 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
 ```bash
 python3 tools/build_miniapp.py --project-ref ВАШ_REF   # впишет адрес сервера в приложение
 git add -A && git commit -m "Подключён Supabase" && git push
-PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ./tools/telegram-setup.sh   # токен и секрет спросит сам
+PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigbin53.github.io/epycloud/ ./tools/telegram-setup.sh   # токен и секрет спросит сам
 ```
 Откройте бота в Telegram, нажмите `/start` → «Открыть Gym Tracker».
 
