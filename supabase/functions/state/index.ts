@@ -3,17 +3,12 @@
 //   PUT  /functions/v1/state  → тело { state: {...} }, сохраняет и возвращает { updated_at }
 //   POST /functions/v1/state  → тело { export: { filename, content } }, бот присылает файл в чат пользователю
 // Пользователь определяется по подписанным данным Telegram в заголовке X-Telegram-Init-Data.
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { db as supabase, dbFail } from "../_shared/db.ts";
 import { verifyInitData } from "../_shared/telegram.ts";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
 const MAX_BODY_BYTES = 6 * 1024 * 1024; // в состоянии бывают фото в base64
 
-const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  { auth: { persistSession: false } },
-);
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(request) });
@@ -29,7 +24,7 @@ Deno.serve(async (request) => {
       .select("state, updated_at")
       .eq("telegram_id", user.id)
       .maybeSingle();
-    if (error) return json(request, { error: "db_error" }, 500);
+    if (error) return json(request, dbFail("state get", error), 500);
     await touchUser(user);
     return json(request, data ? { state: data.state, updated_at: data.updated_at } : { state: null, updated_at: null });
   }
@@ -55,12 +50,12 @@ Deno.serve(async (request) => {
   const { error } = await supabase
     .from("user_state")
     .upsert({ telegram_id: user.id, state, updated_at: updatedAt }, { onConflict: "telegram_id" });
-  if (error) return json(request, { error: "db_error" }, 500);
+  if (error) return json(request, dbFail("state put", error), 500);
   return json(request, { ok: true, updated_at: updatedAt });
 });
 
 async function touchUser(user: { id: number; first_name?: string; username?: string; language_code?: string }) {
-  await supabase.from("app_users").upsert(
+  const { error } = await supabase.from("app_users").upsert(
     {
       telegram_id: user.id,
       first_name: user.first_name ?? null,
@@ -70,6 +65,7 @@ async function touchUser(user: { id: number; first_name?: string; username?: str
     },
     { onConflict: "telegram_id" },
   );
+  if (error) dbFail("touch user", error);
 }
 
 // Экспорт: обычное скачивание файла внутри Telegram не работает, поэтому файл присылает бот.

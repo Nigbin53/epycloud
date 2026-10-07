@@ -5,14 +5,11 @@
 // Переменные: BOT_TOKEN, GEMINI_API_KEY, AI_DAILY_LIMIT (по умолчанию 40),
 //   GEMINI_MODEL (по умолчанию gemini-flash-lite-latest — быстрая, проверена 07.10.2026),
 //   GEMINI_FALLBACK_MODEL (по умолчанию gemini-flash-latest — если основная перегружена).
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { db as supabase } from "../_shared/db.ts";
 import { verifyInitData } from "../_shared/telegram.ts";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
 const MAX_BODY_BYTES = 3 * 1024 * 1024;
-const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
-  auth: { persistSession: false },
-});
 
 const COMMON =
   "Ты помощник дневника питания. Отвечай только JSON по схеме. Названия продуктов — по-русски, коротко. " +
