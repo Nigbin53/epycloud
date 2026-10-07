@@ -1845,7 +1845,7 @@ if(S.bgPreset==="photo"&&!S.bgCustom)S.bgPreset="aura";
 if(!S.achAt||typeof S.achAt!=="object")S.achAt={};
 if(S.bgDim==null)S.bgDim=30;
 if(S.bgDimOn==null)S.bgDimOn=false;
-if(S.unit!=="lb")S.unit="kg";
+S.unit="kg";
 if(S.remWorkout==null)S.remWorkout=false;
 if(!S.remDays)S.remDays=[0,2,4];
 if(!S.remTime)S.remTime="19:00";
@@ -2143,7 +2143,7 @@ function screenSettings(){
     +'<button class="settbtn acc" data-a="obreplay">Пройти знакомство заново</button>'
     +'</div></section>';
   var bw=S.bw.length?S.bw[S.bw.length-1].w:null;
-  h+='<section class="settsec"><h2>Единицы</h2><div class="settgroup"><div class="settrow"><span class="settlead">'+settIc(IC_RULER)+'Вес</span>'
+  /* только килограммы: переключатель кг/lb убран по решению владельца */ if(false)h+='<section class="settsec"><h2>Единицы</h2><div class="settgroup"><div class="settrow"><span class="settlead">'+settIc(IC_RULER)+'Вес</span>'
     +'<div class="unitseg" role="group" aria-label="Единицы веса"><button class="'+(S.unit==="kg"?"on":"")+'" data-a="unit" data-v="kg" aria-pressed="'+(S.unit==="kg")+'">кг</button><button class="'+(S.unit==="lb"?"on":"")+'" data-a="unit" data-v="lb" aria-pressed="'+(S.unit==="lb")+'">lb</button></div></div>'
     +'<div class="unithint">'+(S.unit==="kg"?"Шаг веса 2,5 кг · тело "+(bw!=null?f(bw):"—")+" кг":"Шаг веса 5 lb · тело "+(bw!=null?f(Math.round(bw*2.20462*10)/10):"—")+" lb")+'</div></div></section>';
   /* напоминания отключены по решению владельца */ if(false)h+='<section class="settsec"><h2>Напоминания</h2><div class="settgroup">'
