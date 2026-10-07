@@ -2,7 +2,9 @@
 //   POST /functions/v1/food-ai  { mode: "food" | "label", image: "data:image/jpeg;base64,..." }
 //   POST /functions/v1/food-ai  { mode: "text", text: "гречка с курицей и огурец" }
 // Ответ: { dish, items: [{ name, grams, kcal, protein, fat, carbs }] } — значения на указанную порцию.
-// Переменные: BOT_TOKEN, GEMINI_API_KEY, GEMINI_MODEL (по умолчанию gemini-2.5-flash), AI_DAILY_LIMIT (по умолчанию 40).
+// Переменные: BOT_TOKEN, GEMINI_API_KEY, AI_DAILY_LIMIT (по умолчанию 40),
+//   GEMINI_MODEL (по умолчанию gemini-flash-lite-latest — быстрая, проверена 07.10.2026),
+//   GEMINI_FALLBACK_MODEL (по умолчанию gemini-flash-latest — если основная перегружена).
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { verifyInitData } from "../_shared/telegram.ts";
 import { corsHeaders, json } from "../_shared/cors.ts";
@@ -84,22 +86,40 @@ Deno.serve(async (request) => {
   if (usageError) return json(request, { error: "db_error" }, 500);
   if (Number(used) > limit) return json(request, { error: "limit" }, 429);
 
-  const model = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.5-flash";
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-    body: JSON.stringify({
-      contents: [{ role: "user", parts }],
-      generationConfig: { responseMimeType: "application/json", responseSchema: SCHEMA, temperature: 0.2 },
-    }),
+  const models = [
+    Deno.env.get("GEMINI_MODEL") || "gemini-flash-lite-latest",
+    Deno.env.get("GEMINI_FALLBACK_MODEL") || "gemini-flash-latest",
+  ].filter((m, i, all) => all.indexOf(m) === i);
+  const payload = JSON.stringify({
+    contents: [{ role: "user", parts }],
+    generationConfig: { responseMimeType: "application/json", responseSchema: SCHEMA, temperature: 0.2 },
   });
-  if (response.status === 429) return json(request, { error: "limit" }, 429);
-  if (!response.ok) {
-    console.error("gemini", response.status, (await response.text()).slice(0, 500));
-    return json(request, { error: "ai_failed" }, 502);
+  let raw = "";
+  let quota = false;
+  for (const model of models) {
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+        body: payload,
+        signal: AbortSignal.timeout(20000),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        raw = (result?.candidates?.[0]?.content?.parts ?? []).map((p: { text?: string }) => p.text ?? "").join("");
+        if (raw) break;
+        continue;
+      }
+      const detail = (await response.text()).slice(0, 300);
+      console.error("gemini", model, response.status, detail);
+      if (response.status === 429 && /quota/i.test(detail)) quota = true;
+      if (response.status === 429 || response.status >= 500 || response.status === 404) continue; // перегрузка или модель снята — пробуем запасную
+      return json(request, { error: "ai_failed" }, 502);
+    } catch (error) {
+      console.error("gemini", model, String(error)); // тайм-аут — пробуем запасную
+    }
   }
-  const result = await response.json();
-  const raw = result?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+  if (!raw) return json(request, { error: quota ? "limit" : "ai_failed" }, quota ? 429 : 502);
   let parsed: { dish?: unknown; items?: unknown };
   try {
     parsed = JSON.parse(raw);

@@ -41,12 +41,13 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
    supabase functions deploy telegram-bot --no-verify-jwt
    supabase functions deploy food-ai --no-verify-jwt
    ```
-5. ИИ для питания (бесплатный тариф Gemini): на https://aistudio.google.com нажмите **Get API key**, затем
+5. ИИ для питания (бесплатный тариф Gemini). Ключ уже лежит в файле `08_release/.env` (в репозиторий он не попадает). Отправить его в Supabase:
    ```bash
-   supabase secrets set GEMINI_API_KEY=ВАШ_КЛЮЧ
+   supabase secrets set --env-file .env
    ```
+   Новый ключ: https://aistudio.google.com → **Get API key**, заменить строку в `.env` и повторить команду.
    Без ключа приложение работает: штрихкоды распознаются через Open Food Facts, а фото и текст разбираются встроенным словарём.
-   Необязательно: `GEMINI_MODEL` (по умолчанию `gemini-2.5-flash`), `AI_DAILY_LIMIT` (по умолчанию 40 запросов на человека в день).
+   Необязательно: `GEMINI_MODEL` (по умолчанию `gemini-flash-lite-latest`), `GEMINI_FALLBACK_MODEL` (по умолчанию `gemini-flash-latest`, если основная перегружена), `AI_DAILY_LIMIT` (по умолчанию 40 запросов на человека в день).
 
 ### 3. GitHub
 1. На github.com (аккаунт Nigbin53) создайте **пустой** репозиторий `gym-tracker`: без README, .gitignore и лицензии. Для бесплатного GitHub Pages он должен быть **public**, приватный требует платного тарифа. Секретов в репозитории нет: токены лежат только в Supabase.

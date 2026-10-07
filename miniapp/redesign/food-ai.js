@@ -104,6 +104,7 @@
     if (!aiReady()) throw new Error('no_ai');
     const r = await fetch(cfg().API_BASE.replace(/\/$/, '') + '/food-ai', {
       method: 'POST',
+      signal: typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(45000) : undefined,
       headers: { 'Content-Type': 'application/json', 'X-Telegram-Init-Data': tg().initData },
       body: JSON.stringify(body)
     });
