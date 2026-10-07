@@ -2748,6 +2748,7 @@ function kbMealsFor(key,past){
 function kbFavRow(f,meal){
   var tag=f.kind==="recipe"?"рецепт":f.kind==="set"?"набор":"";
   return '<div class="kn-fav"><div class="kn-favi"><div class="n"><span>'+esc(f.n)+'</span>'+(tag?'<i>'+tag+'</i>':'')+'</div><div class="s">'+thous(f.k)+' ккал · Б '+Math.round(f.p)+' · У '+Math.round(f.c)+' · Ж '+Math.round(f.f)+'</div></div>'
+    +(String(f.id).indexOf("fq:")===0?'':'<button class="kn-favedit" data-a="kvedit" data-v="'+esc(f.id)+'" aria-label="Изменить '+esc(f.n)+'">'+kic("pen",17,2)+'</button><button class="kn-favdel" data-a="kvdel" data-v="'+esc(f.id)+'" aria-label="Удалить '+esc(f.n)+' из избранного">'+kic("trash",17,2)+'</button>')
     +'<button class="kn-favadd" data-a="kbfavadd" data-v="'+esc(f.id)+'" aria-label="Добавить '+esc(f.n)+' в '+MEAL_IN[meal]+'">'+kic("plus",20,2.2)+'</button></div>';
 }
 function kbInsightsCard(){
@@ -3411,7 +3412,7 @@ function kvRow(d,M){
   return '<div class="kv-row'+(cnt?' sel':(fresh?' fresh':''))+'" data-key="'+id+'">'
     +'<button class="kv-pin'+(pinned?' on':'')+'" data-a="kvpin" data-v="'+id+'" aria-pressed="'+pinned+'" aria-label="'+(set?nm+' — набор, всегда в избранном':(pinned?'Открепить '+nm:'Закрепить '+nm))+'"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" aria-hidden="true">'+KI.star+'</svg></button>'
     +'<div class="kv-ri"><div class="kv-rn"><b>'+nm+'</b>'+(tag?'<i class="kv-tag">'+tag+'</i>':'')+'</div><div class="kv-rs">'+sub+'</div></div>'
-    +((set||d.kind==="recipe")?'<button class="kv-edit" data-a="kvedit" data-v="'+id+'" aria-label="Изменить '+nm+'">'+kic("pen",17,2)+'</button>':'')
+    +(kbFavById(d.id)?'<button class="kv-edit" data-a="kvedit" data-v="'+id+'" aria-label="Изменить '+nm+'">'+kic("pen",17,2)+'</button><button class="kv-del" data-a="kvdel" data-v="'+id+'" aria-label="Удалить '+nm+' из избранного">'+kic("trash",17,2)+'</button>':'')
     +(cnt===0?'<button class="kv-add" data-a="kvinc" data-v="'+id+'" aria-label="Добавить '+nm+'">'+kbSvgPlus(22,2.4)+'</button>'
       :'<div class="kv-cnt"><button data-a="kvdec" data-v="'+id+'" aria-label="Убрать одну порцию">−</button><span>'+cnt+'</span><button data-a="kvinc" data-v="'+id+'" aria-label="Добавить ещё порцию">+</button></div>')
     +'</div>';
@@ -3532,6 +3533,12 @@ function kseSave(){
   if(ex){Object.assign(ex,o);save()}else{ex=kbSaveFav(o)}
   KSE=null;buzz();screenBack();
 }
+/* Удалить из избранного прямо из списка (с возможностью вернуть). Записи в дневнике не трогаем. */
+function kbFavDelete(id){
+  var i=S.kbFav.findIndex(function(f){return f.id===id});if(i<0)return;
+  var f=S.kbFav[i];S.kbFav.splice(i,1);save();kvPaint();if(!scrStack.length)render();buzz();
+  toast("«"+f.n+"» удалено из избранного",function(){if(!kbFavById(f.id)){S.kbFav.splice(Math.min(i,S.kbFav.length),0,f);save();kvPaint();if(!scrStack.length)render()}},"записи в дневнике остались");
+}
 function kseDelete(){
   var id=KSE.id,i=S.kbFav.findIndex(function(f){return f.id===id});if(i<0){KSE=null;screenBack();return}
   var f=S.kbFav[i];S.kbFav.splice(i,1);save();KSE=null;screenBack();
@@ -3619,13 +3626,14 @@ document.addEventListener("click",function(e){
   if(!/^(kv|kse|kr)/.test(a))return;
   /* Избранное */
   if(a==="kvback"){KV=null;screenBack();return}
-  if(/^kv/.test(a)&&!KV)return;
+  if(/^kv/.test(a)&&!KV&&a!=="kvedit"&&a!=="kvdel")return; // «изменить»/«удалить» работают и в списке на странице «Питание»
   if(a==="kvmeal"){KV.meal=+v;KV.showAll=false;kvPaint()}
   else if(a==="kvall"){KV.showAll=!KV.showAll;kvPaint()}
   else if(a==="kvinc"){kvCount(v,1);buzz()}
   else if(a==="kvdec"){kvCount(v,-1)}
   else if(a==="kvpin"){kvPin(v)}
   else if(a==="kvedit"){var fe=kbFavById(v);if(!fe)return;if(fe.kind==="set")kbOpenSetEdit(v);else kbOpenRecipe(v)}
+  else if(a==="kvdel"){kbFavDelete(v)}
   else if(a==="kvsetnew"){kbOpenSetEdit(null,MEALS[KV.meal])}
   else if(a==="kvrecipe"){kbOpenRecipe(null)}
   else if(a==="kvrec"){kvRecord()}

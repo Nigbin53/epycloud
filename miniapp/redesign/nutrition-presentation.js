@@ -4,12 +4,34 @@
 let scheduled=false;
 const number=value=>Math.round(value).toLocaleString('ru-RU').replace(/\u00a0/g,' ');
 function nativeButton(button,action,value,label){button.removeAttribute('data-action');button.dataset.a=action;if(value!==undefined)button.dataset.v=String(value);if(label)button.setAttribute('aria-label',label);}
+/* Кольцо калорий: заполнение = съедено / дневная цель. Раньше это была неподвижная картинка из макета. */
+function ring(page,ratio,over){
+ const f=Math.max(0,Math.min(1,ratio||0));
+ // Black: дуга прогресса от левого края через верх до правого (230°), бегунок на её конце
+ const prog=page.querySelector('.na-ring-progress'),knob=page.querySelector('.na-ring-knob');
+ if(prog){
+  const L=f*230,start=155,cx=407.84,cy=393.27,r=211.32;
+  prog.setAttribute('stroke-dasharray',L.toFixed(2)+' '+(360-L).toFixed(2));
+  prog.style.opacity=L<0.5?'0':'1';
+  if(knob){knob.style.opacity=L<0.5?'0':'1';const a=(start+L)*Math.PI/180;knob.setAttribute('cx',(cx+Math.cos(a)*r).toFixed(3));knob.setAttribute('cy',(cy+Math.sin(a)*r).toFixed(3));}
+ }
+ // White: 40 светящихся сегментов, горит доля съеденного
+ const segs=page.querySelectorAll('.white-led-segment');
+ if(segs.length){
+  let n=Math.round(f*segs.length);if(f>0&&n===0)n=1;
+  segs.forEach((seg,i)=>{
+   const lit=i<n;seg.classList.toggle('is-lit',lit);seg.classList.toggle('is-over',lit&&!!over);
+   const fl=seg.getAttribute('filter')||'';const want=fl.replace(/-(glow|contact)\)$/,lit?'-glow)':'-contact)');if(want!==fl)seg.setAttribute('filter',want);
+  });
+ }
+}
 function update(page,data,white){
  const signature=JSON.stringify(data);if(page.dataset.nutritionState===signature)return;
  page.dataset.nutritionState=signature;
  const balance=Math.round(data.goal.k-data.totals.k);
  page.querySelector('.na-calorie-reading .ui-micro').textContent=balance<0?'ПЕРЕБОР':'ОСТАЛОСЬ';
  page.querySelector('.na-calorie-reading .ui-value').textContent=number(Math.abs(balance));
+ ring(page,data.goal.k>0?data.totals.k/data.goal.k:0,balance<0);
  const fields=['p','c','f'];
  page.querySelectorAll('.na-macros>div').forEach((item,i)=>{
   const current=Math.round(data.totals[fields[i]]),target=data.goal[fields[i]],value=item.querySelector('.ui-caption');

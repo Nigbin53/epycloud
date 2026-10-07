@@ -754,3 +754,5 @@
 /* A calorie deficit is informational in both themes, with a neutral high-contrast capsule. */
 :root[data-redesign-theme] .kn-sum .kn-verd.o{color:var(--rd-text);background:var(--rd-raised);border:1px solid var(--rd-rim);font-weight:500}
 :root[data-redesign-theme] .rd-approved-nutrition.ui-page{background:var(--fit-bg);color:var(--fit-text)}
+/* Перебор калорий: сегменты кольца подсвечиваются акцентом */
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-led-segment.is-over{fill:var(--white-accent,#ff510c)}

@@ -768,3 +768,25 @@
 :root[data-redesign-theme] .kc-frame.f.rd-photo-finder .c.br{bottom:16px;right:16px;top:auto;left:auto;border-radius:0 0 12px 0}
 :root[data-redesign-theme] .kc-frame.f.rd-photo-finder>div.rd-finder-ui,:root[data-redesign-theme] .km-fig.rd-photo-finder>div.rd-finder-ui{position:absolute;inset:0;left:0!important;transform:none!important;display:grid;place-items:center;color:var(--rd-muted)}
 :root[data-redesign-theme] .km-fig.food.rd-photo-finder{position:relative;background:var(--rd-surface)}
+
+/* Избранное: «изменить» и «удалить» на виду в каждой строке */
+:root[data-redesign-theme] .kn-fav{gap:8px}
+:root[data-redesign-theme] :is(.kn-favedit,.kn-favdel,.kv-del){width:38px;height:38px;flex:none;border-radius:50%;display:grid;place-items:center;padding:0;background:transparent;border:1px solid var(--rd-line);color:var(--rd-muted)!important;cursor:pointer}
+:root[data-redesign-theme] .kv-edit{width:38px;height:38px;border:1px solid var(--rd-line)}
+:root[data-redesign-theme] :is(.kn-favdel,.kv-del):active{color:#e5484d!important;border-color:#e5484d}
+:root[data-redesign-theme] :is(.kn-favedit,.kv-edit):active{color:var(--rd-text)!important}
+:root[data-redesign-theme] .kv-row{gap:8px}
+
+/* Строка приёма пищи: время, название, ккал, карандаш и корзина на одной оси */
+:root[data-redesign-theme] .kn-row{display:flex;align-items:center}
+:root[data-redesign-theme] .kn-rowb{align-items:center}
+:root[data-redesign-theme] .kn-rowk{display:inline-flex;align-items:baseline;gap:3px;line-height:1}
+:root[data-redesign-theme] .kn-rowb .kn-pen{width:17px;height:17px;flex:none;color:var(--rd-muted);margin:0 2px 0 6px}
+:root[data-redesign-theme] .kn-rowdel{width:38px;height:38px;align-self:center;color:var(--rd-muted)!important}
+:root[data-redesign-theme] .kn-rowdel svg{width:17px;height:17px}
+:root[data-redesign-theme] .kv-row{flex-wrap:nowrap!important}
+:root[data-redesign-theme] .kv-row .kv-ri{flex:1 1 auto;min-width:0}
+:root[data-redesign-theme] .kv-row :is(.kv-pin,.kv-add,.kv-edit,.kv-del){flex:none}
+/* Пока у строки идёт счётчик порций, «изменить»/«удалить» прячутся — счётчику нужно место */
+:root[data-redesign-theme] .kv-row.sel :is(.kv-edit,.kv-del){display:none}
+:root[data-redesign-theme] .kv-row .kv-rn b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
