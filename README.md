@@ -24,6 +24,14 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
 
 Эти шаги требуют ваших аккаунтов и токенов, поэтому сделать их за вас нельзя.
 
+### Быстрый путь
+Когда есть токен бота (в `.env` строкой `BOT_TOKEN=…`) и Project ref Supabase, всё остальное делает одна команда в папке `08_release`:
+```bash
+brew install supabase/tap/supabase && supabase login   # один раз
+bash tools/launch.sh ВАШ_REF
+```
+Ниже те же шаги по отдельности.
+
 ### 1. Бот
 1. В Telegram откройте @BotFather → `/newbot` → задайте имя и username. Получите **токен** (строка вида `123456:ABC…`). Никому не показывайте.
 
