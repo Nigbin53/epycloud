@@ -27,7 +27,8 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
 ### Быстрый путь
 Когда есть токен бота (в `.env` строкой `BOT_TOKEN=…`) и Project ref Supabase, всё остальное делает одна команда в папке `08_release`:
 ```bash
-brew install supabase/tap/supabase && supabase login   # один раз
+A=$(uname -m); [ "$A" = x86_64 ] && A=amd64; mkdir -p ~/.local/bin && curl -fsSL "https://github.com/supabase/cli/releases/latest/download/supabase_darwin_$A.tar.gz" | tar -xz -C ~/.local/bin supabase && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && export PATH="$HOME/.local/bin:$PATH"   # один раз, без Homebrew
+supabase login   # один раз
 bash tools/launch.sh ВАШ_REF
 ```
 Ниже те же шаги по отдельности.
