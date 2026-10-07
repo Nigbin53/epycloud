@@ -1,0 +1,128 @@
+{
+  "createdAt": "2026-10-02T23:46:23.513214+00:00",
+  "mode": "built-in image_gen",
+  "promptSet": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/work/white/asset-prompts.json",
+  "edits": "Four separate built-in image_gen calls, including one targeted framing revision of the pulldown photograph. No Python/CLI image edits, resizing or alpha processing. Selected generated outputs copied unchanged to project paths. Python used only to read image metadata/pixels and hashes and copy files.",
+  "inspection": "All input and output images inspected. Blank brushed-metal dial with no UI content; full correct leg-press with silver metal and black padding; full lat-pulldown equipment in light warm-gray studio. No user/interface mockups used as runtime imagery.",
+  "assets": [
+    {
+      "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/assets/steel-dial.png",
+      "generatedSource": "/Users/epycvc/.codex/generated_images/01a0fd49-972c-76c2-a664-70016e63008f/exec-198bf5f8-0c47-4339-98bd-cde6f13cefca.png",
+      "mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "948a7d336ae04684646ec75191c3bae81dabab5f314876082f316d4bcadda16e",
+      "copiedBytesIdentical": true,
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBoundingBox": [
+        0,
+        21,
+        1210,
+        1190
+      ],
+      "completelyTransparentPercent": 37.808,
+      "promptKey": "steel",
+      "references": [
+        {
+          "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/reference/03.png",
+          "sha256": "62429b2d6c76ac1189ca7964a9ee6ee22c37b8c787a657d5c77d5ffb3c83f3af"
+        },
+        {
+          "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/reference/02.png",
+          "sha256": "bb180430817b6ba1bdf7a4ab95050db322ab7d3d33dba237ab472ed3816872c5"
+        },
+        {
+          "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/reference/04.png",
+          "sha256": "45ed7a32ea61f2e10468c192409776d8eec64478570ad3b74637ebc7b97ebc8c"
+        }
+      ]
+    },
+    {
+      "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/assets/light-legpress.png",
+      "generatedSource": "/Users/epycvc/.codex/generated_images/01a0fd49-972c-76c2-a664-70016e63008f/exec-492b109c-2932-4f4f-9a69-c3bf406f4c4c.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "7937a2eab5186750e470144d29cc32740dc61861bfccf4c3a78d29aa9b1025a0",
+      "copiedBytesIdentical": true,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "alphaBoundingBox": [
+        50,
+        21,
+        1507,
+        977
+      ],
+      "completelyTransparentPercent": 43.334,
+      "promptKey": "legpress",
+      "references": [
+        {
+          "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/assets/detail-leg-photo-full.png",
+          "sha256": "5cd336f85a919c759e0d353601530fcc8371ff9f4251df933f02da1b05188aec"
+        }
+      ]
+    },
+    {
+      "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/assets/light-pulldown.png",
+      "generatedSource": "/Users/epycvc/.codex/generated_images/01a0fd49-972c-76c2-a664-70016e63008f/exec-a1eacd36-dae4-4ae6-a54e-9b58cdf1b25f.png",
+      "mode": "RGB",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2fc4d8c3f9bb175bf23e7edd386d9a16101a47d0a275c707ec5e693441d481c6",
+      "copiedBytesIdentical": true,
+      "alphaRange": null,
+      "alphaBoundingBox": null,
+      "completelyTransparentPercent": null,
+      "promptKey": "pulldownReframe",
+      "references": [
+        {
+          "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/assets/lat-pulldown-equipment.png",
+          "sha256": "62014f3587a6f0410dbda0bbd059e28886ba71b6c162879b9f0275af5f65b892"
+        },
+        {
+          "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/reference/01.png",
+          "sha256": "83c14a171ff3be5257316cd2cefa008f012aa96222eb3812988c3f8a519cf9ae"
+        }
+      ],
+      "previousVersions": [
+        {
+          "generatedSource": "/Users/epycvc/.codex/generated_images/01a0fd49-972c-76c2-a664-70016e63008f/exec-a653f7f2-edc1-48cc-bdac-d03824ca893d.png",
+          "sha256": "0a6d79a1e15557586822dfb402163205ff7d95d2d06db4876109a26c0580e760",
+          "mode": "RGB",
+          "width": 1536,
+          "height": 1024
+        }
+      ],
+      "updatedAt": "2026-10-03T00:05:04.123162+00:00",
+      "editTargetBeforeReplacement": {
+        "path": "/Users/epycvc/Documents/Codex/2026-10-02/ui-kit-design-system-1-1/outputs/gym-ui-kit-audited/white/assets/light-pulldown.png",
+        "sha256": "0a6d79a1e15557586822dfb402163205ff7d95d2d06db4876109a26c0580e760"
+      },
+      "prompt": "Use case: precise-object-edit.\nAsset type: a photorealistic studio equipment photo for an actual HTML fitness interface, NOT a UI mockup.\nInput image 1 is the edit target and absolute authority for the equipment identity, mechanical anatomy, materials, perspective and soft studio light.\nPrimary request: Change ONLY the framing/zoom. Zoom the camera out so the SAME full lat-pulldown machine fits centrally within the photograph, occupying exactly 60–62% of the total canvas HEIGHT, not 90%. Preserve the entire machine including the overhead arm, hanging wide pull bar, black seat, cylindrical thigh rollers, weight-stack tower, silver/black frame and all base feet. Maintain the same three-quarter perspective and proportions. Place the full equipment silhouette inside the central horizontal band from 20% to 81% of canvas height, with generous neutral studio background ABOVE and BELOW the equipment. The object must be centered vertically at 50% canvas height and centered horizontally at 50% canvas width. On a 1536 × 1024 landscape canvas, the equipment should extend approximately from y=205 to y=829, leaving around 200px clear background at top and bottom. This geometry is critical: the eventual browser display uses object-fit:cover at 320 × 144, which crops the top/bottom, so every part of the machine MUST fit in the central 62% vertical band.\nScene/backdrop: extend the existing bright, seamless light warm-gray studio backdrop and pale floor to fill the entire canvas edge-to-edge. Soft silver side-light from upper-left, subtle realistic contact shadow. No dark room, no new objects, no decorative background. Preserve the lighting/material appearance of the target.\nStyle: refined photorealistic grayscale studio product photograph, black padding with polished metal highlights.\nConstraints: exactly same machine and camera angle, full equipment uncut and unwarped, landscape canvas 1536 × 1024, opaque light-neutral background across full canvas, no transparent areas, no person, no added equipment, no text/numbers/logos/borders/UI/phone. Change only camera zoom and empty surrounding space.",
+      "inspection": "Full same lat-pulldown silhouette is centered in approximately the middle 60% of the canvas height; upper arm, wide pull bar, seat, thigh rollers, weight stack and all base feet visible. Empty light studio canvas fills all four edges. No image postprocessing.",
+      "darkObjectBoundsApprox": [
+        512,
+        188,
+        1115,
+        807
+      ],
+      "objectFitCover320x144": {
+        "sourceVisibleCentralY": [
+          166.4,
+          857.6
+        ],
+        "darkObjectBoundsY": [
+          188,
+          807
+        ],
+        "silhouetteWithinCrop": true
+      }
+    }
+  ],
+  "updatedAt": "2026-10-03T00:05:04.123942+00:00"
+}

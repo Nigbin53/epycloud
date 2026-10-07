@@ -1,0 +1,10 @@
+# Настройки проекта Supabase для CLI. project_id — любое локальное имя.
+project_id = "tg-bot-gym"
+
+[functions.state]
+# Вызывается из мини-приложения; доступ защищён проверкой подписи Telegram (initData), а не JWT Supabase.
+verify_jwt = false
+
+[functions.telegram-bot]
+# Вызывается серверами Telegram; защищён секретом вебхука.
+verify_jwt = false

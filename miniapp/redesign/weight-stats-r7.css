@@ -1,0 +1,89 @@
+/* 06.2: native measurements and axis geometry, finished with the existing material kit. */
+:root[data-redesign-theme] .wsscr .wchart {
+ --rd-ws-stroke:var(--rd-text);
+ --rd-ws-point:var(--rd-accent);
+ --rd-ws-grid:var(--rd-line);
+ position:relative;
+ margin-top:20px;
+ padding:14px 0 4px;
+ border-top:1px solid var(--rd-line);
+}
+:root[data-redesign-theme='black'] .wsscr .wchart {
+ --rd-ws-stroke:#d6e0e8;
+ --rd-ws-point:#f0f4f7;
+ --rd-ws-grid:rgba(186,208,224,.15);
+ border-top-color:rgba(200,220,235,.18);
+ background:linear-gradient(180deg,rgba(183,204,223,.025),transparent 75%);
+}
+:root[data-redesign-theme='white'] .wsscr .wchart {
+ --rd-ws-stroke:#3d464a;
+ --rd-ws-point:#ff510c;
+ --rd-ws-grid:rgba(55,66,72,.14);
+ background:linear-gradient(180deg,rgba(255,255,255,.16),transparent 75%);
+}
+:root[data-redesign-theme] .wsscr .wchart > svg {
+ display:block;
+ width:100%;
+ height:auto;
+ aspect-ratio:2/1;
+ overflow:visible;
+}
+:root[data-redesign-theme] .wsscr .wchart > svg > line {
+ stroke:var(--rd-ws-grid);
+ stroke-width:.7;
+}
+:root[data-redesign-theme] .wsscr .wchart > svg > path {
+ fill:none;
+ stroke:var(--rd-ws-stroke);
+ stroke-width:1.9;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+:root[data-redesign-theme] .wsscr .wchart > svg > circle {
+ fill:var(--rd-ws-point);
+ stroke:var(--rd-surface);
+ stroke-width:1.6;
+}
+:root[data-redesign-theme] .wsscr .wchart > svg > text {
+ fill:var(--rd-muted);
+ font-family:var(--rd-font);
+ font-weight:400;
+ font-size:9px;
+}
+:root[data-redesign-theme] .wsscr .wchart[data-rd-chart-state='single'] > svg > path { opacity:.7; }
+
+/* The graph period keeps its native buttons and switches in one recessed rail. */
+:root[data-redesign-theme] .wsscr .wtop { gap:12px;flex-wrap:wrap; }
+:root[data-redesign-theme] .wsscr .wtop > em { font-size:11px;line-height:1.5;font-weight:500; }
+:root[data-redesign-theme] .wsscr .wtop .seg {
+ padding:3px;
+ border:1px solid var(--rd-rim);
+ background:var(--rd-recess);
+ gap:2px;
+ box-shadow:inset 0 1px 3px rgba(0,0,0,.12);
+}
+:root[data-redesign-theme] .wsscr .wtop .seg > button {
+ min-height:44px;
+ min-width:57px;
+ padding:0 10px;
+ font-size:10px;
+ font-weight:500;
+ color:var(--rd-muted);
+ border:1px solid transparent;
+}
+:root[data-redesign-theme='black'] .wsscr .wtop .seg > button.on {
+ color:#edf2f6;
+ border-color:rgba(198,222,240,.25);
+ background:linear-gradient(160deg,#2c353d,#151b21);
+ box-shadow:inset 0 1px 0 rgba(234,244,251,.12),0 2px 4px #0006;
+}
+:root[data-redesign-theme='white'] .wsscr .wtop .seg > button.on {
+ color:#fff;
+ border-color:#71787b;
+ background:linear-gradient(155deg,#424a4f,#262c2f);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 2px 4px rgba(45,55,61,.18);
+}
+:root[data-redesign-theme] .wsscr .wtop .seg > button:focus-visible {
+ outline:2px solid var(--rd-accent);
+ outline-offset:2px;
+}

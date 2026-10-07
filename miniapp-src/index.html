@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>Gym Tracker</title>
+<style>
+html,body{margin:0;height:100%;background:#0b0b0c;color:#fcfcfc;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
+.boot{height:100%;display:grid;place-items:center}
+.dot{width:10px;height:10px;border-radius:50%;background:#fcfcfc;opacity:.35;animation:p 1s ease-in-out infinite}
+@keyframes p{50%{opacity:1;transform:scale(1.4)}}
+</style>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+<div class="boot" role="status" aria-label="Загрузка"><div class="dot"></div></div>
+<script src="loader.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FORM — Капсулы действия</title>
+  <link rel="stylesheet" href="tokens.css?v=2.0">
+  <link rel="stylesheet" href="kit.css?v=2.2">
+  <link rel="stylesheet" href="capsules.css?v=2.0">
+  <script src="app.js?v=2.0" defer></script>
+  <style>
+    #fit-kit.button-detail{max-width:832px;padding:29px 32px 25px}
+    .button-detail .detail-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:27px;color:#b7bfbb;font-size:12px}
+    .button-detail .detail-title a{font-size:10px;color:#929996}
+    .button-detail .button-example{margin-bottom:28px}
+    .button-detail .state-label{font-size:10px;letter-spacing:.15em;margin:0 6px 12px}
+    @media(max-width:640px){#fit-kit.button-detail{padding:24px 16px}.button-detail .detail-title{font-size:11px}.button-detail .state-label{font-size:9px}}
+  </style>
+</head>
+<body>
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="f-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
+    <symbol id="f-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </defs></svg>
+  <main id="fit-kit" class="button-detail">
+    <div class="detail-title"><span>FORM / КАПСУЛА ДЕЙСТВИЯ</span><a href="index.html">Весь UI kit ↗</a></div>
+    <div class="button-example"><span class="state-label">GRAPHITE / DEFAULT <span>01</span></span><button type="button" class="action-button primary ref-capsule" id="save-set"><span class="action-mark"></span><span class="action-label">Записать подход</span><span class="action-circle" data-icon><svg class="icon"><use href="#f-arrow"/></svg></span></button></div>
+    <div class="button-example"><span class="state-label">STATUS / ARROW <span>02</span></span><button type="button" class="action-button primary ref-capsule ref-capsule--green" data-save-set><span class="action-mark"></span><span class="action-label">Записать подход</span><span class="action-circle" data-icon><svg class="icon"><use href="#f-arrow"/></svg></span></button></div>
+    <div class="button-example"><span class="state-label">STATUS / PLUS <span>03</span></span><button type="button" class="action-button primary ref-capsule ref-capsule--green" data-save-set><span class="action-mark"></span><span class="action-label">Добавить подход</span><span class="action-circle" data-icon><svg class="icon"><use href="#f-plus"/></svg></span></button></div>
+    <div id="toast" class="kit-toast" role="status" aria-live="polite" hidden></div>
+  </main>
+</body>
+</html>

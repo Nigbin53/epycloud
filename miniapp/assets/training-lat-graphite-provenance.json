@@ -1,0 +1,26 @@
+{
+  "mode": "built-in image_gen",
+  "asset": "assets/training-lat-graphite.png",
+  "editTarget": "../black-card-white-layout-preview/dark-pulldown-studio.png",
+  "generatedSource": "/Users/epycvc/.codex/generated_images/01a0f9bc-38da-7e02-922d-858319233d82/exec-e947fde2-3095-4208-aa12-2fc7e53da9bc.png",
+  "prompt": "Use case: precise-object-edit. Asset type: a dark graphite studio photograph of gym equipment for an actual HTML interface.\nInput image is the sole edit target. Make ONLY the photographed studio wall and floor a little darker, approximately 18–22% lower perceived brightness than the input, so they sit closer to a near-black application background. Keep the neutral cool graphite hue and subtle wall/floor textures. Do not make them pitch-black or empty. The left and right sides must still contain continuous visible wall and floor scenery, filling the ENTIRE landscape canvas edge to edge; no black bars or empty side holes.\nPreserve every part of the SAME lat-pulldown machine, its original position, size, geometry, black padding, silver edges, lighting and highlights. Do not dim the machine itself. Keep the original three-quarter camera view and the original soft floor reflection/contact shadow, just with a darker floor around them. Keep the original 1536×1024 landscape crop EXACTLY: entire machine inside the middle vertical band about y188–807. No zoom, no reframing, no moving the equipment, no cropping any feet or overhead pulley.\nThe output should look like the same approved photograph with the BACKDROP subtly darkened only. No green tint, no brown, no new lighting beams, no bright wall patches, no heavy vignette, no transparent areas, no added text, numbers, logos, borders, icons or UI. Opaque high-quality PNG, identical composition.",
+  "postprocessing": "None. Generated PNG copied byte-for-byte; CSS filter:none.",
+  "scope": "Dark01 first exercise; photo backdrop subtly darker than approved PNGv3, framing and machinery preserved.",
+  "sha256": "71153dfee8448fc57ebee06bf00342ff7002ddeb185bbbcfc96a5141b97582d3",
+  "editTargetSha256": "2abe5579950dfbb1f8097df5a3b1d9d63fd98f0495fe6acef0e2e36cc51caf07",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "wallSample": {
+    "region": [
+      0,
+      200,
+      400,
+      500
+    ],
+    "beforeAverageGray": 46.56,
+    "afterAverageGray": 29.27,
+    "brightnessReductionPercent": 37.1
+  }
+}

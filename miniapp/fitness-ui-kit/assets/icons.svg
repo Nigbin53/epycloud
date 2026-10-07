@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="f-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
+  <symbol id="f-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="f-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="f-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="f-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="f-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="f-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+  <symbol id="f-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/><path d="M3 11h4l2-3 4 8 2-5h6"/></symbol>
+  <symbol id="f-activity" viewBox="0 0 24 24"><path d="M2 12h5l3-8 4 16 3-8h5"/></symbol>
+  <symbol id="f-dumbbell" viewBox="0 0 24 24"><path d="M7 8v8M4 9v6M17 8v8M20 9v6M7 12h10"/><path d="M4 9h3M4 15h3M17 9h3M17 15h3"/></symbol>
+  <symbol id="f-timer" viewBox="0 0 24 24"><circle cx="12" cy="14" r="8"/><path d="M9 2h6M12 6V2M18 7l2-2M12 10v5l3 2"/></symbol>
+  <symbol id="f-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 2v6M17 2v6M3 11h18M8 15h2M14 15h2"/></symbol>
+  <symbol id="f-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-5 4 3 6-8"/></symbol>
+  <symbol id="f-user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3"/></symbol>
+  <symbol id="f-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="f-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="f-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="f-signal" viewBox="0 0 24 24"><path d="M5 18v3M10 13v8M15 8v13M20 3v18"/></symbol>
+  <symbol id="f-battery" viewBox="0 0 24 24"><rect x="2" y="6" width="18" height="12" rx="2"/><path d="M23 10v4M6 9v6M10 9v6M14 9v6"/></symbol>
+  <symbol id="f-warning" viewBox="0 0 24 24"><path d="m12 3 10 18H2Z M12 9v5M12 17v.1"/></symbol>
+  <symbol id="f-wifi" viewBox="0 0 24 24"><path d="M3 7a14 14 0 0 1 18 0M6 11a9 9 0 0 1 12 0M9 15a4 4 0 0 1 6 0M12 19v.1"/></symbol>
+  <symbol id="f-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z"/></symbol>
+</defs></svg>

@@ -1,0 +1,53 @@
+/* Local anatomy presentation for the new-machine group selector only. */
+:root[data-redesign-theme] .addsheet .addgrp .grpbtn.rd-anatomy-button {
+  height: 90px;
+  padding: 7px 4px 9px;
+  gap: 6px;
+  overflow: hidden;
+}
+:root[data-redesign-theme] .rd-anatomy {
+  position: relative;
+  display: block;
+  width: 66px;
+  height: 53px;
+  flex: 0 0 53px;
+  overflow: hidden;
+  pointer-events: none;
+}
+:root[data-redesign-theme] .rd-anatomy img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  object-fit: contain;
+}
+:root[data-redesign-theme] .rd-anatomy--torso img {
+  width: 91px;
+  height: auto;
+  left: -12.5px;
+  top: -14px;
+}
+:root[data-redesign-theme] .rd-anatomy--legs img {
+  width: 68px;
+  height: auto;
+  left: -1px;
+  top: -2px;
+}
+:root[data-redesign-theme] .rd-anatomy--shoulders {
+  /* Reveal the shoulders above the arm highlight in the original PNG. */
+  clip-path: inset(10px 0 11px);
+}
+:root[data-redesign-theme] .rd-anatomy--shoulders img {
+  width: 140px;
+  height: auto;
+  left: -37px;
+  top: -9px;
+}
+:root[data-redesign-theme] .rd-anatomy-button > span:last-child {
+  flex-shrink: 0;
+  line-height: 15px;
+  color: var(--rd-text);
+}

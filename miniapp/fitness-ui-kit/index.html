@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#020303">
+  <meta name="description" content="FORM — интерактивный UI kit для фитнеса в эстетике автомобильных интерфейсов.">
+  <title>FORM — Fitness UI Kit</title>
+  <link rel="stylesheet" href="tokens.css?v=2.0">
+  <link rel="stylesheet" href="kit.css?v=2.2">
+  <link rel="stylesheet" href="screens.css?v=2.2">
+  <link rel="stylesheet" href="capsules.css?v=2.0">
+  <script src="app.js?v=2.0" defer></script>
+</head>
+<body>
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="f-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
+  <symbol id="f-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="f-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="f-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="f-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="f-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="f-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+  <symbol id="f-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/><path d="M3 11h4l2-3 4 8 2-5h6"/></symbol>
+  <symbol id="f-activity" viewBox="0 0 24 24"><path d="M2 12h5l3-8 4 16 3-8h5"/></symbol>
+  <symbol id="f-dumbbell" viewBox="0 0 24 24"><path d="M7 8v8M4 9v6M17 8v8M20 9v6M7 12h10"/><path d="M4 9h3M4 15h3M17 9h3M17 15h3"/></symbol>
+  <symbol id="f-timer" viewBox="0 0 24 24"><circle cx="12" cy="14" r="8"/><path d="M9 2h6M12 6V2M18 7l2-2M12 10v5l3 2"/></symbol>
+  <symbol id="f-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 2v6M17 2v6M3 11h18M8 15h2M14 15h2"/></symbol>
+  <symbol id="f-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-5 4 3 6-8"/></symbol>
+  <symbol id="f-user" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3"/></symbol>
+  <symbol id="f-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="f-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="f-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="f-signal" viewBox="0 0 24 24"><path d="M5 18v3M10 13v8M15 8v13M20 3v18"/></symbol>
+  <symbol id="f-battery" viewBox="0 0 24 24"><rect x="2" y="6" width="18" height="12" rx="2"/><path d="M23 10v4M6 9v6M10 9v6M14 9v6"/></symbol>
+  <symbol id="f-warning" viewBox="0 0 24 24"><path d="m12 3 10 18H2Z M12 9v5M12 17v.1"/></symbol>
+  <symbol id="f-wifi" viewBox="0 0 24 24"><path d="M3 7a14 14 0 0 1 18 0M6 11a9 9 0 0 1 12 0M9 15a4 4 0 0 1 6 0M12 19v.1"/></symbol>
+  <symbol id="f-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2L5.8 21 7 14.2 2 9.3l6.9-1Z"/></symbol>
+</defs></svg>
+<div id="fit-kit">
+  <header class="kit-header">
+    <a class="wordmark" href="#" aria-label="FORM — начало"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>FORM<span class="wordmark-caption">FITNESS INTERFACE SYSTEM</span></a>
+    <div class="header-right"><span class="edition"><span class="micro-dot"></span> BLACK EDITION / 2.0</span><a class="download-button" href="fitness-ui-kit.zip" download id="download-kit"><svg class="icon"><use href="#f-download"/></svg><span>Скачать kit</span></a></div>
+  </header>
+  <div class="intro">
+    <div><p class="eyebrow">PRECISION IN EVERY REP</p><h1>Форма. В каждой детали<span class="title-dot">.</span></h1><p class="intro-caption">UX / UI kit для фитнеса · Эстетика автомобильных интерфейсов</p></div>
+    <div class="intro-code"><span>DESIGN SYSTEM</span><strong>01—30</strong><span>КОМПОНЕНТЫ / СОСТОЯНИЯ / ЭКРАНЫ</span></div>
+  </div>
+  <nav class="kit-tabs" role="tablist" aria-label="Разделы UI kit">
+    <button type="button" class="kit-tab active" id="tab-components" data-tab="components" role="tab" aria-selected="true" aria-controls="panel-components">Компоненты <span>01</span></button>
+    <button type="button" class="kit-tab" id="tab-screens" data-tab="screens" role="tab" aria-selected="false" aria-controls="panel-screens">Экраны <span>02</span></button>
+    <button type="button" class="kit-tab" id="tab-tokens" data-tab="tokens" role="tab" aria-selected="false" aria-controls="panel-tokens">Токены <span>03</span></button>
+    <span class="tabs-note">ИЗ РЕФЕРЕНСА — В ВАШ ПРОДУКТ</span>
+  </nav>
+  <main>
+  <div id="panel-components" role="tabpanel" aria-labelledby="tab-components">
+    <div class="overview-grid">
+      <section class="console session-console" aria-labelledby="session-title">
+        <div class="panel-heading"><h2 id="session-title">Показатели тренировки</h2><span class="panel-index">01 / DATA</span></div>
+        <div class="session-status"><span class="status-dot"></span> ТРЕНИРОВКА ИДЁТ <span>LIVE</span></div>
+        <div class="session-time technical">48<span class="colon">:</span>32</div>
+        <div class="measure-label">ВРЕМЯ В ДВИЖЕНИИ</div>
+        <div class="metric-triplet">
+          <div><span class="metric-label">Калории</span><strong>482 <small>ккал</small></strong><span class="metric-delta neutral">↑ 8%</span></div>
+          <div><span class="metric-label">Объём</span><strong>2 450 <small>кг</small></strong><span class="metric-delta">↑ 14%</span></div>
+          <div><span class="metric-label">Подходы</span><strong id="sets-count" data-total="16">12</strong><span class="metric-delta">↑ 3</span></div>
+        </div>
+        <div class="session-progress-head"><span class="micro-label">ПРОГРЕСС СЕССИИ</span><span id="session-percent">75%</span></div>
+        <div class="progress-track" id="session-progress" role="progressbar" aria-label="Прогресс тренировки" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span style="width:75%"></span></div>
+        <div class="session-footer"><svg class="icon"><use href="#f-dumbbell"/></svg><span>Силовая · Верх тела</span><span class="small-number">04 / 06</span></div>
+      </section>
+      <section class="console actions-console" aria-labelledby="actions-title">
+        <div class="panel-heading"><h2 id="actions-title">Действия и состояния</h2><span class="panel-index">02 / ACTION</span></div>
+        <div class="button-example"><span class="state-label">DEFAULT <span>01</span></span><button type="button" class="action-button primary ref-capsule" id="save-set"><span class="action-mark"></span><span class="action-label">Записать подход</span><span class="action-circle" data-icon><svg class="icon"><use href="#f-arrow"/></svg></span></button></div>
+        <div class="button-example"><span class="state-label">HOVER <span>02</span></span><button type="button" class="action-button primary ref-capsule is-hover" data-toast="Состояние наведения — светлее графитовая поверхность"><span class="action-mark"></span><span class="action-label">Записать подход</span><span class="action-circle"><svg class="icon"><use href="#f-arrow"/></svg></span></button></div>
+        <div class="button-states-grid">
+          <div class="button-example"><span class="state-label">PRESSED</span><button type="button" class="action-button compact is-pressed" data-toast="Нажатие — поверхность уходит внутрь"><span class="action-label">Нажата</span><svg class="icon"><use href="#f-arrow"/></svg></button></div>
+          <div class="button-example"><span class="state-label">DISABLED</span><button type="button" class="action-button compact" disabled><span class="action-label">Недоступна</span><svg class="icon"><use href="#f-arrow"/></svg></button></div>
+          <div class="button-example"><span class="state-label">LOADING</span><button type="button" class="action-button compact is-loading" disabled aria-busy="true"><span class="spinner" aria-hidden="true"></span><span class="action-label">Сохраняем</span></button></div>
+          <div class="button-example"><span class="state-label">SUCCESS</span><button type="button" class="action-button compact is-success" data-toast="Подход успешно записан"><span class="action-label">Записано</span><svg class="icon"><use href="#f-check"/></svg></button></div>
+        </div>
+        <div class="icon-actions"><span class="micro-label">ICON / TOGGLE</span><button class="round-button" type="button" aria-label="Добавить упражнение" data-toast="Упражнение добавлено"><svg class="icon"><use href="#f-plus"/></svg></button><button class="round-button" type="button" aria-label="Пауза" aria-pressed="false" data-toggle><svg class="icon"><use href="#f-pause"/></svg></button><button class="round-button is-active" type="button" aria-label="Избранное упражнение" aria-pressed="true" data-toggle><svg class="icon"><use href="#f-star"/></svg></button><button class="round-button" type="button" aria-label="Недоступное действие" disabled><svg class="icon"><use href="#f-close"/></svg></button></div>
+      </section>
+      <section class="console rest-console" aria-labelledby="rest-title">
+        <div class="panel-heading"><h2 id="rest-title">Контроль восстановления</h2><span class="panel-index">03 / TIMER</span></div>
+        <div class="rest-readout"><div class="technical rest-value" id="rest-value">02:00</div><div class="measure-label">ОТДЫХ МЕЖДУ ПОДХОДАМИ</div><span class="readout-dash"></span></div>
+        <div class="segment-control" data-segment-group="rest" role="group" aria-label="Длительность отдыха"><button type="button" data-segment data-value="60" aria-pressed="false">1 МИН</button><button type="button" class="is-active" data-segment data-value="120" aria-pressed="true">2 МИН</button><button type="button" data-segment data-value="180" aria-pressed="false">3 МИН</button></div>
+        <button class="action-button secondary" type="button" id="rest-start"><svg class="icon"><use href="#f-play"/></svg><span class="action-label">Начать отдых</span></button>
+        <div class="rest-bottom"><div><svg class="icon"><use href="#f-heart"/></svg><strong>118 <small>уд/мин</small></strong><span>ПУЛЬС</span></div><div><svg class="icon"><use href="#f-activity"/></svg><strong>02 <small>/ 05</small></strong><span>ЗОНА НАГРУЗКИ</span></div></div>
+      </section>
+    </div>
+    <div class="section-divider"><h2>Одно действие. Спокойный акцент.</h2><span>ACTION / STATUS</span></div>
+    <section class="console capsule-variants" aria-label="Действия с индикатором состояния">
+      <div class="button-example"><span class="state-label">READY / ARROW <span>01</span></span><button type="button" id="save-set-green" class="action-button primary ref-capsule ref-capsule--green" data-save-set><span class="action-mark"></span><span class="action-label">Записать подход</span><span class="action-circle" data-icon><svg class="icon"><use href="#f-arrow"/></svg></span></button><p class="capsule-variants-note">Статус — маленький индикатор · Стрелка — без отдельной рамки</p></div>
+      <div class="button-example"><span class="state-label">READY / PLUS <span>02</span></span><button type="button" id="save-set-plus" class="action-button primary ref-capsule ref-capsule--green" data-save-set><span class="action-mark"></span><span class="action-label">Добавить подход</span><span class="action-circle" data-icon><svg class="icon"><use href="#f-plus"/></svg></span></button><p class="capsule-variants-note">Нейтральная поверхность · Компактный знак действия</p></div>
+    </section>
+    <div class="section-divider"><h2>Режим, команды и история</h2><span>REFERENCE / NEW COMPONENTS</span></div>
+    <div class="reference-grid">
+      <section class="console mode-console">
+        <div class="panel-heading"><h3>Режим тренировки</h3><span class="panel-index">10 / MODE</span></div>
+        <div class="mode-selector" data-segment-group="training-mode" role="group" aria-label="Режим тренировки">
+          <button type="button" data-segment aria-pressed="false">Восстановление</button>
+          <button type="button" data-segment class="is-active" aria-pressed="true">Обычный</button>
+          <button type="button" data-segment aria-pressed="false">Силовой</button>
+          <button type="button" data-segment aria-pressed="false">Выносливость</button>
+        </div>
+        <p class="reference-note">Вертикальный выбор · Отметка текущего режима</p>
+      </section>
+      <section class="console quick-console">
+        <div class="panel-heading"><h3>Быстрые действия</h3><span class="panel-index">11 / COMMAND</span></div>
+        <div class="quick-actions">
+          <button type="button" data-toast="Демо: выбор упражнения"><svg class="icon"><use href="#f-dumbbell"/></svg><span>Упражнения</span></button>
+          <button type="button" data-toast="Демо: таймер отдыха"><svg class="icon"><use href="#f-timer"/></svg><span>Отдых</span></button>
+          <button type="button" data-toast="Демо: план тренировок"><svg class="icon"><use href="#f-calendar"/></svg><span>План</span></button>
+        </div>
+        <button type="button" class="destination-row" data-toast="Демо: открыта тренировка «Верх тела»"><span class="destination-icon"><svg class="icon"><use href="#f-dumbbell"/></svg></span><span><strong>Верх тела</strong><small>45 мин · 5 упражнений</small></span><svg class="icon"><use href="#f-chevron"/></svg></button>
+        <p class="reference-note">Компактные команды · Строка с контекстом</p>
+      </section>
+      <section class="console history-console">
+        <div class="panel-heading"><h3>История тренировок</h3><span class="panel-index">12 / HISTORY</span></div>
+        <button class="history-row" type="button" data-toast="Демо: результаты силовой тренировки"><span class="history-index technical">01</span><span><strong>Силовая · Верх тела</strong><small>30 сентября · 48 мин · 15 подходов</small></span><svg class="icon"><use href="#f-chevron"/></svg></button>
+        <button class="history-row" type="button" data-toast="Демо: результаты тренировки ног"><span class="history-index technical">02</span><span><strong>Ноги и корпус</strong><small>28 сентября · 52 мин · 18 подходов</small></span><svg class="icon"><use href="#f-chevron"/></svg></button>
+        <p class="reference-note">Строки вместо карточек · Тонкие разделители</p>
+      </section>
+    </div>
+    <div class="section-divider"><h2>Контролы, которые чувствуют контекст</h2><span>04—09 / INTERACTION & FEEDBACK</span></div>
+    <div class="detail-grid">
+      <section class="console input-console">
+        <div class="panel-heading"><h3>Ввод параметров</h3><span class="panel-index">04 / INPUT</span></div>
+        <div class="steppers"><div><label class="control-label" for="set-weight">Вес <span>КГ</span></label><div class="stepper"><button type="button" data-stepper data-delta="-1" data-target="set-weight" aria-label="Уменьшить вес"><svg class="icon"><use href="#f-minus"/></svg></button><input id="set-weight" type="number" min="0" max="300" step="2.5" value="60" aria-label="Вес подхода, кг"><button type="button" data-stepper data-delta="1" data-target="set-weight" aria-label="Увеличить вес"><svg class="icon"><use href="#f-plus"/></svg></button></div></div><div><label class="control-label" for="set-reps">Повторения <span>ПОВТ.</span></label><div class="stepper"><button type="button" data-stepper data-delta="-1" data-target="set-reps" aria-label="Уменьшить повторения"><svg class="icon"><use href="#f-minus"/></svg></button><input id="set-reps" type="number" min="1" max="100" step="1" value="12" aria-label="Повторения подхода"><button type="button" data-stepper data-delta="1" data-target="set-reps" aria-label="Увеличить повторения"><svg class="icon"><use href="#f-plus"/></svg></button></div></div></div>
+        <label class="control-label" for="exercise-search">Поиск упражнения</label><div class="text-field"><svg class="icon"><use href="#f-search"/></svg><input type="search" id="exercise-search" placeholder="Название упражнения"><span class="field-key">⌘ K</span></div>
+        <label class="control-label" for="weight-validate">Поле с валидацией</label><div class="text-field field-error"><input type="number" id="weight-validate" value="350" min="0" max="300" step="2.5" aria-invalid="true" aria-describedby="weight-error"><span>кг</span><svg class="icon"><use href="#f-warning"/></svg></div><p class="field-message" id="weight-error">Укажите вес от 0 до 300 кг</p>
+        <div class="range-heading"><label class="control-label" for="effort-range">Ощущаемая нагрузка</label><strong id="effort-value">7 / 10</strong></div><input type="range" class="fit-range" id="effort-range" min="1" max="10" value="7"><div class="range-caption"><span>ЛЕГКО</span><span id="effort-note">Осталось 3 повторения</span><span>ПРЕДЕЛ</span></div>
+      </section>
+      <section class="console statuses-console">
+        <div class="panel-heading"><h3>Статусы системы</h3><span class="panel-index">05 / STATUS</span></div>
+        <div class="status-row status-success" id="status-live"><span class="status-indicator"><span></span></span><div><strong class="status-title">Готов к тренировке</strong><span class="status-description">Все показатели в норме</span></div><svg class="icon"><use href="#f-chevron"/></svg></div>
+        <div class="status-demo-controls" role="group" aria-label="Состояние системы"><button class="status-demo is-active" type="button" data-status-demo="success" aria-pressed="true">Норма</button><button class="status-demo" type="button" data-status-demo="warning" aria-pressed="false">Внимание</button><button class="status-demo" type="button" data-status-demo="error" aria-pressed="false">Ошибка</button><button class="status-demo" type="button" data-status-demo="offline" aria-pressed="false">Офлайн</button></div>
+        <div class="status-row status-warning small-status"><span class="status-indicator"><svg class="icon"><use href="#f-warning"/></svg></span><div><strong>Нагрузка высокая</strong><span>Увеличьте время отдыха</span></div><span class="tiny-tag">RPE 9</span></div>
+        <div class="status-row status-error small-status"><span class="status-indicator"><svg class="icon"><use href="#f-close"/></svg></span><div><strong>Не удалось сохранить</strong><span>Данные остались на устройстве</span></div><button type="button" class="text-button" data-toast="Повторная попытка: подход сохранён">Повторить</button></div>
+        <div class="status-chips"><span class="status-chip"><i></i>В процессе</span><span class="status-chip green"><i></i>Выполнено</span><span class="status-chip amber"><i></i>Пауза</span><span class="status-chip muted"><i></i>Нет данных</span></div>
+        <div class="data-states"><div><span class="micro-label">НЕТ ДАННЫХ</span><strong class="technical">—<small>ккал</small></strong></div><div><span class="micro-label">ОБНОВЛЕНИЕ</span><span class="skeleton skeleton-large" aria-label="Показатель загружается"></span><span class="skeleton skeleton-small"></span></div><div><span class="micro-label">УСТАРЕЛО</span><strong class="technical muted-number">118<small>уд/мин</small></strong><span class="stale-caption">5 мин назад</span></div></div>
+      </section>
+      <section class="console progress-console">
+        <div class="panel-heading"><h3>Прогресс и выбор</h3><span class="panel-index">06 / CONTROL</span></div>
+        <div class="progress-example"><div><span>Недельная цель</span><strong>75%</strong></div><div class="progress-track" role="progressbar" aria-label="Недельная цель" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><span style="width:75%"></span></div><small>3 из 4 тренировок выполнено</small></div>
+        <div class="progress-example complete"><div><span>Тренировка завершена</span><svg class="icon"><use href="#f-check"/></svg></div><div class="progress-track" role="progressbar" aria-label="Завершённая тренировка" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span style="width:100%"></span></div></div>
+        <div class="progress-example paused"><div><span>На паузе</span><strong>42%</strong></div><div class="progress-track" role="progressbar" aria-label="Тренировка на паузе" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"><span style="width:42%"></span></div></div>
+        <span class="control-label">Тип подхода</span><div class="segment-control compact-segments" data-segment-group="set-type" role="group" aria-label="Тип подхода"><button type="button" data-segment aria-pressed="false">Разминка</button><button type="button" class="is-active" data-segment aria-pressed="true">Рабочий</button><button type="button" data-segment aria-pressed="false">Дропсет</button></div>
+        <label class="switch-row"><span><strong>Автоотдых</strong><small>После каждого подхода</small></span><input class="fit-switch" type="checkbox" role="switch" checked></label>
+        <label class="switch-row"><span><strong>Тактильный отклик</strong><small>Подтверждение действий</small></span><input class="fit-switch" type="checkbox" role="switch"></label>
+      </section>
+    </div>
+    <div class="section-divider"><h2>Навигация и обратная связь</h2><span>07—09 / FLOW</span></div>
+    <div class="flow-grid">
+      <section class="console navigation-console"><div class="panel-heading"><h3>Навигация</h3><span class="panel-index">07 / NAV</span></div><div class="mobile-statusbar"><strong>9:41</strong><span><svg class="icon"><use href="#f-signal"/></svg><svg class="icon"><use href="#f-wifi"/></svg><svg class="icon"><use href="#f-battery"/></svg></span></div><div class="bottom-nav" data-segment-group="navigation" role="group" aria-label="Навигация приложения"><button type="button" class="is-active" data-segment aria-pressed="true"><svg class="icon"><use href="#f-dumbbell"/></svg><span>Тренировка</span></button><button type="button" data-segment aria-pressed="false"><svg class="icon"><use href="#f-chart"/></svg><span>Прогресс</span></button><button type="button" data-segment aria-pressed="false"><svg class="icon"><use href="#f-calendar"/></svg><span>План</span></button><button type="button" data-segment aria-pressed="false"><svg class="icon"><use href="#f-user"/></svg><span>Профиль</span></button></div><div class="list-row"><span class="equipment-icon"><svg class="icon"><use href="#f-dumbbell"/></svg></span><div><strong>Жим лёжа</strong><span>4 подхода · 8–12 повторений</span></div><button class="round-button small" type="button" aria-label="Открыть жим лёжа" data-toast="Жим лёжа · 4 подхода · 8–12 повторений"><svg class="icon"><use href="#f-chevron"/></svg></button></div></section>
+      <section class="console feedback-console"><div class="panel-heading"><h3>Уведомления</h3><span class="panel-index">08 / FEEDBACK</span></div><div class="inline-toast"><svg class="icon"><use href="#f-check"/></svg><span>Подход записан</span><button class="text-button" type="button" data-toast="Последний подход отменён">Отменить</button></div><div class="inline-toast inline-toast-error"><svg class="icon"><use href="#f-close"/></svg><span>Нет соединения</span><button class="text-button" type="button" data-toast="Соединение восстановлено">Повторить</button></div><button type="button" class="action-button secondary feedback-trigger is-error" data-toast="Демо: повторная попытка завершена, подход сохранён."><span class="action-label">Повторить сохранение</span><svg class="icon"><use href="#f-arrow"/></svg></button><p class="feedback-caption">Подтверждение, ошибка, повторная попытка.</p></section>
+      <section class="console empty-console"><div class="panel-heading"><h3>Пустое состояние</h3><span class="panel-index">09 / EMPTY</span></div><div class="empty-state"><svg class="icon"><use href="#f-dumbbell"/></svg><strong>Каждый путь начинается<br>с первого подхода.</strong><p>Добавьте упражнение в тренировку.</p><button type="button" class="text-button" data-toast="Жим лёжа добавлен в тренировку">Добавить упражнение <svg class="icon"><use href="#f-plus"/></svg></button></div></section>
+    </div>
+    <div class="system-footer"><span>CONSISTENCY<br>CREATES RESULTS.</span><div>Тихий интерфейс.<br>Сильный результат.</div><span>FORM / BLACK EDITION<br>FITNESS UI KIT © 2026</span></div>
+  </div>
+  <div id="panel-screens" role="tabpanel" aria-labelledby="tab-screens" hidden>
+    <div class="section-divider first-divider"><h2>От компонентов — к опыту</h2><span>ТРИ СОСТОЯНИЯ ОДНОЙ ТРЕНИРОВКИ</span></div>
+<div class="fs-gallery">
+  <svg class="fs-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="fs-arrow" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5"/></symbol>
+      <symbol id="fs-home" viewBox="0 0 24 24"><path d="m4 10 8-6 8 6v10H4zM9 20v-7h6v7"/></symbol>
+      <symbol id="fs-lift" viewBox="0 0 24 24"><path d="M2 9v6m3-9v12m3-9v6m0-3h8m0-3v6m3-9v12m3-9v6"/></symbol>
+      <symbol id="fs-chart" viewBox="0 0 24 24"><path d="M4 20h16M5 16V9m7 7V4m7 12v-5"/></symbol>
+      <symbol id="fs-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></symbol>
+      <symbol id="fs-chev" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+      <symbol id="fs-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+      <symbol id="fs-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+      <symbol id="fs-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+      <symbol id="fs-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+      <symbol id="fs-back" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+      <symbol id="fs-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 10h16m-11 5h2m2 0h2"/></symbol>
+    </defs>
+  </svg>
+
+  <article class="fs-example" aria-label="Пример экрана: план тренировки">
+    <div class="fs-example-label"><span>01</span><span>ПЛАН ТРЕНИРОВКИ</span></div>
+    <div class="fs-phone fs-overview">
+      <div class="fs-system"><span>9:41</span><div class="fs-system-right"><i class="fs-signal"></i><i class="fs-wifi"></i><i class="fs-battery"></i></div></div>
+      <header class="fs-header"><span class="fs-wordmark">FORM<span> / </span></span><button class="fs-icon-button" aria-label="Календарь тренировок" data-screen-action="calendar"><svg><use href="#fs-calendar"/></svg></button></header>
+      <div class="fs-body">
+        <div class="fs-eyebrow">СРЕДА, 30 СЕНТЯБРЯ <span class="fs-live-dot"></span></div>
+        <h2 class="fs-title">Дисциплина.<br><span>В движении.</span></h2>
+        <section class="fs-feature" aria-label="Силовая тренировка, верх тела">
+          <div class="fs-feature-visual"><img src="assets/strength-hero.png" alt="" width="1536" height="1024"/><div class="fs-plan-heading"><span>ПЛАН НА СЕГОДНЯ</span><span>07 / 12</span></div><div class="fs-feature-status"><span class="fs-ring-dot"></span><span>Готов к тренировке</span><span class="fs-faint">100%</span></div></div>
+          <div class="fs-feature-line"><div><h3 class="fs-feature-title">Силовая тренировка</h3><span class="fs-tiny">ВЕРХ ТЕЛА</span></div><div class="fs-feature-number">45<span>мин</span></div></div>
+          <div class="fs-feature-foot"><span>5 упражнений</span><span class="fs-small-dot"></span><span>15 подходов</span></div>
+        </section>
+        <div class="fs-list-label"><span>УПРАЖНЕНИЯ</span><span>СЕГОДНЯ</span></div>
+        <div class="fs-exercise-list">
+          <button class="fs-exercise" data-screen-action="bench-press"><span class="fs-exercise-index">01</span><span class="fs-exercise-name">Жим лёжа<small>3 подхода × 12 повторений</small></span><svg><use href="#fs-chev"/></svg></button>
+          <button class="fs-exercise" data-screen-action="lat-pulldown"><span class="fs-exercise-index">02</span><span class="fs-exercise-name">Тяга верхнего блока<small>3 подхода × 12 повторений</small></span><svg><use href="#fs-chev"/></svg></button>
+          <button class="fs-exercise" data-screen-action="all-exercises"><span class="fs-exercise-index">+3</span><span class="fs-exercise-name fs-muted">Все упражнения<small>Плечи · бицепс · трицепс</small></span><svg><use href="#fs-chev"/></svg></button>
+        </div>
+        <button class="fs-capsule ref-capsule fs-start-button" data-screen-action="start-workout"><span class="fs-button-dash"></span><span>Начать тренировку</span><span class="fs-button-arrow"><svg><use href="#fs-arrow"/></svg></span></button>
+      </div>
+      <nav class="fs-nav" aria-label="Навигация: план"><button class="fs-nav-item fs-is-current" data-screen-action="home" aria-label="Главная" aria-current="page"><svg><use href="#fs-home"/></svg><span>Главная</span></button><button class="fs-nav-item" data-screen-action="training" aria-label="Тренировки"><svg><use href="#fs-lift"/></svg><span>Тренировки</span></button><button class="fs-nav-item" data-screen-action="progress" aria-label="Прогресс"><svg><use href="#fs-chart"/></svg><span>Прогресс</span></button><button class="fs-nav-item" data-screen-action="profile" aria-label="Профиль"><svg><use href="#fs-user"/></svg><span>Профиль</span></button></nav>
+      <div class="fs-home-indicator"></div>
+    </div>
+  </article>
+
+  <article class="fs-example" aria-label="Пример экрана: запись подхода">
+    <div class="fs-example-label"><span>02</span><span>АКТИВНЫЙ ПОДХОД</span></div>
+    <div class="fs-phone fs-session">
+      <div class="fs-system"><span>9:41</span><div class="fs-system-right"><i class="fs-signal"></i><i class="fs-wifi"></i><i class="fs-battery"></i></div></div>
+      <header class="fs-header"><button class="fs-icon-button" aria-label="Назад к упражнениям" data-screen-action="back-to-workout"><svg><use href="#fs-back"/></svg></button><span class="fs-header-label">ТРЕНИРОВКА 07</span><button class="fs-icon-button" aria-label="Приостановить тренировку" data-screen-action="pause-workout"><svg><use href="#fs-pause"/></svg></button></header>
+      <div class="fs-body">
+        <div class="fs-eyebrow fs-session-eyebrow">ВЕРХ ТЕЛА <span>01 / 05</span></div>
+        <h2 class="fs-title fs-single-title">Жим лёжа</h2>
+        <div class="fs-set-heading"><span>ПОДХОД 2 <span class="fs-faint">ИЗ 3</span></span><span class="fs-session-time">48:32</span></div>
+        <div class="fs-set-progress" role="progressbar" aria-label="Выполненные подходы" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" aria-valuetext="1 из 3 подходов выполнен, текущий подход второй"><span class="fs-set-done"></span><span class="fs-set-active"></span><span></span></div>
+        <section class="fs-input-metric">
+          <label class="fs-tiny" for="fs-weight">РАБОЧИЙ ВЕС</label>
+          <div class="fs-adjustment"><button class="fs-adjust-button" aria-label="Уменьшить вес на 2,5 кг" data-screen-action="decrease-weight"><svg><use href="#fs-minus"/></svg></button><div class="fs-value-wrap"><input id="fs-weight" type="number" min="0" max="300" step="2.5" class="fs-number-input fs-weight-value" value="60.0" inputmode="decimal" aria-label="Рабочий вес в килограммах"/><span class="fs-unit">кг</span></div><button class="fs-adjust-button" aria-label="Увеличить вес на 2,5 кг" data-screen-action="increase-weight"><svg><use href="#fs-plus"/></svg></button></div>
+          <div class="fs-metric-hint">ШАГ <span>2.5 КГ</span></div>
+        </section>
+        <section class="fs-input-metric fs-reps-metric">
+          <label class="fs-tiny" for="fs-reps">ПОВТОРЕНИЯ</label>
+          <div class="fs-adjustment"><button class="fs-adjust-button" aria-label="Уменьшить количество повторений" data-screen-action="decrease-reps"><svg><use href="#fs-minus"/></svg></button><div class="fs-value-wrap"><input id="fs-reps" type="number" min="1" max="100" step="1" class="fs-number-input fs-reps-value" value="12" inputmode="numeric" aria-label="Количество повторений"/><span class="fs-unit">раз</span></div><button class="fs-adjust-button" aria-label="Увеличить количество повторений" data-screen-action="increase-reps"><svg><use href="#fs-plus"/></svg></button></div>
+        </section>
+        <div class="fs-previous-set"><span class="fs-ring-dot"></span><span>Предыдущий подход</span><span>60 кг × 12</span><svg><use href="#fs-check"/></svg></div>
+        <section class="fs-rest"><div><span class="fs-tiny">ОТДЫХ МЕЖДУ ПОДХОДАМИ</span><strong>01:30</strong></div><button class="fs-mini-capsule" data-screen-action="rest-timer">Таймер <svg><use href="#fs-arrow"/></svg></button></section>
+        <button class="fs-capsule ref-capsule" data-screen-action="log-set"><span class="fs-button-dash"></span><span>Записать подход</span><span class="fs-button-arrow"><svg><use href="#fs-arrow"/></svg></span></button>
+        <p class="fs-bottom-note">КАЖДОЕ ПОВТОРЕНИЕ ИМЕЕТ ЗНАЧЕНИЕ.</p>
+      </div>
+      <nav class="fs-nav" aria-label="Навигация: подход"><button class="fs-nav-item" data-screen-action="home" aria-label="Главная"><svg><use href="#fs-home"/></svg><span>Главная</span></button><button class="fs-nav-item fs-is-current" data-screen-action="training" aria-label="Тренировки" aria-current="page"><svg><use href="#fs-lift"/></svg><span>Тренировки</span></button><button class="fs-nav-item" data-screen-action="progress" aria-label="Прогресс"><svg><use href="#fs-chart"/></svg><span>Прогресс</span></button><button class="fs-nav-item" data-screen-action="profile" aria-label="Профиль"><svg><use href="#fs-user"/></svg><span>Профиль</span></button></nav>
+      <div class="fs-home-indicator"></div>
+    </div>
+  </article>
+
+  <article class="fs-example" aria-label="Пример экрана: результаты тренировки">
+    <div class="fs-example-label"><span>03</span><span>РЕЗУЛЬТАТЫ</span></div>
+    <div class="fs-phone fs-summary">
+      <div class="fs-system"><span>9:41</span><div class="fs-system-right"><i class="fs-signal"></i><i class="fs-wifi"></i><i class="fs-battery"></i></div></div>
+      <header class="fs-header"><span class="fs-wordmark">FORM<span> / </span></span><span class="fs-summary-saved"><span class="fs-live-dot"></span>СОХРАНЕНО</span></header>
+      <div class="fs-body">
+        <div class="fs-eyebrow">ТРЕНИРОВКА 07 <span>30.09.2026</span></div>
+        <h2 class="fs-title">Работа сделана.<br><span>Ты стал сильнее.</span></h2>
+        <div class="fs-result-stack" aria-label="Итоги тренировки">
+          <section class="fs-result-hero"><div class="fs-result-value">48<span class="fs-time-colon">:</span>32<small>мин</small></div><div class="fs-tiny">ВРЕМЯ ТРЕНИРОВКИ</div></section>
+          <section class="fs-result-metric"><div class="fs-result-reading"><strong>482<small>ккал</small></strong><span class="fs-result-trend">↑ 8%</span></div><span class="fs-tiny">КАЛОРИИ</span></section>
+          <section class="fs-result-metric"><div class="fs-result-reading"><strong>2 450<small>кг</small></strong><span class="fs-result-trend">↑ 14%</span></div><span class="fs-tiny">ОБЩИЙ ОБЪЁМ</span></section>
+        </div>
+        <div class="fs-summary-status"><span class="fs-status-emblem"><svg><use href="#fs-check"/></svg></span><div><strong>Цель выполнена</strong><span>15 подходов · 5 упражнений</span></div><svg class="fs-status-arrow"><use href="#fs-chev"/></svg></div>
+        <section class="fs-weekly-progress"><div class="fs-progress-heading"><span class="fs-tiny">ПРОГРЕСС НЕДЕЛИ</span><strong>75<span>%</span></strong></div><div class="fs-progress-track" role="progressbar" aria-label="Прогресс тренировок за неделю" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-valuetext="75 процентов, 3 из 4 тренировок"><span></span></div><div class="fs-weekly-copy"><span>3 из 4 тренировок</span><span>Осталось совсем немного</span></div></section>
+        <button class="fs-capsule ref-capsule" data-screen-action="view-results"><span class="fs-button-dash fs-dash-white"></span><span>Смотреть результаты</span><span class="fs-button-arrow"><svg><use href="#fs-arrow"/></svg></span></button>
+        <p class="fs-bottom-note">ПОСТОЯНСТВО СОЗДАЁТ РЕЗУЛЬТАТ.</p>
+      </div>
+      <nav class="fs-nav" aria-label="Навигация: результаты"><button class="fs-nav-item" data-screen-action="home" aria-label="Главная"><svg><use href="#fs-home"/></svg><span>Главная</span></button><button class="fs-nav-item" data-screen-action="training" aria-label="Тренировки"><svg><use href="#fs-lift"/></svg><span>Тренировки</span></button><button class="fs-nav-item fs-is-current" data-screen-action="progress" aria-label="Прогресс" aria-current="page"><svg><use href="#fs-chart"/></svg><span>Прогресс</span></button><button class="fs-nav-item" data-screen-action="profile" aria-label="Профиль"><svg><use href="#fs-user"/></svg><span>Профиль</span></button></nav>
+      <div class="fs-home-indicator"></div>
+    </div>
+  </article>
+</div>
+  </div>
+  <div id="panel-tokens" role="tabpanel" aria-labelledby="tab-tokens" hidden>
+    <div class="section-divider first-divider"><h2>ДНК интерфейса</h2><span>FOUNDATIONS / BLACK TECHNICAL MINIMALISM</span></div>
+    <section class="console tokens-colors"><div class="panel-heading"><h3>Цвет и материал</h3><span class="panel-index">01 / PALETTE</span></div><div class="swatch-grid">
+      <button type="button" class="swatch" data-copy="#020303"><i style="background:#020303"></i><strong>Background</strong><span>#020303</span></button>
+      <button type="button" class="swatch" data-copy="#0B0D0E"><i style="background:#0b0d0e"></i><strong>Surface</strong><span>#0B0D0E</span></button>
+      <button type="button" class="swatch" data-copy="#141819"><i style="background:#141819"></i><strong>Raised</strong><span>#141819</span></button>
+      <button type="button" class="swatch" data-copy="#ECEEEB"><i style="background:#eceeeb"></i><strong>Primary text</strong><span>#ECEEEB</span></button>
+      <button type="button" class="swatch" data-copy="#929996"><i style="background:#929996"></i><strong>Secondary text</strong><span>#929996</span></button>
+      <button type="button" class="swatch" data-copy="#BD5356"><i style="background:#bd5356"></i><strong>Error</strong><span>#BD5356</span></button>
+      <button type="button" class="swatch" data-copy="#74AD91"><i style="background:#74ad91"></i><strong>Success</strong><span>#74AD91</span></button>
+      <button type="button" class="swatch" data-copy="#C3A277"><i style="background:#c3a277"></i><strong>Attention</strong><span>#C3A277</span></button>
+    </div></section>
+    <div class="foundation-grid"><section class="console type-console"><div class="panel-heading"><h3>Типографика</h3><span class="panel-index">02 / TYPE</span></div><span class="micro-label">RAJDHANI LIGHT / DISPLAY</span><div class="type-display technical">02:00</div><div class="type-spec"><span>Показатели и таймеры</span><span>120 px / 300</span></div><div class="type-sample"><span class="micro-label">MANROPE / INTERFACE</span><strong>Каждый подход имеет значение.</strong><span>Заголовки 20 / 400 · Текст 14 / 400 · Подписи 11 / 500</span></div><div class="type-sample"><span class="micro-label">TECHNICAL LABEL / TRACKING 0.18 EM</span><p>PRECISION. PERFORMANCE. PROGRESS.</p></div></section><section class="console geometry-console"><div class="panel-heading"><h3>Геометрия и ритм</h3><span class="panel-index">03 / SHAPE</span></div><div class="geometry-row"><span class="shape-panel"></span><div><strong>18 px</strong><span>Радиус панели</span></div><span class="shape-pill"></span><div><strong>999 px</strong><span>Сегменты и капсулы</span></div></div><div class="space-system"><span class="micro-label">ШАГ ОТСТУПОВ / 4 PX</span><div class="space-bars"><div><i style="width:4px"></i><span>4</span></div><div><i style="width:8px"></i><span>8</span></div><div><i style="width:12px"></i><span>12</span></div><div><i style="width:16px"></i><span>16</span></div><div><i style="width:24px"></i><span>24</span></div><div><i style="width:32px"></i><span>32</span></div><div><i style="width:48px"></i><span>48</span></div></div></div><div class="motion-row"><strong>180 ms</strong><span>Плавный отклик контролов<br>Без движения при reduced motion</span></div><div class="focus-example"><span class="micro-label">KEYBOARD FOCUS</span><button type="button" class="action-button secondary is-focus" data-toast="Клавиатурный фокус выделяет действие светлым контуром"><span class="action-label">В фокусе</span><svg class="icon"><use href="#f-arrow"/></svg></button></div></section></div>
+    <section class="console icon-library"><div class="panel-heading"><h3>Иконки</h3><span class="panel-index">04 / 20 SVG ICONS</span></div><div class="icon-grid">
+      <div><svg class="icon"><use href="#f-dumbbell"/></svg><span>Упражнение</span></div><div><svg class="icon"><use href="#f-heart"/></svg><span>Пульс</span></div><div><svg class="icon"><use href="#f-timer"/></svg><span>Таймер</span></div><div><svg class="icon"><use href="#f-activity"/></svg><span>Нагрузка</span></div><div><svg class="icon"><use href="#f-chart"/></svg><span>Прогресс</span></div><div><svg class="icon"><use href="#f-calendar"/></svg><span>План</span></div><div><svg class="icon"><use href="#f-user"/></svg><span>Профиль</span></div><div><svg class="icon"><use href="#f-check"/></svg><span>Готово</span></div><div><svg class="icon"><use href="#f-arrow"/></svg><span>Действие</span></div><div><svg class="icon"><use href="#f-search"/></svg><span>Поиск</span></div>
+    </div></section>
+    <div class="token-downloads"><a class="action-button secondary" href="tokens.json" download><span>Токены JSON</span><svg class="icon"><use href="#f-download"/></svg></a><a class="action-button secondary" href="tokens.css?v=2.0" download><span>Переменные CSS</span><svg class="icon"><use href="#f-download"/></svg></a><span>Компоненты масштабируются от 320 px до desktop.</span></div>
+  </div>
+  </main>
+  <div id="toast" class="kit-toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+</div>
+</body>
+</html>

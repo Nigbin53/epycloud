@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "note": "Список тренажёров из исходного приложения (seed в technical/source.html). Поле slug связывает тренажёр со слотами фото в catalog.json (поле machine).",
+  "machines": [
+    {"slug": "butterfly", "name": "Бабочка", "group": "Грудь"},
+    {"slug": "chest-press", "name": "Жим в тренажёре", "group": "Грудь"},
+    {"slug": "lat-pulldown", "name": "Тяга верхнего блока", "group": "Спина"},
+    {"slug": "seated-row", "name": "Гребная тяга", "group": "Спина"},
+    {"slug": "leg-press", "name": "Жим ногами", "group": "Ноги"},
+    {"slug": "leg-extension", "name": "Разгибание ног", "group": "Ноги"},
+    {"slug": "biceps-curl", "name": "Сгибание на бицепс", "group": "Руки"},
+    {"slug": "triceps-extension", "name": "Разгибание на трицепс", "group": "Руки"},
+    {"slug": "shoulder-press", "name": "Жим на плечи", "group": "Плечи"}
+  ]
+}

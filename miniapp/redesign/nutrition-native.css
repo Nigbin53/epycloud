@@ -1,0 +1,19 @@
+/* Native today content uses the same approved03 geometry with shared product hooks. */
+:root[data-redesign-theme] .kn:has(.rd-approved-nutrition){margin:0 calc(-1 * var(--rd-gutter));width:calc(100% + 2 * var(--rd-gutter));gap:0}
+:root[data-redesign-theme] .rd-approved-nutrition.ui-page{width:100%;height:auto;min-height:0;overflow:hidden;font:400 14px/1.5 var(--fit-font)}
+:root[data-redesign-theme] .rd-approved-nutrition .ui-content{min-height:0}
+:root[data-redesign-theme] .rd-approved-nutrition .na-header .rd-nutrition-goal{width:44px;height:44px;min-height:44px;min-width:44px;background:transparent;display:grid;place-items:center;border:0;padding:0;border-radius:50%;color:var(--fit-muted);margin-top:-4px}
+:root[data-redesign-theme] .rd-approved-nutrition .na-header .rd-nutrition-goal svg{width:20px;height:20px}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-meals{margin-bottom:24px}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-meals .kn-h2{font:500 15px/1.3 var(--fit-font);margin-bottom:12px}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-favorites{margin-top:0}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-favorites .kn-favh{min-height:0;margin-bottom:12px;align-items:center}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-favorites h3{font:400 15px/1.3 var(--fit-font);letter-spacing:-.3px}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-favorites .kn-all{font:400 10px/1.5 var(--fit-font)}
+:root[data-redesign-theme] .rd-approved-nutrition .rd-native-favorites .kn-favempty{padding:12px 0;border:0;color:var(--fit-muted);font:400 11px/1.65 var(--fit-font)}
+:root[data-redesign-theme] .rd-approved-nutrition .na-budget-metrics .ui-metric{font-size:38px}
+:root[data-redesign-theme="white"] .rd-approved-nutrition .na-budget-metrics .ui-metric{font-size:27px}
+:root[data-redesign-theme] .rd-approved-nutrition .ui-photo{max-width:none}
+/* A calorie deficit is informational in both themes, with a neutral high-contrast capsule. */
+:root[data-redesign-theme] .kn-sum .kn-verd.o{color:var(--rd-text);background:var(--rd-raised);border:1px solid var(--rd-rim);font-weight:500}
+:root[data-redesign-theme] .rd-approved-nutrition.ui-page{background:var(--fit-bg);color:var(--fit-text)}

@@ -1,0 +1,79 @@
+/* The two presentations share the original product engine and local assets. */
+@font-face{font-family:RDManrope;src:url('../fitness-ui-kit/assets/manrope-400.ttf');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:RDManrope;src:url('../fitness-ui-kit/assets/manrope-500.ttf');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:RDManrope;src:url('../fitness-ui-kit/assets/manrope-600.ttf');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:RDManrope;src:url('../fitness-ui-kit/assets/manrope-700.ttf');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:RDRajdhani;src:url('../fitness-ui-kit/assets/rajdhani-300.ttf');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:RDWhiteSF;src:url('../assets/sf-pro.ttf');font-weight:100 1000;font-style:normal;font-display:swap}
+
+:root[data-redesign-theme]{
+ --rd-space-1:4px;--rd-space-2:8px;--rd-space-3:12px;--rd-space-4:16px;--rd-space-5:24px;--rd-space-6:32px;--rd-space-7:48px;
+ --rd-gutter:24px;--rd-safe-top:43px;--rd-nav-height:66px;--rd-safe-bottom:16px;
+ --rd-field-height:52px;--rd-touch-min:44px;--rd-control-height:52px;--rd-field-radius:12px;
+ --rd-radius-pill:999px;--rd-duration:180ms;--rd-ease:cubic-bezier(.2,.7,.2,1);
+ --rd-font:RDManrope,'Helvetica Neue',Arial,sans-serif;
+ --rd-number-font:RDRajdhani,'Arial Narrow','Helvetica Neue',sans-serif;
+ --rd-number-weight:300;--rd-heading-weight:400;--rd-strong-weight:600;
+}
+:root[data-redesign-theme='black']{
+ color-scheme:dark;
+ --rd-bg:#020303;--rd-surface:#0b0d0e;--rd-raised:#141819;--rd-recess:#050707;
+ --rd-text:#eceeeb;--rd-muted:#979fa4;--rd-subtle:#70797f;
+ --rd-line:rgba(221,232,239,.13);--rd-rim:rgba(223,235,243,.22);
+ --rd-accent:#c8d1d8;--rd-on-accent:#111519;--rd-accent-rgb:200,209,216;
+ --rd-accent-soft:rgba(200,209,216,.09);--rd-number-accent:var(--rd-text);
+ --rd-track:#252b2f;--rd-error:#bd6264;--rd-warning:#c3a277;
+ --rd-page-fill:#020303;--rd-overlay:rgba(0,3,6,.7);
+ --rd-panel-fill:linear-gradient(145deg,#0e1113,#080a0c 75%);
+ --rd-control-fill:linear-gradient(155deg,#202629 0%,#14191c 48%,#101416 100%);
+ --rd-control-hover:linear-gradient(155deg,#293034,#1b2328 48%,#151c20);
+ --rd-control-pressed:#090d10;--rd-field-fill:#070a0c;
+ --rd-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+ --rd-control-shadow:inset 0 1px 0 rgba(228,240,249,.08),0 2px 5px rgba(0,0,0,.2);
+ --rd-dialog-shadow:0 18px 48px rgba(0,0,0,.5);
+ --rd-number-weight:300;--rd-heading-weight:400;--rd-panel-radius:18px;--rd-control-radius:16px;
+ --rd-led-fill:#e9eef2;--rd-steel-ink:#14191c;
+ --rd-knob-fill:conic-gradient(from 25deg,#dde2e6,#707b85 13%,#ccd3da 28%,#6b7782 43%,#d6dce0 59%,#87939d 75%,#e5e9ec);
+}
+:root[data-redesign-theme='white']{
+ color-scheme:light;
+ --rd-bg:#e8e7e2;--rd-surface:#ecece8;--rd-raised:#f1f1ed;--rd-recess:#d8d9d5;
+ --rd-text:#171b1d;--rd-muted:#777b7d;--rd-subtle:#9a9d9e;
+ --rd-line:rgba(60,65,69,.18);--rd-rim:rgba(60,65,69,.24);
+ --rd-accent:#ff510c;--rd-on-accent:#fff;--rd-accent-rgb:255,81,12;
+ --rd-accent-soft:rgba(255,81,12,.07);--rd-number-accent:#ff510c;
+ --rd-track:#cdd0cc;--rd-error:#ae4437;--rd-warning:#a96920;
+ --rd-page-fill:radial-gradient(ellipse at 22% 18%,#ffffff35,transparent 60%),linear-gradient(115deg,#e4e3dd,#ecece8 48%,#e2e2dd);
+ --rd-overlay:rgba(58,66,72,.32);
+ --rd-panel-fill:linear-gradient(145deg,#ffffff12,#d4d7d21a);
+ --rd-control-fill:linear-gradient(145deg,#f1f1edcc,#d9dcd866);
+ --rd-control-hover:linear-gradient(145deg,#ffffffe6,#e4e5e0b3);
+ --rd-control-pressed:#d8dbd8;--rd-field-fill:rgba(255,255,255,.2);
+ --rd-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+ --rd-control-shadow:inset 0 1px 2px #ffffffbd,0 3px 6px #252b3020;
+ --rd-dialog-shadow:0 16px 40px rgba(41,44,52,.22);
+ --rd-font:RDWhiteSF,'Helvetica Neue',Arial,sans-serif;--rd-number-font:var(--rd-font);
+ --rd-number-weight:700;--rd-heading-weight:700;--rd-strong-weight:700;
+ --rd-panel-radius:14px;--rd-control-radius:999px;
+ --rd-led-fill:#fff;--rd-steel-ink:#171b1d;
+ --rd-knob-fill:conic-gradient(from 40deg,#fafafa,#c0c6c9 13%,#f5f6f7 25%,#aeb6ba 42%,#e8ebee 60%,#bac1c5 75%,#f8f9fa);
+}
+
+/* Source theme updates may change data-theme; the redesign roles stay stable. */
+:root[data-redesign-theme]{
+ --bg:var(--rd-bg)!important;--bg2:var(--rd-recess)!important;
+ --surface:var(--rd-surface)!important;--sheet:var(--rd-surface)!important;
+ --card:var(--rd-panel-fill)!important;--card2:var(--rd-raised)!important;
+ --ink:var(--rd-text)!important;--muted:var(--rd-muted)!important;--line:var(--rd-line)!important;
+ --font:var(--rd-font)!important;--font-num:var(--rd-number-font)!important;--num:var(--rd-number-font)!important;
+ --track:var(--rd-track)!important;--ktrack:var(--rd-track)!important;
+ --acc:var(--rd-accent)!important;--acc2:var(--rd-accent)!important;--on-acc:var(--rd-on-accent)!important;
+ --acc-grad:var(--rd-control-fill)!important;--a:var(--rd-accent-rgb)!important;--a2:var(--rd-accent-rgb)!important;
+ --wine:var(--rd-raised)!important;--wine2:var(--rd-surface)!important;--wine3:var(--rd-text)!important;--on-wine:var(--rd-text)!important;
+ --rose:var(--rd-recess)!important;--coin:var(--rd-raised)!important;--coin-ink:var(--rd-text)!important;
+ --chipbg:transparent!important;--chipink:var(--rd-muted)!important;--done:var(--rd-accent)!important;
+ --warn:var(--rd-error)!important;--warnl:var(--rd-rim)!important;
+ --glass-blur:none!important;--glow:none!important;
+ --mchip-onfg:var(--rd-text)!important;--mchip-onbase:var(--rd-accent-soft)!important;
+}
+@media(max-width:360px){:root[data-redesign-theme]{--rd-gutter:16px}}

@@ -1,0 +1,19 @@
+/* The existing portrait is shared by materials; their native rims stay intact. */
+:root[data-redesign-theme] :is(.top > .ava, #scrpage .proring > .inner)[data-rd-avatar='kit-portrait'] {
+  background: #050606;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-mask-image: radial-gradient(white, white);
+}
+:root[data-redesign-theme] :is(.top > .ava, #scrpage .proring > .inner) > img.rd-avatar-fallback {
+  width: 108%;
+  height: 108%;
+  max-width: none;
+  flex: 0 0 108%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border: 0;
+  border-radius: 50%;
+  image-rendering: auto;
+}

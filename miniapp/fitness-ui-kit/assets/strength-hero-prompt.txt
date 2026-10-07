@@ -1,0 +1,13 @@
+Generator: built-in image_gen.imagegen, generation mode, opaque background.
+
+Use case: product-mockup
+Asset type: cinematic fitness app hero background image, landscape 1536 x 1024 pixels
+Primary request: a premium photoreal product photograph of real strength equipment in a dark studio.
+Scene/backdrop: near-black seamless gym floor and background, an almost black empty upper-left third for text overlays.
+Subject: one heavy matte-black dumbbell with clearly recognizable round cylindrical weight heads and a knurled metal handle, close cropped in the lower center-right foreground. Behind it, part of a real barbell with polished chrome sleeve and a single round black weight plate in silhouette.
+Style/medium: high-end editorial studio photography, realistic object construction, low camera angle, restrained technical and cinematic luxury.
+Composition/framing: horizontal landscape frame; equipment occupies lower center and right; upper-left third stays almost black and uncluttered, no visible horizon; crop close, equipment large and sculptural.
+Lighting/mood: subtle cold neutral silver rim and raking light revealing contours and steel machining against deep shadow, controlled soft reflection on the floor, dramatic but readable, no colored lighting.
+Color palette: near-black, graphite, steel silver, neutral monochrome.
+Materials/textures: matte black rubber-coated dumbbell heads, true cylindrical metal handle with fine knurling, polished steel sleeve, black metal weight plate; understated realistic surface details.
+Constraints: no people, no human body parts, no car, no brand or logo, no labels, no text, no watermark, no neon, no colored accent, no UI elements. Correct physically plausible gym equipment geometry. This is an asset photograph only.

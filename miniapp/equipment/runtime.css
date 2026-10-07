@@ -1,0 +1,10 @@
+/* Replacement cutouts retain their own proportions in the existing 02 frame. */
+body .ta-detail-photo-layers.equipment-single-image {
+  -webkit-mask-image:none!important;mask-image:none!important;
+}
+body .ta-detail-photo-layers.equipment-single-image .ta-detail-hero {
+  left:0!important;right:auto!important;top:0!important;bottom:auto!important;
+  width:100%!important;height:100%!important;object-fit:contain!important;
+  object-position:center bottom!important;transform:none!important;
+}
+body .ta-detail-photo-layers.equipment-single-image .ta-detail-hero-back {display:none!important}

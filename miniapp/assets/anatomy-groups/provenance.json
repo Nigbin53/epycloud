@@ -1,0 +1,101 @@
+{
+  "method": "Byte-for-byte copies of user-provided transparent PNGs. Only CSS viewport crops are used; no generated or altered pixels.",
+  "groups": {
+    "Грудь": "chest",
+    "Спина": "back",
+    "Ноги": "front-thighs",
+    "Бицепс": "arms",
+    "Трицепс": "arms",
+    "Плечи": "arms, neutral shoulder crop above highlighted arms"
+  },
+  "assets": [
+    {
+      "theme": "black",
+      "asset": "black/chest.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy black/01-chest.png",
+      "size": [
+        380,
+        574
+      ],
+      "mode": "RGBA",
+      "sha256": "0a1205798f7e79eab53a3f3ba85ddbbc74389e7694db8519095bd8ec03d8453e"
+    },
+    {
+      "theme": "black",
+      "asset": "black/back.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy black/02-back.png",
+      "size": [
+        380,
+        574
+      ],
+      "mode": "RGBA",
+      "sha256": "88fb3c00c2d1fc4aaee6cde41951cf256f44f0a2f7d1d439f8a7580b962f467a"
+    },
+    {
+      "theme": "black",
+      "asset": "black/arms.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy black/03-arms.png",
+      "size": [
+        380,
+        574
+      ],
+      "mode": "RGBA",
+      "sha256": "74cab0ee584696ccf858120f2c0fb0d424dcf44471260986ae0560561b91d4bd"
+    },
+    {
+      "theme": "black",
+      "asset": "black/front-thighs.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy black/05-front-thighs.png",
+      "size": [
+        380,
+        446
+      ],
+      "mode": "RGBA",
+      "sha256": "04ebf5f7a3db0594421916edc47039d8677bc0232a2c3e197d770a84c8142444"
+    },
+    {
+      "theme": "white",
+      "asset": "white/chest.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy white/01-chest-for-white.png",
+      "size": [
+        380,
+        574
+      ],
+      "mode": "RGBA",
+      "sha256": "d24acd86dca179242a04dc23e9e05462539918147150beb26d2a225650c0b259"
+    },
+    {
+      "theme": "white",
+      "asset": "white/back.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy white/02-back-for-white.png",
+      "size": [
+        380,
+        574
+      ],
+      "mode": "RGBA",
+      "sha256": "398a29685fea029b53e7315cab53a0fc3b2cee94febaafd95516b04bfdb40d9f"
+    },
+    {
+      "theme": "white",
+      "asset": "white/arms.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy white/03-arms-for-white.png",
+      "size": [
+        380,
+        574
+      ],
+      "mode": "RGBA",
+      "sha256": "d6ae49b7e82cd983f32212122a03e13e1a5d7c376453caccb6332e60fe6e96bc"
+    },
+    {
+      "theme": "white",
+      "asset": "white/front-thighs.png",
+      "source": "/Users/epycvc/Desktop/GYM/anatomy white/05-front-thighs-for-white.png",
+      "size": [
+        380,
+        446
+      ],
+      "mode": "RGBA",
+      "sha256": "19141fe314f4994768e3336e645e91ae233e9347ceee748e767e83eff5c85901"
+    }
+  ]
+}

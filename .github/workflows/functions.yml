@@ -1,0 +1,30 @@
+name: Deploy Supabase functions
+
+# Включается сам, когда в репозитории заданы секреты SUPABASE_ACCESS_TOKEN и SUPABASE_PROJECT_REF.
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/**"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ vars.SUPABASE_PROJECT_REF != '' }}
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link project
+        run: supabase link --project-ref "$PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+      - name: Apply migrations
+        run: supabase db push --password "$SUPABASE_DB_PASSWORD"
+      - name: Deploy functions
+        run: |
+          supabase functions deploy state --project-ref "$PROJECT_REF" --no-verify-jwt
+          supabase functions deploy telegram-bot --project-ref "$PROJECT_REF" --no-verify-jwt

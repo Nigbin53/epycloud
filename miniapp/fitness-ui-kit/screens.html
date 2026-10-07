@@ -1,0 +1,96 @@
+<div class="fs-gallery">
+  <svg class="fs-symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="fs-arrow" viewBox="0 0 24 24"><path d="M5 12h13m-5-5 5 5-5 5"/></symbol>
+      <symbol id="fs-home" viewBox="0 0 24 24"><path d="m4 10 8-6 8 6v10H4zM9 20v-7h6v7"/></symbol>
+      <symbol id="fs-lift" viewBox="0 0 24 24"><path d="M2 9v6m3-9v12m3-9v6m0-3h8m0-3v6m3-9v12m3-9v6"/></symbol>
+      <symbol id="fs-chart" viewBox="0 0 24 24"><path d="M4 20h16M5 16V9m7 7V4m7 12v-5"/></symbol>
+      <symbol id="fs-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></symbol>
+      <symbol id="fs-chev" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+      <symbol id="fs-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+      <symbol id="fs-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+      <symbol id="fs-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+      <symbol id="fs-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+      <symbol id="fs-back" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+      <symbol id="fs-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 10h16m-11 5h2m2 0h2"/></symbol>
+    </defs>
+  </svg>
+
+  <article class="fs-example" aria-label="Пример экрана: план тренировки">
+    <div class="fs-example-label"><span>01</span><span>ПЛАН ТРЕНИРОВКИ</span></div>
+    <div class="fs-phone fs-overview">
+      <div class="fs-system"><span>9:41</span><div class="fs-system-right"><i class="fs-signal"></i><i class="fs-wifi"></i><i class="fs-battery"></i></div></div>
+      <header class="fs-header"><span class="fs-wordmark">FORM<span> / </span></span><button class="fs-icon-button" aria-label="Календарь тренировок" data-screen-action="calendar"><svg><use href="#fs-calendar"/></svg></button></header>
+      <div class="fs-body">
+        <div class="fs-eyebrow">СРЕДА, 30 СЕНТЯБРЯ <span class="fs-live-dot"></span></div>
+        <h2 class="fs-title">Дисциплина.<br><span>В движении.</span></h2>
+        <section class="fs-feature" aria-label="Силовая тренировка, верх тела">
+          <div class="fs-feature-visual"><img src="assets/strength-hero.png" alt="" width="1536" height="1024"/><div class="fs-plan-heading"><span>ПЛАН НА СЕГОДНЯ</span><span>07 / 12</span></div><div class="fs-feature-status"><span class="fs-ring-dot"></span><span>Готов к тренировке</span><span class="fs-faint">100%</span></div></div>
+          <div class="fs-feature-line"><div><h3 class="fs-feature-title">Силовая тренировка</h3><span class="fs-tiny">ВЕРХ ТЕЛА</span></div><div class="fs-feature-number">45<span>мин</span></div></div>
+          <div class="fs-feature-foot"><span>5 упражнений</span><span class="fs-small-dot"></span><span>15 подходов</span></div>
+        </section>
+        <div class="fs-list-label"><span>УПРАЖНЕНИЯ</span><span>СЕГОДНЯ</span></div>
+        <div class="fs-exercise-list">
+          <button class="fs-exercise" data-screen-action="bench-press"><span class="fs-exercise-index">01</span><span class="fs-exercise-name">Жим лёжа<small>3 подхода × 12 повторений</small></span><svg><use href="#fs-chev"/></svg></button>
+          <button class="fs-exercise" data-screen-action="lat-pulldown"><span class="fs-exercise-index">02</span><span class="fs-exercise-name">Тяга верхнего блока<small>3 подхода × 12 повторений</small></span><svg><use href="#fs-chev"/></svg></button>
+          <button class="fs-exercise" data-screen-action="all-exercises"><span class="fs-exercise-index">+3</span><span class="fs-exercise-name fs-muted">Все упражнения<small>Плечи · бицепс · трицепс</small></span><svg><use href="#fs-chev"/></svg></button>
+        </div>
+        <button class="fs-capsule ref-capsule fs-start-button" data-screen-action="start-workout"><span class="fs-button-dash"></span><span>Начать тренировку</span><span class="fs-button-arrow"><svg><use href="#fs-arrow"/></svg></span></button>
+      </div>
+      <nav class="fs-nav" aria-label="Навигация: план"><button class="fs-nav-item fs-is-current" data-screen-action="home" aria-label="Главная" aria-current="page"><svg><use href="#fs-home"/></svg><span>Главная</span></button><button class="fs-nav-item" data-screen-action="training" aria-label="Тренировки"><svg><use href="#fs-lift"/></svg><span>Тренировки</span></button><button class="fs-nav-item" data-screen-action="progress" aria-label="Прогресс"><svg><use href="#fs-chart"/></svg><span>Прогресс</span></button><button class="fs-nav-item" data-screen-action="profile" aria-label="Профиль"><svg><use href="#fs-user"/></svg><span>Профиль</span></button></nav>
+      <div class="fs-home-indicator"></div>
+    </div>
+  </article>
+
+  <article class="fs-example" aria-label="Пример экрана: запись подхода">
+    <div class="fs-example-label"><span>02</span><span>АКТИВНЫЙ ПОДХОД</span></div>
+    <div class="fs-phone fs-session">
+      <div class="fs-system"><span>9:41</span><div class="fs-system-right"><i class="fs-signal"></i><i class="fs-wifi"></i><i class="fs-battery"></i></div></div>
+      <header class="fs-header"><button class="fs-icon-button" aria-label="Назад к упражнениям" data-screen-action="back-to-workout"><svg><use href="#fs-back"/></svg></button><span class="fs-header-label">ТРЕНИРОВКА 07</span><button class="fs-icon-button" aria-label="Приостановить тренировку" data-screen-action="pause-workout"><svg><use href="#fs-pause"/></svg></button></header>
+      <div class="fs-body">
+        <div class="fs-eyebrow fs-session-eyebrow">ВЕРХ ТЕЛА <span>01 / 05</span></div>
+        <h2 class="fs-title fs-single-title">Жим лёжа</h2>
+        <div class="fs-set-heading"><span>ПОДХОД 2 <span class="fs-faint">ИЗ 3</span></span><span class="fs-session-time">48:32</span></div>
+        <div class="fs-set-progress" role="progressbar" aria-label="Выполненные подходы" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" aria-valuetext="1 из 3 подходов выполнен, текущий подход второй"><span class="fs-set-done"></span><span class="fs-set-active"></span><span></span></div>
+        <section class="fs-input-metric">
+          <label class="fs-tiny" for="fs-weight">РАБОЧИЙ ВЕС</label>
+          <div class="fs-adjustment"><button class="fs-adjust-button" aria-label="Уменьшить вес на 2,5 кг" data-screen-action="decrease-weight"><svg><use href="#fs-minus"/></svg></button><div class="fs-value-wrap"><input id="fs-weight" type="number" min="0" max="300" step="2.5" class="fs-number-input fs-weight-value" value="60.0" inputmode="decimal" aria-label="Рабочий вес в килограммах"/><span class="fs-unit">кг</span></div><button class="fs-adjust-button" aria-label="Увеличить вес на 2,5 кг" data-screen-action="increase-weight"><svg><use href="#fs-plus"/></svg></button></div>
+          <div class="fs-metric-hint">ШАГ <span>2.5 КГ</span></div>
+        </section>
+        <section class="fs-input-metric fs-reps-metric">
+          <label class="fs-tiny" for="fs-reps">ПОВТОРЕНИЯ</label>
+          <div class="fs-adjustment"><button class="fs-adjust-button" aria-label="Уменьшить количество повторений" data-screen-action="decrease-reps"><svg><use href="#fs-minus"/></svg></button><div class="fs-value-wrap"><input id="fs-reps" type="number" min="1" max="100" step="1" class="fs-number-input fs-reps-value" value="12" inputmode="numeric" aria-label="Количество повторений"/><span class="fs-unit">раз</span></div><button class="fs-adjust-button" aria-label="Увеличить количество повторений" data-screen-action="increase-reps"><svg><use href="#fs-plus"/></svg></button></div>
+        </section>
+        <div class="fs-previous-set"><span class="fs-ring-dot"></span><span>Предыдущий подход</span><span>60 кг × 12</span><svg><use href="#fs-check"/></svg></div>
+        <section class="fs-rest"><div><span class="fs-tiny">ОТДЫХ МЕЖДУ ПОДХОДАМИ</span><strong>01:30</strong></div><button class="fs-mini-capsule" data-screen-action="rest-timer">Таймер <svg><use href="#fs-arrow"/></svg></button></section>
+        <button class="fs-capsule ref-capsule" data-screen-action="log-set"><span class="fs-button-dash"></span><span>Записать подход</span><span class="fs-button-arrow"><svg><use href="#fs-arrow"/></svg></span></button>
+        <p class="fs-bottom-note">КАЖДОЕ ПОВТОРЕНИЕ ИМЕЕТ ЗНАЧЕНИЕ.</p>
+      </div>
+      <nav class="fs-nav" aria-label="Навигация: подход"><button class="fs-nav-item" data-screen-action="home" aria-label="Главная"><svg><use href="#fs-home"/></svg><span>Главная</span></button><button class="fs-nav-item fs-is-current" data-screen-action="training" aria-label="Тренировки" aria-current="page"><svg><use href="#fs-lift"/></svg><span>Тренировки</span></button><button class="fs-nav-item" data-screen-action="progress" aria-label="Прогресс"><svg><use href="#fs-chart"/></svg><span>Прогресс</span></button><button class="fs-nav-item" data-screen-action="profile" aria-label="Профиль"><svg><use href="#fs-user"/></svg><span>Профиль</span></button></nav>
+      <div class="fs-home-indicator"></div>
+    </div>
+  </article>
+
+  <article class="fs-example" aria-label="Пример экрана: результаты тренировки">
+    <div class="fs-example-label"><span>03</span><span>РЕЗУЛЬТАТЫ</span></div>
+    <div class="fs-phone fs-summary">
+      <div class="fs-system"><span>9:41</span><div class="fs-system-right"><i class="fs-signal"></i><i class="fs-wifi"></i><i class="fs-battery"></i></div></div>
+      <header class="fs-header"><span class="fs-wordmark">FORM<span> / </span></span><span class="fs-summary-saved"><span class="fs-live-dot"></span>СОХРАНЕНО</span></header>
+      <div class="fs-body">
+        <div class="fs-eyebrow">ТРЕНИРОВКА 07 <span>30.09.2026</span></div>
+        <h2 class="fs-title">Работа сделана.<br><span>Ты стал сильнее.</span></h2>
+        <div class="fs-result-stack" aria-label="Итоги тренировки">
+          <section class="fs-result-hero"><div class="fs-result-value">48<span class="fs-time-colon">:</span>32<small>мин</small></div><div class="fs-tiny">ВРЕМЯ ТРЕНИРОВКИ</div></section>
+          <section class="fs-result-metric"><div class="fs-result-reading"><strong>482<small>ккал</small></strong><span class="fs-result-trend">↑ 8%</span></div><span class="fs-tiny">КАЛОРИИ</span></section>
+          <section class="fs-result-metric"><div class="fs-result-reading"><strong>2 450<small>кг</small></strong><span class="fs-result-trend">↑ 14%</span></div><span class="fs-tiny">ОБЩИЙ ОБЪЁМ</span></section>
+        </div>
+        <div class="fs-summary-status"><span class="fs-status-emblem"><svg><use href="#fs-check"/></svg></span><div><strong>Цель выполнена</strong><span>15 подходов · 5 упражнений</span></div><svg class="fs-status-arrow"><use href="#fs-chev"/></svg></div>
+        <section class="fs-weekly-progress"><div class="fs-progress-heading"><span class="fs-tiny">ПРОГРЕСС НЕДЕЛИ</span><strong>75<span>%</span></strong></div><div class="fs-progress-track" role="progressbar" aria-label="Прогресс тренировок за неделю" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-valuetext="75 процентов, 3 из 4 тренировок"><span></span></div><div class="fs-weekly-copy"><span>3 из 4 тренировок</span><span>Осталось совсем немного</span></div></section>
+        <button class="fs-capsule ref-capsule" data-screen-action="view-results"><span class="fs-button-dash fs-dash-white"></span><span>Смотреть результаты</span><span class="fs-button-arrow"><svg><use href="#fs-arrow"/></svg></span></button>
+        <p class="fs-bottom-note">ПОСТОЯНСТВО СОЗДАЁТ РЕЗУЛЬТАТ.</p>
+      </div>
+      <nav class="fs-nav" aria-label="Навигация: результаты"><button class="fs-nav-item" data-screen-action="home" aria-label="Главная"><svg><use href="#fs-home"/></svg><span>Главная</span></button><button class="fs-nav-item" data-screen-action="training" aria-label="Тренировки"><svg><use href="#fs-lift"/></svg><span>Тренировки</span></button><button class="fs-nav-item fs-is-current" data-screen-action="progress" aria-label="Прогресс" aria-current="page"><svg><use href="#fs-chart"/></svg><span>Прогресс</span></button><button class="fs-nav-item" data-screen-action="profile" aria-label="Профиль"><svg><use href="#fs-user"/></svg><span>Профиль</span></button></nav>
+      <div class="fs-home-indicator"></div>
+    </div>
+  </article>
+</div>

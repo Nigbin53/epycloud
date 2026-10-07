@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "pathBase": "outputs/gym-ui-kit-audited/white",
+  "asset": "assets/water-glass.png",
+  "scope": "white nutrition water tracker only",
+  "createdAt": "2026-10-03T03:22:38.027Z",
+  "generation": {
+    "mode": "built-in image_gen",
+    "useCase": "background-extraction",
+    "transparentBackground": true,
+    "editTarget": "../assets/nutrition-water-scene-full.png",
+    "generatedOutput": "/Users/epycvc/.codex/generated_images/01a0ffc4-7a2d-7cf2-8672-f5b2078d4895/exec-9af39567-337b-4632-9d02-661c0ad10b92.png",
+    "prompt": "Use case: background-extraction\nAsset type: photographic water tracker asset for a premium white mobile fitness UI.\nInput image: the supplied local nutrition-water-scene-full.png is the edit target and the authoritative glass shape reference.\nPrimary request: adapt only this complete low clear tumbler from the dark scene into a delicate, crisp, photorealistic transparent cutout suitable for a pale warm white interface.\nSubject: exactly one EMPTY clear glass, the same short straight-sided cylindrical tumbler, broad elliptical top rim, gently rounded thick base, same near-front viewpoint with the top opening visible. Preserve the full glass shape and empty interior. No water.\nLighting: high-key studio lighting with refined silver-gray edge definition and narrow natural white highlights. Make the transparent glass legible on white with subtle neutral gray contours, not dark smoky panels. Honest optical transparency, clean sharp rim and base.\nScene/backdrop: actual transparent alpha outside the glass and through its transparent body. Remove the black tabletop and black background completely. Only a small very delicate neutral contact shadow immediately below the base.\nComposition: entire glass centered, uncropped, moderately tight transparent margins around it. Full rim and base visible. Maximize the usable glass within the asset.\nStyle: premium catalog product photography, precise glass edges, natural crystalline reflections, restrained high contrast only at rims.\nConstraints: no UI, no text, no labels, no branding, no icons, no water splash, no water droplets, no colored reflections, no blue or amber tint, no black rectangle, no gray rectangle, no backdrop, no tabletop, no vignette, no blur, no frosted material. Preserve the single low tumbler silhouette from the reference."
+  },
+  "sources": [
+    {
+      "path": "../assets/nutrition-water-scene-full.png",
+      "role": "edit target and low tumbler geometry reference",
+      "sha256": "b707461fc81e3496b98d2eb94b823740535fc17e214feadfbce6641b1d94c84b",
+      "bytes": 230407,
+      "mode": "RGBA",
+      "width": 773,
+      "height": 280,
+      "alphaRange": [
+        255,
+        255
+      ],
+      "alphaGt5Bounds": [
+        0,
+        0,
+        773,
+        280
+      ],
+      "cornerAlpha": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "centerAlpha": 255
+    },
+    {
+      "path": "../assets/nutrition-water-photo.png",
+      "role": "inspected prior cropped asset; unchanged",
+      "sha256": "562165d9a677d8433191a838d65bdfe04ff54eff65a21d0de7de09d95129689a",
+      "bytes": 158058,
+      "mode": "RGB",
+      "width": 527,
+      "height": 260
+    }
+  ],
+  "output": {
+    "sha256": "18728fb3e474a123f01edc4fc557ae1202f2507d6c8f5b05ba444f9b391338f1",
+    "bytes": 1737042,
+    "mode": "RGBA",
+    "width": 1536,
+    "height": 1024,
+    "alphaRange": [
+      0,
+      254
+    ],
+    "alphaGt5Bounds": [
+      290,
+      96,
+      1262,
+      988
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "centerAlpha": 1
+  },
+  "presentation": {
+    "stylesheet": "water.css",
+    "sha256": "731a589a95cb1aa3ddea09d4f15eb114a0315b0e22740fb2d12c4ca3ab8435ec",
+    "bytes": 4068,
+    "selector": ".theme-white .white-nutrition-page .na-water",
+    "integration": "Change the White adapter's .na-water-photo src to the project-relative white/assets/water-glass.png and load white/water.css after white/nutrition.css.",
+    "states": "Water amount, milliliters, goal, progress width, portion action, add action, and minus action remain owned by existing product nodes and handlers.",
+    "responsiveWidths": [
+      320,
+      393,
+      560
+    ],
+    "layout": "Left water readout, complete transparent glass on right, thin orange progress, existing controls below; object-fit cover trims only transparent canvas margins."
+  },
+  "verification": {
+    "assetInspection": "RGBA alpha 0 at all corners; center alpha 1; complete rim and base within the alpha > 5 bounds. Original sources inspected via view_image. Generated photograph inspected in native tool output.",
+    "runtime": "Not performed by the asset/CSS subtask. Parent will verify the integrated White nutrition page.",
+    "originalFiles": "No existing files edited by this subtask."
+  }
+}
