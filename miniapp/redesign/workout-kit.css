@@ -75,3 +75,11 @@
 :root[data-redesign-theme] .rd-workout .training-overview,:root[data-redesign-theme] .rd-workout .ui-page{background:transparent!important;box-shadow:none!important;min-height:0!important;height:auto!important;overflow:visible!important}
 :root[data-redesign-theme] .rd-approved-training.rd-workout{background:transparent!important}
 :root[data-redesign-theme="black"] .rd-workout .ta-today-line{display:flex;justify-content:flex-end}
+
+/* Вкладки групп помещаются в ширину экрана: без горизонтальной прокрутки, поэтому при переключении ряд не «бегает». */
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters{overflow:visible!important;margin-right:0!important;gap:0!important;justify-content:space-between!important}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button{flex:0 1 auto!important;padding:0 8px!important;gap:5px}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button{padding:0 9px!important;letter-spacing:1px!important}
+/* Дни недели: каждая ячейка строго в своей колонке — обводки не наезжают друг на друга. */
+:root[data-redesign-theme] .rd-workout .ui-calendar>.ui-day{width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;box-sizing:border-box}
+:root[data-redesign-theme="black"] .rd-workout .ui-calendar>.ui-day{border-radius:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}

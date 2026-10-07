@@ -1843,6 +1843,8 @@ if(!S.name)S.name=CATALOG_PREVIEW?"Epy":tgName().slice(0,20);
 if(S.bgCustom==null)S.bgCustom="";
 if(!S.bgPreset||S.bgPreset==="default"||S.bgPreset==="mono")S.bgPreset=S.bgCustom?"photo":(S.bgPreset==="mono"?"plain":"aura");
 if(S.bgPreset==="photo"&&!S.bgCustom)S.bgPreset="aura";
+/* Пока в приложении один фон на тему: выбор фона и своё фото скрыты, у всех основной фон темы. */
+if(!CATALOG_PREVIEW){S.bgPreset="aura";S.bgCustom="";S.bgDimOn=false}
 if(!S.achAt||typeof S.achAt!=="object")S.achAt={};
 if(S.bgDim==null)S.bgDim=30;
 if(S.bgDimOn==null)S.bgDimOn=false;
@@ -1893,10 +1895,10 @@ function scrovDismiss(cb){
     if(el._modalAnim)el._modalAnim.cancel();
     el._modalAnim=el.animate([{transform:"scale(.94)",filter:"brightness(.6)"},{transform:"none",filter:"brightness(1)"}],{duration:380,easing:APPLE_EASE,fill:"forwards"});
   });
-  a.onfinish=a.oncancel=function(){[appEl,navEl].forEach(function(el){if(el&&el._modalAnim){el._modalAnim.cancel();el._modalAnim=null}});cb()};
+  a.onfinish=a.oncancel=function(){if(!scrStack.length)[appEl,navEl].forEach(function(el){if(el&&el._modalAnim){el._modalAnim.cancel();el._modalAnim=null}});cb()};
 }
 function openScreen(name){
-  var wasEmpty=!scrStack.length;
+  var wasEmpty=!scrStack.length;lastScrTop=null;
   scrStack.push(name);if(name==="profileEdit")peState=null;if(KB_ENTER[name])KB_ENTER[name]();
   document.getElementById("scrov").classList.add("on");
   if(wasEmpty)scrovPresent();
@@ -1905,14 +1907,18 @@ function openScreen(name){
 function screenBack(){
   scrStack.pop();
   if(!scrStack.length){
-    scrovDismiss(function(){document.getElementById("scrov").classList.remove("on");render()});
+    scrovDismiss(function(){if(!scrStack.length){document.getElementById("scrov").classList.remove("on");scrovClearModal()}render()});
     return;
   }
   renderScreenView("pop");
 }
+var lastScrTop=null;
 function renderScreenView(navDir){
   var top=scrStack[scrStack.length-1];
   if(!top)return;
+  var sameScr=!navDir&&top===lastScrTop&&document.getElementById("scrov").classList.contains("on");
+  var scrSnap=sameScr?scrollSnap(document.getElementById("scrov")):null;
+  lastScrTop=top;
   var sp0=document.getElementById("scrpage");if(sp0)sp0.className="scrpage";var ov0=document.getElementById("scrov");if(ov0)ov0.classList.remove("settov","kmov","kcov","kvov","ksov","krov","kgov","kiov");
   if(ov0)ov0.classList.toggle("kbsec",/^kb/.test(top));
   if(top==="profile")screenProfile();
@@ -1922,7 +1928,8 @@ function renderScreenView(navDir){
   else if(top==="weightStats")screenWeightStats();
   else if(KB_SCREENS[top])KB_SCREENS[top]();
   else if(/^kb/.test(top))kbPlaceholder(top);
-  var sp=document.getElementById("scrpage");if(sp)sp.scrollTop=0;
+  var sp=document.getElementById("scrpage");if(sp&&!scrSnap)sp.scrollTop=0;
+  if(scrSnap)scrollRestore(document.getElementById("scrov"),scrSnap);
   if(navDir&&!reduceMotion()&&sp&&sp.animate){
     if(sp._navAnim)sp._navAnim.cancel();
     var dx=navDir==="push"?22:-22;
@@ -2127,7 +2134,7 @@ function screenSettings(){
       return '<button class="obthm'+(th===k?" on":"")+'" data-a="theme" data-v="'+k+'" aria-pressed="'+(th===k)+'" style="--tacc:'+OB_THEME_ACC[k]+'"><span class="rg">'+OB_THEME_SVG[k].replace(/id="([^"]+)"/g,'id="st-$1"').replace(/url\(#([^)]+)\)/g,'url(#st-$1)')+'</span><span class="nm">'+t[1]+'</span></button>';
     }).join("")+'</div></section>';
   var cur=BG_PRESETS.filter(function(p){return p[0]===S.bgPreset})[0]||BG_PRESETS[0];
-  h+='<section class="settsec"><div class="setth"><h2>Фон</h2><span>'+cur[1]+'</span></div><div class="settbgs">'
+  if(CATALOG_PREVIEW)h+='<section class="settsec"><div class="setth"><h2>Фон</h2><span>'+cur[1]+'</span></div><div class="settbgs">'
     +BG_PRESETS.map(function(p){
       var on=S.bgPreset===p[0],inner='<span class="ck">'+SVG_CHK12+'</span><span class="nm">'+p[1]+'</span>',st=' style="background:'+bgCss(p[0],th).replace(/"/g,"&quot;")+'"';
       if(p[0]==="photo"&&!S.bgCustom)return '<label class="bgtile" aria-label="'+p[1]+'"'+st+'>'+inner+'<input type="file" class="bgfilein" accept="image/*" hidden></label>';
@@ -2912,7 +2919,10 @@ function kbFoodSearch(q){q=String(q||"").toLowerCase().trim();var D=kmDict(),out
 
 /* ---- навигация ---- */
 function kbGo(name){if(!scrStack.length){openScreen(name);return}scrStack[scrStack.length-1]=name;if(KB_ENTER[name])KB_ENTER[name]();renderScreenView()}
-function kbCloseAll(){scrStack=[];document.getElementById("scrov").classList.remove("on")}
+function scrovClearModal(){["app","nav"].forEach(function(id){var el=document.getElementById(id);if(el&&el._modalAnim){el._modalAnim.cancel();el._modalAnim=null}})}
+/* Закрыть все экраны поверх приложения. Раньше окно убиралось напрямую и затемнение/уменьшение приложения
+   (эффект «шторки») оставалось висеть — интерфейс был тёмным до перезапуска. Теперь закрываем через ту же анимацию. */
+function kbCloseAll(){scrStack=[];var ov=document.getElementById("scrov");if(!ov.classList.contains("on")){scrovClearModal();return}scrovDismiss(function(){if(!scrStack.length){ov.classList.remove("on");scrovClearModal()}})}
 /* kbOpenManual(opts) — открыть «Вручную» (или фото-результат) с предзаполнением.
    opts: {meal:"Ужин", day:dayKey, photo:"food"|"barcode"|"label", img:dataURL, text, items:[{n,g,k,p,c,f,fib?,sug?,salt?}] | [dictId], favName, replace:true (заменить верхний экран, «назад» → куда был) } */
 function kbOpenManual(opts){kmNext=opts||{};if(opts&&opts.replace)kbGo("kbManual");else openScreen("kbManual")}
@@ -4111,6 +4121,10 @@ function applyBgTransform(){
 function syncBgHeight(){
   var ap=document.getElementById("app"),bg=document.getElementById("appbg");
   if(ap&&bg){bg.style.height="0px";bg.style.height=Math.max(ap.scrollHeight,ap.clientHeight)+"px"}
+  /* Экраны дорисовываются после render() (утверждённый вид подменяет разметку), и высота страницы меняется.
+     Раньше фон оставался высотой старой разметки — внизу «Питания» появлялся целый экран пустоты. */
+  var ac=document.getElementById("appcontent");
+  if(ac&&window.ResizeObserver&&!ac._bgObs){var q=0;ac._bgObs=new ResizeObserver(function(){if(q)return;q=requestAnimationFrame(function(){q=0;syncBgHeight()})});ac._bgObs.observe(ac)}
 }
 var THEMES=[["g","Зелёная","linear-gradient(135deg,#B2EE37,#58F670)"],["p","Розовая","linear-gradient(135deg,#FF8FB8,#FFC2D6)"],["b","Clear","linear-gradient(135deg,#F2F2F2,#BDBDC2)"],["f","Огонь","linear-gradient(135deg,#F8561C,#FA844D)"]];
 var BG_PRESETS=[["aura","Аура"],["mist","Туман"],["plain","Чистый"],["grid","Точки"],["blueprint","Чертёж"],["smoke","Дым"],["photo","Моё фото"]];
@@ -4241,6 +4255,11 @@ function fadeTargets(root){
 }
 function reduceMotion(){return window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches}
 var APPLE_EASE="cubic-bezier(.32,.72,0,1)";
+/* Прокрутка при перерисовке. Экран, шторка и вкладка перерисовываются целиком при каждом нажатии (+/−, ✓, ★),
+   из-за этого прокрутка сбрасывалась наверх. Запоминаем позиции всех прокручиваемых блоков и возвращаем их. */
+function scrollKey(n,root){if(n===root)return ":root";if(n.id)return "#"+n.id;var c=(n.className&&typeof n.className==="string")?n.className.trim().split(/\s+/)[0]:"";return c?"."+c:""}
+function scrollSnap(root){var out=[];if(!root)return out;[root].concat([].slice.call(root.querySelectorAll("*"))).forEach(function(n){if(n.scrollTop>0||n.scrollLeft>0){var k=scrollKey(n,root);if(k)out.push([k,n.scrollTop,n.scrollLeft])}});return out}
+function scrollRestore(root,snap){if(!root||!snap||!snap.length)return;function go(){snap.forEach(function(x){var n=x[0]===":root"?root:root.querySelector(x[0]);if(n){if(n.scrollTop!==x[1])n.scrollTop=x[1];if(n.scrollLeft!==x[2])n.scrollLeft=x[2]}})}go();requestAnimationFrame(function(){go();requestAnimationFrame(go)});setTimeout(go,60)}
 function render(){
   var abg=document.getElementById("appbg");if(abg)abg.classList.toggle("kpast",S.tab==="kbju"&&!!kbjuSel&&kbjuSel!==kbToday());
   var appEl=document.getElementById("app");if(appEl)appEl.classList.toggle("kbsec",S.tab==="kbju");
@@ -4249,7 +4268,9 @@ function render(){
     var oi=TAB_ORDER.indexOf(lastRenderTab),ni=TAB_ORDER.indexOf(S.tab);
     dir=ni>oi?1:-1;
   }
+  var keepApp=!switchedTab&&lastRenderTab!==null?scrollSnap(appEl):null;
   if(S.tab==="workout")viewWorkout();else if(S.tab==="weight")viewWeight();else if(S.tab==="history")viewHistory();else viewKbju();
+  if(keepApp)scrollRestore(appEl,keepApp);
   navBar();
   applyTheme();
   applyBgTransform();
@@ -4285,6 +4306,14 @@ function boxes(extra){
 }
 var ADD_SUGG=["Жим в тренажёре","Тяга верхнего блока","Разгибание ног"];
 function sheet(){
+  var el=document.getElementById("sheet"),ov=document.getElementById("ov");
+  var same=ov&&ov.classList.contains("on")&&el.dataset.cid===String(cur.id);
+  var snap=same?scrollSnap(el):null;
+  sheetRender();
+  el.dataset.cid=String(cur.id);
+  if(snap)scrollRestore(el,snap);
+}
+function sheetRender(){
   var isNew=cur.id===0,m=isNew?null:find(cur.id),el=document.getElementById("sheet"),h;
   el.className="sheet "+(isNew?"addsheet":"msheet");
   if(isNew){
@@ -4345,7 +4374,7 @@ function sheetLog(){
   h+='<div class="lwsave"><button class="save" data-a="savelog">Сохранить</button></div>';
   var el=document.getElementById("sheet");el.className="sheet logsheet";el.innerHTML=h;
 }
-function close(){document.getElementById("ov").classList.remove("on");document.getElementById("sheet").className="sheet";cur=null;curFood=null}
+function close(){document.getElementById("ov").classList.remove("on");document.getElementById("sheet").className="sheet";document.getElementById("sheet").dataset.cid="";cur=null;curFood=null}
 function buzz(){try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}}
 
 document.addEventListener("click",function(e){
@@ -4417,7 +4446,7 @@ document.addEventListener("click",function(e){
   else if(a==="wsr"){wsRange=v;var wsp=document.getElementById("scrpage"),wst=wsp.scrollTop;renderScreenView();wsp.scrollTop=wst}
   else if(a==="goalsopen"){openScreen("kbGoals")}
 
-  else if(a==="foodopen"){var fe=kbFind(+v);if(fe){scrStack=[];document.getElementById("scrov").classList.remove("on");S.tab="kbju";kbjuSel=dateKey(fe.t);kbSel=fe.id;save();render();var rw=document.getElementById("kn-row-"+fe.id);if(rw)rw.scrollIntoView({block:"center"})}}
+  else if(a==="foodopen"){var fe=kbFind(+v);if(fe){kbCloseAll();S.tab="kbju";kbjuSel=dateKey(fe.t);kbSel=fe.id;save();render();var rw=document.getElementById("kn-row-"+fe.id);if(rw)rw.scrollIntoView({block:"center"})}}
   else if(a==="kday"){kbjuSel=v;kbSel=null;kbMenuOpen=false;render();var ap2=document.getElementById("app");if(ap2)ap2.scrollTop=0}
   else if(a==="kbopen"){kbTargetDay=kbjuSel&&kbjuSel!==kbToday()?kbjuSel:null;kbTargetMeal=null;openScreen(v)}
   else if(a==="kbaddday"){kbTargetDay=kbjuSel;kbTargetMeal=null;openScreen("kbManual")}
@@ -4474,7 +4503,7 @@ document.addEventListener("click",function(e){
   else if(a==="obtheme"){obState.theme=v;renderOb()}
   else if(a==="obfinish"){finishOnboarding(false)}
   else if(a==="obskip"){finishOnboarding(true)}
-  else if(a==="obreplay"){close();scrStack=[];document.getElementById("scrov").classList.remove("on");showOnboarding()}
+  else if(a==="obreplay"){close();kbCloseAll();showOnboarding()}
 });
 document.addEventListener("input",function(e){
   if(e.target.id==="nn"&&cur&&cur.id===0){

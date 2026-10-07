@@ -51,7 +51,10 @@
       const key = keyFor(page?.dataset.equipmentName, machine, 'detail', theme);
       bind(hero, key);
       // Своё фото тренажёра (не общий слот) показывается одним слоем, без фона жима ногами.
-      const single = key !== machine + '/detail/' + theme || !!store.current(key);
+      // Двухслойная композиция (фото + фон) есть только у утверждённого жима ногами в Black.
+      // Любое другое фото — одним слоем, целиком и без искажения пропорций.
+      const layered = machine === 'leg-press' && theme === 'black' && key === machine + '/detail/' + theme && !store.current(key);
+      const single = !layered;
       layers.classList.toggle('equipment-single-image', single);
       if (rear) {
         if (rear.dataset.equipmentHidden === undefined) rear.dataset.equipmentHidden = String(rear.hidden);

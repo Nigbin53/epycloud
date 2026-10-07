@@ -43,7 +43,7 @@
 @font-face{font-family:Manrope;src:url('../fitness-ui-kit/assets/manrope-700.ttf');font-weight:700;font-display:swap}
 @font-face{font-family:Rajdhani;src:url('../fitness-ui-kit/assets/rajdhani-300.ttf');font-weight:300;font-display:swap}
 @font-face{font-family:Barlow;src:url('../fitness-ui-kit/assets/barlow-300.ttf');font-weight:300;font-display:swap}
-:root[data-redesign-theme] .rd-approved-nutrition{--ui-width:393px;--ui-height:852px;--ui-status-height:43px;--ui-header-height:52px;--ui-nav-height:66px;--ui-home-height:16px;--ui-page-pad:23px;--ui-header-pad:22px;--ui-field-height:49px;--ui-body-size:14px;--ui-body-leading:1.5;--ui-button-size:12px;--ui-panel-padding:var(--fit-space-4)}
+:root[data-redesign-theme] .rd-approved-nutrition{--ui-width:393px;--ui-height:852px;--ui-status-height:var(--rd-safe-top);--ui-header-height:52px;--ui-nav-height:66px;--ui-home-height:16px;--ui-page-pad:23px;--ui-header-pad:22px;--ui-field-height:49px;--ui-body-size:14px;--ui-body-leading:1.5;--ui-button-size:12px;--ui-panel-padding:var(--fit-space-4)}
 :root[data-redesign-theme] .rd-approved-nutrition *{box-sizing:border-box}
 :root[data-redesign-theme] .rd-approved-nutrition{margin:0;background:#181c1e;color:var(--fit-text);font:400 var(--ui-body-size)/var(--ui-body-leading) var(--fit-font)}
 :root[data-redesign-theme] .rd-approved-nutrition button,:root[data-redesign-theme] .rd-approved-nutrition input,:root[data-redesign-theme] .rd-approved-nutrition select,:root[data-redesign-theme] .rd-approved-nutrition textarea{font:inherit}

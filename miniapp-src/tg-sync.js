@@ -28,6 +28,19 @@
       if (tg.setBackgroundColor) tg.setBackgroundColor(color);
     } catch (e) {}
   }
+  /* Верхний отступ: дизайн рассчитан на статус-бар iPhone (43 px), а в Telegram его закрывает шапка Telegram.
+     Оставляем небольшой воздух; в полноэкранном режиме учитываем вырез и кнопки Telegram. */
+  function fitTop() {
+    try {
+      var a = (tg.safeAreaInset && tg.safeAreaInset.top) || 0;
+      var b = (tg.contentSafeAreaInset && tg.contentSafeAreaInset.top) || 0;
+      var top = Math.max(14, a + b + 8);
+      document.documentElement.style.setProperty('--rd-safe-top', top + 'px');
+      document.documentElement.classList.add('in-telegram');
+    } catch (e) {}
+  }
+  fitTop();
+  try { tg.onEvent('safeAreaChanged', fitTop); tg.onEvent('contentSafeAreaChanged', fitTop); tg.onEvent('fullscreenChanged', fitTop); } catch (e) {}
   paint();
   new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-redesign-theme'] });
 

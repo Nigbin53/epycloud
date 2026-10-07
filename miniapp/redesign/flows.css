@@ -13,7 +13,7 @@
 
 /* Page rhythm / headings. The 43px blank top belongs to the phone safe area. */
 :root[data-redesign-theme] :is(.scrpage.km,.scrpage.kv,.scrpage.ks,.scrpage.ki,.scrpage.wsscr,.scrpage.settscr,.scrpage.achscr) {
-  padding:43px 24px 28px;gap:24px;overflow-x:hidden;
+  padding:var(--rd-safe-top) 24px 28px;gap:24px;overflow-x:hidden;
 }
 :root[data-redesign-theme] :is(.scrpage.km,.scrpage.kv,.scrpage.ks,.scrpage.ki,.scrpage.wsscr,.scrpage.settscr,.scrpage.achscr)>* { flex-shrink:0;min-width:0; }
 :root[data-redesign-theme] :is(.km-head,.kv-head,.scrhead,.kr-head,.sh-title) { min-height:52px;gap:12px;align-items:center; }
@@ -50,7 +50,7 @@
 }
 
 /* Training: new machine, completed approaches and personal record. */
-:root[data-redesign-theme] .sheet.addsheet { padding:14px 24px 24px;height:calc(100% - 43px);max-height:calc(100% - 43px);gap:0; }
+:root[data-redesign-theme] .sheet.addsheet { padding:14px 24px 24px;height:calc(100% - var(--rd-safe-top));max-height:calc(100% - var(--rd-safe-top));gap:0; }
 :root[data-redesign-theme] .addphoto { margin-top:18px;height:142px;border:1px solid var(--rd-rim);border-radius:var(--rd-flow-radius);background:var(--rd-surface);gap:10px;color:var(--rd-text); }
 :root[data-redesign-theme] .addphoto .apimg { opacity:.42; }
 :root[data-redesign-theme] .addphoto .apic { width:48px;height:48px;background:var(--rd-flow-metal);color:var(--rd-text);border:1px solid var(--rd-rim);box-shadow:var(--rd-shadow);animation:none; }
@@ -80,7 +80,7 @@
 :root[data-redesign-theme] .row2 .mini { width:44px;height:44px;background:transparent;border:0;color:var(--rd-muted); }
 :root[data-redesign-theme] .addfoot { margin-top:24px;padding-top:0;gap:12px; }
 :root[data-redesign-theme] .addfoot>span { font-size:11px;font-weight:400;color:var(--rd-muted);line-height:1.5; }
-:root[data-redesign-theme] .sheet.msheet { --sbg:var(--rd-bg);height:calc(100% - 43px);max-height:calc(100% - 43px);border-radius:20px 20px 0 0; }
+:root[data-redesign-theme] .sheet.msheet { --sbg:var(--rd-bg);height:calc(100% - var(--rd-safe-top));max-height:calc(100% - var(--rd-safe-top));border-radius:20px 20px 0 0; }
 :root[data-redesign-theme] .mhero { height:258px; }
 :root[data-redesign-theme] .mhero-ph { background:var(--rd-surface);color:var(--rd-subtle); }
 :root[data-redesign-theme] .mhero-fade { background:linear-gradient(to top,var(--rd-bg),color-mix(in srgb,var(--rd-bg) 85%,transparent) 23%,transparent 72%); }
@@ -143,7 +143,7 @@
 :root[data-redesign-theme] .wsempty { margin:28px 0 0;padding:32px 20px;min-height:210px;display:flex;align-items:center;justify-content:center;line-height:1.7;font-size:14px;text-align:center;color:var(--rd-muted);border:1px solid var(--rd-line);border-radius:var(--rd-flow-radius);background:var(--rd-surface); }
 
 /* Weight entry and detailed statistics. */
-:root[data-redesign-theme] .sheet.logsheet { padding:14px 24px 24px;height:590px;max-height:calc(100% - 43px); }
+:root[data-redesign-theme] .sheet.logsheet { padding:14px 24px 24px;height:590px;max-height:calc(100% - var(--rd-safe-top)); }
 :root[data-redesign-theme] .logsheet .big { margin:24px 0 0;min-height:124px;gap:12px; }
 :root[data-redesign-theme] .logsheet .num { font-size:76px;line-height:1; }
 :root[data-redesign-theme] .logsheet .round { width:52px;height:52px;flex:0 0 52px; }
@@ -242,7 +242,7 @@
 
 /* Camera modes: restrained viewfinder, equal chrome, physical shutter. */
 :root[data-redesign-theme] .scrpage.kc { padding:0;display:block;overflow:hidden;background:var(--rd-bg);color:var(--rd-text); }
-:root[data-redesign-theme] .kc-top { top:43px;left:24px;right:24px;min-height:52px; }
+:root[data-redesign-theme] .kc-top { top:var(--rd-safe-top);left:24px;right:24px;min-height:52px; }
 :root[data-redesign-theme] .kc-ic { width:44px;height:44px;background:var(--rd-raised);border:1px solid var(--rd-rim);color:var(--rd-text);box-shadow:var(--rd-shadow); }
 :root[data-redesign-theme] .kc-ic.on { background:var(--rd-accent);color:var(--rd-on-accent);border-color:var(--rd-accent); }
 :root[data-redesign-theme] .kc-tt { font-size:15px;font-weight:500;letter-spacing:.02em; }
@@ -419,7 +419,7 @@
 :root[data-redesign-theme] .ks-delok { background:var(--rd-flow-danger);color:var(--rd-on-accent);font-size:13px;font-weight:500; }
 
 /* Calorie goals: true manual / automatic modes with profile correction. */
-:root[data-redesign-theme] .scrpage.kg { padding:43px 0 0;display:block;background:var(--rd-bg);overflow-x:hidden; }
+:root[data-redesign-theme] .scrpage.kg { padding:var(--rd-safe-top) 0 0;display:block;background:var(--rd-bg);overflow-x:hidden; }
 :root[data-redesign-theme] .kg-ghost { display:none; }
 :root[data-redesign-theme] .kg-sheet { min-height:100%;padding:0 24px;gap:24px;border:0;border-radius:0;background:var(--rd-bg); }
 :root[data-redesign-theme] .kg-sheet .kr-grab { display:none; }
@@ -580,7 +580,7 @@
 :root[data-redesign-theme] .clrgo { margin-top:24px;height:52px;font-size:14px;font-weight:500;background:var(--rd-flow-danger);color:var(--rd-on-accent); }
 
 /* Profile editor, achievements and settings. */
-:root[data-redesign-theme] #scrpage.pescr { padding:43px 24px 28px;gap:0; }
+:root[data-redesign-theme] #scrpage.pescr { padding:var(--rd-safe-top) 24px 28px;gap:0; }
 :root[data-redesign-theme] .peava { border:1px solid var(--rd-rim);background:var(--rd-recess);box-shadow:0 0 0 7px var(--rd-surface),0 0 0 8px var(--rd-line); }
 :root[data-redesign-theme] .pecam { background:var(--rd-flow-metal);color:var(--rd-text);border:3px solid var(--rd-bg);box-shadow:var(--rd-shadow); }
 :root[data-redesign-theme] #penick { height:52px;padding:0 14px;border:1px solid var(--rd-line);border-radius:12px;font-family:var(--rd-font);font-size:16px;font-weight:500;background:var(--rd-recess);color:var(--rd-text); }
@@ -660,7 +660,7 @@
 
 /* First use: calm visual hierarchy, explicit choices, shared UX between skins. */
 :root[data-redesign-theme] .obov { background:var(--rd-bg); }
-:root[data-redesign-theme] .obscr { padding:43px 24px 28px;overflow-x:hidden; }
+:root[data-redesign-theme] .obscr { padding:var(--rd-safe-top) 24px 28px;overflow-x:hidden; }
 :root[data-redesign-theme] .obscr>* { flex-shrink:0; }
 :root[data-redesign-theme] .obtop { min-height:52px;gap:16px; }
 :root[data-redesign-theme] .obprog { gap:6px; }
@@ -759,3 +759,12 @@
 @media (prefers-reduced-motion:reduce) {
   :root[data-redesign-theme] :is(.prdlg,.kc-frame .scan,.km-it.fresh,.kb-spin) { animation:none; }
 }
+
+/* Видоискатель «Еда»: рамка с уголками и значок тарелки (вместо демонстрационного фото). */
+:root[data-redesign-theme] .kc-frame.f.rd-photo-finder .c{position:absolute;width:30px;height:30px}
+:root[data-redesign-theme] .kc-frame.f.rd-photo-finder .c.tl{top:16px;left:16px;border-radius:12px 0 0 0}
+:root[data-redesign-theme] .kc-frame.f.rd-photo-finder .c.tr{top:16px;right:16px;left:auto;border-radius:0 12px 0 0}
+:root[data-redesign-theme] .kc-frame.f.rd-photo-finder .c.bl{bottom:16px;left:16px;top:auto;border-radius:0 0 0 12px}
+:root[data-redesign-theme] .kc-frame.f.rd-photo-finder .c.br{bottom:16px;right:16px;top:auto;left:auto;border-radius:0 0 12px 0}
+:root[data-redesign-theme] .kc-frame.f.rd-photo-finder>div.rd-finder-ui,:root[data-redesign-theme] .km-fig.rd-photo-finder>div.rd-finder-ui{position:absolute;inset:0;left:0!important;transform:none!important;display:grid;place-items:center;color:var(--rd-muted)}
+:root[data-redesign-theme] .km-fig.food.rd-photo-finder{position:relative;background:var(--rd-surface)}

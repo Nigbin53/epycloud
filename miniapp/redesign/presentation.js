@@ -2,6 +2,7 @@
 (() => {
 'use strict';
 let scheduled=false;
+const PLATE_ICON='<svg width="132" height="84" viewBox="0 0 132 84" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="66" cy="42" r="32"/><circle cx="66" cy="42" r="21" stroke-dasharray="1.5 5" opacity=".75"/><path d="M12 12v14a6 6 0 0 0 12 0V12M18 12v14M18 32v40"/><path d="M114 72V12c5 4 7 12 7 22h-7"/></svg>';
 function image(src,className,alt=''){const el=document.createElement('img');el.src=src;el.className=className;el.alt=alt;return el;}
 function present(){
  scheduled=false;
@@ -35,13 +36,14 @@ function present(){
   const resolved=own?store.resolve(own):(store?.placeholder?store.placeholder(theme):el.dataset.equipmentOriginal);
   if(el.src!==resolved)el.src=resolved;
  });
+ // Видоискатель камеры: аккуратная рамка с уголками и значком тарелки вместо демонстрационного фото.
  const finder=shell.querySelector('.kc-frame.f');
- if(finder&&!finder.querySelector('.rd-camera-photo')){
-  finder.replaceChildren(image('../assets/chicken-rice.png','rd-camera-photo'));
+ if(finder&&!finder.querySelector('.rd-finder-ui')){
+  finder.innerHTML='<i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i><div class="rd-finder-ui">'+PLATE_ICON+'</div>';
   finder.classList.add('rd-photo-finder');
  }
  const foodFigure=shell.querySelector('.km-fig.food');
- if(foodFigure&&!foodFigure.querySelector('img'))foodFigure.replaceChildren(image('../assets/chicken-rice.png','rd-result-photo'));
+ if(foodFigure&&!foodFigure.querySelector('img,.rd-finder-ui')){foodFigure.innerHTML='<div class="rd-finder-ui">'+PLATE_ICON+'</div>';foodFigure.classList.add('rd-photo-finder');}
  shell.querySelectorAll('.kn-arc>svg').forEach(svg=>{
   const paths=[...svg.querySelectorAll('path')];
   if(!svg.querySelector('defs')){

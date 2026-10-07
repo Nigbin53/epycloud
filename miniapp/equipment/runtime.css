@@ -5,6 +5,11 @@ body .ta-detail-photo-layers.equipment-single-image {
 body .ta-detail-photo-layers.equipment-single-image .ta-detail-hero {
   left:0!important;right:auto!important;top:0!important;bottom:auto!important;
   width:100%!important;height:100%!important;object-fit:contain!important;
-  object-position:center bottom!important;transform:none!important;
+  object-position:center center!important;transform:none!important;
+}
+/* Фото на всю ширину экрана, мягко растворяется сверху и снизу — без жёстких краёв прямоугольника. */
+body .ta-detail-photo-layers.equipment-single-image:not(:has(img[data-equipment-placeholder="true"])) {
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%)!important;
 }
 body .ta-detail-photo-layers.equipment-single-image .ta-detail-hero-back {display:none!important}
