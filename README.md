@@ -39,7 +39,14 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
    supabase secrets set BOT_TOKEN=ТОКЕН_БОТА WEBHOOK_SECRET=$WEBHOOK_SECRET MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ALLOWED_ORIGIN=https://nigbin53.github.io
    supabase functions deploy state --no-verify-jwt
    supabase functions deploy telegram-bot --no-verify-jwt
+   supabase functions deploy food-ai --no-verify-jwt
    ```
+5. ИИ для питания (бесплатный тариф Gemini): на https://aistudio.google.com нажмите **Get API key**, затем
+   ```bash
+   supabase secrets set GEMINI_API_KEY=ВАШ_КЛЮЧ
+   ```
+   Без ключа приложение работает: штрихкоды распознаются через Open Food Facts, а фото и текст разбираются встроенным словарём.
+   Необязательно: `GEMINI_MODEL` (по умолчанию `gemini-2.5-flash`), `AI_DAILY_LIMIT` (по умолчанию 40 запросов на человека в день).
 
 ### 3. GitHub
 1. На github.com (аккаунт Nigbin53) создайте **пустой** репозиторий `gym-tracker`: без README, .gitignore и лицензии. Для бесплатного GitHub Pages он должен быть **public**, приватный требует платного тарифа. Секретов в репозитории нет: токены лежат только в Supabase.
@@ -68,6 +75,11 @@ PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ./too
 ## Проверка
 - Тест подписи Telegram: `node --experimental-strip-types --test supabase/functions/_shared/telegram.test.ts`
 - Открыть локально: `cd miniapp && python3 -m http.server 8080`, затем http://localhost:8080 (вне Telegram работает на локальных данных).
+
+## Распознавание еды
+- **Штрихкод:** камера телефона → код читается в приложении (BarcodeDetector или библиотека ZXing, MIT) → продукт и КБЖУ из [Open Food Facts](https://world.openfoodfacts.org) (бесплатно, без ключа, данные по лицензии ODbL — источник указан на экране результата). Не нашли — экран «Нет в базе» с кодом и предложением сфотографировать этикетку.
+- **Фото еды, этикетка, «Вручную» словами:** функция `food-ai` → Gemini. Ключ хранится только в секретах Supabase. На бесплатном тарифе Google может использовать присланные данные для улучшения своих моделей.
+- Лимит на человека в день защищает бесплатную квоту; при превышении приложение переходит на встроенный словарь.
 
 ## Как устроена синхронизация
 - При запуске приложение сверяется с сервером. Если сервер не ответил, приложение работает на данных телефона и **ничего не отправляет**, пока не сверится. Так пустые данные нового телефона не затрут настоящие.

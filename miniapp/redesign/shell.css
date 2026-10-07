@@ -173,3 +173,9 @@
 :root[data-redesign-theme] .catchip{display:inline-flex;align-items:baseline;gap:6px}
 :root[data-redesign-theme] .catchip small{opacity:.55;font-size:11px}
 :root[data-redesign-theme] .catchip.has{opacity:.5}
+
+/* Камера: идёт распознавание */
+:root[data-redesign-theme] .kc-shoot[disabled]{opacity:.45;pointer-events:none}
+:root[data-redesign-theme] .kc-bot.busy .kc-hint{animation:kcBusy 1.2s ease-in-out infinite}
+@keyframes kcBusy{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){:root[data-redesign-theme] .kc-bot.busy .kc-hint{animation:none}}

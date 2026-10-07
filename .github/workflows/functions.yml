@@ -28,3 +28,4 @@ jobs:
         run: |
           supabase functions deploy state --project-ref "$PROJECT_REF" --no-verify-jwt
           supabase functions deploy telegram-bot --project-ref "$PROJECT_REF" --no-verify-jwt
+          supabase functions deploy food-ai --project-ref "$PROJECT_REF" --no-verify-jwt

@@ -8,3 +8,7 @@ verify_jwt = false
 [functions.telegram-bot]
 # Вызывается серверами Telegram; защищён секретом вебхука.
 verify_jwt = false
+
+[functions.food-ai]
+# Вызывается из мини-приложения; доступ защищён проверкой подписи Telegram.
+verify_jwt = false
