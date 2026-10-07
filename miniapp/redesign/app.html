@@ -1839,7 +1839,7 @@ S.m.forEach(function(m){if(m.g==="Бицепс"||m.g==="Трицепс")m.g="Р�
 function todayKeyNow(){var d=new Date();return d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()}
 if(S.doneDay!==todayKeyNow()){if(S.doneDay!=null){S.m.forEach(function(m){m.d=0});S.day=new Date().getDay()===0?6:new Date().getDay()-1}S.doneDay=todayKeyNow()}
 if(!S.theme)S.theme="g";
-if(!S.name)S.name="Epy";
+if(!S.name)S.name=CATALOG_PREVIEW?"Epy":tgName().slice(0,20);
 if(S.bgCustom==null)S.bgCustom="";
 if(!S.bgPreset||S.bgPreset==="default"||S.bgPreset==="mono")S.bgPreset=S.bgCustom?"photo":(S.bgPreset==="mono"?"plain":"aura");
 if(S.bgPreset==="photo"&&!S.bgCustom)S.bgPreset="aura";
@@ -4177,7 +4177,7 @@ function renderOb(){
   var s=obState,h='<div class="obscr">';
   if(s.step===1){
     h+='<div class="obtop"><div class="obprog">'+progBar(1)+'</div>'
-      +(CATALOG_PREVIEW?'<div class="oblang" role="group" aria-label="Язык"><button class="'+(s.lang==="ru"?"on":"")+'" data-a="oblang" data-v="ru" aria-pressed="'+(s.lang==="ru")+'">RU</button><button class="'+(s.lang==="en"?"on":"")+'" data-a="oblang" data-v="en" aria-pressed="'+(s.lang==="en")+'">EN</button></div></div>':'');
+      +(CATALOG_PREVIEW?'<div class="oblang" role="group" aria-label="Язык"><button class="'+(s.lang==="ru"?"on":"")+'" data-a="oblang" data-v="ru" aria-pressed="'+(s.lang==="ru")+'">RU</button><button class="'+(s.lang==="en"?"on":"")+'" data-a="oblang" data-v="en" aria-pressed="'+(s.lang==="en")+'">EN</button></div>':'')+'</div>';
     h+='<h1 class="obh1 s1">Привет! Кто<br>тренируется?</h1><p class="obp">Подберём стартовые настройки. Изменить можно в любой момент.</p>';
     h+='<div class="obgrid2">'
       +'<button class="obgcard'+(s.g==="m"?" on":"")+'" data-a="obg" data-v="m" aria-pressed="'+(s.g==="m")+'"><span class="av"><img src="'+AVATAR_M+'" alt=""></span><span style="font-size:16px;font-weight:800">Парень</span><span class="chk">'+SVG_CHECK(14,3)+'</span></button>'
