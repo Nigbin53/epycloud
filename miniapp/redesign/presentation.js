@@ -30,8 +30,9 @@ function present(){
   const src=white?(legs?'../white/assets/light-legpress.png':'../white/assets/light-pulldown.png'):(legs?'../assets/training-leg-photo.png':'../assets/training-lat-graphite.png');
   el.dataset.equipmentOriginal=new URL(src,document.baseURI).href;
   const store=window.GymEquipment,theme=white?'white':'black';
-  const key=store?.photoKey?store.photoKey(el.dataset.equipmentName,el.dataset.equipmentMachine,'overview',theme):el.dataset.equipmentMachine+'/overview/'+theme;
-  const resolved=store?.resolve(key)||el.dataset.equipmentOriginal;
+  // своё фото тренажёра; если его нет — заглушка, а не фото другого тренажёра
+  const own=store?.ownKey?store.ownKey(el.dataset.equipmentName,'overview',theme):null;
+  const resolved=own?store.resolve(own):(store?.placeholder?store.placeholder(theme):el.dataset.equipmentOriginal);
   if(el.src!==resolved)el.src=resolved;
  });
  const finder=shell.querySelector('.kc-frame.f');
@@ -58,6 +59,7 @@ function present(){
 }
 function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(present);}
 window.addEventListener('gym-redesign:view',schedule);
+window.addEventListener('gym-equipment:change',schedule);
 const shell=document.querySelector('.screen');
 if(shell)new MutationObserver(schedule).observe(shell,{subtree:true,childList:true});
 schedule();

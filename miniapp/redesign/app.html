@@ -1814,14 +1814,17 @@ function seedFood(){
 }
 var S=null,isNewUser=false;
 try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!S||!S.m){S={tab:"workout",m:seed(),bw:seedBW(),day:new Date().getDay()===0?6:new Date().getDay()-1,filter:"Все",bwStep:0.5,history:[],food:seedFood(),kcalGoal:2200,pGoal:140,fGoal:70,cGoal:250};isNewUser=true}
+/* Новый пользователь: каталог тренажёров без выдуманной истории, без примеров веса и еды.
+   Примеры остаются только в предпросмотре Карты экранов (catalog=1). */
+function cleanStart(){return seed().map(function(m){m.h=[];m.d=0;return m})}
+if(!S||!S.m){S={tab:"workout",m:CATALOG_PREVIEW?seed():cleanStart(),bw:CATALOG_PREVIEW?seedBW():[],day:new Date().getDay()===0?6:new Date().getDay()-1,filter:"Все",bwStep:0.5,history:[],food:CATALOG_PREVIEW?seedFood():[],kcalGoal:2200,pGoal:140,fGoal:70,cGoal:250};isNewUser=true}
 if(S.onboarded==null)S.onboarded=!isNewUser;
 if(!S.gender)S.gender="";
 if(!S.goalType)S.goalType="lose";
 if(S.goalWeight==null)S.goalWeight=null;
-if(!S.bw)S.bw=seedBW();
+if(!S.bw)S.bw=CATALOG_PREVIEW?seedBW():[];
 if(!S.history)S.history=[];
-if(!S.food)S.food=seedFood();
+if(!S.food)S.food=CATALOG_PREVIEW?seedFood():[];
 if(!S.kcalGoal)S.kcalGoal=2200;
 if(!S.pGoal)S.pGoal=140;
 if(!S.fGoal)S.fGoal=70;
@@ -1831,6 +1834,9 @@ if(S.bgX==null)S.bgX=0;
 if(S.bgY==null)S.bgY=0;
 /* группы: бицепс и трицепс объединены в «Руки» */
 S.m.forEach(function(m){if(m.g==="Бицепс"||m.g==="Трицепс")m.g="Руки"});(S.history||[]).forEach(function(e){if(e.g==="Бицепс"||e.g==="Трицепс")e.g="Руки"});if(S.filter==="Бицепс"||S.filter==="Трицепс")S.filter="Руки";
+/* отметки «выполнено» и выбранный день действуют только сегодня */
+function todayKeyNow(){var d=new Date();return d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()}
+if(S.doneDay!==todayKeyNow()){if(S.doneDay!=null){S.m.forEach(function(m){m.d=0});S.day=new Date().getDay()===0?6:new Date().getDay()-1}S.doneDay=todayKeyNow()}
 if(!S.theme)S.theme="g";
 if(!S.name)S.name="Epy";
 if(S.bgCustom==null)S.bgCustom="";
@@ -1846,11 +1852,15 @@ if(!S.remTime)S.remTime="19:00";
 if(S.remWeigh==null)S.remWeigh=false;
 if(!S.expFmt)S.expFmt="csv";
 if(!S.kbWater||typeof S.kbWater!=="object")S.kbWater={};
-if(!Array.isArray(S.kbFav))S.kbFav=seedFav();
+if(!Array.isArray(S.kbFav))S.kbFav=(isNewUser&&!CATALOG_PREVIEW)?[]:seedFav();
 if(!S.kbGoal||typeof S.kbGoal!=="object")S.kbGoal={mode:"manual",goal:S.goalType==="gain"?2:S.goalType==="hold"?1:0,act:1,pkg:2,bonus:true,height:null,age:null};
 if(!Array.isArray(S.kbGoalLog))S.kbGoalLog=[];
 if(S.kbBotHidden==null)S.kbBotHidden=false;
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return}catch(e){}
+  /* память переполнена: убираем фото у старых записей еды (сначала старше 14 дней, потом старше 2) */
+  for(var di=0;di<2;di++){var lim=Date.now()-(di?2:14)*86400000,cut=0;(S.food||[]).forEach(function(x){if(x.img&&x.t<lim){x.img="";cut++}});
+    if(cut){try{localStorage.setItem(KEY,JSON.stringify(S));toast("Память почти заполнена","","убрали фото у старых записей еды");return}catch(e2){}}}
+  toast("Не удалось сохранить","","память телефона заполнена")}
 function f(n){return String(Math.round((+n||0)*100)/100).replace(".",",")}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function find(id){return S.m.filter(function(x){return x.id===id})[0]}
@@ -2136,7 +2146,7 @@ function screenSettings(){
   h+='<section class="settsec"><h2>Единицы</h2><div class="settgroup"><div class="settrow"><span class="settlead">'+settIc(IC_RULER)+'Вес</span>'
     +'<div class="unitseg" role="group" aria-label="Единицы веса"><button class="'+(S.unit==="kg"?"on":"")+'" data-a="unit" data-v="kg" aria-pressed="'+(S.unit==="kg")+'">кг</button><button class="'+(S.unit==="lb"?"on":"")+'" data-a="unit" data-v="lb" aria-pressed="'+(S.unit==="lb")+'">lb</button></div></div>'
     +'<div class="unithint">'+(S.unit==="kg"?"Шаг веса 2,5 кг · тело "+(bw!=null?f(bw):"—")+" кг":"Шаг веса 5 lb · тело "+(bw!=null?f(Math.round(bw*2.20462*10)/10):"—")+" lb")+'</div></div></section>';
-  h+='<section class="settsec"><h2>Напоминания</h2><div class="settgroup">'
+  /* напоминания отключены по решению владельца */ if(false)h+='<section class="settsec"><h2>Напоминания</h2><div class="settgroup">'
     +'<button class="settbtn tall" data-a="remtoggle" aria-pressed="'+!!S.remWorkout+'"><span class="settlead">'+settIc(IC_BELL)+'<span class="settlbl">Напоминать о тренировке<small>сообщение от бота в Telegram</small></span></span><span class="swtc'+(S.remWorkout?" on":"")+'"><i></i></span></button>'
     +(S.remWorkout?('<div class="rembody"><div class="remdays">'+DAYS.map(function(nm,i){var on=S.remDays.indexOf(i)>=0;return '<button class="remday'+(on?" on":"")+'" data-a="remday" data-v="'+i+'" aria-pressed="'+on+'">'+nm+'</button>';}).join("")+'</div>'
       +'<div class="remtrow"><span>Время</span><div>'+["07:00","12:00","19:00"].map(function(t){return '<button class="remtime'+(S.remTime===t?" on":"")+'" data-a="remtime" data-v="'+t+'">'+t+'</button>';}).join("")+'</div></div>'
@@ -3169,8 +3179,8 @@ KB_SCREENS.kbCamera=kcScreen;
 function kcResult(img){var md=KC?KC.mode:"food";kbOpenManual({photo:md,img:img||null,meal:kbTargetMeal||undefined,replace:true})}
 function kbReadImage(file,cb){
   var rd=new FileReader();rd.onload=function(){var im=new Image();im.onload=function(){
-    var k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
-    c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};im.onerror=function(){toast("Не получилось открыть фото")};im.src=rd.result};
+    var k=Math.min(1,640/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+    c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.72))};im.onerror=function(){toast("Не получилось открыть фото")};im.src=rd.result};
   rd.readAsDataURL(file);
 }
 /* ---- PhotoFail.dc.html / BarcodeNotFound.dc.html ---- */
@@ -4663,6 +4673,7 @@ renderOb=function(){redesignNativeOnboarding();redesignThemeControls(document.ge
 /* Run before the native bubbling click handler, retaining its original action,
    validation, persistence and subsequent rerender. */
 document.addEventListener("click",function(event){
+  now=Date.now(); /* записи получают время нажатия, а не время открытия приложения */
   var button=event.target.closest("[data-a]");if(!button)return;
   if(button.dataset.a==="rdmachinefav"&&cur){
     var favoriteMachine=find(cur.id);favoriteMachine.favorite=!favoriteMachine.favorite;save();sheet();
@@ -4709,6 +4720,8 @@ window.addEventListener("message",function(event){
     location.replace(next.href);
   }
 });
+/* вернулись в приложение на следующий день — перезапуск: новая неделя, сброс отметок */
+document.addEventListener("visibilitychange",function(){if(document.visibilityState!=="visible")return;now=Date.now();if(S.doneDay!==todayKeyNow())location.reload();});
 window.addEventListener("error",function(event){catalogSend("error",{message:String(event.message||"Ошибка приложения")});});
 window.addEventListener("unhandledrejection",function(event){catalogSend("error",{message:String(event.reason&&event.reason.message||event.reason||"Ошибка приложения")});});
 try{

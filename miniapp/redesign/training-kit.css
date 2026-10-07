@@ -363,7 +363,7 @@
 :root[data-redesign-theme="black"] .rd-approved-training .black-training-cards .ta-record>.ui-button{width:160px;height:42px;min-height:42px}
 
 /* white/tokens.css */
-@font-face{font-family:WhiteSF;src:url('../assets/sf-pro.ttf');font-weight:100 1000;font-style:normal;font-display:swap}
+
 :root[data-redesign-theme="white"] .rd-approved-training{
  color-scheme:light;
  --white-bg:#e8e7e2;--white-surface:#ecece8;--white-raised:#f1f1ed;--white-recess:#d8d9d5;
@@ -374,7 +374,7 @@
  --white-radius-card:5px;--white-radius-panel:14px;--white-radius-control:999px;
  --white-shadow-soft:0 3px 8px #242b3014;--white-shadow-control:inset 0 1px 2px #ffffffbd,0 3px 6px #252b3020;
  --white-space-1:4px;--white-space-2:8px;--white-space-3:12px;--white-space-4:16px;--white-space-5:24px;--white-space-6:32px;--white-space-7:48px;
- --white-font:WhiteSF,'Helvetica Neue',Arial,sans-serif;--white-body-size:14px;--white-caption-size:10px;--white-heading-size:28px;--white-weight-number:700;
+ --white-font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;--white-body-size:14px;--white-caption-size:10px;--white-heading-size:28px;--white-weight-number:700;
  --fit-bg:var(--white-bg);--fit-recess:var(--white-recess);--fit-surface:var(--white-surface);--fit-raised:var(--white-raised);
  --fit-text:var(--white-text);--fit-muted:var(--white-secondary);--fit-subtle:var(--white-muted);--fit-line:var(--white-line);--fit-rim:var(--white-border);
  --fit-red:var(--white-error);--fit-green:var(--white-success);--fit-amber:var(--white-warning);--fit-font:var(--white-font);--fit-display:var(--white-font);

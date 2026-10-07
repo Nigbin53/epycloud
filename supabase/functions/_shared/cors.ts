@@ -8,7 +8,7 @@ export function corsHeaders(request: Request): Record<string, string> {
   const allowOrigin = allowed.length === 0 ? "*" : allowed.includes(origin) ? origin : allowed[0];
   return {
     "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Methods": "GET, PUT, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
     "Access-Control-Allow-Headers": "content-type, x-telegram-init-data, authorization, apikey",
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin",

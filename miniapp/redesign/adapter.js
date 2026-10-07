@@ -204,6 +204,7 @@ renderOb=function(){redesignNativeOnboarding();redesignThemeControls(document.ge
 /* Run before the native bubbling click handler, retaining its original action,
    validation, persistence and subsequent rerender. */
 document.addEventListener("click",function(event){
+  now=Date.now(); /* записи получают время нажатия, а не время открытия приложения */
   var button=event.target.closest("[data-a]");if(!button)return;
   if(button.dataset.a==="rdmachinefav"&&cur){
     var favoriteMachine=find(cur.id);favoriteMachine.favorite=!favoriteMachine.favorite;save();sheet();
@@ -250,6 +251,8 @@ window.addEventListener("message",function(event){
     location.replace(next.href);
   }
 });
+/* вернулись в приложение на следующий день — перезапуск: новая неделя, сброс отметок */
+document.addEventListener("visibilitychange",function(){if(document.visibilityState!=="visible")return;now=Date.now();if(S.doneDay!==todayKeyNow())location.reload();});
 window.addEventListener("error",function(event){catalogSend("error",{message:String(event.message||"Ошибка приложения")});});
 window.addEventListener("unhandledrejection",function(event){catalogSend("error",{message:String(event.reason&&event.reason.message||event.reason||"Ошибка приложения")});});
 try{

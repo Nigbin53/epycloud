@@ -4,7 +4,7 @@
 @font-face{font-family:RDManrope;src:url('../fitness-ui-kit/assets/manrope-600.ttf');font-weight:600;font-style:normal;font-display:swap}
 @font-face{font-family:RDManrope;src:url('../fitness-ui-kit/assets/manrope-700.ttf');font-weight:700;font-style:normal;font-display:swap}
 @font-face{font-family:RDRajdhani;src:url('../fitness-ui-kit/assets/rajdhani-300.ttf');font-weight:300;font-style:normal;font-display:swap}
-@font-face{font-family:RDWhiteSF;src:url('../assets/sf-pro.ttf');font-weight:100 1000;font-style:normal;font-display:swap}
+
 
 :root[data-redesign-theme]{
  --rd-space-1:4px;--rd-space-2:8px;--rd-space-3:12px;--rd-space-4:16px;--rd-space-5:24px;--rd-space-6:32px;--rd-space-7:48px;
@@ -52,7 +52,7 @@
  --rd-shadow:inset 0 1px 0 rgba(255,255,255,.25);
  --rd-control-shadow:inset 0 1px 2px #ffffffbd,0 3px 6px #252b3020;
  --rd-dialog-shadow:0 16px 40px rgba(41,44,52,.22);
- --rd-font:RDWhiteSF,'Helvetica Neue',Arial,sans-serif;--rd-number-font:var(--rd-font);
+ --rd-font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;--rd-number-font:var(--rd-font);
  --rd-number-weight:700;--rd-heading-weight:700;--rd-strong-weight:700;
  --rd-panel-radius:14px;--rd-control-radius:999px;
  --rd-led-fill:#fff;--rd-steel-ink:#171b1d;

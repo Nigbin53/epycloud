@@ -35,7 +35,8 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
    ```bash
    supabase link --project-ref ВАШ_REF
    supabase db push
-   supabase secrets set BOT_TOKEN=ТОКЕН_БОТА WEBHOOK_SECRET=ЛЮБАЯ_ДЛИННАЯ_СТРОКА MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ALLOWED_ORIGIN=https://nigbin53.github.io
+   export WEBHOOK_SECRET=$(openssl rand -hex 32); echo $WEBHOOK_SECRET   # сохраните это значение — понадобится в шаге 4
+   supabase secrets set BOT_TOKEN=ТОКЕН_БОТА WEBHOOK_SECRET=$WEBHOOK_SECRET MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ALLOWED_ORIGIN=https://nigbin53.github.io
    supabase functions deploy state --no-verify-jwt
    supabase functions deploy telegram-bot --no-verify-jwt
    ```
@@ -53,7 +54,7 @@ Telegram  ──►  бот (Supabase Edge Function telegram-bot)  ──►  к
 ```bash
 python3 tools/build_miniapp.py --project-ref ВАШ_REF   # впишет адрес сервера в приложение
 git add -A && git commit -m "Подключён Supabase" && git push
-BOT_TOKEN=... WEBHOOK_SECRET=... PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ./tools/telegram-setup.sh
+PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigbin53.github.io/gym-tracker/ ./tools/telegram-setup.sh   # токен и секрет спросит сам
 ```
 Откройте бота в Telegram, нажмите `/start` → «Открыть Gym Tracker».
 
@@ -68,9 +69,15 @@ BOT_TOKEN=... WEBHOOK_SECRET=... PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigb
 - Тест подписи Telegram: `node --experimental-strip-types --test supabase/functions/_shared/telegram.test.ts`
 - Открыть локально: `cd miniapp && python3 -m http.server 8080`, затем http://localhost:8080 (вне Telegram работает на локальных данных).
 
+## Как устроена синхронизация
+- При запуске приложение сверяется с сервером. Если сервер не ответил, приложение работает на данных телефона и **ничего не отправляет**, пока не сверится. Так пустые данные нового телефона не затрут настоящие.
+- Правки уходят на сервер через 1,5 с, а также при сворачивании. Если отправка не удалась, правка помечается и уйдёт при следующем запуске.
+- Два устройства: побеждает более свежая правка. Устройство, которое ещё ни разу не сверялось, всегда берёт данные сервера.
+- Экспорт CSV/JSON в Telegram приходит файлом в чат с ботом.
+
 ## Известные ограничения
-- Состояние пользователя хранится одним JSON (до 4 МБ). Фото из галереи сохраняются внутри него.
-- Если одно и то же состояние менять на двух устройствах одновременно, побеждает последняя запись.
-- Загрузка фото тренажёров через локальный сервер (`serve.py`) в мини-приложении не работает. Фото каталога вшиваются при сборке.
+- Состояние пользователя хранится одним JSON (до 6 МБ). Фото из галереи сохраняются внутри него; при нехватке памяти у старых записей еды убираются фото.
+- Для чистой сборки удалите папку `miniapp/` перед `build_miniapp.py`: скрипт сам ничего не удаляет.
+- Загрузка фото тренажёров через локальный сервер (`serve.py`) в мини-приложении не работает. Фото каталога вшиваются при сборке; у тренажёров без своего фото показывается заглушка.
 - Список тренажёров и экран «Тренировка» в рабочем приложении ещё в старой раскладке, а утверждённый вариант с «Избранным» сейчас только на Карте экранов. Нужно перенести перед публичным релизом.
 - Напоминания и push из бота не подключены (отложены по вашему решению).

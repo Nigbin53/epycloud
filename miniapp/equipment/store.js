@@ -50,6 +50,19 @@
     return wanted ? machines.find(item => String(item.name).trim().toLowerCase() === wanted)?.slug || null : null;
   }
   function hasPhoto(key) { return !!(current(key) || catalog.slots.find(slot => slot.key === key)?.defaultUrl); }
+  /* Собственное фото тренажёра для экрана или null — без подмены фото другого тренажёра. */
+  function ownKey(name, screen, theme) {
+    const slug = slugFor(name);
+    const key = slug ? slug + '/' + screen + '/' + theme : null;
+    return key && hasPhoto(key) ? key : null;
+  }
+  /* Заглушка, пока у тренажёра нет своего фото: графит и гантель (как в утверждённом дизайне). */
+  function placeholder(theme) {
+    const white = theme === 'white';
+    const a = white ? '#dcdbd6' : '#1b1c1f', b = white ? '#c9c8c2' : '#36373b', ink = white ? '#ff510c' : '#fcfcfc';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="260" fill="url(#g)"/><g transform="translate(134 110)" fill="${ink}" opacity="${white ? '.85' : '.55'}"><rect x="28" y="17" width="76" height="6" rx="3"/><rect x="12" y="0" width="14" height="40" rx="4"/><rect x="106" y="0" width="14" height="40" rx="4"/><rect x="0" y="8" width="10" height="24" rx="3"/><rect x="122" y="8" width="10" height="24" rx="3"/></g></svg>`;
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
   function photoKey(name, fallback, screen, theme) {
     const slug = slugFor(name);
     const own = slug ? slug + '/' + screen + '/' + theme : null;
@@ -87,7 +100,7 @@
     getCatalog: () => catalog,
     getManifest: () => manifest,
     getMachines: () => machines,
-    slugFor, hasPhoto, photoKey,
+    slugFor, hasPhoto, photoKey, ownKey, placeholder,
     save, reset: key => write('reset', {key}),
     subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); }
   };

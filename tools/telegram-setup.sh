@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Одноразовая настройка бота в Telegram: вебхук, команды и кнопка меню.
-# Запуск:  BOT_TOKEN=... WEBHOOK_SECRET=... PROJECT_REF=... MINIAPP_URL=... ./tools/telegram-setup.sh
+# Запуск:  PROJECT_REF=... MINIAPP_URL=... ./tools/telegram-setup.sh   (токен и секрет спросит)
 set -euo pipefail
+# Токен и секрет можно не писать в команде (чтобы они не остались в истории терминала) — скрипт спросит сам.
+if [ -z "${BOT_TOKEN:-}" ]; then read -rsp "Токен бота: " BOT_TOKEN; echo; fi
+if [ -z "${WEBHOOK_SECRET:-}" ]; then read -rsp "WEBHOOK_SECRET (тот же, что в Supabase): " WEBHOOK_SECRET; echo; fi
 : "${BOT_TOKEN:?нужен BOT_TOKEN}" "${WEBHOOK_SECRET:?нужен WEBHOOK_SECRET}" "${PROJECT_REF:?нужен PROJECT_REF}" "${MINIAPP_URL:?нужен MINIAPP_URL}"
 API="https://api.telegram.org/bot${BOT_TOKEN}"
 WEBHOOK="https://${PROJECT_REF}.supabase.co/functions/v1/telegram-bot"

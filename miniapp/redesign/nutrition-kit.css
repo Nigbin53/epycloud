@@ -314,7 +314,7 @@
 :root[data-redesign-theme] .rd-approved-nutrition .na-header .ui-title{font-size:11px;line-height:15px;font-weight:500;letter-spacing:4.3px;text-transform:uppercase}
 
 /* white/tokens.css */
-@font-face{font-family:WhiteSF;src:url('../assets/sf-pro.ttf');font-weight:100 1000;font-style:normal;font-display:swap}
+
 :root[data-redesign-theme="white"] .rd-approved-nutrition{
  color-scheme:light;
  --white-bg:#e8e7e2;--white-surface:#ecece8;--white-raised:#f1f1ed;--white-recess:#d8d9d5;
@@ -325,7 +325,7 @@
  --white-radius-card:5px;--white-radius-panel:14px;--white-radius-control:999px;
  --white-shadow-soft:0 3px 8px #242b3014;--white-shadow-control:inset 0 1px 2px #ffffffbd,0 3px 6px #252b3020;
  --white-space-1:4px;--white-space-2:8px;--white-space-3:12px;--white-space-4:16px;--white-space-5:24px;--white-space-6:32px;--white-space-7:48px;
- --white-font:WhiteSF,'Helvetica Neue',Arial,sans-serif;--white-body-size:14px;--white-caption-size:10px;--white-heading-size:28px;--white-weight-number:700;
+ --white-font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;--white-body-size:14px;--white-caption-size:10px;--white-heading-size:28px;--white-weight-number:700;
  --fit-bg:var(--white-bg);--fit-recess:var(--white-recess);--fit-surface:var(--white-surface);--fit-raised:var(--white-raised);
  --fit-text:var(--white-text);--fit-muted:var(--white-secondary);--fit-subtle:var(--white-muted);--fit-line:var(--white-line);--fit-rim:var(--white-border);
  --fit-red:var(--white-error);--fit-green:var(--white-success);--fit-amber:var(--white-warning);--fit-font:var(--white-font);--fit-display:var(--white-font);
@@ -504,7 +504,7 @@
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .ui-content{padding:0 18px 28px;min-height:0}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-header{height:52px;min-height:52px;padding:8px 30px 0;align-items:flex-start;position:relative;background:none}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-header:before{content:'';position:absolute;left:18px;top:8px;width:1.5px;height:14px;background:var(--white-accent,#ff510c)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-header .ui-title{margin:0;font:500 11px/15px WhiteSF,Manrope,sans-serif;letter-spacing:4.3px;text-transform:uppercase;color:var(--white-text,#171b1d)}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-header .ui-title{margin:0;font:500 11px/15px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:4.3px;text-transform:uppercase;color:var(--white-text,#171b1d)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-header .ui-caption{margin-top:3px;font-size:8px;line-height:11px;color:var(--white-muted,#787b7a)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-scene{height:160px;width:100%;margin:0;overflow:visible;isolation:isolate}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-scene>img{display:none!important}
@@ -521,19 +521,19 @@
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-led-segment.is-lit{fill:var(--wn-led-on)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-led-glow-colour{flood-color:var(--wn-led-glow)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading{top:52px;left:50%;transform:translateX(-50%);gap:9px;z-index:1}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading .ui-micro{font:500 8px/11px WhiteSF,Manrope,sans-serif;letter-spacing:1.9px;color:var(--wn-reading-label)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading .ui-value{font:750 56px/1 WhiteSF,Manrope,sans-serif;letter-spacing:-2.6px;color:var(--white-text,#171b1d)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading .ui-micro:last-child{font:400 12px/18px WhiteSF,Manrope,sans-serif;letter-spacing:.35px;color:var(--wn-reading-unit)}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading .ui-micro{font:500 8px/11px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:1.9px;color:var(--wn-reading-label)}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading .ui-value{font:750 56px/1 -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:-2.6px;color:var(--white-text,#171b1d)}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-calorie-reading .ui-micro:last-child{font:400 12px/18px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:.35px;color:var(--wn-reading-unit)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:calc(100% + 18px);margin:5px 0 0;padding:0;gap:0;min-height:61px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros>div{position:relative;padding:0 29px 0 13px;border:0;min-width:0}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros>div:nth-child(3){padding-left:17px;padding-right:25px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros>div:not(:last-child):after{content:'';position:absolute;right:13px;top:0;height:61px;width:1px;background:var(--wn-line)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros .ui-caption{display:flex;align-items:baseline;white-space:nowrap;gap:2px;height:24px;font:400 13px/24px WhiteSF,Manrope,sans-serif;letter-spacing:0;color:var(--wn-macro-goal)}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros .ui-caption{display:flex;align-items:baseline;white-space:nowrap;gap:2px;height:24px;font:400 13px/24px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:0;color:var(--wn-macro-goal)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-macro-current{font-weight:650;font-size:20px;line-height:24px;color:var(--white-text,#171b1d)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-macro-goal{font-weight:400;font-size:12px;line-height:20px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macro-track{height:6px;margin:7px 0 12px;border-radius:999px;background:var(--wn-macro-track);overflow:hidden}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macro-track>span{width:5%;min-width:3px;height:100%;background:var(--wn-macro-fill)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros .ui-small{font:500 7px/10px WhiteSF,Manrope,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--wn-macro-label);white-space:nowrap}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros .ui-small{font:500 7px/10px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--wn-macro-label);white-space:nowrap}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-actions{display:grid;position:relative;grid-template-columns:minmax(0,1fr) 112px minmax(0,1fr);grid-template-rows:112px auto;column-gap:12px;row-gap:16px;align-items:start;isolation:isolate;width:min(100%,348px);height:auto;min-height:0;margin:28px auto 0}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-actions>div{position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-camera-action{left:auto;top:auto;width:112px;height:112px;grid-column:2;grid-row:1}
@@ -543,14 +543,14 @@
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-camera-button>.white-camera-icon{width:28px;height:27px;stroke:var(--wn-camera-icon);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:none}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-camera-button:hover{filter:brightness(1.045)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-camera-button:active{filter:brightness(.96);box-shadow:inset 0 2px 5px var(--wn-metal-shadow-pressed);transform:translateY(1px)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-camera-help{grid-column:1/-1;grid-row:2;margin:0;min-height:18px;text-align:center;font:400 13px/18px WhiteSF,Manrope,sans-serif;letter-spacing:.15px;color:var(--wn-camera-help)}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-camera-help{grid-column:1/-1;grid-row:2;margin:0;min-height:18px;text-align:center;font:400 13px/18px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:.15px;color:var(--wn-camera-help)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-side-action{top:auto;left:auto;width:100%;min-width:0;gap:8px;padding-top:28px;grid-row:1}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-favorite-action{grid-column:1}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-manual-action{grid-column:3}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-shortcut{display:grid;place-items:center;width:56px;height:56px;min-width:56px;min-height:56px;position:relative;box-sizing:border-box;border:1px solid var(--wn-shortcut-rim);border-radius:50%;background:radial-gradient(ellipse at 28% 8%,#ffffff9c,transparent 68%),linear-gradient(145deg,#f0f2ed,#d4dad8);box-shadow:inset 0 1px 1px #ffffffb3,inset 0 -1px 2px #8c969e19,0 2px 5px var(--wn-shortcut-shadow);backdrop-filter:none;color:var(--white-text,#171b1d);filter:none}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-shortcut:before,:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-shortcut:after{display:none}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-shortcut>.ui-icon{width:22px;height:22px;stroke-width:1.8;color:var(--wn-shortcut-icon)}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-side-action>.ui-caption{font:400 13px/18px WhiteSF,Manrope,sans-serif;letter-spacing:0;color:var(--wn-shortcut-label);white-space:nowrap;text-align:center}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-side-action>.ui-caption{font:400 13px/18px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:0;color:var(--wn-shortcut-label);white-space:nowrap;text-align:center}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-shortcut:hover{background:radial-gradient(ellipse at 28% 8%,#ffffffd9,transparent 68%),linear-gradient(145deg,#f7f9f4,#e0e5e2);filter:none}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-shortcut:active{background:#d4dad8;box-shadow:inset 0 2px 4px var(--wn-metal-shadow-pressed);filter:none}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .white-nutrition-extras{margin-top:20px;padding:0 5px 20px}
@@ -559,10 +559,10 @@
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-row+.na-food-row{border-top:1px solid var(--wn-line)}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-photo{width:44px;height:44px;flex-basis:44px;margin-right:8px;border-radius:8px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-copy{gap:4px}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-copy .ui-list-title{font:500 11px/15px WhiteSF,Manrope,sans-serif;letter-spacing:0}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-copy .ui-small{font:400 8px/12px WhiteSF,Manrope,sans-serif;letter-spacing:0}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-copy .ui-list-title{font:500 11px/15px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:0}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-food-copy .ui-small{font:400 8px/12px -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:0}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-budget{margin-top:24px}
-:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-budget-metrics .ui-metric{font:600 27px/1.15 WhiteSF,Manrope,sans-serif;letter-spacing:-.6px}
+:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-budget-metrics .ui-metric{font:600 27px/1.15 -apple-system,BlinkMacSystemFont,'SF Pro Text',Manrope,sans-serif;letter-spacing:-.6px}
 @media(max-width:360px){:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros>div{padding-right:18px;padding-left:11px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros>div:nth-child(3){padding-right:15px;padding-left:12px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-macros .ui-caption{font-size:10px}
@@ -619,7 +619,7 @@
   padding:0;
 }
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water-reading>.ui-feature-title{
-  font:600 11px/16px var(--white-font,WhiteSF,sans-serif);
+  font:600 11px/16px var(--white-font,-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif);
   letter-spacing:1.7px;
   text-transform:uppercase;
   color:var(--white-text,#171b1d);
@@ -632,13 +632,13 @@
   white-space:nowrap;
 }
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water-amount>.ui-value{
-  font:650 48px/1 var(--white-font,WhiteSF,sans-serif);
+  font:650 48px/1 var(--white-font,-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif);
   letter-spacing:-1.6px;
   color:var(--white-number-accent,var(--white-accent,#ff510c));
   font-variant-numeric:tabular-nums;
 }
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water-amount>.ui-secondary{
-  font:400 11px/16px var(--white-font,WhiteSF,sans-serif);
+  font:400 11px/16px var(--white-font,-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif);
   color:#626968;
   letter-spacing:0;
 }
@@ -666,7 +666,7 @@
   gap:12px;
 }
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water-limits>.ui-small{
-  font:400 9px/14px var(--white-font,WhiteSF,sans-serif);
+  font:400 9px/14px var(--white-font,-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif);
   letter-spacing:.15px;
   color:#626968;
 }
@@ -692,13 +692,13 @@
 }
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water .na-portion>.ui-micro{
   color:#626968;
-  font:500 8px/12px var(--white-font,WhiteSF,sans-serif);
+  font:500 8px/12px var(--white-font,-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif);
   letter-spacing:1.2px;
 }
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water .na-portion>.ui-button{
   min-height:44px;
   color:var(--white-text,#171b1d);
-  font:500 12px/16px var(--white-font,WhiteSF,sans-serif);
+  font:500 12px/16px var(--white-font,-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif);
 }
 @media(max-width:360px){:root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water{grid-template-columns:minmax(0,1fr) 120px;grid-template-rows:124px 4px auto auto;column-gap:10px;padding:10px 12px 14px}
 :root[data-redesign-theme="white"] .rd-approved-nutrition.white-nutrition-page .na-water-photo{width:120px;height:124px}
