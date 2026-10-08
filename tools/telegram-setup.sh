@@ -17,7 +17,7 @@ curl -fsS "${API}/setWebhook" \
 echo
 echo "→ команды"
 curl -fsS "${API}/setMyCommands" \
-  --data-urlencode 'commands=[{"command":"start","description":"Открыть Gym Tracker"},{"command":"help","description":"Как это работает"}]'
+  --data-urlencode 'commands=[{"command":"start","description":"Открыть Gym Tracker"},{"command":"home","description":"Иконка на рабочий стол"},{"command":"help","description":"Как это работает"}]'
 echo
 echo "→ кнопка меню (открывает приложение)"
 curl -fsS "${API}/setChatMenuButton" \

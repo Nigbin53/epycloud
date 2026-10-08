@@ -2156,6 +2156,11 @@ function screenSettings(){
     +'<button class="settbtn" data-a="goalsopen"><span>Цель по питанию</span><span class="settval">'+thous(kbGoalFor(kbToday()).k)+' ккал'+SVG_CHEV+'</span></button>'
     +'<button class="settbtn acc" data-a="obreplay">Пройти знакомство заново</button>'
     +'</div></section>';
+  /* Иконка на рабочем столе телефона (Telegram Bot API 8.0). Пункт есть только там, где Telegram это умеет. */
+  if(window.GymHomeScreen&&window.GymHomeScreen.supported()){var hs=window.GymHomeScreen.status();
+    h+='<section class="settsec"><h2>Приложение</h2><div class="settgroup">'
+      +'<button class="settbtn" data-a="a2hs"><span>На рабочий стол</span><span class="settval">'+(hs==="added"?"Уже добавлено":"Добавить")+SVG_CHEV+'</span></button>'
+      +'</div></section>';}
   var bw=S.bw.length?S.bw[S.bw.length-1].w:null;
   /* только килограммы: переключатель кг/lb убран по решению владельца */ if(false)h+='<section class="settsec"><h2>Единицы</h2><div class="settgroup"><div class="settrow"><span class="settlead">'+settIc(IC_RULER)+'Вес</span>'
     +'<div class="unitseg" role="group" aria-label="Единицы веса"><button class="'+(S.unit==="kg"?"on":"")+'" data-a="unit" data-v="kg" aria-pressed="'+(S.unit==="kg")+'">кг</button><button class="'+(S.unit==="lb"?"on":"")+'" data-a="unit" data-v="lb" aria-pressed="'+(S.unit==="lb")+'">lb</button></div></div>'
@@ -4469,6 +4474,7 @@ document.addEventListener("click",function(e){
   else if(a==="wstats"){openScreen("weightStats")}
   else if(a==="wsr"){wsRange=v;var wsp=document.getElementById("scrpage"),wst=wsp.scrollTop;renderScreenView();wsp.scrollTop=wst}
   else if(a==="goalsopen"){openScreen("kbGoals")}
+  else if(a==="a2hs"){if(window.GymHomeScreen)window.GymHomeScreen.add()}
 
   else if(a==="foodopen"){var fe=kbFind(+v);if(fe){kbCloseAll();S.tab="kbju";kbjuSel=dateKey(fe.t);kbSel=fe.id;save();render();var rw=document.getElementById("kn-row-"+fe.id);if(rw)rw.scrollIntoView({block:"center"})}}
   else if(a==="kday"){kbjuSel=v;kbSel=null;kbMenuOpen=false;render();var ap2=document.getElementById("app");if(ap2)ap2.scrollTop=0}

@@ -12,6 +12,8 @@
   var tg = window.Telegram && window.Telegram.WebApp;
   var cfg = window.GYM_CONFIG || {};
 
+  // Кнопка «На рабочий стол» в чате бота открывает мини-апп с меткой a2hs=1 — передаём её приложению
+  try { if (/[?&]a2hs=1\b/.test(location.search)) sessionStorage.setItem('gym_a2hs', '1'); } catch (e) {}
   function start() { location.replace(APP); }
   function read(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } }
   function mark(value) { try { sessionStorage.setItem(READY, value); } catch (e) {} }

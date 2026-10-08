@@ -18,11 +18,27 @@ async function telegram(method: string, body: Record<string, unknown>) {
   if (!response.ok) console.error(method, response.status, await response.text());
 }
 
+// Адрес мини-приложения с меткой: приложение откроется и сразу предложит добавить иконку на рабочий стол
+function homeUrl(): string {
+  return MINIAPP_URL + (MINIAPP_URL.includes("?") ? "&" : "?") + "a2hs=1";
+}
+
 function openButton() {
   return {
-    inline_keyboard: [[{ text: "Открыть Gym Tracker", web_app: { url: MINIAPP_URL } }]],
+    inline_keyboard: [
+      [{ text: "Открыть Gym Tracker", web_app: { url: MINIAPP_URL } }],
+      [{ text: "📲 На рабочий стол", web_app: { url: homeUrl() } }],
+    ],
   };
 }
+
+function homeButton() {
+  return { inline_keyboard: [[{ text: "📲 На рабочий стол", web_app: { url: homeUrl() } }]] };
+}
+
+const HOME_TEXT =
+  "Иконка на рабочем столе телефона открывает приложение в одно касание, без поиска чата.\n\n" +
+  "Нажми кнопку ниже — Telegram покажет окно «Добавить на главный экран».";
 
 function safeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
@@ -47,10 +63,14 @@ Deno.serve(async (request) => {
   const message = update.message;
   if (message?.chat?.id && MINIAPP_URL.startsWith("https://")) {
     const text = (message.text ?? "").trim();
-    const reply = text.startsWith("/help")
-      ? "Нажми кнопку ниже — приложение откроется прямо в Telegram. Данные сохраняются в твоём аккаунте."
-      : WELCOME;
-    await telegram("sendMessage", { chat_id: message.chat.id, text: reply, reply_markup: openButton() });
+    if (text.startsWith("/home")) {
+      await telegram("sendMessage", { chat_id: message.chat.id, text: HOME_TEXT, reply_markup: homeButton() });
+    } else {
+      const reply = text.startsWith("/help")
+        ? "Нажми кнопку ниже — приложение откроется прямо в Telegram. Данные сохраняются в твоём аккаунте."
+        : WELCOME;
+      await telegram("sendMessage", { chat_id: message.chat.id, text: reply, reply_markup: openButton() });
+    }
   }
   // Telegram должен получать 200, иначе будет повторять доставку
   return new Response("ok");
