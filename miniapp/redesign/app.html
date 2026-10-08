@@ -4149,6 +4149,7 @@ function applyBgTransform(){
 }
 function syncBgHeight(){
   var ap=document.getElementById("app"),bg=document.getElementById("appbg");
+  if(bg&&getComputedStyle(bg).display==="none"){bg.style.height="";return} /* в новом дизайне слоя нет — ничего не подгоняем */
   if(ap&&bg){var acx=document.getElementById("appcontent"),need=ap.clientHeight;
     if(acx){var pb=parseFloat(getComputedStyle(ap).paddingBottom)||0;need=Math.max(need,acx.offsetTop+acx.offsetHeight+pb)}
     var hpx=Math.ceil(need)+"px";if(bg.style.height!==hpx)bg.style.height=hpx}

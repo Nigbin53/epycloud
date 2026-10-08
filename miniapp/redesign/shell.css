@@ -196,3 +196,11 @@
 :root.in-telegram .home-ind{display:none}
 /* Браузер не «якорит» прокрутку при перестройке страницы — иначе при +/− экран мог уезжать сам */
 :root[data-redesign-theme] .app{overflow-anchor:none}
+
+/* ===== Один фон на весь экран (09.10) =====
+   Слой #appbg остался от старой версии приложения: он лежал внутри прокрутки и растягивался по высоте страницы.
+   Когда страница перестраивалась, его высота отставала — внизу появлялся пустой экран, а за краем был «второй» фон.
+   В новом дизайне он не нужен: выключен полностью, длину прокрутки задаёт только содержимое.
+   Фон рисует только .screen (неподвижный), страницы прозрачные. */
+:root[data-redesign-theme] #appbg{display:none!important}
+:root[data-redesign-theme] :is(.white-nutrition-page,.rd-approved-nutrition.na-page,#appcontent,#appcontent>.kn){background:transparent!important}
