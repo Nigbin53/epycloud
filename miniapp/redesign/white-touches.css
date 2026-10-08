@@ -1,0 +1,28 @@
+/* ===== White: точечные элементы (09.10, по фото владельца) =====
+   1) «Неделя / Месяц» — тумблер: утопленная дорожка, выбранный вариант — выпуклый «ползунок» как кнопка-звезда;
+   2) карточки «Вода» и «Бюджет недели» — мелкие болтики в углах и лёгкая фактура. Тема Black не затрагивается. */
+:root[data-redesign-theme="white"]{
+  --wt-noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --wt-screw:radial-gradient(circle at 50% 40%,#c9cac6 0 1.1px,#9fa09c 1.6px,#e9e9e6 2.4px,rgba(255,255,255,0) 3px);
+}
+/* 1) тумблер «Неделя / Месяц» */
+:root[data-redesign-theme="white"] .seg{display:inline-flex!important;align-items:center;gap:0!important;padding:3px!important;border-radius:999px!important;
+  background:linear-gradient(180deg,#d9dedc,#e9ebe8)!important;border:1px solid rgba(150,159,162,.35)!important;
+  box-shadow:inset 0 2px 4px rgba(55,64,73,.18),inset 0 -1px 0 rgba(255,255,255,.75)!important}
+:root[data-redesign-theme="white"] .seg>button{min-height:32px;padding:0 15px!important;border-radius:999px!important;border:1px solid transparent!important;
+  background:transparent!important;box-shadow:none!important;color:#6b7274!important;transition:color .2s}
+:root[data-redesign-theme="white"] .seg>button.on{
+  background:radial-gradient(at 28% 8%,rgba(255,255,255,.61),rgba(0,0,0,0) 68%),linear-gradient(145deg,#f0f2ed,#d4dad8)!important;
+  border:1px solid rgba(150,159,162,.5)!important;color:#ff4a08!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -1px 2px rgba(140,150,158,.1),0 2px 5px rgba(55,64,73,.16)!important}
+/* 2) «Вода» и «Бюджет недели» */
+:root[data-redesign-theme="white"] :is(.na-water,.na-budget){position:relative;
+  background:
+    var(--wt-screw) 10px 10px/8px 8px no-repeat,
+    var(--wt-screw) calc(100% - 10px) 10px/8px 8px no-repeat,
+    var(--wt-screw) 10px calc(100% - 10px)/8px 8px no-repeat,
+    var(--wt-screw) calc(100% - 10px) calc(100% - 10px)/8px 8px no-repeat,
+    var(--wt-noise),linear-gradient(180deg,#f5f5f2 0%,#ebebe7 55%,#e2e2de 100%)!important;
+  border:1px solid rgba(255,255,255,.85)!important;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.05),0 12px 26px -12px rgba(40,40,30,.32),0 2px 5px rgba(40,40,30,.08)!important}
+:root[data-redesign-theme="white"] .na-budget{border-radius:24px!important;padding:22px 20px 18px!important;box-sizing:border-box}

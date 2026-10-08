@@ -92,3 +92,7 @@
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:last-child{padding-right:0!important}
 :root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button.selected:first-child{padding-left:12px!important}
 :root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button.selected:last-child{padding-right:12px!important}
+/* Экран тренажёра без записей: блока «Текущий вес» нет (было оранжевое тире), подходы×повторы — слева под подзаголовком */
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-load,.bt-current-load){display:none!important}
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-detail-current,.bt-detail-current){grid-template-columns:max-content!important;justify-content:start!important}
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-sets,.bt-current-sets){justify-self:start!important;margin-left:0!important}

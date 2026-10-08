@@ -194,3 +194,5 @@
 :root[data-redesign-theme='black'] .nav{background:linear-gradient(#0b0e10f5,#030507)}
 /* В Telegram iPhone рисует свою полоску «домой» — нарисованная в макете не нужна */
 :root.in-telegram .home-ind{display:none}
+/* Браузер не «якорит» прокрутку при перестройке страницы — иначе при +/− экран мог уезжать сам */
+:root[data-redesign-theme] .app{overflow-anchor:none}

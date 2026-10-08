@@ -15,6 +15,7 @@ function present(){
  page.querySelector('.ta-detail-category').textContent=data.machine.g;
  const values={load:data.working.w,sets:data.working.s,reps:data.working.r};
  const used=!!(data.machine.used||(data.machine.h&&data.machine.h.length)||data.logs>0);
+ page.classList.toggle('rd-noload',!used); // без записей шапка без блока веса
  for(const key of ['load','sets','reps']){
   const input=page.querySelector('[data-value="'+key+'"]');const value=document.createElement('span');value.className=input.className+' rd-training-value';value.dataset.value=key;value.textContent=fmt(values[key]);input.replaceWith(value);
   // до первой записи у тренажёра нет рабочего веса — в шапке «—», значение на регуляторе лишь подсказка

@@ -43,6 +43,7 @@ function update(page,data,white){
  water.querySelector('[data-water]').textContent=data.liters;
  water.querySelector('[data-water-ml]').textContent=number(data.water*250)+' мл';
  water.querySelector('.water-fill').style.width=Math.min(100,data.water/8*100)+'%';
+ const waterMinus=water.querySelector('[data-a="kbw"][data-v="-1"]');if(waterMinus)waterMinus.disabled=data.water===0;
  const weekly=[Math.max(0,data.week.budget-data.week.used),data.week.used,Math.max(0,data.week.sunday)];
  page.querySelectorAll('.na-budget-metrics .ui-metric').forEach((el,i)=>el.textContent=number(weekly[i]));
 }
