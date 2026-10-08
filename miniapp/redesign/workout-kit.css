@@ -83,3 +83,12 @@
 /* Дни недели: каждая ячейка строго в своей колонке — обводки не наезжают друг на друга. */
 :root[data-redesign-theme] .rd-workout .ui-calendar>.ui-day{width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;box-sizing:border-box}
 :root[data-redesign-theme="black"] .rd-workout .ui-calendar>.ui-day{border-radius:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* Тренажёр ещё без записей: вместо веса тире, без подписи «КГ» */
+:root[data-redesign-theme] .rd-workout .tg-noload .ui-micro{visibility:hidden}
+:root[data-redesign-theme] .rd-workout .tg-noload .ui-compact-value{opacity:.45}
+/* Вкладки групп занимают всю ширину блока до правого края карточек */
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters{width:100%!important;max-width:none!important;box-sizing:border-box;padding-left:0!important;padding-right:0!important}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:first-child{padding-left:0!important}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:last-child{padding-right:0!important}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button.selected:first-child{padding-left:12px!important}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button.selected:last-child{padding-right:12px!important}

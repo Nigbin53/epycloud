@@ -2012,7 +2012,13 @@ var SVG_TROPHY='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stro
 var SVG_CAM18='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.8l1.5-2h4.4l1.5 2h1.8A2.5 2.5 0 0 1 20 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z"></path><circle cx="12" cy="12.5" r="3.5"></circle></svg>';
 var proWorkAll=false;
 function mStart(m){return m.h&&m.h.length?m.h[m.h.length-1].w:m.w}
-function muIcon(g,w,h){return muscleIcon(g,false).replace('width="19" height="24"','width="'+w+'" height="'+h+'"')}
+var MU_ANAT={"Грудь":"chest","Спина":"back","Ноги":"front-thighs","Руки":"arms","Бицепс":"arms","Трицепс":"arms","Плечи":"arms"};
+/* Иконка группы мышц — та же анатомия, что на экране тренажёра (тема Black/White) */
+function muIcon(g,w,h){var th=document.documentElement.dataset.redesignTheme==="white"?"white":"black",file=MU_ANAT[g];
+  if(!file)return muscleIcon(g,false).replace('width="19" height="24"','width="'+w+'" height="'+h+'"');
+  return '<img class="mu-anat" src="../assets/anatomy-groups/'+th+'/'+file+'.png" width="'+w+'" height="'+h+'" alt="" decoding="async">'}
+/* Тренажёр «в работе» — была хоть одна запись. До этого его вес — лишь подсказка для первой записи и нигде не показывается. */
+function mUsed(m){return !!(m&&(m.used||(m.h&&m.h.length)||S.history.some(function(e){return e.mid===m.id})))}
 function prSpark(vals){
   vals=vals.slice(-4);if(vals.length<2)vals=[vals[0],vals[0]];
   var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),n=vals.length;
@@ -2072,7 +2078,7 @@ function screenProfile(){
     }).join("")+'</section>';
   }
   // working weights by muscle group
-  var wm=S.m.filter(function(m){return m.w>0});
+  var wm=S.m.filter(function(m){return m.w>0&&mUsed(m)});
   if(wm.length){
     var groups=GROUPS.slice();wm.forEach(function(m){if(groups.indexOf(m.g)<0)groups.push(m.g)});
     var shown=0,limit=proWorkAll?1e9:5,parts=[];
@@ -4018,11 +4024,11 @@ function viewHistory(){
   S.history.forEach(function(e){if(e.t>=wk)wd[dateKey(e.t)]=1});
   S.food.forEach(function(e){if(e.t>=wk){var k=dateKey(e.t);fd[k]=(fd[k]||0)+numv(e.kcal)}});
   var fk=Object.keys(fd),avg=fk.length?fk.reduce(function(a,k){return a+fd[k]},0)/fk.length:null;
-  var bch=bwChange(7);
+  var bch=bwChange(7),lastBwW=S.bw.length?chrono(S.bw)[S.bw.length-1].w:null; // в сводке — актуальный вес, изменение за неделю строкой ниже
   h+='<div class="hstats">'
     +'<div class="hstat cm"><em>Тренировок</em><b>'+Object.keys(wd).length+'<small> за нед.</small></b></div>'
     +'<div class="hstat cm"><em>Ср. калории</em><b>'+(avg==null?'—':thous(avg))+'</b></div>'
-    +'<div class="hstat cm"><em>Вес</em><b class="a2">'+(bch==null?'—':(bch>0?'+':bch<0?'−':'')+f(Math.abs(bch))+'<small> кг</small>')+'</b></div></div>';
+    +'<div class="hstat cm"><em>Вес</em><b class="a2">'+(lastBwW==null?'—':f(lastBwW)+'<small> кг</small>')+'</b>'+(bch!=null&&bch!==0?'<small class="hdelta">'+(bch>0?'+':'−')+f(Math.abs(bch))+' кг за нед.</small>':'')+'</div></div>';
   var groups=[],map={};
   items.forEach(function(it){var k=dateKey(it.t);if(!map[k]){map[k]={t:it.t,items:[]};groups.push(k)}map[k].items.push(it)});
   h+=groups.map(function(k){var g=map[k];
@@ -4183,7 +4189,11 @@ function finishOnboarding(skip){
     S.gender=obState.g;
     if(obState.nick.trim())S.name=obState.nick.trim();
     S.goalType=obState.goal;S.goalWeight=obState.t;
-    if(!S.bw.length)S.bw=[{t:now,w:obState.w}];
+    /* Вес: при первом знакомстве — первая запись; при повторном — если вес изменили, это сегодняшнее взвешивание.
+       Остальные данные (тренажёры, история, питание) повторное знакомство не трогает. */
+    var lastBw=S.bw.length?chrono(S.bw)[S.bw.length-1]:null;
+    if(!lastBw)S.bw=[{t:Date.now(),w:obState.w}];
+    else if(Math.abs(lastBw.w-obState.w)>=0.05){var tt=Date.now(),tk=dateKey(tt);S.bw=S.bw.filter(function(x){return dateKey(x.t)!==tk});S.bw.push({t:tt,w:Math.round(obState.w*10)/10});S.bw.sort(function(x,y){return x.t-y.t})}
     S.theme=obState.theme||S.theme;
     S.lang=obState.lang;
   }
@@ -4243,7 +4253,11 @@ function renderOb(){
     h+='<div class="obfoot"><button class="obnext obstart" data-a="obfinish">Начать тренировки</button><span class="obcap lg">'+(CATALOG_PREVIEW?'Тему и язык можно сменить в настройках':'Тему можно сменить в настройках')+'</span></div>';
   }
   h+='</div>';
-  var ov=document.getElementById("obov");ov.innerHTML=h;ov.classList.toggle("s3",s.step===3);
+  var ov=document.getElementById("obov"),prevScr=ov.querySelector(".obscr");
+  /* Перерисовка шага не должна сбрасывать прокрутку: раньше любое нажатие (+/−, выбор цели) кидало экран наверх */
+  var keepTop=prevScr&&ov.dataset.step===String(s.step)?prevScr.scrollTop:0;
+  ov.innerHTML=h;ov.classList.toggle("s3",s.step===3);ov.dataset.step=String(s.step);
+  var newScr=ov.querySelector(".obscr");if(newScr&&keepTop)newScr.scrollTop=keepTop;
   document.documentElement.setAttribute("data-theme",(s.theme||S.theme||"g"));
 }
 var TAB_ORDER=["workout","weight","kbju","history"],lastRenderTab=null;
@@ -4267,7 +4281,7 @@ var APPLE_EASE="cubic-bezier(.32,.72,0,1)";
    из-за этого прокрутка сбрасывалась наверх. Запоминаем позиции всех прокручиваемых блоков и возвращаем их. */
 function scrollKey(n,root){if(n===root)return ":root";if(n.id)return "#"+n.id;var c=(n.className&&typeof n.className==="string")?n.className.trim().split(/\s+/)[0]:"";return c?"."+c:""}
 function scrollSnap(root){var out=[];if(!root)return out;[root].concat([].slice.call(root.querySelectorAll("*"))).forEach(function(n){if(n.scrollTop>0||n.scrollLeft>0){var k=scrollKey(n,root);if(k)out.push([k,n.scrollTop,n.scrollLeft])}});return out}
-function scrollRestore(root,snap){if(!root||!snap||!snap.length)return;function go(){snap.forEach(function(x){var n=x[0]===":root"?root:root.querySelector(x[0]);if(n){if(n.scrollTop!==x[1])n.scrollTop=x[1];if(n.scrollLeft!==x[2])n.scrollLeft=x[2]}})}go();requestAnimationFrame(function(){go();requestAnimationFrame(go)});setTimeout(go,60)}
+function scrollRestore(root,snap){if(!root||!snap||!snap.length)return;function go(){snap.forEach(function(x){var n=x[0]===":root"?root:root.querySelector(x[0]);if(n){if(n.scrollTop!==x[1])n.scrollTop=x[1];if(n.scrollLeft!==x[2])n.scrollLeft=x[2]}})}go();requestAnimationFrame(function(){go();requestAnimationFrame(go)});setTimeout(go,60);setTimeout(go,220)}
 function render(){
   var abg=document.getElementById("appbg");if(abg)abg.classList.toggle("kpast",S.tab==="kbju"&&!!kbjuSel&&kbjuSel!==kbToday());
   var appEl=document.getElementById("app");if(appEl)appEl.classList.toggle("kbsec",S.tab==="kbju");
@@ -4277,6 +4291,8 @@ function render(){
     dir=ni>oi?1:-1;
   }
   var keepApp=!switchedTab&&lastRenderTab!==null?scrollSnap(appEl):null;
+  /* iPhone прокручивает к кнопке в фокусе, когда её перерисовывают (вода, +/−) — снимаем фокус заранее */
+  try{var ae=document.activeElement;if(ae&&ae!==document.body&&ae.tagName==="BUTTON"&&appEl&&appEl.contains(ae))ae.blur()}catch(e){}
   if(S.tab==="workout")viewWorkout();else if(S.tab==="weight")viewWeight();else if(S.tab==="history")viewHistory();else viewKbju();
   if(keepApp)scrollRestore(appEl,keepApp);
   navBar();
@@ -4427,7 +4443,7 @@ document.addEventListener("click",function(e){
       var m=find(cur.id),prevW=m.w,prevDate=m.h.length?m.h[0].t:null,gain=Math.round((cur.w-prevW)*100)/100;
       var achBefore=achList(),before={};achBefore.forEach(function(a,i){before[i]=a.cur()>=a.max()});
       if(cur.w!==m.w){m.h.unshift({w:m.w,t:now});m.h=m.h.slice(0,60)}
-      m.w=cur.w;m.st=cur.st;m.s=cur.s;m.r=cur.r;m.img=cur.img;
+      m.w=cur.w;m.st=cur.st;m.s=cur.s;m.r=cur.r;m.img=cur.img;m.used=true;
       save();
       var newAch=null;
       achBefore.forEach(function(a,i){if(!before[i]&&a.cur()>=a.max())newAch=a});

@@ -14,9 +14,11 @@ function present(){
  page.querySelector('.ta-detail-title').textContent=data.machine.n;
  page.querySelector('.ta-detail-category').textContent=data.machine.g;
  const values={load:data.working.w,sets:data.working.s,reps:data.working.r};
+ const used=!!(data.machine.used||(data.machine.h&&data.machine.h.length)||data.logs>0);
  for(const key of ['load','sets','reps']){
   const input=page.querySelector('[data-value="'+key+'"]');const value=document.createElement('span');value.className=input.className+' rd-training-value';value.dataset.value=key;value.textContent=fmt(values[key]);input.replaceWith(value);
-  page.querySelectorAll('[data-white-current="'+key+'"],[data-dark-current="'+key+'"],[data-training-summary="'+key+'"]').forEach(el=>el.textContent=fmt(values[key]));
+  // до первой записи у тренажёра нет рабочего веса — в шапке «—», значение на регуляторе лишь подсказка
+  page.querySelectorAll('[data-white-current="'+key+'"],[data-dark-current="'+key+'"],[data-training-summary="'+key+'"]').forEach(el=>el.textContent=(key==='load'&&!used)?'—':fmt(values[key]));
  }
  const reps=page.querySelector('[data-white-reps]');if(reps)reps.textContent=values.reps;
  const parameters=page.querySelector('[data-white-detail-parameters],[data-dark-detail-parameters]');if(parameters)parameters.textContent=data.lastText;

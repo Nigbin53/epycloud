@@ -36,6 +36,9 @@
       var b = (tg.contentSafeAreaInset && tg.contentSafeAreaInset.top) || 0;
       var top = Math.max(14, a + b + 8);
       document.documentElement.style.setProperty('--rd-safe-top', top + 'px');
+      // низ: зона полоски «домой» iPhone (Telegram сообщает её высоту; иначе — системная или 16 px)
+      var bottom = (tg.safeAreaInset && tg.safeAreaInset.bottom) || 0;
+      document.documentElement.style.setProperty('--rd-safe-bottom', bottom > 0 ? bottom + 'px' : 'max(16px, env(safe-area-inset-bottom))');
       document.documentElement.classList.add('in-telegram');
     } catch (e) {}
   }

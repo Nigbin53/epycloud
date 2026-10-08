@@ -179,3 +179,18 @@
 :root[data-redesign-theme] .kc-bot.busy .kc-hint{animation:kcBusy 1.2s ease-in-out infinite}
 @keyframes kcBusy{50%{opacity:.45}}
 @media (prefers-reduced-motion:reduce){:root[data-redesign-theme] .kc-bot.busy .kc-hint{animation:none}}
+
+/* ===== Мини-апп: фон и края экрана =====
+   Фон страницы — один неподвижный слой на весь экран (.screen). Раньше он был ещё и отдельным слоем внутри прокрутки
+   с другой высотой: при оттягивании вверх/вниз становилась видна «вторая» подложка с другим градиентом. */
+:root[data-redesign-theme]{background:var(--rd-bg)}
+:root[data-redesign-theme] body{background:var(--rd-page-fill);overscroll-behavior:none}
+:root[data-redesign-theme] .app-bg,:root[data-redesign-theme] #appbg .bg-layer,:root[data-redesign-theme] #appbg:not(.photoraw):not(.photodim) .bg-layer{background:transparent!important}
+/* «Резиновое» оттягивание экранов отключено — за краем страницы ничего не открывается */
+:root[data-redesign-theme] :is(.app,.scrpage,#scrpage,.ui-scroll,.obscr,.sheet,.scrov){overscroll-behavior:none}
+/* Тапбар до самого низа: зона полоски «домой» закрыта тапбаром, под ним ничего не видно */
+:root[data-redesign-theme] .nav{bottom:0;height:calc(66px + var(--rd-safe-bottom));padding-bottom:calc(4px + var(--rd-safe-bottom))}
+:root[data-redesign-theme='white'] .nav{background:rgba(232,232,227,.98)}
+:root[data-redesign-theme='black'] .nav{background:linear-gradient(#0b0e10f5,#030507)}
+/* В Telegram iPhone рисует свою полоску «домой» — нарисованная в макете не нужна */
+:root.in-telegram .home-ind{display:none}

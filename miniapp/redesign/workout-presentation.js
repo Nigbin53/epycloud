@@ -36,7 +36,8 @@ function card(m, index, theme) {
   const white = theme === 'white';
   const small = white ? 12 : 18;
   const metrics = `<div class="ta-metrics"><div>${text(m.s, 'compact-value')}${text('ПОДХОДА', 'micro', 'ui-muted')}</div><div>${text(m.r, 'compact-value')}${text('ПОВТОРОВ', 'micro', 'ui-muted')}</div></div>`;
-  const load = `<div class="${white ? 'wt' : 'bt'}-load-summary">${text(fmt(m.w), 'compact-value')}${text('КГ', 'micro', 'ui-muted')}</div>`;
+  // рабочий вес появляется только после первой записи
+  const load = `<div class="${white ? 'wt' : 'bt'}-load-summary${m.used ? '' : ' tg-noload'}">${text(m.used ? fmt(m.w) : '—', 'compact-value')}${text('КГ', 'micro', 'ui-muted')}</div>`;
   const frame = `<div class="${white ? 'wt-exercise-image' : 'bt-exercise-photo-frame'}">${photo(m, theme)}</div>`;
   const record = white
     ? `<button type="button" class="ui-button ui-button-outline wt-record-button" data-a="open" data-v="${m.id}" aria-label="Записать: ${esc(m.n)}"><span class="button-label">ЗАПИСАТЬ</span></button>`
@@ -62,7 +63,8 @@ function addBlock(machines, favs) {
 }
 
 function build(state, theme) {
-  const machines = state.m || [];
+  const hist = state.history || [];
+  const machines = (state.m || []).map((m) => Object.assign({}, m, { used: !!(m.used || (m.h && m.h.length) || hist.some((e) => e.mid === m.id)) }));
   const filter = TABS.includes(state.filter) ? state.filter : 'Избранное';
   const favs = machines.filter((m) => m.favorite);
   const doneCount = machines.filter((m) => m.d).length;

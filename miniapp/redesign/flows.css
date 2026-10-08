@@ -790,3 +790,10 @@
 /* Пока у строки идёт счётчик порций, «изменить»/«удалить» прячутся — счётчику нужно место */
 :root[data-redesign-theme] .kv-row.sel :is(.kv-edit,.kv-del){display:none}
 :root[data-redesign-theme] .kv-row .kv-rn b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Профиль: иконки групп мышц — анатомия из экрана тренажёра */
+:root[data-redesign-theme] :is(.pwg,.prorec) .ic{overflow:hidden;background:var(--rd-recess,transparent)}
+:root[data-redesign-theme] .pwg .ic{width:40px;height:40px}
+:root[data-redesign-theme] .mu-anat{width:100%;height:100%;object-fit:contain;display:block}
+/* История: изменение веса за неделю под актуальным весом */
+:root[data-redesign-theme] .hstat .hdelta{display:block;margin-top:4px;font-size:11px;color:var(--rd-muted)}
