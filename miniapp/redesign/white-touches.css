@@ -5,16 +5,20 @@
   --wt-noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   --wt-screw:radial-gradient(circle at 50% 40%,#c9cac6 0 1.1px,#9fa09c 1.6px,#e9e9e6 2.4px,rgba(255,255,255,0) 3px);
 }
-/* 1) тумблер «Неделя / Месяц» */
-:root[data-redesign-theme="white"] .seg{display:inline-flex!important;align-items:center;gap:0!important;padding:3px!important;border-radius:999px!important;
-  background:linear-gradient(180deg,#d9dedc,#e9ebe8)!important;border:1px solid rgba(150,159,162,.35)!important;
-  box-shadow:inset 0 2px 4px rgba(55,64,73,.18),inset 0 -1px 0 rgba(255,255,255,.75)!important}
-:root[data-redesign-theme="white"] .seg>button{min-height:32px;padding:0 15px!important;border-radius:999px!important;border:1px solid transparent!important;
-  background:transparent!important;box-shadow:none!important;color:#6b7274!important;transition:color .2s}
-:root[data-redesign-theme="white"] .seg>button.on{
-  background:radial-gradient(at 28% 8%,rgba(255,255,255,.61),rgba(0,0,0,0) 68%),linear-gradient(145deg,#f0f2ed,#d4dad8)!important;
-  border:1px solid rgba(150,159,162,.5)!important;color:#ff4a08!important;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -1px 2px rgba(140,150,158,.1),0 2px 5px rgba(55,64,73,.16)!important}
+/* 1) «Неделя / Месяц» — настоящий тумблер: подписи по бокам, между ними оранжевая дорожка с металлической ручкой.
+      Ручка слева — «Неделя», справа — «Месяц». Нажимать можно и на тумблер, и на подписи. */
+:root[data-redesign-theme="white"] .seg{display:inline-flex!important;align-items:center;gap:8px!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;border-radius:0!important}
+:root[data-redesign-theme="white"] .seg>button{order:0;min-height:32px;padding:0 2px!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:#8a8f90!important;font-weight:500;transition:color .2s}
+:root[data-redesign-theme="white"] .seg>button:last-child{order:2}
+:root[data-redesign-theme="white"] .seg>button.on{color:#1d1d1b!important}
+:root[data-redesign-theme="white"] .seg::before{content:"";order:1;flex:none;width:58px;height:32px;border-radius:16px;cursor:pointer;
+  background:radial-gradient(circle at 13px 13px,#8f908c 0 1.6px,rgba(0,0,0,0) 2.2px) 3px 3px/26px 26px no-repeat,
+    radial-gradient(circle at 9px 8px,rgba(255,255,255,.95) 0,rgba(255,255,255,0) 6px) 3px 3px/26px 26px no-repeat,
+    radial-gradient(circle at 13px 13px,#f4f4f1 0,#e6e6e2 7px,#cfd0cc 11px,#aeafab 12.3px,rgba(80,30,0,.35) 12.8px,rgba(80,30,0,0) 13.4px) 3px 3px/26px 26px no-repeat,
+    linear-gradient(180deg,#ff5a10,#ff7a34);
+  box-shadow:inset 0 2px 5px rgba(120,30,0,.45),0 0 12px -3px rgba(255,90,20,.55),0 1px 0 #fff;
+  transition:background-position .25s cubic-bezier(.32,.72,0,1)}
+:root[data-redesign-theme="white"] .seg:has(>button:last-child.on)::before{background-position:29px 3px,29px 3px,29px 3px,0 0}
 /* 2) «Вода» и «Бюджет недели» */
 :root[data-redesign-theme="white"] :is(.na-water,.na-budget){position:relative;
   background:
@@ -26,3 +30,31 @@
   border:1px solid rgba(255,255,255,.85)!important;
   box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.05),0 12px 26px -12px rgba(40,40,30,.32),0 2px 5px rgba(40,40,30,.08)!important}
 :root[data-redesign-theme="white"] .na-budget{border-radius:24px!important;padding:22px 20px 18px!important;box-sizing:border-box}
+
+/* 3) Окно «Записать вес»: пилюли «Шаг» и «Когда» — в стиле кнопки-звезды; кнопки −/+ — такие же светлые выпуклые;
+      «Утром, натощак» — карточка с болтиками и физический тумблер */
+:root[data-redesign-theme="white"] .logsheet .stepbtn{
+  background:radial-gradient(at 28% 8%,rgba(255,255,255,.61),rgba(0,0,0,0) 68%),linear-gradient(145deg,#f0f2ed,#d4dad8)!important;
+  border:1px solid rgba(150,159,162,.5)!important;color:#4f5557!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -1px 2px rgba(140,150,158,.1),0 2px 5px rgba(55,64,73,.11)!important}
+:root[data-redesign-theme="white"] .logsheet .stepbtn.on{
+  background:linear-gradient(145deg,#d6dbd9,#eceeea)!important;border:1px solid rgba(130,139,142,.55)!important;color:#ff4a08!important;
+  box-shadow:inset 0 2px 4px rgba(55,64,73,.2),inset 0 -1px 0 rgba(255,255,255,.6)!important}
+:root[data-redesign-theme="white"] .logsheet .round{
+  background:radial-gradient(at 28% 8%,rgba(255,255,255,.61),rgba(0,0,0,0) 68%),linear-gradient(145deg,#f0f2ed,#d4dad8)!important;
+  border:1px solid rgba(150,159,162,.5)!important;color:#1d1d1b!important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -1px 2px rgba(140,150,158,.1),0 2px 5px rgba(55,64,73,.11)!important}
+:root[data-redesign-theme="white"] .logsheet .fasttog{position:relative;
+  background:
+    var(--wt-screw) 10px 10px/8px 8px no-repeat,var(--wt-screw) calc(100% - 10px) 10px/8px 8px no-repeat,
+    var(--wt-screw) 10px calc(100% - 10px)/8px 8px no-repeat,var(--wt-screw) calc(100% - 10px) calc(100% - 10px)/8px 8px no-repeat,
+    var(--wt-noise),linear-gradient(180deg,#f5f5f2 0%,#ebebe7 55%,#e2e2de 100%)!important;
+  border:1px solid rgba(255,255,255,.85)!important;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.05),0 12px 26px -12px rgba(40,40,30,.32),0 2px 5px rgba(40,40,30,.08)!important}
+:root[data-redesign-theme="white"] .swtc{width:66px!important;height:38px!important;padding:4px!important;border-radius:19px!important;
+  background:linear-gradient(180deg,#d5d5d1,#e8e8e4)!important;box-shadow:inset 0 2px 5px rgba(0,0,0,.25),0 1px 0 #fff!important}
+:root[data-redesign-theme="white"] .swtc.on{background:linear-gradient(180deg,#ff5a10,#ff7a34)!important;
+  box-shadow:inset 0 2px 5px rgba(120,30,0,.45),0 0 14px -3px rgba(255,90,20,.6),0 1px 0 #fff!important}
+:root[data-redesign-theme="white"] .swtc i{width:30px!important;height:30px!important;
+  background:radial-gradient(circle at 50% 50%,#8f908c 0 1.6px,rgba(0,0,0,0) 2.2px),radial-gradient(circle at 38% 30%,#ffffff 0%,#e9e9e6 55%,#b9bab6 100%)!important;
+  box-shadow:0 0 0 1px rgba(0,0,0,.12),0 3px 6px rgba(0,0,0,.3),inset 0 -2px 3px rgba(0,0,0,.12)!important}

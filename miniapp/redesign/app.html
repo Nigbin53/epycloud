@@ -4898,6 +4898,9 @@ try{
 }catch(redesignError){catalogReady=false;catalogSend("error",{message:String(redesignError.message||redesignError)});throw redesignError;}
 
 })();
+
+/* Тумблер «Неделя / Месяц» (White): нажатие на саму дорожку переключает на другой вариант */
+document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classList||!sg.classList.contains("seg"))return;var off=sg.querySelector("button:not(.on)");if(off)off.click()});
 </script>
 <script src="../equipment/store.js?v=equipment-library-r1"></script>
 <script src="presentation.js?v=equipment-library-r1"></script>
