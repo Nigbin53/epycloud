@@ -75,6 +75,12 @@ PROJECT_REF=ВАШ_REF MINIAPP_URL=https://nigbin53.github.io/epycloud/ ./tools/
 ```
 Откройте бота в Telegram, нажмите `/start` → «Открыть Gym Tracker».
 
+
+### Иконка на рабочем столе (один раз в @BotFather)
+Чтобы ярлык на рабочем столе открывал приложение, а не чат, у бота должно быть включено главное мини-приложение:
+@BotFather → `/mybots` → бот → **Bot Settings** → **Configure Mini App** → **Enable Mini App** → прислать адрес `https://nigbin53.github.io/epycloud/`.
+После этого кнопка «📲 На рабочий стол» в чате и команда `/home` открывают приложение по ссылке `t.me/<бот>?startapp=a2hs` и сразу предлагают добавить иконку.
+
 ## Как выпустить обновление
 1. Правите рабочую версию в `06_web-version`.
 2. `python3 tools/build_miniapp.py`

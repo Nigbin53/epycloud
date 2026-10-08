@@ -18,22 +18,37 @@ async function telegram(method: string, body: Record<string, unknown>) {
   if (!response.ok) console.error(method, response.status, await response.text());
 }
 
-// Адрес мини-приложения с меткой: приложение откроется и сразу предложит добавить иконку на рабочий стол
-function homeUrl(): string {
-  return MINIAPP_URL + (MINIAPP_URL.includes("?") ? "&" : "?") + "a2hs=1";
+// Ярлык на рабочем столе Telegram привязывает к «главному мини-приложению» бота (BotFather → Main Mini App).
+// Поэтому кнопка открывает его по ссылке t.me/<бот>?startapp=a2hs, а не как приложение внутри чата —
+// иначе ярлык ведёт в чат. Приложение видит start_param=a2hs и сразу показывает окно «Добавить на главный экран».
+let botUsername = "";
+async function username(): Promise<string> {
+  if (botUsername) return botUsername;
+  try {
+    const r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getMe`);
+    const j = await r.json();
+    botUsername = j?.result?.username ?? "";
+  } catch { /* нет сети — запасной вариант ниже */ }
+  return botUsername;
+}
+async function homeButtonRow(): Promise<Record<string, unknown>> {
+  const name = await username();
+  return name
+    ? { text: "📲 На рабочий стол", url: `https://t.me/${name}?startapp=a2hs` }
+    : { text: "📲 На рабочий стол", web_app: { url: MINIAPP_URL + (MINIAPP_URL.includes("?") ? "&" : "?") + "a2hs=1" } };
 }
 
-function openButton() {
+async function openButton() {
   return {
     inline_keyboard: [
       [{ text: "Открыть Gym Tracker", web_app: { url: MINIAPP_URL } }],
-      [{ text: "📲 На рабочий стол", web_app: { url: homeUrl() } }],
+      [await homeButtonRow()],
     ],
   };
 }
 
-function homeButton() {
-  return { inline_keyboard: [[{ text: "📲 На рабочий стол", web_app: { url: homeUrl() } }]] };
+async function homeButton() {
+  return { inline_keyboard: [[await homeButtonRow()]] };
 }
 
 const HOME_TEXT =
@@ -64,12 +79,12 @@ Deno.serve(async (request) => {
   if (message?.chat?.id && MINIAPP_URL.startsWith("https://")) {
     const text = (message.text ?? "").trim();
     if (text.startsWith("/home")) {
-      await telegram("sendMessage", { chat_id: message.chat.id, text: HOME_TEXT, reply_markup: homeButton() });
+      await telegram("sendMessage", { chat_id: message.chat.id, text: HOME_TEXT, reply_markup: await homeButton() });
     } else {
       const reply = text.startsWith("/help")
         ? "Нажми кнопку ниже — приложение откроется прямо в Telegram. Данные сохраняются в твоём аккаунте."
         : WELCOME;
-      await telegram("sendMessage", { chat_id: message.chat.id, text: reply, reply_markup: openButton() });
+      await telegram("sendMessage", { chat_id: message.chat.id, text: reply, reply_markup: await openButton() });
     }
   }
   // Telegram должен получать 200, иначе будет повторять доставку

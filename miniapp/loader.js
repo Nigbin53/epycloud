@@ -13,7 +13,11 @@
   var cfg = window.GYM_CONFIG || {};
 
   // Кнопка «На рабочий стол» в чате бота открывает мини-апп с меткой a2hs=1 — передаём её приложению
-  try { if (/[?&]a2hs=1\b/.test(location.search)) sessionStorage.setItem('gym_a2hs', '1'); } catch (e) {}
+  // либо ?a2hs=1 в адресе, либо запуск главного мини-приложения по ссылке t.me/<бот>?startapp=a2hs
+  try {
+    var sp = window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe && Telegram.WebApp.initDataUnsafe.start_param;
+    if (/[?&]a2hs=1\b/.test(location.search) || /[#&?]tgWebAppStartParam=a2hs\b/.test(location.search + location.hash) || sp === 'a2hs') sessionStorage.setItem('gym_a2hs', '1');
+  } catch (e) {}
   function start() { location.replace(APP); }
   function read(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } }
   function mark(value) { try { sessionStorage.setItem(READY, value); } catch (e) {} }
