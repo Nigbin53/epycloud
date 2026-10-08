@@ -52,29 +52,52 @@
   function homeSupported() {
     try { return typeof tg.addToHomeScreen === 'function' && (!tg.isVersionAtLeast || tg.isVersionAtLeast('8.0')); } catch (e) { return false; }
   }
+  // Проверка статуса с запасным выходом: если Telegram не ответит за 800 мс, считаем «неизвестно» и не зависаем
   function homeCheck(cb) {
-    if (!homeSupported() || typeof tg.checkHomeScreenStatus !== 'function') { if (cb) cb(homeSupported() ? 'unknown' : 'unsupported'); return; }
-    try { tg.checkHomeScreenStatus(function (st) { homeStatus = st || 'unknown'; if (cb) cb(homeStatus); }); } catch (e) { if (cb) cb('unknown'); }
+    var done = false;
+    function finish(st) { if (done) return; done = true; homeStatus = st || 'unknown'; if (cb) cb(homeStatus); }
+    if (!homeSupported() || typeof tg.checkHomeScreenStatus !== 'function') { finish(homeSupported() ? 'unknown' : 'unsupported'); return; }
+    setTimeout(function () { finish('unknown'); }, 800);
+    try { tg.checkHomeScreenStatus(function (st) { finish(st); }); } catch (e) { finish('unknown'); }
   }
+  function homeUnsupported() {
+    try { tg.showAlert('Эта версия Telegram не умеет добавлять приложение на рабочий стол. Обновите Telegram на телефоне и попробуйте снова.'); } catch (e) {}
+  }
+  // Нажатие пользователя (пункт в Настройках) — сразу системное окно Telegram
   function homeAdd() {
-    if (!homeSupported()) {
-      try { tg.showAlert('Эта версия Telegram не умеет добавлять приложение на рабочий стол. Обновите Telegram на телефоне и попробуйте снова.'); } catch (e) {}
-      return;
-    }
+    if (!homeSupported()) { homeUnsupported(); return; }
+    if (homeStatus === 'added') { try { tg.showAlert('EpyFit уже на рабочем столе.'); } catch (e) {} return; }
+    try { tg.addToHomeScreen(); } catch (e) {}
+  }
+  // Пришли по кнопке «На рабочий стол» из чата: вызова без касания Telegram может не показать,
+  // поэтому сначала своё окно Telegram с кнопкой «Добавить» — её нажатие и открывает системное окно
+  function homeOffer() {
+    if (!homeSupported()) { homeUnsupported(); return; }
     homeCheck(function (st) {
       if (st === 'added') { try { tg.showAlert('EpyFit уже на рабочем столе.'); } catch (e) {} return; }
-      if (st === 'unsupported') { try { tg.showAlert('На этом устройстве Telegram не умеет добавлять иконку на рабочий стол — откройте приложение с телефона.'); } catch (e) {} return; }
+      if (st === 'unsupported') { homeUnsupported(); return; }
+      if (typeof tg.showPopup === 'function') {
+        try {
+          tg.showPopup({
+            title: 'Иконка на рабочем столе',
+            message: 'Добавить EpyFit на главный экран телефона? Приложение будет открываться в одно касание.',
+            buttons: [{ id: 'add', type: 'default', text: 'Добавить' }, { type: 'cancel' }]
+          }, function (id) { if (id === 'add') { try { tg.addToHomeScreen(); } catch (e) {} } });
+          return;
+        } catch (e) {}
+      }
       try { tg.addToHomeScreen(); } catch (e) {}
     });
   }
   window.GymHomeScreen = { supported: homeSupported, status: function () { return homeStatus; }, add: homeAdd };
   try { tg.onEvent('homeScreenAdded', function () { homeStatus = 'added'; }); } catch (e) {}
   homeCheck();
-  // пришли из чата по кнопке «На рабочий стол» — сразу показываем системное окно Telegram
+  // пришли из чата по кнопке «На рабочий стол» (?a2hs=1 или startapp=a2hs)
   try {
-    if (sessionStorage.getItem('gym_a2hs') === '1') {
+    var sp = tg.initDataUnsafe && tg.initDataUnsafe.start_param;
+    if (sessionStorage.getItem('gym_a2hs') === '1' || sp === 'a2hs') {
       sessionStorage.removeItem('gym_a2hs');
-      setTimeout(homeAdd, 700);
+      if (sp !== 'a2hs' || sessionStorage.getItem('gym_a2hs_shown') !== '1') { sessionStorage.setItem('gym_a2hs_shown', '1'); setTimeout(homeOffer, 600); }
     }
   } catch (e) {}
 
