@@ -86,6 +86,8 @@
 /* Тренажёр ещё без записей: вместо веса тире, без подписи «КГ» */
 /* тренажёр без записей: в карточке списка блока веса нет совсем (раньше было оранжевое тире) */
 :root[data-redesign-theme] .rd-workout .tg-noload{display:none!important}
+/* без блока веса фото не прилипает к названию */
+:root[data-redesign-theme] .rd-workout .tg-noload+:is(.wt-exercise-image,.bt-exercise-photo-frame){margin-top:22px}
 /* Вкладки групп занимают всю ширину блока до правого края карточек */
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters{width:100%!important;max-width:none!important;box-sizing:border-box;padding-left:0!important;padding-right:0!important}
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:first-child{padding-left:0!important}
