@@ -75,9 +75,15 @@ function present(){
   const mkey=theme+'|'+mimg.getAttribute('src');
   if(keptMuscle&&keptMuscle.key===mkey)mimg.replaceWith(keptMuscle.node);else keptMuscle={key:mkey,node:mimg};
  }
+ // цифра веса/повторов «прокручивается» вверх или вниз при +/−
+ const vals={id:data.machine.id,load:+data.working.w,reps:+data.working.r};
+ if(lastVals&&lastVals.id===vals.id){
+  ['load','reps'].forEach(k=>{if(vals[k]!==lastVals[k]){const el=page.querySelector('.rd-training-value[data-value="'+k+'"]');if(el)el.classList.add(vals[k]>lastVals[k]?'rd-roll-up':'rd-roll-down');}});
+ }
+ lastVals=vals;
  sheet.replaceChildren(page);
 }
-let keptPhoto=null,keptMuscle=null;
+let keptPhoto=null,keptMuscle=null,lastVals=null;
 /* ---------- r10: подходы, подсказка «пора прибавить», типы упражнений ---------- */
 const exTypeOf=m=>['free','body','time'].includes(m&&m.type)?m.type:'machine';
 function setText(type,x){

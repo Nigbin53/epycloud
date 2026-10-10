@@ -121,3 +121,31 @@
 :root[data-redesign-theme="black"] .rd-medit-step button{background:#0b0d0f;border:1px solid rgba(255,255,255,.14);color:#f2f2f2}
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ta-small-metric{width:220px;max-width:100%}
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ta-small-adjustment{width:100%}
+
+/* ---------- жесты и анимации ---------- */
+@keyframes rdRollUp{from{transform:translateY(55%);opacity:0}to{transform:none;opacity:1}}
+@keyframes rdRollDown{from{transform:translateY(-55%);opacity:0}to{transform:none;opacity:1}}
+.rd-approved-training .rd-training-value.rd-roll-up,.rd-approved-training .rd-training-value.rd-roll-down{display:inline-block;animation:rdRollUp .22s cubic-bezier(.32,.72,0,1) both}
+.rd-approved-training .rd-training-value.rd-roll-down{animation-name:rdRollDown}
+@media (prefers-reduced-motion:reduce){.rd-approved-training .rd-training-value.rd-roll-up,.rd-approved-training .rd-training-value.rd-roll-down{animation:none}}
+/* удержание +/−: без выделения текста и системного меню */
+.rd-approved-training :is([data-a="dw"],[data-a="dr"]){-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+/* свайп подхода влево — красная подложка «Удалить» */
+:root[data-redesign-theme] .rd-approved-training .rd-set{position:relative;overflow:hidden}
+:root[data-redesign-theme] .rd-approved-training .rd-set>*{position:relative;z-index:1}
+:root[data-redesign-theme] .rd-approved-training .rd-set.is-swiping>*{transform:translateX(var(--sx,0px))}
+:root[data-redesign-theme] .rd-approved-training .rd-set.is-back>*{transition:transform .2s cubic-bezier(.32,.72,0,1)}
+:root[data-redesign-theme] .rd-approved-training .rd-set.is-swiping::after{content:"Удалить";position:absolute;inset:0;z-index:0;display:flex;align-items:center;justify-content:flex-end;padding-right:16px;background:rgba(229,72,46,.18);color:#e5482e;font-size:14px;font-weight:600;border-radius:10px}
+:root[data-redesign-theme] .rd-approved-training .rd-set.is-armed::after{background:#e5482e;color:#fff}
+/* список обновлений в настройках */
+.rd-chlog-card{padding:4px 14px!important}
+.rd-chlog-item{border-bottom:1px solid rgba(128,128,128,.18)}
+.rd-chlog-item:last-child{border-bottom:0}
+.rd-chlog-item summary{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:13px 0;cursor:pointer;list-style:none}
+.rd-chlog-item summary::-webkit-details-marker{display:none}
+.rd-chlog-item summary b{font-size:15px;font-weight:600}
+.rd-chlog-item summary span{flex:none;font-size:12px;opacity:.6}
+.rd-chlog-item ul{margin:0 0 12px;padding:0;list-style:none}
+.rd-chlog-item li{position:relative;padding:4px 0 4px 16px;font-size:13px;line-height:1.4;opacity:.85}
+.rd-chlog-item li:before{content:"";position:absolute;left:3px;top:11px;width:5px;height:5px;border-radius:50%;background:#ff5a14}
+.rd-wn-more{display:block;margin-top:10px;text-align:center;font-size:12px;opacity:.55}

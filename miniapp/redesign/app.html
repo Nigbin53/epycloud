@@ -1708,7 +1708,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="avatar-r8.css?v=equipment-library-r1">
 <link rel="stylesheet" href="../equipment/runtime.css?v=equipment-library-r1">
 <link rel="stylesheet" href="white-touches.css?v=3">
-<link rel="stylesheet" href="features-r10.css?v=5">
+<link rel="stylesheet" href="features-r10.css?v=6">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2001,6 +2001,10 @@ window.gymAddFromCatalog=function(name){
 /* window.toast занято элементом #toast (именованный доступ), поэтому отдельное имя */
 window.gymToast=function(msg,undo,sub){toast(msg,undo,sub)};
 window.gymSelPastT=function(){return selPastT()};
+/* для жестов (gestures.js): закрыть шторку, шаг назад в экранах */
+window.gymClose=function(){close()};
+window.gymScreenBack=function(){screenBack()};
+window.gymScrDepth=function(){return scrStack.length};
 /* ===================== /r10 ===================== */
 function greet(){var h=new Date().getHours();return h<6?"Доброй ночи!":h<12?"Доброе утро!":h<18?"Добрый день!":"Добрый вечер!"}
 function mealForNow(){var h=new Date().getHours();return h<11?"Завтрак":h<16?"Обед":h<21?"Ужин":"Перекус"}
@@ -2313,7 +2317,8 @@ function screenSettings(){
     +'<div class="expfmts"><button class="expfmt'+(S.expFmt!=="json"?" on":"")+'" data-a="expfmt" data-v="csv">CSV · Excel</button><button class="expfmt'+(S.expFmt==="json"?" on":"")+'" data-a="expfmt" data-v="json">JSON</button></div>'
     +'<button class="expbtn'+(expDone?" done":"")+'" data-a="doexport">'+(expDone?"Готово — файл сохранён":"Выгрузить · "+nrec+" "+plural(nrec,"запись","записи","записей"))+'</button>'
     +'</div></section>';
-  h+='<span class="settver">Gym Tracker · версия 0.9</span>';
+  if(window.gymChangelogHtml)h+=window.gymChangelogHtml();
+  h+='<span class="settver">EpyFit · '+(window.GymChangelog&&GymChangelog[0]?'сборка '+GymChangelog[0].label:'версия 0.9')+'</span>';
   var sp=document.getElementById("scrpage");sp.className="scrpage settscr";sp.innerHTML=h;
   document.getElementById("scrov").classList.add("settov");
 }
@@ -4552,7 +4557,8 @@ function sheetLog(){
   var el=document.getElementById("sheet");el.className="sheet logsheet";el.innerHTML=h;
 }
 function close(){document.getElementById("ov").classList.remove("on");document.getElementById("sheet").className="sheet";document.getElementById("sheet").dataset.cid="";cur=null;curFood=null}
-function buzz(){try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}}
+/* вибрация: в Telegram — Taptic Engine (heavy — плотный «мужской» щелчок для веса), вне Telegram — vibrate */
+function buzz(kind){try{var hf=window.Telegram&&Telegram.WebApp&&Telegram.WebApp.HapticFeedback;if(hf&&Telegram.WebApp.initData){if(kind==="success"||kind==="error"||kind==="warning")hf.notificationOccurred(kind);else hf.impactOccurred(kind||"light");return}}catch(e){}try{navigator.vibrate&&navigator.vibrate(kind==="heavy"?28:kind==="success"?[18,40,18]:12)}catch(e){}}
 
 document.addEventListener("click",function(e){
   if(e.target.id==="ov"){close();return}
@@ -4582,13 +4588,13 @@ document.addEventListener("click",function(e){
     buzz();save();render();
   }
   else if(a==="close")close();
-  else if(a==="dw"){cur.w=Math.max(0,Math.round((cur.w+(+v)*cur.st)*100)/100);buzz();sheet()}
+  else if(a==="dw"){var w0=cur.w;cur.w=Math.max(0,Math.round((cur.w+(+v)*cur.st)*100)/100);if(cur.w!==w0)buzz("heavy");sheet()}
   else if(a==="st"){cur.st=+v;sheet()}
   else if(a==="ds"){cur.s=Math.min(12,Math.max(1,cur.s+(+v)));sheet()}
   else if(a==="grp"){cur.g=v;sheet()}
   else if(a==="extype"){cur.type=v;if(v==="time"){cur.r=45}else if(cur.r>50)cur.r=10;sheet()}
   else if(a==="sugg"){cur.n=v;sheet()}
-  else if(a==="dr"){var tm=cur.type==="time";cur.r=Math.min(tm?600:50,Math.max(tm?5:1,cur.r+(+v)*(tm?5:1)));sheet()}
+  else if(a==="dr"){var tm=cur.type==="time",r0=cur.r;cur.r=Math.min(tm?600:50,Math.max(tm?5:1,cur.r+(+v)*(tm?5:1)));if(cur.r!==r0)buzz("light");sheet()}
   else if(a==="ok"){cur.ok=!cur.ok;sheet()}
   else if(a==="rmimg"){cur.img="";sheet()}
   else if(a==="mkr"){mkRange=v;sheet()}
@@ -4607,7 +4613,7 @@ document.addEventListener("click",function(e){
       var res=window.gymSetAdd(cur.id,cur.w,cur.r);
       var newAch=null;
       achBefore.forEach(function(a,i){if(!before[i]&&a.cur()>=a.max())newAch=a});
-      buzz();
+      buzz("success");
       if(res&&res.pr)showPR(m.n,res.gain,res.w,res.rec,res.recT,newAch);
       else if(res)toast("Подход "+res.n+" записан","",mt==="time"?res.r+" сек":(mt==="body"?(res.w>0?"+"+f(res.w)+" кг":"свой вес"):f(res.w)+" кг")+" × "+res.r);
     }
@@ -5051,9 +5057,10 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="nutrition-kit.js?v=equipment-library-r1"></script>
 <script src="training-kit.js?v=equipment-library-r1"></script>
 <script src="nutrition-presentation.js?v=equipment-library-r1"></script>
-<script src="training-presentation.js?v=r10-3"></script>
+<script src="training-presentation.js?v=r10-4"></script>
 <script src="workout-presentation.js?v=r10-2"></script>
-<script src="plans-whatsnew.js?v=3"></script>
+<script src="plans-whatsnew.js?v=4"></script>
+<script src="gestures.js?v=1"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
 <script src="avatar-r8.js?v=equipment-library-r1"></script>

@@ -95,15 +95,40 @@ function onClick(e) {
   }
 }
 
-/* ---------- окно «Обновление — что нового» (один раз на версию) ---------- */
-const WHATS_NEW = {
-  version: '2026-10-10',
-  date: '10 октября',
-  items: [
-    'Каждый подход записывается отдельно — кнопкой «Записать»',
-    'Свободные веса, свой вес и упражнения на время',
+/* ---------- список обновлений (сборки) + окно «Что нового» (один раз на последнюю сборку) ---------- */
+const CHANGELOG = [
+  { version: '2026-10-10.2', label: '10.10 · 2', date: '10 октября', title: 'Жесты и анимации', items: [
+    'Свайп от левого края — назад',
+    'Шторки закрываются свайпом вниз',
+    'Удерживай + или − — вес меняется быстро',
+    'Плотная вибрация при смене веса',
+    'Свайп подхода влево — удалить',
+    'Список обновлений внизу настроек',
+  ] },
+  { version: '2026-10-10', label: '10.10', date: '10 октября', title: 'Подходы и планы', items: [
+    'Каждый подход записывается отдельно — кнопкой «Записать», рекорд считается сам',
+    'Свободные веса, свой вес и упражнения на время, группа «Пресс»',
     'Планы тренировок по дням недели',
-  ],
+    'Карандаш у тренажёра: название, группа, фото, подходы и шаг веса',
+    'Запись за прошедший день, прошедшие дни затемнены',
+  ] },
+  { version: '2026-10-08', label: '08.10', date: '8 октября', title: 'Удобство', items: [
+    'EpyFit на рабочем столе: кнопка в чате, /home и пункт в настройках',
+    'Тумблер «Неделя / Месяц», новое окно «Записать вес»',
+    'Вода и избранное в питании без прыжков экрана',
+    'Один фон на весь экран, правки знакомства и истории',
+  ] },
+  { version: '2026-10-07', label: '07.10', date: '7 октября', title: 'Первый запуск', items: [
+    'Мини-приложение в Telegram с синхронизацией между устройствами',
+    'Распознавание еды по фото, тексту и штрихкоду',
+    'Экран «Тренировка» в новом дизайне, кольцо калорий',
+  ] },
+];
+window.GymChangelog = CHANGELOG;
+const WHATS_NEW = CHANGELOG[0];
+window.gymChangelogHtml = function () {
+  return '<section class="settsec rd-chlog"><h2>Обновления</h2><div class="settcard cm rd-chlog-card">' + CHANGELOG.map((c, i) =>
+    '<details class="rd-chlog-item"' + (i === 0 ? ' open' : '') + '><summary><b>' + esc(c.title) + '</b><span>' + esc(c.date) + (i === 0 ? ' · новое' : '') + '</span></summary><ul>' + c.items.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul></details>').join('') + '</div></section>';
 };
 const SEEN_KEY = 'gym_whatsnew_seen';
 function whatsNew() {
@@ -113,7 +138,7 @@ function whatsNew() {
   if (!st) return;
   if (!st.onboarded) { try { localStorage.setItem(SEEN_KEY, WHATS_NEW.version); } catch (_) {} return; } // новичку показывать нечего
   const w = document.createElement('div'); w.className = 'rd-medit rd-whatsnew'; w.setAttribute('role', 'dialog'); w.setAttribute('aria-modal', 'true'); w.setAttribute('aria-label', 'Обновление');
-  w.innerHTML = '<div class="rd-medit-panel rd-wn-panel"><div class="rd-wn-badge">Обновление · ' + WHATS_NEW.date + '</div><b class="rd-wn-title">Что нового</b><ul class="rd-wn-list">' + WHATS_NEW.items.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul><button type="button" class="rd-medit-save rd-wn-ok">Понятно</button></div>';
+  w.innerHTML = '<div class="rd-medit-panel rd-wn-panel"><div class="rd-wn-badge">Обновление · ' + WHATS_NEW.date + '</div><b class="rd-wn-title">' + esc(WHATS_NEW.title) + '</b><ul class="rd-wn-list">' + WHATS_NEW.items.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul><button type="button" class="rd-medit-save rd-wn-ok">Понятно</button><small class="rd-wn-more">Все обновления — внизу настроек</small></div>';
   const done = () => { try { localStorage.setItem(SEEN_KEY, WHATS_NEW.version); } catch (_) {} w.classList.remove('on'); setTimeout(() => w.remove(), 220); };
   w.addEventListener('click', (e) => { if (e.target === w || e.target.closest('.rd-wn-ok')) done(); });
   document.body.append(w); requestAnimationFrame(() => w.classList.add('on'));
