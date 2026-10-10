@@ -45,7 +45,7 @@ function card(m, index, theme) {
   const loadUnit = type === 'body' ? (m.w > 0 ? 'КГ' : '') : 'КГ';
   const noLoad = !m.used || type === 'time';
   const load = `<div class="${white ? 'wt' : 'bt'}-load-summary${noLoad ? ' tg-noload' : ''}${type === 'body' && !(m.w > 0) ? ' tg-bodyweight' : ''}">${text(noLoad ? '—' : loadValue, 'compact-value')}${text(loadUnit, 'micro', 'ui-muted')}</div>`;
-  const tip = typeof window.gymHint === 'function' ? window.gymHint(m.id) : null;
+  const tip = null; // подсказки «прибавить / остаться» убраны по просьбе пользователя
   const hint = tip ? `<button type="button" class="tg-hint tg-hint-${tip.kind}" data-a="open" data-v="${m.id}">${tip.kind === 'up' ? '↑ ' : tip.kind === 'down' ? '↓ ' : '• '}${esc(tip.text)}</button>` : '';
   const frame = `<div class="${white ? 'wt-exercise-image' : 'bt-exercise-photo-frame'}">${photo(m, theme)}</div>`;
   const record = white

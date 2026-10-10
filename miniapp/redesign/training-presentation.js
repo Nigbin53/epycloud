@@ -32,7 +32,7 @@ function present(){
  if(data.working.ok){nativeDone.className='rd-training-success';nativeDone.setAttribute('role','status');nativeDone.innerHTML=UI.icon('check',18)+'<span>Все подходы выполнены</span>';content.querySelector('[data-a="save"]').before(nativeDone);}
  const extra=document.createElement('details');extra.className='rd-training-controls';extra.innerHTML='<summary>Параметры тренажёра</summary><div class="rd-training-extra"></div>';const box=extra.lastElementChild;
  if(!data.working.ok){nativeDone.className='rd-training-complete';box.append(nativeDone);}
- if(nativeStep)box.append(nativeStep);
+ // шаг веса теперь в «Редактировать» (карандаш)
  // смена фото теперь в «Редактировать» (кнопка на фото)
  if(nativeDelete)box.append(nativeDelete);
  content.querySelector('.ta-muscles').after(extra);
@@ -105,15 +105,9 @@ function trialMachine(page,data,theme){
   const ss=todaySets.length?todaySets:(last?last.sets:[]);
   if(par&&ss.length)par.textContent='Последний раз: '+ss.map(x=>type==='time'?x.r+' сек':(x.w>0?'+'+fmt(x.w)+'×':'')+x.r).join(' · ');
  }
- // подсказка прибавки
- const tip=window.gymHint(id);
- const load=page.querySelector('.ta-load');
- if(tip&&load){
-  const b=document.createElement('button');b.type='button';b.className='rd-hint rd-hint-'+tip.kind;
-  b.innerHTML='<span>'+(tip.kind==='up'?'↑ ':tip.kind==='down'?'↓ ':'• ')+tip.text+'</span>'+(tip.kind==='stay'?'':'<b>Поставить</b>');
-  if(tip.kind!=='stay')b.addEventListener('click',()=>window.gymApplyHint(id));
-  load.before(b);
- }
+ // подходов на странице нет (цель подходов — в «Редактировать»), остаются только повторы по центру
+ const sr=page.querySelector('.ta-sets-reps');
+ if(sr){sr.querySelectorAll('.ta-small-metric').forEach(el=>{const lb=el.querySelector('.ta-small-label');if(lb&&/Подход/i.test(lb.textContent))el.remove();});sr.classList.add('rd-reps-only');}
  // подходы за выбранный день: список с удалением; записывает их кнопка «Записать» (бывшая «Сохранить»)
  const sets=window.gymSets(id);
  const past=typeof window.gymSelPastT==='function'&&window.gymSelPastT();
@@ -153,7 +147,7 @@ function meditCrop(file,w,h,q){return new Promise((ok,no)=>{const r=new FileRead
  const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));};im.src=r.result;};r.readAsDataURL(file);});}
 function openEditor(machine,theme){
  const old=document.querySelector('.rd-medit');if(old)old.remove();
- const st={n:machine.n,g:machine.g,img:machine.img||'',cover:machine.cover||'',type:exTypeOf(machine)};
+ const st={n:machine.n,g:machine.g,img:machine.img||'',cover:machine.cover||'',type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5};
  const box=document.createElement('div');box.className='rd-medit';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Редактировать тренажёр');
  const close=()=>{box.classList.remove('on');setTimeout(()=>box.remove(),220);};
  function draw(){
@@ -165,6 +159,8 @@ function openEditor(machine,theme){
    +MEDIT_GROUPS.map(g=>'<button type="button" class="rd-medit-chip'+(g===st.g?' on':'')+'" data-m="group" data-g="'+g+'" aria-pressed="'+(g===st.g)+'">'+g+'</button>').join('')+'</div>'
    +'<div class="rd-medit-lbl">Тип</div><div class="rd-medit-groups" role="group" aria-label="Тип упражнения">'
    +MEDIT_TYPES.map(t=>'<button type="button" class="rd-medit-chip'+(t[0]===st.type?' on':'')+'" data-m="type" data-t="'+t[0]+'" aria-pressed="'+(t[0]===st.type)+'">'+t[1]+'</button>').join('')+'</div>'
+   +'<div class="rd-medit-row2"><div><div class="rd-medit-lbl">Подходов</div><div class="rd-medit-step" role="group" aria-label="Подходов"><button type="button" data-m="sets" data-d="-1" aria-label="Меньше подходов">−</button><b>'+st.s+'</b><button type="button" data-m="sets" data-d="1" aria-label="Больше подходов">+</button></div></div>'
+   +(st.type==='time'?'':'<div><div class="rd-medit-lbl">Шаг веса, кг</div><div class="rd-medit-groups rd-medit-steps" role="group" aria-label="Шаг веса">'+[1,2.5,5,10].map(v=>'<button type="button" class="rd-medit-chip'+(v===st.step?' on':'')+'" data-m="wstep" data-v="'+v+'" aria-pressed="'+(v===st.step)+'">'+String(v).replace('.',',')+'</button>').join('')+'</div></div>')+'</div>'
    +'<div class="rd-medit-photos">'
    +'<div class="rd-medit-ph"><div class="rd-medit-lbl">Фото тренажёра<small>на странице тренажёра</small></div>'
    +'<label class="rd-medit-pick ph">'+(st.img?'<img alt="" src="'+st.img+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="img" hidden></label>'
@@ -186,12 +182,14 @@ function openEditor(machine,theme){
   if(m==='close')close();
   else if(m==='group'){st.g=t.dataset.g;draw();}
   else if(m==='type'){st.type=t.dataset.t;draw();}
+  else if(m==='sets'){st.s=Math.min(12,Math.max(1,st.s+(+t.dataset.d)));draw();}
+  else if(m==='wstep'){st.step=+t.dataset.v;draw();}
   else if(m==='rmimg'){st.img='';draw();}
   else if(m==='rmcover'){st.cover='';draw();}
   else if(m==='save'){
    const n=String(st.n||'').trim();
    if(n.length<2){box.querySelector('.rd-medit-err').textContent='Название — минимум 2 символа';box.querySelector('#rd-medit-name').focus();return;}
-   const ok=window.gymMachineEdit(machine.id,{n:n,g:st.g,img:st.img,cover:st.cover,type:st.type});
+   const ok=window.gymMachineEdit(machine.id,{n:n,g:st.g,img:st.img,cover:st.cover,type:st.type,s:st.s,st:st.step});
    if(ok)close();else box.querySelector('.rd-medit-err').textContent='Не получилось сохранить';
   }
  });
