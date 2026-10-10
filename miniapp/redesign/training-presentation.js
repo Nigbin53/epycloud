@@ -169,9 +169,18 @@ const MEDIT_GROUPS=['Грудь','Спина','Ноги','Руки','Плечи'
 const MEDIT_TYPES=[['machine','Тренажёр'],['free','Свободный вес'],['body','Свой вес'],['time','На время']];
 const meditEsc=v=>String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 // фото с телефона → центральная обрезка под нужные пропорции, сжатый JPEG
+// есть ли в картинке прозрачность (PNG/WebP без фона)
+function hasAlpha(im){try{const c=document.createElement('canvas');c.width=64;c.height=64;const x=c.getContext('2d');x.drawImage(im,0,0,64,64);const d=x.getImageData(0,0,64,64).data;let n=0;for(let i=3;i<d.length;i+=4)if(d[i]<250)n++;return n>20;}catch(_){return false;}}
+// фото с телефона → под пропорции рамки. Обычное фото: обрезка по центру, JPEG.
+// PNG с прозрачным фоном: вписываем целиком, прозрачность сохраняется (PNG), — тренажёр без фона, как встроенные.
 function meditCrop(file,w,h,q){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const im=new Image();im.onerror=no;im.onload=()=>{
+ const c=document.createElement('canvas'),x=c.getContext('2d');
+ if(/png|webp|gif/i.test(file.type||'')&&hasAlpha(im)){
+  const W=Math.round(w*.8),H=Math.round(h*.8),k=Math.min(W/im.width,H/im.height,1),dw=Math.round(im.width*k),dh=Math.round(im.height*k);
+  c.width=W;c.height=H;x.drawImage(im,Math.round((W-dw)/2),Math.round((H-dh)/2),dw,dh);ok(c.toDataURL('image/png'));return;
+ }
  const k=Math.max(w/im.width,h/im.height),sw=w/k,sh=h/k,sx=(im.width-sw)/2,sy=(im.height-sh)/2;
- const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));};im.src=r.result;};r.readAsDataURL(file);});}
+ c.width=w;c.height=h;x.drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));};im.src=r.result;};r.readAsDataURL(file);});}
 function openEditor(machine,theme){
  const old=document.querySelector('.rd-medit');if(old)old.remove();
  const st={n:machine.n,g:machine.g,img:machine.img||'',cover:machine.cover||'',type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5};

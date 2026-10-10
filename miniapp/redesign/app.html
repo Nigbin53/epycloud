@@ -4753,7 +4753,8 @@ document.addEventListener("change",function(e){
       var k=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement("canvas");
       c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
       c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-      cur.img=c.toDataURL("image/jpeg",.72);sheet()};im.src=r.result};
+      var png=/png|webp|gif/i.test(e.target.files[0].type||"")&&(function(){try{var d=c.getContext("2d").getImageData(0,0,c.width,c.height).data;for(var i=3;i<d.length;i+=16)if(d[i]<250)return true}catch(_){}return false})();
+      cur.img=png?c.toDataURL("image/png"):c.toDataURL("image/jpeg",.72);sheet()};im.src=r.result}; /* PNG без фона сохраняет прозрачность */
     r.readAsDataURL(e.target.files[0]);
   }
 });
@@ -5066,7 +5067,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="nutrition-kit.js?v=equipment-library-r1"></script>
 <script src="training-kit.js?v=equipment-library-r1"></script>
 <script src="nutrition-presentation.js?v=equipment-library-r1"></script>
-<script src="training-presentation.js?v=r10-5"></script>
+<script src="training-presentation.js?v=r10-6"></script>
 <script src="workout-presentation.js?v=r10-2"></script>
 <script src="plans-whatsnew.js?v=6"></script>
 <script src="gestures.js?v=6"></script>
