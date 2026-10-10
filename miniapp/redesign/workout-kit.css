@@ -109,17 +109,17 @@
 :root[data-redesign-theme] .rd-workout .ui-calendar>.ui-day.tg-future{cursor:default}
 :root[data-redesign-theme] .rd-workout .ta-today-line .tg-day-label{color:var(--white-accent,#ff5a14)}
 
-/* кнопка «Сменить / Добавить фото» — в правом верхнем углу фото, вне потока (не сдвигает регулятор и фото) */
-:root[data-redesign-theme] .rd-approved-training .rd-photo-pin{position:relative;height:0;z-index:3}
-:root[data-redesign-theme] .rd-approved-training .rd-photo-change{position:absolute;top:6px;right:16px;display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:16px;font-family:inherit;font-size:12px;font-weight:600;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-:root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{top:26px}
-:root[data-redesign-theme="white"] .rd-approved-training .rd-photo-change{color:#1d1d1b;background:rgba(255,255,255,.78);border:1px solid rgba(29,29,27,.12);box-shadow:0 6px 14px -8px rgba(30,30,20,.4)}
-:root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{color:#f2f2f2;background:rgba(20,22,26,.72);border:1px solid rgba(255,255,255,.16)}
-:root[data-redesign-theme] .rd-approved-training .rd-photo-change:active{transform:scale(.97)}
-/* своё фото тренажёра — квадратное, со скруглением; в White вписано в кольцо шкалы */
-:root[data-redesign-theme] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{left:50%!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important;object-fit:cover!important;object-position:center center!important;max-width:none!important}
-:root[data-redesign-theme="white"] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{top:82px!important;width:196px!important;height:196px!important;border-radius:30px;box-shadow:0 14px 28px -14px rgba(30,30,20,.45),0 0 0 1px rgba(29,29,27,.08)}
-:root[data-redesign-theme="black"] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{top:26px!important;width:210px!important;height:210px!important;border-radius:26px;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+/* своё фото тренажёра — как встроенные: во всю ширину, 3:2, по центру рамки, без скругления */
+:root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers .ta-detail-hero[data-equipment-personal="true"]{left:0!important;right:auto!important;top:50%!important;bottom:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:translateY(-50%)!important;object-fit:cover!important;object-position:center center!important;border-radius:0!important;box-shadow:none!important}
+/* карандаш рядом с избранным */
+:root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-content>.ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 38px 38px!important}
+:root[data-redesign-theme="black"] .rd-approved-training.black-leg-layout .ta-detail-content>.ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 36px 44px!important;column-gap:4px!important;height:auto!important;min-height:76px}
+:root[data-redesign-theme="white"] .rd-approved-training .ui-header>.rd-medit-open{box-sizing:border-box;width:38px;height:38px;min-width:38px;min-height:38px;border:1px solid var(--white-border)!important;border-radius:50%;justify-self:end}
+:root[data-redesign-theme="black"] .rd-approved-training .ui-header>.rd-medit-open{justify-self:end}
+/* без рабочего веса «подходы × повторы» по левому краю названия */
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-column,.bt-current-column){align-items:flex-start!important;text-align:left}
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-sets,.bt-current-values){padding-left:0!important}
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-values,.bt-current-values){grid-template-columns:auto auto auto!important;column-gap:14px!important}
 
 /* ---------- редактор тренажёра ---------- */
 .rd-medit{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,12,14,.45);opacity:0;transition:opacity .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
@@ -136,7 +136,7 @@
 .rd-medit-chip{height:36px;padding:0 14px;border-radius:18px;font:inherit;font-size:14px;cursor:pointer}
 .rd-medit-photos{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start}
 .rd-medit-pick{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;border-radius:16px;font-size:13px;font-weight:600}
-.rd-medit-pick.sq{width:120px;height:120px}
+.rd-medit-pick.ph{width:120px;aspect-ratio:3/2}
 .rd-medit-pick.wd{width:100%;aspect-ratio:20/9}
 .rd-medit-pick img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .rd-medit-rm{margin-top:8px;padding:0;border:0;background:none;font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;opacity:.7;color:inherit}

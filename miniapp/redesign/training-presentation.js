@@ -39,7 +39,7 @@ function present(){
  const muscles=page.querySelector('.ta-muscles');
  if(data.machine.g!=='Ноги'){
   const groups={Грудь:'chest',Спина:'back',Бицепс:'arms',Трицепс:'arms',Руки:'arms',Плечи:'chest'};
-  muscles.querySelector('img').src='../assets/anatomy-groups/'+theme+'/'+(groups[data.machine.g]||'front-thighs')+'.png';
+  muscles.querySelector('img').src='../assets/anatomy-groups/'+theme+'/'+(groups[data.machine.g]?groups[data.machine.g]+'-upper':'front-thighs')+'.png'; // обрезано по зоне мышц, как у ног
   muscles.querySelector('.ta-muscle-labels').replaceChildren();const row=document.createElement('div');row.innerHTML='<span class="ta-muscle-dot" aria-hidden="true"></span>';const label=document.createElement('span');label.className='ui-list-title';label.textContent=data.machine.g;row.append(label);muscles.querySelector('.ta-muscle-labels').append(row);
  }
  const approvedChart=page.querySelector('.ta-chart-section');approvedChart.classList.add('rd-training-chart');approvedChart.replaceChildren(nativeChart);
@@ -52,14 +52,16 @@ function present(){
   page.querySelector('.ta-detail-hero').src=theme==='white'?'../white/assets/light-pulldown.png':'../assets/training-lat-graphite.png';
   page.querySelector('.ta-detail-hero-back').hidden=true;
  }
- // кнопка «Редактировать» в углу фото: название, группа мышц, квадратное фото, заставка
- const layers=page.querySelector('.ta-detail-photo-layers');
- if(layers&&typeof window.gymMachineEdit==='function'){
-  const edit=document.createElement('button');edit.type='button';edit.className='rd-photo-change rd-medit-open';
-  edit.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><span>Редактировать</span>';
+ // своё фото — в той же рамке и с теми же краями, что и встроенные фото тренажёров
+ if(data.working.img){const pl=page.querySelector('.ta-detail-photo-layers');if(pl)pl.classList.add('equipment-single-image');}
+ // карандаш «Редактировать» в шапке, рядом с избранным: название, группа мышц, фото, заставка
+ if(star&&typeof window.gymMachineEdit==='function'){
+  const edit=star.cloneNode(false);
+  edit.removeAttribute('aria-pressed');edit.classList.remove('filled');delete edit.dataset.a;delete edit.dataset.v;
+  edit.classList.add('rd-medit-open');edit.setAttribute('aria-label','Редактировать тренажёр');
+  edit.innerHTML='<svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
   edit.addEventListener('click',()=>openEditor(data.machine,theme));
-  // держатель нулевой высоты — кнопка не сдвигает вёрстку страницы
-  const pin=document.createElement('div');pin.className='rd-photo-pin';pin.append(edit);layers.before(pin);
+  star.before(edit);
  }
  sheet.replaceChildren(page);
 }
@@ -83,8 +85,8 @@ function openEditor(machine,theme){
    +'<div class="rd-medit-lbl">Группа мышц</div><div class="rd-medit-groups" role="group" aria-label="Группа мышц">'
    +MEDIT_GROUPS.map(g=>'<button type="button" class="rd-medit-chip'+(g===st.g?' on':'')+'" data-m="group" data-g="'+g+'" aria-pressed="'+(g===st.g)+'">'+g+'</button>').join('')+'</div>'
    +'<div class="rd-medit-photos">'
-   +'<div class="rd-medit-ph"><div class="rd-medit-lbl">Фото тренажёра<small>квадратное, на странице тренажёра</small></div>'
-   +'<label class="rd-medit-pick sq">'+(st.img?'<img alt="" src="'+st.img+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="img" hidden></label>'
+   +'<div class="rd-medit-ph"><div class="rd-medit-lbl">Фото тренажёра<small>на странице тренажёра</small></div>'
+   +'<label class="rd-medit-pick ph">'+(st.img?'<img alt="" src="'+st.img+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="img" hidden></label>'
    +(st.img?'<button type="button" class="rd-medit-rm" data-m="rmimg">Убрать</button>':'')+'</div>'
    +'<div class="rd-medit-ph wide"><div class="rd-medit-lbl">Заставка<small>широкая, в списке тренировок</small></div>'
    +'<label class="rd-medit-pick wd">'+(st.cover?'<img alt="" src="'+st.cover+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="cover" hidden></label>'
@@ -114,7 +116,7 @@ function openEditor(machine,theme){
  box.addEventListener('change',e=>{
   const t=e.target;if(!t.files||!t.files[0])return;
   const kind=t.dataset.m;
-  const job=kind==='img'?meditCrop(t.files[0],560,560,.8):meditCrop(t.files[0],900,405,.76);
+  const job=kind==='img'?meditCrop(t.files[0],900,600,.8):meditCrop(t.files[0],900,405,.76);
   job.then(url=>{st[kind]=url;draw();}).catch(()=>{const er=box.querySelector('.rd-medit-err');if(er)er.textContent='Не удалось открыть фото';});
  });
  document.body.append(box);
