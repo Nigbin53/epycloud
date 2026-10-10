@@ -64,8 +64,20 @@ function present(){
   star.before(edit);
  }
  trialMachine(page,data,theme); // подходы, подсказка, типы упражнений
+ // при +/− страница пересобирается: фото и анатомию берём прежними узлами — без перезагрузки картинки и мелькания
+ const layersNew=page.querySelector('.ta-detail-photo-layers');
+ if(layersNew){
+  const wi=data.working.img||'',pkey=[theme,data.machine.id,data.machine.n,data.machine.g,wi.length,wi.slice(-48)].join('|');
+  if(keptPhoto&&keptPhoto.key===pkey)layersNew.replaceWith(keptPhoto.node);else keptPhoto={key:pkey,node:layersNew};
+ }
+ const mimg=page.querySelector('.ta-muscles img');
+ if(mimg){
+  const mkey=theme+'|'+mimg.getAttribute('src');
+  if(keptMuscle&&keptMuscle.key===mkey)mimg.replaceWith(keptMuscle.node);else keptMuscle={key:mkey,node:mimg};
+ }
  sheet.replaceChildren(page);
 }
+let keptPhoto=null,keptMuscle=null;
 /* ---------- r10: подходы, подсказка «пора прибавить», типы упражнений ---------- */
 const exTypeOf=m=>['free','body','time'].includes(m&&m.type)?m.type:'machine';
 function setText(type,x){
@@ -128,7 +140,7 @@ function trialMachine(page,data,theme){
   saveBtn.setAttribute('aria-label','Записать подход');
  }
  const save=page.querySelector('.ta-detail-content [data-a="save"]');
- if(save)save.before(sec);
+ if(save)save.after(sec); // сразу после подходов/повторов идёт «Записать», под ней — список подходов
 }
 
 /* ---------- редактор тренажёра ---------- */
