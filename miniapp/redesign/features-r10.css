@@ -159,3 +159,14 @@
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ta-small-adjustment>.ui-icon-button::before,:root[data-redesign-theme] .rd-approved-training .rd-reps-only .ta-small-adjustment>.ui-icon-button::after{display:none!important}
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ta-small-adjustment>.ui-icon-button:active{opacity:.45}
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ui-stepper-value{flex:none;width:76px!important;min-width:76px;display:flex!important;align-items:center;justify-content:center;text-align:center;margin:0!important}
+/* следующий экран при свайпе между вкладками — без пустоты */
+.rd-peek{position:absolute;inset:0;z-index:2;pointer-events:none;will-change:transform;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.12)}
+.rd-peek-in{padding:calc(var(--rd-safe-top,14px) + 16px) 20px 0;display:flex;flex-direction:column;gap:14px}
+.rd-peek-h{display:flex;align-items:center;gap:10px;margin:6px 0 10px}
+.rd-peek-h svg{width:26px;height:26px;opacity:.55}
+.rd-peek-h b{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.rd-peek i{display:block;height:120px;border-radius:22px;background:rgba(128,128,128,.12)}
+.rd-peek i.s{height:64px}
+:root[data-redesign-theme="white"] .rd-peek{color:#1d1d1b}
+:root[data-redesign-theme="black"] .rd-peek{color:#f2f2f2;background-color:#000}
+:root[data-redesign-theme="black"] .rd-peek i{background:rgba(255,255,255,.07)}

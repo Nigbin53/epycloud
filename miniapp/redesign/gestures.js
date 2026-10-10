@@ -74,15 +74,38 @@ function tabNeighbor(dir) {
   const nb = [...document.querySelectorAll('#nav .nb[data-a="tab"]')], i = nb.findIndex((b) => b.classList.contains('on'));
   return i < 0 ? null : nb[i + dir] || null;
 }
-function tabFinish(app, dir, btn) {
-  btn.click(); // та же кнопка нижнего меню: вибрация, перерисовка, прокрутка наверх
-  app.style.transition = 'none';
-  app.style.transform = 'translateX(' + (dir * 28) + '%)'; app.style.opacity = '.35';
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    app.style.transition = 'transform .3s ' + EASE + ', opacity .3s ' + EASE;
-    app.style.transform = ''; app.style.opacity = '';
-    setTimeout(() => reset(app, ['transition', 'willChange']), 320);
-  }));
+/* «подглядывание»: следующий экран въезжает за пальцем (фон и заголовок того же экрана, без пустоты),
+   текущий уходит с параллаксом; после отпускания под ним рисуется настоящий экран и он растворяется */
+function peekMake(btn, dir) {
+  const screen = document.querySelector('.screen'), app = document.getElementById('app');
+  const pk = document.createElement('div'); pk.className = 'rd-peek'; pk.setAttribute('aria-hidden', 'true');
+  const cs = getComputedStyle(screen);
+  pk.style.backgroundImage = cs.backgroundImage; pk.style.backgroundColor = cs.backgroundColor !== 'rgba(0, 0, 0, 0)' ? cs.backgroundColor : getComputedStyle(document.body).backgroundColor;
+  pk.style.backgroundSize = cs.backgroundSize; pk.style.backgroundPosition = cs.backgroundPosition;
+  const label = (btn.querySelector('.nblabel') || btn).textContent.trim(), ic = btn.querySelector('svg');
+  pk.innerHTML = '<div class="rd-peek-in"><div class="rd-peek-h">' + (ic ? ic.outerHTML : '') + '<b>' + label + '</b></div><i></i><i></i><i class="s"></i><i></i></div>';
+  pk.style.transform = 'translateX(' + (dir * 100) + '%)';
+  screen.insertBefore(pk, app.nextSibling);
+  return pk;
+}
+function tabFinish(tb, dir) {
+  const app = tb.el, pk = tb.peek;
+  pk.style.transition = 'transform .2s ' + EASE; pk.style.transform = 'translateX(0)';
+  app.style.transition = 'transform .2s ' + EASE + ', opacity .2s ' + EASE; app.style.transform = 'translateX(' + (-dir * 30) + '%)'; app.style.opacity = '.4';
+  setTimeout(() => {
+    reset(app, ['transition', 'transform', 'opacity', 'willChange']);
+    tb.next.click(); // та же кнопка нижнего меню: вибрация, перерисовка, прокрутка наверх
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      pk.style.transition = 'opacity .22s ease'; pk.style.opacity = '0';
+      setTimeout(() => pk.remove(), 240);
+    }));
+  }, 200);
+}
+function tabCancel(tb) {
+  const app = tb.el, pk = tb.peek, dir = tb.dir;
+  app.style.transition = 'transform .22s ' + EASE + ', opacity .22s ' + EASE; app.style.transform = ''; app.style.opacity = '';
+  if (pk) { pk.style.transition = 'transform .22s ' + EASE; pk.style.transform = 'translateX(' + (dir * 100) + '%)'; setTimeout(() => pk.remove(), 240); }
+  setTimeout(() => reset(app, ['transition', 'willChange']), 240);
 }
 
 document.addEventListener('touchstart', (e) => {
@@ -136,9 +159,14 @@ document.addEventListener('touchmove', (e) => {
     }
     if (tab.lock !== 'x') { tab = null; return; }
     e.preventDefault();
-    tab.next = tabNeighbor(dx < 0 ? 1 : -1);
+    const dir = dx < 0 ? 1 : -1;
+    if (tab.dir !== dir) { if (tab.peek) tab.peek.remove(); tab.peek = null; tab.dir = dir; tab.next = tabNeighbor(dir); if (tab.next) tab.peek = peekMake(tab.next, dir); }
     tab.d = tab.next ? dx : dx * 0.25; // у крайних экранов — пружинит
-    tab.el.style.transform = 'translateX(' + tab.d + 'px)';
+    if (tab.next) {
+      const f = Math.min(1, Math.abs(dx) / tab.w);
+      tab.el.style.transform = 'translateX(' + (dx * 0.3) + 'px)'; tab.el.style.opacity = String(1 - f * 0.6);
+      tab.peek.style.transform = 'translateX(' + (dir * tab.w + dx) + 'px)';
+    } else tab.el.style.transform = 'translateX(' + tab.d + 'px)';
   } else if (pull) {
     const dx = t.clientX - pull.x0, dy = t.clientY - pull.y0;
     if (pull.lock === null) {
@@ -173,9 +201,7 @@ function end(cancel) {
   }
   if (tab && tab.lock === 'x') {
     const tb = tab, v = Math.abs(tb.d) / Math.max(1, now() - tb.t0), go = !cancel && tb.next && (Math.abs(tb.d) > tb.w * 0.22 || v > 0.45);
-    tb.el.style.transition = 'transform .2s ' + EASE;
-    if (go) { const dir = tb.d < 0 ? 1 : -1; tb.el.style.transform = 'translateX(' + (-dir * tb.w) + 'px)'; setTimeout(() => tabFinish(tb.el, dir, tb.next), 170); }
-    else { tb.el.style.transform = ''; setTimeout(() => reset(tb.el, ['transition', 'willChange']), 220); }
+    if (go) tabFinish(tb, tb.dir); else tabCancel(tb);
   }
   back = pull = row = tab = null;
 }
