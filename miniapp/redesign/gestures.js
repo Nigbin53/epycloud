@@ -59,10 +59,36 @@ function pullFinish(el, kind) {
 /* ---------- 3. свайп подхода влево — удалить ---------- */
 let row = null;
 
+/* ---------- 5. свайп между главными экранами: Тренировка · Вес · Питание · История ---------- */
+let tab = null;
+const overlayOpen = () => !!document.querySelector('#ov.on, #scrov.on, .rd-medit.on, #prov.on, .obscr');
+function hBlocked(el) {
+  for (let n = el; n && n.id !== 'app'; n = n.parentElement) {
+    if (n.matches && n.matches('input,textarea,select,[data-noswipe],.ui-calendar,.tg-filters,.seg,.rd-r7-switch,.rd-set')) return true;
+    const cs = getComputedStyle(n);
+    if (n.scrollWidth > n.clientWidth + 2 && /(auto|scroll)/.test(cs.overflowX)) return true; // свои горизонтальные ленты
+  }
+  return false;
+}
+function tabNeighbor(dir) {
+  const nb = [...document.querySelectorAll('#nav .nb[data-a="tab"]')], i = nb.findIndex((b) => b.classList.contains('on'));
+  return i < 0 ? null : nb[i + dir] || null;
+}
+function tabFinish(app, dir, btn) {
+  btn.click(); // та же кнопка нижнего меню: вибрация, перерисовка, прокрутка наверх
+  app.style.transition = 'none';
+  app.style.transform = 'translateX(' + (dir * 28) + '%)'; app.style.opacity = '.35';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    app.style.transition = 'transform .3s ' + EASE + ', opacity .3s ' + EASE;
+    app.style.transform = ''; app.style.opacity = '';
+    setTimeout(() => reset(app, ['transition', 'willChange']), 320);
+  }));
+}
+
 document.addEventListener('touchstart', (e) => {
-  if (e.touches.length !== 1) { back = pull = row = null; return; }
+  if (e.touches.length !== 1) { back = pull = row = tab = null; return; }
   const t = e.touches[0], target = e.target;
-  back = pull = row = null;
+  back = pull = row = tab = null;
   if (t.clientX <= 24) {
     const b = backTarget(target);
     if (b) { back = Object.assign(b, { x0: t.clientX, y0: t.clientY, t0: now(), d: 0, lock: null, w: b.el.getBoundingClientRect().width || innerWidth }); return; }
@@ -71,7 +97,9 @@ document.addEventListener('touchstart', (e) => {
   if (r && !target.closest('.rd-set-x')) { row = { el: r, x0: t.clientX, y0: t.clientY, d: 0, lock: null }; return; }
   if (target.closest && target.closest('input,textarea,select,.tg-filters,.ui-calendar,.rd-plan-days')) return;
   const p = pullTarget(target);
-  if (p && p.el.scrollTop <= 0) pull = Object.assign(p, { x0: t.clientX, y0: t.clientY, t0: now(), d: 0, lock: null, h: p.el.getBoundingClientRect().height || innerHeight });
+  if (p && p.el.scrollTop <= 0) { pull = Object.assign(p, { x0: t.clientX, y0: t.clientY, t0: now(), d: 0, lock: null, h: p.el.getBoundingClientRect().height || innerHeight }); return; }
+  const app = document.getElementById('app');
+  if (app && app.contains(target) && !overlayOpen() && !hBlocked(target)) tab = { el: app, x0: t.clientX, y0: t.clientY, t0: now(), d: 0, lock: null, w: app.getBoundingClientRect().width || innerWidth };
 }, { passive: true });
 
 document.addEventListener('touchmove', (e) => {
@@ -99,6 +127,18 @@ document.addEventListener('touchmove', (e) => {
     row.d = Math.min(0, dx);
     row.el.style.setProperty('--sx', row.d + 'px');
     row.el.classList.toggle('is-armed', row.d < -90);
+  } else if (tab) {
+    const dx = t.clientX - tab.x0, dy = t.clientY - tab.y0;
+    if (tab.lock === null) {
+      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+      tab.lock = Math.abs(dx) > Math.abs(dy) * 1.3 ? 'x' : 'no';
+      if (tab.lock === 'x') { tab.el.style.transition = 'none'; tab.el.style.willChange = 'transform'; }
+    }
+    if (tab.lock !== 'x') { tab = null; return; }
+    e.preventDefault();
+    tab.next = tabNeighbor(dx < 0 ? 1 : -1);
+    tab.d = tab.next ? dx : dx * 0.25; // у крайних экранов — пружинит
+    tab.el.style.transform = 'translateX(' + tab.d + 'px)';
   } else if (pull) {
     const dx = t.clientX - pull.x0, dy = t.clientY - pull.y0;
     if (pull.lock === null) {
@@ -131,7 +171,13 @@ function end(cancel) {
     if (go) { p.el.style.transform = 'translateY(110%)'; setTimeout(() => pullFinish(p.el, p.kind), 220); }
     else { p.el.style.transform = ''; setTimeout(() => reset(p.el, ['transition', 'willChange']), 260); }
   }
-  back = pull = row = null;
+  if (tab && tab.lock === 'x') {
+    const tb = tab, v = Math.abs(tb.d) / Math.max(1, now() - tb.t0), go = !cancel && tb.next && (Math.abs(tb.d) > tb.w * 0.22 || v > 0.45);
+    tb.el.style.transition = 'transform .2s ' + EASE;
+    if (go) { const dir = tb.d < 0 ? 1 : -1; tb.el.style.transform = 'translateX(' + (-dir * tb.w) + 'px)'; setTimeout(() => tabFinish(tb.el, dir, tb.next), 170); }
+    else { tb.el.style.transform = ''; setTimeout(() => reset(tb.el, ['transition', 'willChange']), 220); }
+  }
+  back = pull = row = tab = null;
 }
 document.addEventListener('touchend', () => end(false), { passive: true });
 document.addEventListener('touchcancel', () => end(true), { passive: true });
