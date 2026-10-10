@@ -230,6 +230,17 @@ function end(cancel) {
 document.addEventListener('touchend', () => end(false), { passive: true });
 document.addEventListener('touchcancel', () => end(true), { passive: true });
 
+/* ---------- выезжающий список «Из каталога» в окне добавления ---------- */
+document.addEventListener('click', (e) => {
+  const t = e.target.closest && e.target.closest('[data-cat-toggle]');
+  if (!t) return;
+  const wrap = t.nextElementSibling, open = !t.classList.contains('open');
+  window.gymCatOpen = open;
+  t.classList.toggle('open', open); t.setAttribute('aria-expanded', String(open));
+  if (wrap) wrap.classList.toggle('open', open);
+  haptic('light');
+});
+
 /* ---------- 4. удержание +/− на странице тренажёра — быстрый повтор ---------- */
 const HOLD_SEL = '#sheet .rd-approved-training [data-a="dw"], #sheet .rd-approved-training [data-a="dr"]';
 let hold = null;

@@ -176,3 +176,15 @@
   background:radial-gradient(closest-side,rgba(255,120,60,.15),rgba(255,120,60,0));filter:blur(8px);
   -webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent)}
 :root[data-redesign-theme="black"] .rd-seam{background:radial-gradient(closest-side,rgba(255,255,255,.16),rgba(255,255,255,0))}
+
+/* «Из каталога»: выезжающий список */
+:root[data-redesign-theme] .addsheet .addcat-toggle{display:flex;align-items:center;gap:8px;width:100%;padding:12px 0;background:none;border:0;color:inherit;font:inherit;cursor:pointer;text-align:left}
+:root[data-redesign-theme] .addsheet .addcat-toggle span{flex:1}
+:root[data-redesign-theme] .addsheet .addcat-toggle em{font-style:normal;text-transform:none;letter-spacing:0;font-size:12px;opacity:.6}
+:root[data-redesign-theme] .addsheet .addcat-toggle i{width:9px;height:9px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .3s cubic-bezier(.32,.72,0,1);opacity:.7}
+:root[data-redesign-theme] .addsheet .addcat-toggle.open i{transform:rotate(225deg) translateY(-1px)}
+:root[data-redesign-theme] .addsheet .addcat-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s cubic-bezier(.32,.72,0,1)}
+:root[data-redesign-theme] .addsheet .addcat-wrap.open{grid-template-rows:1fr}
+:root[data-redesign-theme] .addsheet .addcat-in{overflow:hidden;min-height:0}
+:root[data-redesign-theme] .addsheet .addcat-wrap .catpick{opacity:0;transform:translateY(-6px);transition:opacity .25s ease,transform .32s cubic-bezier(.32,.72,0,1);padding-bottom:4px}
+:root[data-redesign-theme] .addsheet .addcat-wrap.open .catpick{opacity:1;transform:none}
