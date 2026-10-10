@@ -109,9 +109,11 @@
 :root[data-redesign-theme] .rd-workout .ui-calendar>.ui-day.tg-future{cursor:default}
 :root[data-redesign-theme] .rd-workout .ta-today-line .tg-day-label{color:var(--white-accent,#ff5a14)}
 
-/* кнопка «Сменить / Добавить фото» поверх нижнего края фото на странице тренажёра */
-:root[data-redesign-theme] .rd-approved-training .rd-photo-change{position:relative;z-index:3;display:flex;align-items:center;gap:7px;width:max-content;margin:-46px 16px 14px auto;padding:9px 14px;border-radius:20px;font:600 13px/1 inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-:root[data-redesign-theme="white"] .rd-approved-training .rd-photo-change{margin-top:-80px;margin-right:24px;color:#1d1d1b;background:rgba(255,255,255,.78);border:1px solid rgba(29,29,27,.12);box-shadow:0 6px 14px -8px rgba(30,30,20,.4)}
+/* кнопка «Сменить / Добавить фото» — в правом верхнем углу фото, вне потока (не сдвигает регулятор и фото) */
+:root[data-redesign-theme] .rd-approved-training .rd-photo-pin{position:relative;height:0;z-index:3}
+:root[data-redesign-theme] .rd-approved-training .rd-photo-change{position:absolute;top:6px;right:16px;display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:16px;font:600 12px/1 inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+:root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{top:26px}
+:root[data-redesign-theme="white"] .rd-approved-training .rd-photo-change{color:#1d1d1b;background:rgba(255,255,255,.78);border:1px solid rgba(29,29,27,.12);box-shadow:0 6px 14px -8px rgba(30,30,20,.4)}
 :root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{color:#f2f2f2;background:rgba(20,22,26,.72);border:1px solid rgba(255,255,255,.16)}
 :root[data-redesign-theme] .rd-approved-training .rd-photo-change:active{transform:scale(.97)}
 /* своё фото тренажёра: целиком, без растяжения и не заходит под регулятор веса */
