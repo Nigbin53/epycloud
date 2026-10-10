@@ -110,7 +110,7 @@
 :root[data-redesign-theme] .rd-workout .ta-today-line .tg-day-label{color:var(--white-accent,#ff5a14)}
 
 /* своё фото тренажёра — как встроенные: во всю ширину, 3:2, по центру рамки, без скругления */
-:root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers .ta-detail-hero[data-equipment-personal="true"]{left:0!important;right:auto!important;top:50%!important;bottom:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:translateY(-50%)!important;object-fit:cover!important;object-position:center center!important;border-radius:0!important;box-shadow:none!important}
+:root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers .ta-detail-hero[data-equipment-personal="true"],:root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers .ta-detail-hero[data-equipment-placeholder="true"]{left:0!important;right:auto!important;top:50%!important;bottom:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:translateY(-50%)!important;object-fit:cover!important;object-position:center center!important;border-radius:0!important;box-shadow:none!important}
 /* карандаш рядом с избранным */
 :root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-content>.ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 38px 38px!important}
 :root[data-redesign-theme="black"] .rd-approved-training.black-leg-layout .ta-detail-content>.ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 36px 44px!important;column-gap:4px!important;height:auto!important;min-height:76px}
@@ -157,3 +157,6 @@
 :root[data-redesign-theme="black"] .rd-medit-pick{background:#0b0d0f;border:1px dashed rgba(255,255,255,.2);color:#9aa0a4}
 :root[data-redesign-theme="black"] .rd-medit-cancel{background:transparent;border:1px solid rgba(255,255,255,.18);color:#f2f2f2}
 :root[data-redesign-theme="black"] .rd-medit-save{background:#f2f2f2;border:0;color:#111}
+
+/* текст в чипах каталога и типа — по центру кнопки */
+:root[data-redesign-theme] .addsheet .catchip{align-items:center!important;justify-content:center}
