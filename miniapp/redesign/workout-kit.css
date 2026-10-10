@@ -111,11 +111,49 @@
 
 /* кнопка «Сменить / Добавить фото» — в правом верхнем углу фото, вне потока (не сдвигает регулятор и фото) */
 :root[data-redesign-theme] .rd-approved-training .rd-photo-pin{position:relative;height:0;z-index:3}
-:root[data-redesign-theme] .rd-approved-training .rd-photo-change{position:absolute;top:6px;right:16px;display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:16px;font:600 12px/1 inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+:root[data-redesign-theme] .rd-approved-training .rd-photo-change{position:absolute;top:6px;right:16px;display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:16px;font-family:inherit;font-size:12px;font-weight:600;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 :root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{top:26px}
 :root[data-redesign-theme="white"] .rd-approved-training .rd-photo-change{color:#1d1d1b;background:rgba(255,255,255,.78);border:1px solid rgba(29,29,27,.12);box-shadow:0 6px 14px -8px rgba(30,30,20,.4)}
 :root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{color:#f2f2f2;background:rgba(20,22,26,.72);border:1px solid rgba(255,255,255,.16)}
 :root[data-redesign-theme] .rd-approved-training .rd-photo-change:active{transform:scale(.97)}
-/* своё фото тренажёра: целиком, без растяжения и не заходит под регулятор веса */
-:root[data-redesign-theme] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{object-fit:contain!important;object-position:center center!important}
-:root[data-redesign-theme="white"] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{height:236px!important}
+/* своё фото тренажёра — квадратное, со скруглением; в White вписано в кольцо шкалы */
+:root[data-redesign-theme] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{left:50%!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important;object-fit:cover!important;object-position:center center!important;max-width:none!important}
+:root[data-redesign-theme="white"] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{top:82px!important;width:196px!important;height:196px!important;border-radius:30px;box-shadow:0 14px 28px -14px rgba(30,30,20,.45),0 0 0 1px rgba(29,29,27,.08)}
+:root[data-redesign-theme="black"] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{top:26px!important;width:210px!important;height:210px!important;border-radius:26px;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+
+/* ---------- редактор тренажёра ---------- */
+.rd-medit{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,12,14,.45);opacity:0;transition:opacity .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.rd-medit.on{opacity:1}
+.rd-medit-panel{width:100%;max-width:440px;max-height:calc(100% - 40px);overflow:auto;box-sizing:border-box;padding:18px 18px calc(18px + var(--rd-safe-bottom,0px));border-radius:26px 26px 0 0;transform:translateY(24px);transition:transform .25s cubic-bezier(.32,.72,0,1);font-family:inherit}
+.rd-medit.on .rd-medit-panel{transform:none}
+.rd-medit-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rd-medit-head b{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.rd-medit-x{width:36px;height:36px;border-radius:50%;border:0;font-size:24px;line-height:1;cursor:pointer;background:transparent;color:inherit}
+.rd-medit-lbl{display:block;margin:14px 0 8px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;opacity:.65}
+.rd-medit-lbl small{display:block;margin-top:3px;font-size:10px;font-weight:400;letter-spacing:0;text-transform:none}
+.rd-medit-input{width:100%;box-sizing:border-box;height:48px;padding:0 14px;border-radius:14px;font:inherit;font-size:16px;outline:none}
+.rd-medit-groups{display:flex;flex-wrap:wrap;gap:8px}
+.rd-medit-chip{height:36px;padding:0 14px;border-radius:18px;font:inherit;font-size:14px;cursor:pointer}
+.rd-medit-photos{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start}
+.rd-medit-pick{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;border-radius:16px;font-size:13px;font-weight:600}
+.rd-medit-pick.sq{width:120px;height:120px}
+.rd-medit-pick.wd{width:100%;aspect-ratio:20/9}
+.rd-medit-pick img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rd-medit-rm{margin-top:8px;padding:0;border:0;background:none;font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;opacity:.7;color:inherit}
+.rd-medit-err{min-height:18px;margin-top:10px;font-size:13px;color:#e5482e}
+.rd-medit-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:6px}
+.rd-medit-actions button{height:50px;border-radius:25px;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+:root[data-redesign-theme="white"] .rd-medit-panel{background:#f1f1ee;color:#1d1d1b;box-shadow:0 -18px 40px -12px rgba(0,0,0,.3)}
+:root[data-redesign-theme="white"] .rd-medit-input{background:#fff;border:1px solid rgba(29,29,27,.14);color:#1d1d1b}
+:root[data-redesign-theme="white"] .rd-medit-chip{background:#fff;border:1px solid rgba(29,29,27,.14);color:#1d1d1b}
+:root[data-redesign-theme="white"] .rd-medit-chip.on{border:2px solid #ff5a14;color:#ff4a08}
+:root[data-redesign-theme="white"] .rd-medit-pick{background:#e2e2de;border:1px dashed rgba(29,29,27,.25);color:#6d6d68}
+:root[data-redesign-theme="white"] .rd-medit-cancel{background:#fff;border:1px solid rgba(29,29,27,.14);color:#1d1d1b}
+:root[data-redesign-theme="white"] .rd-medit-save{background:#1d1d1b;border:0;color:#fff}
+:root[data-redesign-theme="black"] .rd-medit-panel{background:#14171a;color:#f2f2f2;border-top:1px solid rgba(255,255,255,.1)}
+:root[data-redesign-theme="black"] .rd-medit-input{background:#0b0d0f;border:1px solid rgba(255,255,255,.14);color:#f2f2f2}
+:root[data-redesign-theme="black"] .rd-medit-chip{background:#0b0d0f;border:1px solid rgba(255,255,255,.14);color:#cfd3d6}
+:root[data-redesign-theme="black"] .rd-medit-chip.on{border-color:#f2f2f2;color:#fff}
+:root[data-redesign-theme="black"] .rd-medit-pick{background:#0b0d0f;border:1px dashed rgba(255,255,255,.2);color:#9aa0a4}
+:root[data-redesign-theme="black"] .rd-medit-cancel{background:transparent;border:1px solid rgba(255,255,255,.18);color:#f2f2f2}
+:root[data-redesign-theme="black"] .rd-medit-save{background:#f2f2f2;border:0;color:#111}

@@ -26,7 +26,9 @@ function week() {
 }
 
 function photo(m, theme) {
-  if (m.img) return `<img class="ui-photo ta-exercise-photo" data-equipment-personal="true" src="${esc(m.img)}" alt="">`;
+  // своя заставка (широкая) или, если её нет, своё квадратное фото
+  const mine = m.cover || m.img;
+  if (mine) return `<img class="ui-photo ta-exercise-photo" data-equipment-personal="true" src="${esc(mine)}" alt="">`;
   const store = window.GymEquipment;
   const own = store && store.ownKey ? store.ownKey(m.n, 'overview', theme) : null;
   const src = own ? store.resolve(own) : (store && store.placeholder ? store.placeholder(theme) : '');
