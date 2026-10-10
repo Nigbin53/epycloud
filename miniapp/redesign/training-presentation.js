@@ -52,6 +52,13 @@ function present(){
   page.querySelector('.ta-detail-hero').src=theme==='white'?'../white/assets/light-pulldown.png':'../assets/training-lat-graphite.png';
   page.querySelector('.ta-detail-hero-back').hidden=true;
  }
+ // заметная кнопка смены фото прямо на фото тренажёра (тот же выбор файла #pf, что в «Параметрах»)
+ const layers=page.querySelector('.ta-detail-photo-layers');
+ if(layers&&page.querySelector('#pf')){
+  const cam=document.createElement('label');cam.className='rd-photo-change';cam.htmlFor='pf';
+  cam.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.8l1.5-2h4.4l1.5 2h1.8A2.5 2.5 0 0 1 20 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.5" r="3.5"/></svg><span>'+(data.working.img?'Сменить фото':'Добавить фото')+'</span>';
+  layers.after(cam);
+ }
  sheet.replaceChildren(page);
 }
 function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(present);}

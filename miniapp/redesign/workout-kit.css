@@ -98,3 +98,22 @@
 :root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-load,.bt-current-load){display:none!important}
 :root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-detail-current,.bt-detail-current){grid-template-columns:max-content!important;justify-content:start!important}
 :root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-sets,.bt-current-sets){justify-self:start!important;margin-left:0!important}
+
+/* прошедшие дни недели затемнены, будущие — неактивны */
+:root[data-redesign-theme="white"] .rd-workout .ui-calendar>.ui-day.tg-past{background:rgba(29,29,27,.07)!important;border-color:rgba(29,29,27,.06)!important}
+:root[data-redesign-theme="white"] .rd-workout .ui-calendar>.ui-day.tg-past :is(small,strong){color:#8f9392!important}
+:root[data-redesign-theme="white"] .rd-workout .ui-calendar>.ui-day.tg-past.selected{border-color:var(--white-accent)!important}
+:root[data-redesign-theme="black"] .rd-workout .ui-calendar>.ui-day.tg-past{background:rgba(0,0,0,.35)!important}
+:root[data-redesign-theme="black"] .rd-workout .ui-calendar>.ui-day.tg-past :is(small,strong){opacity:.42}
+:root[data-redesign-theme="black"] .rd-workout .ui-calendar>.ui-day.tg-past.selected :is(small,strong){opacity:.8}
+:root[data-redesign-theme] .rd-workout .ui-calendar>.ui-day.tg-future{cursor:default}
+:root[data-redesign-theme] .rd-workout .ta-today-line .tg-day-label{color:var(--white-accent,#ff5a14)}
+
+/* кнопка «Сменить / Добавить фото» поверх нижнего края фото на странице тренажёра */
+:root[data-redesign-theme] .rd-approved-training .rd-photo-change{position:relative;z-index:3;display:flex;align-items:center;gap:7px;width:max-content;margin:-46px 16px 14px auto;padding:9px 14px;border-radius:20px;font:600 13px/1 inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+:root[data-redesign-theme="white"] .rd-approved-training .rd-photo-change{margin-top:-80px;margin-right:24px;color:#1d1d1b;background:rgba(255,255,255,.78);border:1px solid rgba(29,29,27,.12);box-shadow:0 6px 14px -8px rgba(30,30,20,.4)}
+:root[data-redesign-theme="black"] .rd-approved-training .rd-photo-change{color:#f2f2f2;background:rgba(20,22,26,.72);border:1px solid rgba(255,255,255,.16)}
+:root[data-redesign-theme] .rd-approved-training .rd-photo-change:active{transform:scale(.97)}
+/* своё фото тренажёра: целиком, без растяжения и не заходит под регулятор веса */
+:root[data-redesign-theme] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{object-fit:contain!important;object-position:center center!important}
+:root[data-redesign-theme="white"] .rd-approved-training .ta-detail-hero[data-equipment-personal="true"]{height:236px!important}

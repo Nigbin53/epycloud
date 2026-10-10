@@ -6,6 +6,7 @@
 const GROUPS = ['Грудь', 'Спина', 'Ноги', 'Руки', 'Плечи'];
 const TABS = GROUPS.concat(['Избранное']);
 const DAY_NAMES = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const DAY_FULL = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 let pickerOpen = false;
 let scheduled = false;
 
@@ -64,15 +65,21 @@ function addBlock(machines, favs) {
 
 function build(state, theme) {
   const hist = state.history || [];
-  const machines = (state.m || []).map((m) => Object.assign({}, m, { used: !!(m.used || (m.h && m.h.length) || hist.some((e) => e.mid === m.id)) }));
+  const today = (new Date().getDay() + 6) % 7;
+  const selected = Number.isInteger(state.day) && state.day <= today ? state.day : today;
+  // прошедший день: «выполнено» = есть запись в истории за этот день
+  const past = selected < today;
+  const selKey = dayKey(week()[selected]);
+  const machines = (state.m || []).map((m) => Object.assign({}, m, {
+    used: !!(m.used || (m.h && m.h.length) || hist.some((e) => e.mid === m.id)),
+    d: past ? (hist.some((e) => e.mid === m.id && dayKey(e.t) === selKey) ? 1 : 0) : m.d,
+  }));
   const filter = TABS.includes(state.filter) ? state.filter : 'Избранное';
   const favs = machines.filter((m) => m.favorite);
   const doneCount = machines.filter((m) => m.d).length;
   const total = machines.length;
   const word = total % 10 === 1 && total % 100 !== 11 ? 'упражнения' : 'упражнений';
-  const today = (new Date().getDay() + 6) % 7;
-  const selected = Number.isInteger(state.day) ? state.day : today;
-  const calendar = `<div class="ui-calendar calendar">${week().map((d, i) => `<button type="button" class="ui-day day ${selected === i ? 'selected' : ''}${i > today ? ' tg-future' : ''}" data-a="day" data-v="${i}" aria-pressed="${selected === i}" aria-label="${DAY_NAMES[i]} ${d.getDate()}"${i === today ? ' aria-current="date"' : ''}><small>${DAY_NAMES[i]}</small><strong>${d.getDate()}</strong></button>`).join('')}</div>`;
+  const calendar = `<div class="ui-calendar calendar">${week().map((d, i) => `<button type="button" class="ui-day day ${selected === i ? 'selected' : ''}${i < today ? ' tg-past' : ''}${i > today ? ' tg-future' : ''}" data-a="day"${i > today ? ' aria-disabled="true"' : ''} data-v="${i}" aria-pressed="${selected === i}" aria-label="${DAY_NAMES[i]} ${d.getDate()}"${i === today ? ' aria-current="date"' : ''}><small>${DAY_NAMES[i]}</small><strong>${d.getDate()}</strong></button>`).join('')}</div>`;
   const tabs = `<div class="ui-tabs ta-filters tg-filters" role="tablist" aria-label="Группа упражнений">${TABS.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></button>`).join('')}</div>`;
   let list = '';
   if (filter === 'Избранное') {
@@ -86,7 +93,7 @@ function build(state, theme) {
   const pageClass = theme === 'white' ? 'white-page white-training-overview' : 'black-training-layout black-training-cards';
   return `<div class="rd-approved-training rd-workout" data-tg-filter="${esc(filter)}"><div class="training-overview"><div class="ui-page ta-page ${pageClass}"><div class="ta-overview-content">`
     // как на утверждённом экране: в White — «Сегодня» и счётчик, в Black — только счётчик (надпись и полоса убраны в r9)
-    + `<div class="ta-today-line">${theme === 'white' ? text('Сегодня', 'micro') : ''}${text(`${doneCount} из ${total} ${word}`, 'caption', 'ui-muted')}</div>`
+    + `<div class="ta-today-line">${past ? text(DAY_FULL[selected], 'micro', 'tg-day-label') : theme === 'white' ? text('Сегодня', 'micro') : ''}${text(`${doneCount} из ${total} ${word}`, 'caption', 'ui-muted')}</div>`
     + calendar + tabs + list + '</div></div></div></div>';
 }
 
