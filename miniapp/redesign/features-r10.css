@@ -160,7 +160,7 @@
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ta-small-adjustment>.ui-icon-button:active{opacity:.45}
 :root[data-redesign-theme] .rd-approved-training .rd-reps-only .ui-stepper-value{flex:none;width:76px!important;min-width:76px;display:flex!important;align-items:center;justify-content:center;text-align:center;margin:0!important}
 /* следующий экран при свайпе между вкладками — без пустоты */
-.rd-peek{position:absolute;inset:0;z-index:2;pointer-events:none;will-change:transform;overflow:hidden;box-shadow:0 0 40px rgba(0,0,0,.12)}
+.rd-peek{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;will-change:mask-image}
 .rd-peek-in{padding:calc(var(--rd-safe-top,14px) + 16px) 20px 0;display:flex;flex-direction:column;gap:14px}
 .rd-peek-h{display:flex;align-items:center;gap:10px;margin:6px 0 10px}
 .rd-peek-h svg{width:26px;height:26px;opacity:.55}
@@ -170,3 +170,9 @@
 :root[data-redesign-theme="white"] .rd-peek{color:#1d1d1b}
 :root[data-redesign-theme="black"] .rd-peek{color:#f2f2f2;background-color:#000}
 :root[data-redesign-theme="black"] .rd-peek i{background:rgba(255,255,255,.07)}
+
+/* светящийся «шов» на границе растворения */
+.rd-seam{position:absolute;top:0;bottom:0;left:-30px;width:60px;z-index:3;pointer-events:none;opacity:0;will-change:transform,opacity;
+  background:radial-gradient(closest-side,rgba(255,120,60,.15),rgba(255,120,60,0));filter:blur(8px);
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent)}
+:root[data-redesign-theme="black"] .rd-seam{background:radial-gradient(closest-side,rgba(255,255,255,.16),rgba(255,255,255,0))}

@@ -74,9 +74,21 @@ function tabNeighbor(dir) {
   const nb = [...document.querySelectorAll('#nav .nb[data-a="tab"]')], i = nb.findIndex((b) => b.classList.contains('on'));
   return i < 0 ? null : nb[i + dir] || null;
 }
-/* «подглядывание»: следующий экран въезжает за пальцем (фон и заголовок того же экрана, без пустоты),
-   текущий уходит с параллаксом; после отпускания под ним рисуется настоящий экран и он растворяется */
-function peekMake(btn, dir) {
+/* Переход «растворение» (в духе iPhone Duo): граница прозрачности идёт за пальцем.
+   Свайп вправо — текущий экран тает к правой стороне, слева проступает следующий; после отпускания
+   настоящий экран проявляется с левой стороны. Свайп влево — зеркально. */
+const FEATHER = 28; // ширина мягкой границы, % экрана
+const setMask = (el, css) => { el.style.webkitMaskImage = css; el.style.maskImage = css; };
+const clearMask = (el) => { el.style.webkitMaskImage = ''; el.style.maskImage = ''; };
+// side: 'to right' — граница идёт слева направо (свайп вправо), 'to left' — справа налево
+const gone = (side, e) => 'linear-gradient(' + side + ',rgba(0,0,0,0) ' + (e - FEATHER / 2) + '%,#000 ' + (e + FEATHER / 2) + '%)';
+const shown = (side, e) => 'linear-gradient(' + side + ',#000 ' + (e - FEATHER / 2) + '%,rgba(0,0,0,0) ' + (e + FEATHER / 2) + '%)';
+const edgeOf = (f) => -FEATHER / 2 + f * (100 + FEATHER);
+function tween(ms, step, done) {
+  const t0 = now(), ease = (x) => 1 - Math.pow(1 - x, 3);
+  (function tick() { const x = Math.min(1, (now() - t0) / ms); step(ease(x)); if (x < 1) requestAnimationFrame(tick); else if (done) done(); })();
+}
+function peekMake(btn) {
   const screen = document.querySelector('.screen'), app = document.getElementById('app');
   const pk = document.createElement('div'); pk.className = 'rd-peek'; pk.setAttribute('aria-hidden', 'true');
   const cs = getComputedStyle(screen);
@@ -84,28 +96,40 @@ function peekMake(btn, dir) {
   pk.style.backgroundSize = cs.backgroundSize; pk.style.backgroundPosition = cs.backgroundPosition;
   const label = (btn.querySelector('.nblabel') || btn).textContent.trim(), ic = btn.querySelector('svg');
   pk.innerHTML = '<div class="rd-peek-in"><div class="rd-peek-h">' + (ic ? ic.outerHTML : '') + '<b>' + label + '</b></div><i></i><i></i><i class="s"></i><i></i></div>';
-  pk.style.transform = 'translateX(' + (dir * 100) + '%)';
-  screen.insertBefore(pk, app.nextSibling);
+  const seam = document.createElement('div'); seam.className = 'rd-seam'; seam.setAttribute('aria-hidden', 'true');
+  screen.insertBefore(pk, app.nextSibling); screen.insertBefore(seam, pk.nextSibling);
+  pk._seam = seam;
   return pk;
 }
-function tabFinish(tb, dir) {
-  const app = tb.el, pk = tb.peek;
-  pk.style.transition = 'transform .2s ' + EASE; pk.style.transform = 'translateX(0)';
-  app.style.transition = 'transform .2s ' + EASE + ', opacity .2s ' + EASE; app.style.transform = 'translateX(' + (-dir * 30) + '%)'; app.style.opacity = '.4';
-  setTimeout(() => {
-    reset(app, ['transition', 'transform', 'opacity', 'willChange']);
+function tabPaint(tb, f) {
+  const side = tb.dir < 0 ? 'to right' : 'to left', e = edgeOf(f);
+  setMask(tb.el, gone(side, e));
+  if (tb.peek) {
+    setMask(tb.peek, shown(side, e));
+    const px = tb.w * Math.max(0, Math.min(1, e / 100));
+    tb.peek._seam.style.transform = 'translateX(' + (tb.dir < 0 ? px : tb.w - px) + 'px)';
+    tb.peek._seam.style.opacity = String(Math.min(1, f * 4) * (1 - Math.max(0, f - .8) * 5));
+  }
+  tb.f = f;
+}
+function tabCleanup(tb) {
+  clearMask(tb.el); reset(tb.el, ['willChange', 'transform', 'transition']);
+  if (tb.peek) { tb.peek._seam.remove(); tb.peek.remove(); }
+}
+function tabFinish(tb) {
+  const f0 = tb.f || 0, side = tb.dir < 0 ? 'to right' : 'to left';
+  tween(Math.max(90, 200 * (1 - f0)), (x) => tabPaint(tb, f0 + (1 - f0) * x), () => {
+    clearMask(tb.el); reset(tb.el, ['willChange']);
+    tb.peek._seam.remove();
     tb.next.click(); // та же кнопка нижнего меню: вибрация, перерисовка, прокрутка наверх
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      pk.style.transition = 'opacity .22s ease'; pk.style.opacity = '0';
-      setTimeout(() => pk.remove(), 240);
-    }));
-  }, 200);
+    // настоящий экран проявляется с той же стороны, откуда пришёл следующий
+    setMask(tb.peek, gone(side, edgeOf(0)));
+    requestAnimationFrame(() => tween(300, (x) => setMask(tb.peek, gone(side, edgeOf(x))), () => tb.peek.remove()));
+  });
 }
 function tabCancel(tb) {
-  const app = tb.el, pk = tb.peek, dir = tb.dir;
-  app.style.transition = 'transform .22s ' + EASE + ', opacity .22s ' + EASE; app.style.transform = ''; app.style.opacity = '';
-  if (pk) { pk.style.transition = 'transform .22s ' + EASE; pk.style.transform = 'translateX(' + (dir * 100) + '%)'; setTimeout(() => pk.remove(), 240); }
-  setTimeout(() => reset(app, ['transition', 'willChange']), 240);
+  const f0 = tb.f || 0;
+  tween(200, (x) => tabPaint(tb, f0 * (1 - x)), () => tabCleanup(tb));
 }
 
 document.addEventListener('touchstart', (e) => {
@@ -160,13 +184,10 @@ document.addEventListener('touchmove', (e) => {
     if (tab.lock !== 'x') { tab = null; return; }
     e.preventDefault();
     const dir = dx < 0 ? 1 : -1;
-    if (tab.dir !== dir) { if (tab.peek) tab.peek.remove(); tab.peek = null; tab.dir = dir; tab.next = tabNeighbor(dir); if (tab.next) tab.peek = peekMake(tab.next, dir); }
+    if (tab.dir !== dir) { if (tab.peek) { tab.peek._seam.remove(); tab.peek.remove(); } clearMask(tab.el); tab.peek = null; tab.dir = dir; tab.next = tabNeighbor(dir); if (tab.next) tab.peek = peekMake(tab.next); }
     tab.d = tab.next ? dx : dx * 0.25; // у крайних экранов — пружинит
-    if (tab.next) {
-      const f = Math.min(1, Math.abs(dx) / tab.w);
-      tab.el.style.transform = 'translateX(' + (dx * 0.3) + 'px)'; tab.el.style.opacity = String(1 - f * 0.6);
-      tab.peek.style.transform = 'translateX(' + (dir * tab.w + dx) + 'px)';
-    } else tab.el.style.transform = 'translateX(' + tab.d + 'px)';
+    if (tab.next) { tab.el.style.transform = ''; tabPaint(tab, Math.min(1, Math.abs(dx) / (tab.w * 0.9))); }
+    else tab.el.style.transform = 'translateX(' + tab.d + 'px)';
   } else if (pull) {
     const dx = t.clientX - pull.x0, dy = t.clientY - pull.y0;
     if (pull.lock === null) {
@@ -201,7 +222,8 @@ function end(cancel) {
   }
   if (tab && tab.lock === 'x') {
     const tb = tab, v = Math.abs(tb.d) / Math.max(1, now() - tb.t0), go = !cancel && tb.next && (Math.abs(tb.d) > tb.w * 0.22 || v > 0.45);
-    if (go) tabFinish(tb, tb.dir); else tabCancel(tb);
+    if (!tb.next) { tb.el.style.transition = 'transform .22s ' + EASE; tb.el.style.transform = ''; setTimeout(() => reset(tb.el, ['transition', 'willChange']), 240); }
+    else if (go) tabFinish(tb); else tabCancel(tb);
   }
   back = pull = row = tab = null;
 }
