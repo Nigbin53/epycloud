@@ -84,6 +84,27 @@ function present(){
  sheet.replaceChildren(page);
 }
 let keptPhoto=null,keptMuscle=null,lastVals=null;
+/* +/− веса и повторов: меняем только цифры на месте, без пересборки страницы — ничего не мерцает */
+function stepInPlace(e){
+ const b=e.target.closest&&e.target.closest('#sheet .rd-approved-training [data-a="dw"], #sheet .rd-approved-training [data-a="dr"]');
+ if(!b||typeof window.gymCurStep!=='function')return;
+ e.stopImmediatePropagation();e.preventDefault();
+ if(e.isTrusted&&window.gymHoldSwallowUntil>performance.now()){window.gymHoldSwallowUntil=0;return;} // отпускание после удержания — без лишнего шага
+ const res=window.gymCurStep(b.dataset.a,+b.dataset.v);if(!res)return;
+ const page=b.closest('.rd-approved-training');
+ const put=(sel,txt,dir)=>page.querySelectorAll(sel).forEach(el=>{if(el.textContent===txt)return;el.textContent=txt;
+  if(dir&&el.classList.contains('rd-training-value')){el.classList.remove('rd-roll-up','rd-roll-down');void el.offsetWidth;el.classList.add(dir>0?'rd-roll-up':'rd-roll-down');}});
+ if(b.dataset.a==='dw'){
+  put('.rd-training-value[data-value="load"]',fmt(res.w),res.w-(lastVals?lastVals.load:res.w));
+  if(!page.classList.contains('rd-noload'))put('[data-white-current="load"],[data-dark-current="load"],[data-training-summary="load"]',fmt(res.w));
+ }else{
+  put('.rd-training-value[data-value="reps"]',fmt(res.r),res.r-(lastVals?lastVals.reps:res.r));
+  put('[data-white-reps]',String(res.r));
+  put('[data-white-current="reps"],[data-dark-current="reps"],[data-training-summary="reps"]',fmt(res.r));
+ }
+ if(lastVals){lastVals.load=+res.w;lastVals.reps=+res.r;}
+}
+document.addEventListener('click',stepInPlace,true);
 /* ---------- r10: подходы, подсказка «пора прибавить», типы упражнений ---------- */
 const exTypeOf=m=>['free','body','time'].includes(m&&m.type)?m.type:'machine';
 function setText(type,x){

@@ -138,8 +138,8 @@ document.addEventListener('touchcancel', () => end(true), { passive: true });
 
 /* ---------- 4. удержание +/− на странице тренажёра — быстрый повтор ---------- */
 const HOLD_SEL = '#sheet .rd-approved-training [data-a="dw"], #sheet .rd-approved-training [data-a="dr"]';
-let hold = null, swallow = 0;
-function holdStop() { if (!hold) return; clearTimeout(hold.timer); if (hold.fired) swallow = now() + 450; hold = null; }
+let hold = null;
+function holdStop() { if (!hold) return; clearTimeout(hold.timer); if (hold.fired) window.gymHoldSwallowUntil = now() + 450; hold = null; }
 document.addEventListener('pointerdown', (e) => {
   const b = e.target.closest && e.target.closest(HOLD_SEL);
   if (!b) return;
@@ -158,8 +158,5 @@ document.addEventListener('pointerdown', (e) => {
 document.addEventListener('pointermove', (e) => { if (hold && Math.hypot(e.clientX - hold.x, e.clientY - hold.y) > 12) holdStop(); }, { passive: true });
 ['pointerup', 'pointercancel'].forEach((ev) => document.addEventListener(ev, holdStop, { passive: true }));
 window.addEventListener('blur', holdStop);
-// после удержания отпускание пальца не должно добавить лишний шаг
-document.addEventListener('click', (e) => {
-  if (!hold && swallow > now() && e.isTrusted && e.target.closest && e.target.closest(HOLD_SEL)) { e.stopImmediatePropagation(); e.preventDefault(); swallow = 0; }
-}, true);
+// после удержания отпускание пальца не должно добавить лишний шаг — проверяет training-presentation.js (stepInPlace)
 })();
