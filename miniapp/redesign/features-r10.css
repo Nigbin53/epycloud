@@ -191,4 +191,10 @@
 /* White, страница тренажёра: фото во всю ширину экрана и чуть выше —
    отступ от «подходы × повторы» до фото равен отступу от фото до кнопок −/+ (≈29px) */
 :root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-photo-layers{margin-left:-20px!important;margin-right:-20px!important;width:calc(100% + 40px)!important}
-:root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-photo-layers.equipment-single-image .ta-detail-hero{top:14px!important;bottom:auto!important;left:0!important;right:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:none!important;border-radius:0!important}
+:root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-photo-layers.equipment-single-image .ta-detail-hero{top:1px!important;bottom:auto!important;left:0!important;right:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:none!important;border-radius:0!important}
+
+/* «подходы × повторы» и вес в шапке — только после первой записи; отступ фото до круглого регулятора = отступу до шапки */
+:root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-detail-current,.bt-detail-current){display:none!important}
+:root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail.rd-noload .ta-detail-photo-layers{margin-top:8px!important}
+:root[data-redesign-theme="black"] .rd-approved-training.black-leg-layout .ta-detail-photo-layers{margin-top:12px!important}
+:root[data-redesign-theme="black"] .rd-approved-training.black-leg-layout.rd-noload .ta-detail-photo-layers{margin-top:14px!important}
