@@ -188,3 +188,7 @@
 :root[data-redesign-theme] .addsheet .addcat-in{overflow:hidden;min-height:0}
 :root[data-redesign-theme] .addsheet .addcat-wrap .catpick{opacity:0;transform:translateY(-6px);transition:opacity .25s ease,transform .32s cubic-bezier(.32,.72,0,1);padding-bottom:4px}
 :root[data-redesign-theme] .addsheet .addcat-wrap.open .catpick{opacity:1;transform:none}
+/* White, страница тренажёра: фото во всю ширину экрана и чуть выше —
+   отступ от «подходы × повторы» до фото равен отступу от фото до кнопок −/+ (≈29px) */
+:root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-photo-layers{margin-left:-20px!important;margin-right:-20px!important;width:calc(100% + 40px)!important}
+:root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-photo-layers.equipment-single-image .ta-detail-hero{top:14px!important;bottom:auto!important;left:0!important;right:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:none!important;border-radius:0!important}
