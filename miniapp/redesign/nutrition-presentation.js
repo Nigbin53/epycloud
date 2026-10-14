@@ -67,6 +67,8 @@ function present(){
  });
  const header=page.querySelector('.na-header');
  header.querySelector('.ui-caption').textContent=data.date;
+ // «Сегодня · дата» целиком кликабельно → шторка «Неделя» (kweek в движке)
+ const head=header.firstElementChild;if(head){head.classList.add('rd-nutrition-week');head.dataset.a='kweek';head.setAttribute('role','button');head.tabIndex=0;head.setAttribute('aria-label','Неделя питания — '+data.date);}
  const goal=document.createElement('button');goal.type='button';goal.className='rd-nutrition-goal';goal.innerHTML=UI.icon('pencil',20);nativeButton(goal,'kbopen','kbGoals','Изменить дневную цель');header.append(goal);
  nativeButton(page.querySelector('.na-favorite-action button'),'kbopen','kbFav','Избранное');
  nativeButton(page.querySelector('.na-camera-action button'),'kbopen','kbCamera','Сфотографировать еду или штрихкод');
