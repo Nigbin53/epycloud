@@ -1710,6 +1710,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="white-touches.css?v=3">
 <link rel="stylesheet" href="features-r10.css?v=15">
 <link rel="stylesheet" href="lattice-loader.css?v=1">
+<link rel="stylesheet" href="fuse-round.css?v=1">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2898,23 +2899,63 @@ function kbEditor(e,past){
     +'<div class="kn-edb">'+(past?'':'<button class="kn-eddel" data-a="kbdel" data-v="'+e.id+'">Удалить</button>')+'<button class="kn-edok" data-a="kbsel" data-v="'+e.id+'">Готово</button></div></div>';
 }
 function kbRowSub(e){var g=numv(e.g);return (g?g+' г · ':'')+'Б '+Math.round(numv(e.p))+' · У '+Math.round(numv(e.c))+' · Ж '+Math.round(numv(e.f))}
+/* Круглые кнопки строки еды: ☆ избранное, ✎ изменить, 🗑 удалить. ☆ и 🗑 — «фитиль» (FuseButton из React Bits, круглая версия):
+   нажал → иконка меняется на «отменить», по кругу 3,5 с горит красный фитиль. ☆ сохраняет сразу (отмена — вернуть как было),
+   🗑 удаляет, когда фитиль догорит. Состояние в kbFuse — переживает перерисовку (фитиль продолжается с того же места). */
+var KB_FUSE_MS=3500,kbFuse={};
+var SVG_UNDO='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg>';
+function kbEntryFav(e){if(!e)return null;return S.kbFav.filter(function(f){return f.kind!=="set"&&f.n===e.name})[0]||null}
+function kbFzBtn(kind,e,icon,label,on){
+  var key=kind+":"+e.id,f=kbFuse[key],el=f?Math.min(KB_FUSE_MS,Date.now()-f.at):0;
+  return '<span class="kb-fz'+(on?' on':'')+'" data-k="'+kind+'" data-phase="'+(f?'armed':'idle')+'" style="--fz-el:-'+el+'ms">'
+    +'<button class="kb-fz-face kb-fz-idle" data-a="kbfz" data-v="'+key+'" aria-label="'+esc(label)+'"'+(kind==="fav"?' aria-pressed="'+!!on+'"':'')+'>'+icon+'</button>'
+    +'<button class="kb-fz-face kb-fz-undo" data-a="kbfzundo" data-v="'+key+'" aria-label="Отменить"><span class="kb-fz-ui">'+SVG_UNDO+'</span></button>'
+    +'<svg class="kb-fz-rim" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17.25" pathLength="1"></circle></svg></span>';
+}
 function kbRow(e,past){
-  var o=kbSel===e.id;
-  return '<div class="kn-row" id="kn-row-'+e.id+'" data-live="1"><button class="kn-rowb" data-a="kbsel" data-v="'+e.id+'" aria-expanded="'+o+'" aria-label="Изменить: '+esc(e.name)+'">'
-    +'<span class="kn-time">'+timeLabel(e.t)+'</span><span class="kn-rowi"><span class="n">'+esc(e.name)+'</span>'+(e.q?'<span class="s q">ждёт отправки · учтено в итогах дня</span>':'<span class="s">'+kbRowSub(e)+'</span>')+'</span>'
-    +'<span class="kn-rowk">'+thous(numv(e.kcal))+(past?'':'<small> ккал</small>')+'</span>'+(past?'':kic("pen",16,2,' class="kn-pen"'))+'</button>'
-    +'<button class="kn-rowdel" data-a="kbdel" data-v="'+e.id+'" aria-label="Удалить: '+esc(e.name)+'">'+kic("trash",17,2)+'</button></div>'
+  var o=kbSel===e.id,fv=!!kbEntryFav(e),nm=esc(e.name);
+  return '<div class="kn-row'+(kbFuse["del:"+e.id]?' fz-del':'')+'" id="kn-row-'+e.id+'" data-live="1"><button class="kn-rowb" data-a="kbsel" data-v="'+e.id+'" aria-expanded="'+o+'" aria-label="Изменить: '+nm+'">'
+    +'<span class="kn-time">'+timeLabel(e.t)+'</span><span class="kn-rowi"><span class="n">'+nm+'</span>'+(e.q?'<span class="s q">ждёт отправки · учтено в итогах дня</span>':'<span class="s">'+kbRowSub(e)+'</span>')+'</span>'
+    +'<span class="kn-rowk">'+thous(numv(e.kcal))+(past?'':'<small> ккал</small>')+'</span></button>'
+    +'<span class="kn-rowacts">'+kbFzBtn("fav",e,kic("star",17,2),(fv?'Убрать из избранного: ':'В избранное: ')+e.name,fv)
+    +(past?'':'<button class="kb-ic kn-rowedit" data-a="kbsel" data-v="'+e.id+'" aria-label="Изменить: '+nm+'">'+kic("pen",17,2)+'</button>')
+    +kbFzBtn("del",e,kic("trash",17,2),'Удалить: '+e.name,false)+'</span></div>'
     +(o?kbEditor(e,past):'');
+}
+function kbFzEl(key){var p=key.split(":"),row=document.getElementById("kn-row-"+p[1]);return row?row.querySelector('.kb-fz[data-k="'+p[0]+'"]'):null}
+/* избранное внизу экрана — обновить на месте, без перерисовки всей страницы (иначе оборвётся анимация кнопки) */
+function kbPaintFavs(){var el=document.querySelector(".kn-favs");if(!el||S.tab!=="kbju"||kbjuSel!==kbToday()||!S.food.length)return;
+  var tmp=document.createElement("div");tmp.innerHTML=kbMainHtml();var nw=tmp.querySelector(".kn-favs");if(nw)el.innerHTML=nw.innerHTML}
+function kbFzArm(key){
+  if(kbFuse[key])return;var p=key.split(":"),kind=p[0],id=+p[1],e=kbFind(id);if(!e)return;
+  var f={at:Date.now(),undo:null};
+  if(kind==="fav"){var ex=kbEntryFav(e),prev=S.kbFav.slice();
+    if(ex)S.kbFav=S.kbFav.filter(function(x){return x!==ex});
+    else kbSaveFav({n:e.name,kind:"dish",g:numv(e.g)||null,k:Math.round(numv(e.kcal)),p:Math.round(numv(e.p)),c:Math.round(numv(e.c)),f:Math.round(numv(e.f)),when:[mealOf(e)]});
+    save();f.undo=function(){S.kbFav=prev;save()};f.on=!ex}
+  f.t=setTimeout(function(){kbFzEnd(key)},KB_FUSE_MS);kbFuse[key]=f;buzz("light");
+  var z=kbFzEl(key);
+  if(z){z.style.setProperty("--fz-el","0ms");z.dataset.phase="armed";if(kind==="fav")z.classList.toggle("on",f.on);if(kind==="del")z.closest(".kn-row").classList.add("fz-del");
+    var u=z.querySelector(".kb-fz-undo");if(u&&z.contains(document.activeElement))u.focus({preventScroll:true})}
+  if(kind==="fav")kbPaintFavs();
+}
+function kbFzUndo(key){
+  var f=kbFuse[key];if(!f)return;clearTimeout(f.t);delete kbFuse[key];if(f.undo)f.undo();buzz("light");
+  var kind=key.split(":")[0],z=kbFzEl(key);
+  if(z){z.dataset.phase="idle";if(kind==="fav")z.classList.toggle("on",!f.on);if(kind==="del")z.closest(".kn-row").classList.remove("fz-del")}
+  if(kind==="fav")kbPaintFavs();
+}
+function kbFzEnd(key){
+  var f=kbFuse[key];if(!f)return;delete kbFuse[key];var p=key.split(":"),id=+p[1];
+  if(p[0]==="del"){if(kbSel===id)kbSel=null;var n=S.food.length;S.food=S.food.filter(function(x){return x.id!==id});if(S.food.length!==n){save();render()}return}
+  var z=kbFzEl(key);if(z){z.dataset.phase="idle";var b=z.querySelector(".kb-fz-idle"),e=kbFind(id);if(b&&e){b.setAttribute("aria-pressed",String(!!f.on));b.setAttribute("aria-label",(f.on?'Убрать из избранного: ':'В избранное: ')+e.name)}}
 }
 function kbMealsFor(key,past){
   return MEALS.map(function(m,mi){
     var list=dayItems(key).filter(function(e){return mealOf(e)===m}),sum=kbTotals(list).k;
     if(past&&!list.length)return "";
     var h='<div class="kn-meal"><div class="kn-mealh" id="kn-mh-'+mi+'" data-live="1"><div class="kn-mealt"><span>'+m+'</span><em>'+thous(sum)+' ккал</em></div>';
-    if(!past&&list.length){var fav=kbMealFav(key,m),on=!!fav,nm=on?fav.n:"Мой "+MEAL_IN[m];
-      h+='<button class="kn-star'+(on?' on':'')+'" data-a="kbstar" data-v="'+m+'" aria-pressed="'+on+'" aria-label="'+(on?'Убрать «'+esc(nm)+'» из избранного':'Сохранить '+MEAL_IN[m]+' в избранное')+'">'+kic("star",20,2)+'</button>'}
     h+='</div>';
-    if(!past){var fv=kbMealFav(key,m);if(fv&&kbLastStar===key+"|"+m)h+='<div class="kn-saved" role="status"><span>Сохранено в избранное: «'+esc(fv.n)+'»</span><button data-a="kbfavsaved" data-v="'+fv.id+'">Открыть ›</button></div>'}
     h+=list.map(function(e){return kbRow(e,past)}).join("");
     if(!past&&!list.length){var y=mealItems(keyShift(key,-1),m);
       if(y.length){var yk=kbTotals(y).k;h+='<button class="kn-repeat" data-a="kbrepeat" data-v="'+m+'">'+kic("repeat",20,2)+'<span><b>Повторить вчерашний</b><em>'+esc(y.map(function(e){return e.name}).join(" + "))+' · '+thous(yk)+' ккал</em></span></button>'}}
@@ -2972,7 +3013,7 @@ function kbMainHtml(){
   var ff=kbFavFilter||NOW,favs=kbFavAll().filter(function(f){return (f.when||[]).indexOf(ff)>=0}).slice(0,3);
   h+='<section class="kn-favs" aria-label="Мои блюда"><div class="kn-favh"><h3>Избранное</h3><span><button class="kn-ffbtn'+(kbMenuOpen?' on':'')+'" data-a="kbmenu" aria-haspopup="menu" aria-expanded="'+kbMenuOpen+'" aria-label="Показать избранное для: '+ff+'">'+ff+kic("chev",12,2.6)+'</button><button class="kn-all" data-a="kbopen" data-v="kbFav">Все ›</button></span>'
     +(kbMenuOpen?'<div class="kn-menu" role="menu" aria-label="Какие избранные показать">'+MEALS.map(function(m){var on=m===ff;return '<button role="menuitemradio" aria-checked="'+on+'" class="'+(on?'on':'')+'" data-a="kbff" data-v="'+m+'"><span>'+m+'</span>'+(on?kic("check",16,2.6):'')+'</button>'}).join("")+'</div>':'')
-    +'</div>'+(favs.length?favs.map(function(f){return kbFavRow(f,ff)}).join(""):'<div class="kn-favempty">Для '+MEAL_FROM[ff]+' пока ничего нет. Нажми ☆ у приёма пищи — он сохранится набором.</div>')+'</section>';
+    +'</div>'+(favs.length?favs.map(function(f){return kbFavRow(f,ff)}).join(""):'<div class="kn-favempty">Для '+MEAL_FROM[ff]+' пока ничего нет. Нажми ☆ у блюда — оно сохранится сюда.</div>')+'</section>';
   var w=kbWaterGet(key),ex=Math.max(0,w-8)*250;
   h+='<section class="kn-card kn-water" aria-label="Вода"><div class="kn-cardh"><h3>Вода</h3><span><b>'+kbLiters(w)+'</b> / 2 л</span></div>'
     +(w>=8?'<div class="kn-wdone" role="status">'+(ex?'Норма выполнена · +'+ex+' мл сверху':'Норма воды выполнена')+'</div>':'')
@@ -2998,7 +3039,7 @@ function kbEmptyHtml(){
     +'<div class="kn-camcap">Сфотографируй блюдо или штрихкод — посчитаем КБЖУ</div>'
     +'<div class="kn-tiles"><button data-a="kbopen" data-v="kbFav">'+kic("star",22,1.9)+'Избранное</button><button data-a="kbopen" data-v="kbManual">'+kic("pen",22,1.9)+'Вручную</button></div></section>';
   h+='<section class="kn-meals" aria-label="Приёмы пищи"><h2 class="kn-h2">Приёмы пищи</h2><div class="kn-empty"><div class="ic">'+kic("fork",30,1.8)+'</div><b>Сегодня ещё пусто</b><p>Запиши первый приём пищи — фото самый быстрый способ. Завтрак, обед, ужин и перекус разложатся сами по времени.</p></div></section>';
-  h+='<section class="kn-favs e" aria-label="Избранное"><h3 class="kn-h3">Избранное</h3><div class="kn-favempty">Здесь появятся блюда, которые ты ешь чаще всего. Нажми ☆ у приёма пищи — он сохранится набором и добавится в один тап.</div></section>';
+  h+='<section class="kn-favs e" aria-label="Избранное"><h3 class="kn-h3">Избранное</h3><div class="kn-favempty">Здесь появятся блюда, которые ты ешь чаще всего. Нажми ☆ у блюда — оно сохранится и добавится в один тап.</div></section>';
   h+='<section class="kn-wmini" aria-label="Вода"><div><b>Вода</b><span>'+kbLiters(w)+' из 2 л</span></div>'+(w?'<button class="m" data-a="kbw" data-v="-1" aria-label="Убрать стакан">−</button>':'')+'<button data-a="kbw" data-v="1">+ Стакан 250 мл</button></section>';
   return h+'</div>';
 }
@@ -4690,6 +4731,8 @@ document.addEventListener("click",function(e){
   else if(a==="kbfavsaved"){kbFavFocus=v;kbTargetDay=null;openScreen("kbFavSaved")}
   else if(a==="kbsel"){var se=+v;kbSel=kbSel===se?null:se;render()}
   else if(a==="kbdel"){kbDelete(+v)}
+  else if(a==="kbfz"){kbFzArm(v)}
+  else if(a==="kbfzundo"){kbFzUndo(v)}
   else if(a==="kbundo"){kbRestore()}
   else if(a==="kbstar"){kbToggleMealSet(kbjuSel,v)}
   else if(a==="kbtip"){var tm=mealForNow();kbAddedToast(addEntries([KB_TIP],tm,kbToday(),"tip"),tm,KB_TIP.name);buzz();render()}
@@ -5107,7 +5150,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="training-presentation.js?v=r10-6"></script>
 <script src="workout-presentation.js?v=r10-2"></script>
 <script src="lattice-loader.js?v=1"></script>
-<script src="plans-whatsnew.js?v=7"></script>
+<script src="plans-whatsnew.js?v=8"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
