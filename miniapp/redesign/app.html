@@ -1710,7 +1710,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="white-touches.css?v=3">
 <link rel="stylesheet" href="features-r10.css?v=15">
 <link rel="stylesheet" href="lattice-loader.css?v=1">
-<link rel="stylesheet" href="fuse-round.css?v=1">
+<link rel="stylesheet" href="fuse-round.css?v=2">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2898,7 +2898,7 @@ function kbEditor(e,past){
     +(past?'':'<div class="kn-edsc"><span style="left:0">0</span><span class="b" style="left:'+bp+'%">было '+g0+'</span><span style="right:0">'+max+'</span></div>')
     +'<div class="kn-edb">'+(past?'':'<button class="kn-eddel" data-a="kbdel" data-v="'+e.id+'">Удалить</button>')+'<button class="kn-edok" data-a="kbsel" data-v="'+e.id+'">Готово</button></div></div>';
 }
-function kbRowSub(e){var g=numv(e.g);return (g?g+' г · ':'')+'Б '+Math.round(numv(e.p))+' · У '+Math.round(numv(e.c))+' · Ж '+Math.round(numv(e.f))}
+function kbRowSub(e){return 'Б '+Math.round(numv(e.p))+' · У '+Math.round(numv(e.c))+' · Ж '+Math.round(numv(e.f))}
 /* Круглые кнопки строки еды: ☆ избранное, ✎ изменить, 🗑 удалить. ☆ и 🗑 — «фитиль» (FuseButton из React Bits, круглая версия):
    нажал → иконка меняется на «отменить», по кругу 3,5 с горит красный фитиль. ☆ сохраняет сразу (отмена — вернуть как было),
    🗑 удаляет, когда фитиль догорит. Состояние в kbFuse — переживает перерисовку (фитиль продолжается с того же места). */
@@ -2915,7 +2915,7 @@ function kbFzBtn(kind,e,icon,label,on){
 function kbRow(e,past){
   var o=kbSel===e.id,fv=!!kbEntryFav(e),nm=esc(e.name);
   return '<div class="kn-row'+(kbFuse["del:"+e.id]?' fz-del':'')+'" id="kn-row-'+e.id+'" data-live="1"><button class="kn-rowb" data-a="kbsel" data-v="'+e.id+'" aria-expanded="'+o+'" aria-label="Изменить: '+nm+'">'
-    +'<span class="kn-time">'+timeLabel(e.t)+'</span><span class="kn-rowi"><span class="n">'+nm+'</span>'+(e.q?'<span class="s q">ждёт отправки · учтено в итогах дня</span>':'<span class="s">'+kbRowSub(e)+'</span>')+'</span>'
+    +'<span class="kn-time">'+timeLabel(e.t)+'</span><span class="kn-rowi"><span class="n">'+nm+(numv(e.g)?' <em class="kn-rowg">'+Math.round(numv(e.g))+' г</em>':'')+'</span>'+(e.q?'<span class="s q">ждёт отправки · учтено в итогах дня</span>':'<span class="s">'+kbRowSub(e)+'</span>')+'</span>'
     +'<span class="kn-rowk">'+thous(numv(e.kcal))+(past?'':'<small> ккал</small>')+'</span></button>'
     +'<span class="kn-rowacts">'+kbFzBtn("fav",e,kic("star",17,2),(fv?'Убрать из избранного: ':'В избранное: ')+e.name,fv)
     +(past?'':'<button class="kb-ic kn-rowedit" data-a="kbsel" data-v="'+e.id+'" aria-label="Изменить: '+nm+'">'+kic("pen",17,2)+'</button>')
@@ -2952,9 +2952,9 @@ function kbFzEnd(key){
 }
 function kbMealsFor(key,past){
   return MEALS.map(function(m,mi){
-    var list=dayItems(key).filter(function(e){return mealOf(e)===m}),sum=kbTotals(list).k;
+    var list=dayItems(key).filter(function(e){return mealOf(e)===m}),TT=kbTotals(list),sum=TT.k;
     if(past&&!list.length)return "";
-    var h='<div class="kn-meal"><div class="kn-mealh" id="kn-mh-'+mi+'" data-live="1"><div class="kn-mealt"><span>'+m+'</span><em>'+thous(sum)+' ккал</em></div>';
+    var h='<div class="kn-meal"><div class="kn-mealh" id="kn-mh-'+mi+'" data-live="1"><div class="kn-mealt"><span>'+m+'</span><em>'+thous(sum)+' ккал'+(list.length?' · '+Math.round(TT.p)+' г белка':'')+'</em></div>';
     h+='</div>';
     h+=list.map(function(e){return kbRow(e,past)}).join("");
     if(!past&&!list.length){var y=mealItems(keyShift(key,-1),m);
