@@ -52,8 +52,8 @@
 :root[data-redesign-theme] .kn-kc text{font-weight:400}
 :root[data-redesign-theme] .kn-rowk{gap:5px;padding-top:2px}
 :root[data-redesign-theme] .kn-rowk small{font-size:11px}
-/* цифра ккал — узкий высокий шрифт Oswald (OFL, fonts/OFL-oswald.txt), ровная толщина линий, как часы iPhone */
-@font-face{font-family:RDKcal;src:url('fonts/oswald-300.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+/* цифра ккал — шрифт Teko Light (OFL, fonts/OFL-teko.txt; выбран 15.10 из 8 вариантов), ровная толщина линий, как часы iPhone */
+@font-face{font-family:RDKcal;src:url('fonts/teko-300.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
 :root[data-redesign-theme] .kn-kc text{font-family:RDKcal,-apple-system,"SF Pro Display",var(--rd-font);font-weight:300;fill:color-mix(in srgb,var(--rd-text) 88%,transparent)}
 :root[data-redesign-theme] .kn-rowacts{margin:-6px 0 -6px 4px;gap:0}
 /* цифра ккал меньше — не во всю высоту: фиксированная высота, блок по центру */
