@@ -1709,6 +1709,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="../equipment/runtime.css?v=equipment-library-r1">
 <link rel="stylesheet" href="white-touches.css?v=3">
 <link rel="stylesheet" href="features-r10.css?v=15">
+<link rel="stylesheet" href="lattice-loader.css?v=1">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -3380,7 +3381,7 @@ function kcHtml(){
   if(s.mode==="food")h+='<div aria-hidden="true" class="kc-frame f"><div style="position:absolute;top:40px;left:45px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#3A3B40 0 52%,#2A2B2F 53% 70%,#1E1F22 71%)"></div><div style="position:absolute;top:96px;left:100px;width:110px;height:80px;border-radius:50% 45% 55% 40%;background:linear-gradient(135deg,#E9C87A,#C99A4A);opacity:.85"></div><div style="position:absolute;top:120px;left:150px;width:50px;height:34px;border-radius:40%;background:#D9D0C4;opacity:.9"></div></div>';
   else if(s.mode==="barcode")h+='<div aria-hidden="true" class="kc-frame b"><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i><div class="bars"></div><div class="scan"></div></div>';
   else h+='<div aria-hidden="true" class="kc-frame l"><div class="t">Пищевая ценность на 100 г</div><div class="ln"></div>'+[["Энерг. ценность","350 ккал"],["Белки","33 г"],["Жиры","12 г"],["Углеводы","35 г"]].map(function(x){return '<div class="r"><span>'+x[0]+'</span><span>'+x[1]+'</span></div>'}).join("")+'<div class="sk" style="width:70%"></div><div class="sk" style="width:50%"></div></div>';
-  h+='<div class="kc-bot'+(s.busy?' busy':'')+'"><span class="kc-hint" role="status">'+(s.busy?esc(s.busy):r.hint)+'</span><div class="kc-ctl"><label class="kc-gal" aria-label="Выбрать фото из галереи">'+SVG_GAL+'<input type="file" accept="image/*" data-k="kcfile" hidden></label>'
+  h+='<div class="kc-bot'+(s.busy?' busy':'')+'"><span class="kc-hint'+(s.busy?' kc-ll':'')+'"'+(s.busy?'':' role="status"')+'>'+(s.busy?kcLoader(s):r.hint)+'</span><div class="kc-ctl"><label class="kc-gal" aria-label="Выбрать фото из галереи">'+SVG_GAL+'<input type="file" accept="image/*" data-k="kcfile" hidden></label>'
     +'<button class="kc-shoot" data-a="kcshoot" aria-label="'+r.shoot+'"'+(s.busy?' disabled aria-busy="true"':'')+'><span></span></button>'+(CATALOG_PREVIEW?'<button class="kc-fail" data-a="kcfail">'+r.failLabel+'</button>':'<span class="kc-fail" aria-hidden="true" style="visibility:hidden"></span>')+'</div></div>';
   return h;
 }
@@ -3397,7 +3398,20 @@ function kcResult(img){var md=KC?KC.mode:"food";kbOpenManual({photo:md,img:img||
 var kbLastCode=null;
 function kcCapture(){var inp=document.createElement("input");inp.type="file";inp.accept="image/*";inp.setAttribute("capture","environment");inp.style.display="none";
   inp.onchange=function(){var fl=inp.files&&inp.files[0];inp.remove();if(fl)kcHandleFile(fl)};document.body.appendChild(inp);inp.click()}
-function kcBusy(label){if(!KC)return;KC.busy=label||null;kcPaint()}
+function kcBusy(label){if(!KC)return;if(label&&!KC.busy)KC.busyAt=Date.now();KC.busy=label||null;KC.ll=label?"working":null;KC.llEnd=null;kcPaint()}
+/* Анимация распознавания (LatticeLoader из React Bits): точки бегут по кругу + секундомер; в конце — галочка «Готово за 2,3 с» или крестик «Не вышло за …» */
+function kcLoader(s){
+  if(!window.LatticeLoader)return esc(s.busy);
+  return LatticeLoader.html({status:s.ll||"working",label:String(s.busy).replace(/…$/,""),doneLabel:"Готово за",errorLabel:"Не вышло за",
+    pattern:"orbit",grid:4,shape:"round",color:"currentColor",doneColor:"#ff7e25",errorColor:"#a11010",cellSize:6,gap:2,fontSize:13,step:90,idleOpacity:0.15,glow:false,glowColor:"",showTimer:true,
+    start:s.busyAt||Date.now(),end:s.ll&&s.ll!=="working"?s.llEnd:null});
+}
+/* показать итог на лоадере, затем убрать его и продолжить (переход на результат / тост) */
+function kcFinish(st,then){
+  if(!KC||!KC.busy||!window.LatticeLoader){kcBusy(null);then();return}
+  KC.ll=st;KC.llEnd=Date.now();kcPaint();buzz(st==="done"?"success":"error");
+  setTimeout(function(){if(!kcOnCamera())return;kcBusy(null);then()},st==="done"?650:800);
+}
 function kcOnCamera(){return scrStack[scrStack.length-1]==="kbCamera"}
 function kcHandleFile(fl){
   if(!kcOnCamera())return;
@@ -3409,15 +3423,16 @@ function kcHandleFile(fl){
       kcBusy("Ищем штрихкод…");
       GymFood.decodeBarcode(fl).then(function(code){
         if(!kcOnCamera())return;
-        if(!code){kcBusy(null);toast("Штрихкод не найден",null,"сними ближе и ровнее, без бликов");return}
+        if(!code){kcFinish("error",function(){toast("Штрихкод не найден",null,"сними ближе и ровнее, без бликов")});return}
         kbLastCode=code;kcBusy("Ищем продукт…");
         return GymFood.lookupBarcode(code).then(function(res){
-          if(!kcOnCamera())return;kcBusy(null);
-          if(!res){kbGo("kbBarcodeNF");return}
+          if(!kcOnCamera())return;
+          if(!res){kcFinish("error",function(){kbGo("kbBarcodeNF")});return}
+          kcFinish("done",function(){
           kbOpenManual({photo:"barcode",img:img,items:[res.item],favName:res.item.n,meal:meal,replace:true});
-          toast("Найдено в Open Food Facts",null,"проверь вес порции");
+          toast("Найдено в Open Food Facts",null,"проверь вес порции");});
         });
-      }).catch(function(){if(!kcOnCamera())return;kcBusy(null);toast(kbNet==="off"?"Нет сети":"Не получилось проверить штрихкод",null,"попробуй ещё раз")});
+      }).catch(function(){if(!kcOnCamera())return;kcFinish("error",function(){toast(kbNet==="off"?"Нет сети":"Не получилось проверить штрихкод",null,"попробуй ещё раз")})});
       return;
     }
     if(!GymFood.aiReady()){
@@ -3426,14 +3441,15 @@ function kcHandleFile(fl){
     }
     kcBusy(mode==="label"?"Читаем этикетку…":"Распознаём блюдо…");
     GymFood.recognizePhoto(mode,img).then(function(res){
-      if(!kcOnCamera())return;kcBusy(null);
-      if(!res.items.length){kbGo("kbPhotoFail");return}
-      kbOpenManual({photo:mode,img:img,items:res.items,favName:res.dish||(res.items.length===1?res.items[0].n:null),meal:meal,replace:true});
+      if(!kcOnCamera())return;
+      if(!res.items.length){kcFinish("error",function(){kbGo("kbPhotoFail")});return}
+      kcFinish("done",function(){kbOpenManual({photo:mode,img:img,items:res.items,favName:res.dish||(res.items.length===1?res.items[0].n:null),meal:meal,replace:true})});
     }).catch(function(e){
-      if(!kcOnCamera())return;kcBusy(null);
+      if(!kcOnCamera())return;
+      kcFinish("error",function(){
       if(e&&e.code==="limit"){toast("Лимит распознаваний на сегодня",null,"завтра снова — а пока опиши словами");return}
       if(kbNet==="off"){toast("Нет сети",null,"попробуй ещё раз");return}
-      kbGo("kbPhotoFail");
+      kbGo("kbPhotoFail");});
     });
   });
 }
@@ -5090,6 +5106,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="nutrition-presentation.js?v=week-1"></script>
 <script src="training-presentation.js?v=r10-6"></script>
 <script src="workout-presentation.js?v=r10-2"></script>
+<script src="lattice-loader.js?v=1"></script>
 <script src="plans-whatsnew.js?v=7"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
