@@ -26,7 +26,9 @@ SKIP_NAMES = {"__pycache__", ".DS_Store", "previews",
               "background-01-clean.png", "background-02-clean.png", "background-03-clean.png",
               "pasta-photo-no-ui.png", "training-lat-photo.png", "nutrition-water-photo.png",
               "mountain-profile-13.png", "leg-muscles-photo.png", "avatar-photo-13.png",
-              "tuna-salad.png", "beef-buckwheat.png", "training-avatar.png", "avatar-outline-6.png"}
+              "tuna-salad.png", "beef-buckwheat.png", "training-avatar.png", "avatar-outline-6.png",
+              # исходники старых сборщиков (build*.py), приложением не подключаются
+              "adapter.js", "nutrition-native.css", "training-native.css"}
 SKIP_SUFFIXES = {".py", ".md", ".pyc"}
 # в equipment нужны только данные и скрипты просмотра, без локального сервера и тестовых загрузок
 EQUIPMENT_SKIP = {"server.py", "README-server.md", "uploads"}

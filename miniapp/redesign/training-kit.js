@@ -158,26 +158,6 @@ window.ApprovedTrainingBlack=GYM.screens.find(screen=>screen.id===2).render;
     return page;
   };
 
-  function equipmentArc(page) {
-    const arc = element(page, 'div', 'wt-equipment-arc');
-    arc.setAttribute('aria-hidden', 'true');
-    const point = (angle, radius) => {
-      const radians = angle * Math.PI / 180;
-      return [150 + Math.cos(radians) * radius, 160 + Math.sin(radians) * radius];
-    };
-    const path = (start, end) => {
-      const a = point(start, 130), b = point(end, 130);
-      return `M${a[0]} ${a[1]} A130 130 0 ${end - start > 180 ? 1 : 0} 1 ${b[0]} ${b[1]}`;
-    };
-    const ticks = Array.from({ length: 53 }, (_, index) => {
-      const angle = 140 + index * 5;
-      const a = point(angle, 137), b = point(angle, index % 3 === 0 ? 143 : 141);
-      return `<path class="${angle >= 180 && angle <= 345 ? 'wt-arc-accent' : ''}" d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}"/>`;
-    }).join('');
-    arc.innerHTML = `<svg viewBox="0 0 300 255" fill="none" aria-hidden="true"><path class="wt-arc-track" d="${path(140, 400)}"/><path class="wt-arc-progress" d="${path(180, 345)}"/><g class="wt-arc-ticks">${ticks}</g></svg>`;
-    return arc;
-  }
-
   adapters[2] = function (page) {
     if (page.classList.contains('white-leg-detail')) return page;
     page.classList.add('white-leg-detail');
@@ -233,7 +213,6 @@ window.ApprovedTrainingBlack=GYM.screens.find(screen=>screen.id===2).render;
     const photo = photoLayers.querySelector('.ta-detail-hero');
     photo.src = 'white/assets/light-legpress.png';
     photoLayers.querySelector('.ta-detail-hero-back').hidden = true;
-    photoLayers.prepend(equipmentArc(page));
     content.querySelector('.ta-sets-reps').classList.add('wt-sets-panel');
     content.querySelector('button[data-action="save"]').classList.add('wt-save-button');
     const musclePhoto = content.querySelector('.ta-muscles-photo');

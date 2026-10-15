@@ -583,12 +583,6 @@
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-detail-photo-layers{position:relative;width:100%;height:292px;margin:0;mask-image:none;-webkit-mask-image:none;isolation:isolate}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-detail-hero-back{display:none}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-detail-hero{position:absolute;z-index:1;left:0;top:12px;width:100%;height:280px;max-width:100%;object-fit:contain;object-position:center bottom;filter:none}
-:root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-equipment-arc{position:absolute;z-index:0;top:20px;left:50%;width:300px;height:255px;transform:translateX(-50%);pointer-events:none}
-:root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-equipment-arc>svg{display:block;width:100%;height:100%;overflow:visible}
-:root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-arc-track{stroke:var(--white-muted);stroke-width:2}
-:root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-arc-progress{stroke:var(--white-accent);stroke-width:2.5}
-:root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-arc-ticks{stroke:var(--white-muted);stroke-width:.6}
-:root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-arc-accent{stroke:var(--white-accent)}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load{margin:-13px 0 16px}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-adjustment{justify-content:center;gap:20px}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-adjustment>.ui-icon-button{width:52px;height:52px;min-width:52px;min-height:52px;border-radius:50%;color:var(--white-secondary)}
