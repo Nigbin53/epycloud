@@ -247,9 +247,7 @@
 :root[data-redesign-theme] .proplan-t b{color:var(--rd-text);font-weight:600}
 :root[data-redesign-theme] .proplan-btn{height:46px;border-radius:14px;border:1px solid var(--rd-line);background:color-mix(in srgb,var(--rd-text) 5%,transparent);color:var(--rd-text);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 :root[data-redesign-theme] .proplan-btn:active{transform:scale(.98)}
-/* Background Paths за своим PNG тренажёра без фона */
-#sheet .ta-detail-photo-layers.gym-has-paths{overflow:hidden;isolation:isolate}
-#sheet .ta-detail-photo-layers .gym-paths{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;color:#fff}
-:root[data-redesign-theme="white"] #sheet .ta-detail-photo-layers .gym-paths{color:#0f172a}
-#sheet .ta-detail-photo-layers.gym-has-paths .ta-detail-hero-back,#sheet .gym-has-paths .wt-equipment-arc{display:none!important}
-#sheet .ta-detail-photo-layers.gym-has-paths .ta-detail-hero{position:relative;z-index:1;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+/* Background Paths — верх Профиля */
+#scrpage.gym-has-paths{isolation:isolate}
+#scrpage>.gym-paths{position:absolute;left:0;top:0;width:100%;height:340px;z-index:-1;pointer-events:none;color:#fff;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+:root[data-redesign-theme="white"] #scrpage>.gym-paths{color:#0f172a}
