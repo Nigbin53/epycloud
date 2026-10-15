@@ -220,6 +220,7 @@
 :root[data-redesign-theme] .kn-rowk small { font-family:var(--rd-font);font-size:9px;font-weight:400; }
 :root[data-redesign-theme] .kn-ed { padding:14px;gap:12px; }
 :root[data-redesign-theme] .kn-edf { background:var(--rd-recess);border-color:var(--rd-line); }
+:root[data-redesign-theme] .kn-edf input { width:64px;height:44px;min-height:0;padding:0;margin:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--rd-text);font-family:var(--rd-number-font);font-weight:var(--rd-number-weight);font-size:24px;text-align:right; } /* общий стиль полей (рамка, фон, 52 px) не должен рисовать вторую коробку внутри «Вес порции» */
 :root[data-redesign-theme] .kn-saved { background:var(--rd-flow-selected);border-radius:12px; }
 :root[data-redesign-theme] :is(.kn-favempty,.kn-repeat) { background:transparent;border-color:var(--rd-line);border-radius:12px; }
 :root[data-redesign-theme] .kn-fav { padding:14px; }
