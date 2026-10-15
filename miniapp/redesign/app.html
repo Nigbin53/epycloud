@@ -1710,8 +1710,8 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="white-touches.css?v=3">
 <link rel="stylesheet" href="features-r10.css?v=15">
 <link rel="stylesheet" href="lattice-loader.css?v=1">
-<link rel="stylesheet" href="fuse-round.css?v=3">
-<link rel="stylesheet" href="nutrition-rows.css?v=3">
+<link rel="stylesheet" href="fuse-round.css?v=7">
+<link rel="stylesheet" href="nutrition-rows.css?v=12">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2900,20 +2900,6 @@ function kbEditor(e,past){
     +'<div class="kn-edb">'+(past?'':'<button class="kn-eddel" data-a="kbdel" data-v="'+e.id+'">Удалить</button>')+'<button class="kn-edok" data-a="kbsel" data-v="'+e.id+'">Готово</button></div></div>';
 }
 function kbRowSub(e){return 'Б '+Math.round(numv(e.p))+' · У '+Math.round(numv(e.c))+' · Ж '+Math.round(numv(e.f))}
-/* Круглые кнопки строки еды: ☆ избранное, ✎ изменить, 🗑 удалить. ☆ и 🗑 — «фитиль» (FuseButton из React Bits, круглая версия):
-   нажал → иконка меняется на «отменить», по кругу 3,5 с горит красный фитиль. ☆ сохраняет сразу (отмена — вернуть как было),
-   🗑 удаляет, когда фитиль догорит. Состояние в kbFuse — переживает перерисовку (фитиль продолжается с того же места). */
-var KB_FUSE_MS=3500,kbFuse={};
-var SVG_UNDO='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"></path><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"></path></svg>';
-function kbEntryFav(e){if(!e)return null;return S.kbFav.filter(function(f){return f.kind!=="set"&&f.n===e.name})[0]||null}
-function kbFzBtn(kind,e,icon,label,on){
-  var key=kind+":"+e.id,f=kbFuse[key],el=f?Math.min(KB_FUSE_MS,Date.now()-f.at):0;
-  return '<span class="kb-fz'+(on?' on':'')+'" data-k="'+kind+'" data-phase="'+(f?'armed':'idle')+'" style="--fz-el:-'+el+'ms">'
-    +'<button class="kb-fz-face kb-fz-idle" data-a="kbfz" data-v="'+key+'" aria-label="'+esc(label)+'"'+(kind==="fav"?' aria-pressed="'+!!on+'"':'')+'>'+icon+'</button>'
-    +'<button class="kb-fz-face kb-fz-undo" data-a="kbfzundo" data-v="'+key+'" aria-label="Отменить"><span class="kb-fz-ui">'+SVG_UNDO+'</span></button>'
-    +'<svg class="kb-fz-rim" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17.25" pathLength="1"></circle></svg></span>';
-}
-/* иконки строки блюда и приёмов пищи (линейные, в стиле приложения) */
 var KB_MI={p:KI.dumb,
   c:'<path d="M12 21V9"></path><path d="M12 17c-2.4 0-4-1.6-4-4 2.4 0 4 1.6 4 4zM12 17c2.4 0 4-1.6 4-4-2.4 0-4 1.6-4 4zM12 12.5c-2 0-3.3-1.3-3.3-3.3 2 0 3.3 1.3 3.3 3.3zM12 12.5c2 0 3.3-1.3 3.3-3.3-2 0-3.3 1.3-3.3 3.3zM12 8c-1.2-.9-1.2-3.1 0-4.5 1.2 1.4 1.2 3.6 0 4.5z"></path>',
   f:'<path d="M12 3.5s6 6.4 6 10.6a6 6 0 0 1-12 0c0-4.2 6-10.6 6-10.6z"></path><path d="M9.2 14.6a2.8 2.8 0 0 0 2.6 2.6"></path>'};
@@ -2923,7 +2909,7 @@ var KB_MEAL_IC={
   "Ужин":'<path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"></path><path d="M16.5 3.5v3M15 5h3"></path>',
   "Перекус":'<path d="M12 7.6c-1.6-1.1-5.2-1.4-6.5 1.6-1.3 3 .1 7.3 2.1 9.6 1.4 1.6 2.8 1.6 4.4.8 1.6.8 3 .8 4.4-.8 2-2.3 3.4-6.6 2.1-9.6-1.3-3-4.9-2.7-6.5-1.6z"></path><path d="M12 7.6c0-2 .9-3.5 2.8-4.1"></path>'};
 function kbMealIc(m){return '<span class="kn-mealic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(KB_MEAL_IC[m]||KB_MEAL_IC["Перекус"])+'</svg></span>'}
-function kbMacChip(k,lbl,v){return '<span class="kn-mc kn-mc-'+k+'"><span class="kn-mch"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+KB_MI[k]+'</svg><b>'+Math.round(numv(v))+'<small>г</small></b></span><em>'+lbl+'</em></span>'}
+function kbMacChip(k,lbl,v){return '<span class="kn-mc kn-mc-'+k+'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+KB_MI[k]+'</svg><span class="kn-mct"><em>'+lbl+'</em><b>'+Math.round(numv(v))+' г</b></span></span>'}
 /* Круглые кнопки строки еды: ☆ избранное, ✎ изменить, 🗑 удалить. ☆ и 🗑 — «фитиль» (FuseButton из React Bits, круглая версия):
    нажал → иконка меняется на «отменить», по кругу 3,5 с горит красный фитиль. ☆ сохраняет сразу (отмена — вернуть как было),
    🗑 удаляет, когда фитиль догорит. Состояние в kbFuse — переживает перерисовку (фитиль продолжается с того же места). */
@@ -2935,15 +2921,20 @@ function kbFzBtn(kind,e,icon,label,on){
   return '<span class="kb-fz'+(on?' on':'')+'" data-k="'+kind+'" data-phase="'+(f?'armed':'idle')+'" style="--fz-el:-'+el+'ms">'
     +'<button class="kb-fz-face kb-fz-idle" data-a="kbfz" data-v="'+key+'" aria-label="'+esc(label)+'"'+(kind==="fav"?' aria-pressed="'+!!on+'"':'')+'>'+icon+'</button>'
     +'<button class="kb-fz-face kb-fz-undo" data-a="kbfzundo" data-v="'+key+'" aria-label="Отменить"><span class="kb-fz-ui">'+SVG_UNDO+'</span></button>'
-    +'<svg class="kb-fz-rim" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="17.25" pathLength="1"></circle></svg></span>';
+    +'<svg class="kb-fz-rim" aria-hidden="true"><rect pathLength="1"></rect></svg></span>';
 }
 /* строка блюда: название / вес · время / плашки Б-У-Ж | большая цифра ккал | столбик кнопок */
+/* ккал высокой узкой цифрой (как часы на экране блокировки): SVG тянется по высоте колонки до подписи «ккал» */
+function kbKcalNum(k){
+  var t=thous(k),n=t.replace(/\s/g,"").length,dw=n<=2?13:n===3?12:10,W=Math.round(dw*n+(t.length-n)*5),f=Math.round(dw/0.48),cap=Math.round(f*0.81);
+  return '<svg class="kn-kc" width="'+W+'" viewBox="0 0 '+W+' '+cap+'" preserveAspectRatio="none" aria-label="'+t+' ккал"><text x="'+(W/2)+'" y="'+cap+'" text-anchor="middle" font-size="'+f+'" textLength="'+W+'" lengthAdjust="spacingAndGlyphs">'+t+'</text></svg>';
+}
 function kbRow(e,past){
   var o=kbSel===e.id,fv=!!kbEntryFav(e),nm=esc(e.name),g=Math.round(numv(e.g));
   return '<div class="kn-row'+(kbFuse["del:"+e.id]?' fz-del':'')+'" id="kn-row-'+e.id+'" data-live="1"><button class="kn-rowb" data-a="kbsel" data-v="'+e.id+'" aria-expanded="'+o+'" aria-label="Изменить: '+nm+'">'
-    +'<span class="kn-rowi"><span class="n">'+nm+'</span><span class="s">'+(g?g+' г · ':'')+timeLabel(e.t)+'</span>'
-    +(e.q?'<span class="s q">ждёт отправки · учтено в итогах дня</span>':'<span class="kn-mcs">'+kbMacChip("p","белки",e.p)+kbMacChip("c","углеводы",e.c)+kbMacChip("f","жиры",e.f)+'</span>')+'</span>'
-    +'<span class="kn-rowk"><b'+(numv(e.kcal)>=1000?' class="k4"':'')+'>'+thous(numv(e.kcal))+'</b><small>ккал</small></span></button>'
+    +'<span class="kn-rowi"><span class="n">'+nm+'</span><span class="s">'+(g?g+' г · ':'')+timeLabel(e.t)+'</span></span>'
+    +(e.q?'<span class="kn-mcs s q">ждёт отправки · учтено в итогах дня</span>':'<span class="kn-mcs'+(Math.max(numv(e.p),numv(e.c),numv(e.f))>=99.5?' wide':'')+'">'+kbMacChip("p","Белки",e.p)+kbMacChip("c","Углеводы",e.c)+kbMacChip("f","Жиры",e.f)+'</span>')
+    +'<span class="kn-rowk">'+kbKcalNum(numv(e.kcal))+'<small>ккал</small></span></button>'
     +'<span class="kn-rowacts">'+kbFzBtn("fav",e,kic("star",17,2),(fv?'Убрать из избранного: ':'В избранное: ')+e.name,fv)
     +(past?'':'<button class="kb-ic kn-rowedit" data-a="kbsel" data-v="'+e.id+'" aria-label="Изменить: '+nm+'">'+kic("pen",17,2)+'</button>')
     +kbFzBtn("del",e,kic("trash",17,2),'Удалить: '+e.name,false)+'</span></div>'

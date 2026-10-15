@@ -1,31 +1,75 @@
-/* Питание · строка блюда по референсу (без фото): название, «вес · время», плашки Б/У/Ж,
-   справа за разделителем — большая цифра ккал, ещё правее — столбик круглых кнопок ☆ ✎ 🗑.
-   Шапка приёма: иконка приёма (восход / солнце / луна / яблоко) в конце строки. */
-:root[data-redesign-theme] .kn-mealh{display:flex;align-items:center;gap:10px;min-height:36px}
+/* Питание · карточка блюда — по макету Epy из Figma (15.10):
+   слева сверху название и «вес · время», слева снизу три плашки (подпись над значением, по центру, без иконок);
+   справа — высокая узкая цифра ккал (как часы на экране блокировки iPhone), вытянута вниз до подписи «ккал»;
+   у правого края — значки ☆ ✎ 🗑 столбиком на всю высоту карточки, без подложек и без перегородок. */
+:root[data-redesign-theme] .kn-meal{padding:14px 6px 6px;gap:6px}
+:root[data-redesign-theme] .kn-mealh{display:flex;align-items:center;gap:10px;min-height:30px;padding:0 10px}
 :root[data-redesign-theme] .kn-mealt{flex:1;min-width:0}
-:root[data-redesign-theme] .kn-mealic{flex:none;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;color:var(--rd-muted)} /* просто значок, не кнопка: без круга и без акцента */
+:root[data-redesign-theme] .kn-mealic{flex:none;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;color:var(--rd-muted)}
 
-:root[data-redesign-theme] .kn-row{display:flex;align-items:stretch;gap:0;padding:10px 6px 10px 10px;border-radius:14px;background:var(--rd-raised);box-shadow:inset 0 0 0 1px var(--rd-line)} /* карточка блюда светлее приёма — еда не теряется в сером */
-:root[data-redesign-theme] .kn-rowb{flex:1;min-width:0;display:flex;align-items:center;gap:10px;padding:0;border-radius:10px;background:none}
-:root[data-redesign-theme] .kn-rowi{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-:root[data-redesign-theme] .kn-rowi .n{font-size:15px;line-height:1.25;font-weight:600;color:var(--rd-text);overflow-wrap:anywhere}
-:root[data-redesign-theme] .kn-rowi .s{font-size:12px;line-height:1.4;color:var(--rd-muted)}
-/* плашки белки / углеводы / жиры */
-:root[data-redesign-theme] .kn-mcs{display:flex;gap:3px;margin-top:8px}
-:root[data-redesign-theme] .kn-mc{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;padding:6px 4px 5px 5px;border-radius:10px;
-  background:color-mix(in srgb,var(--rd-text) 5%,transparent);border:0} /* плашки Б/У/Ж — тихие, не спорят с едой */
-:root[data-redesign-theme] .kn-mch{display:flex;align-items:center;gap:3px;min-width:0}
-:root[data-redesign-theme] .kn-mch svg{flex:none;color:var(--rd-muted)}
-:root[data-redesign-theme] .kn-mch b{font-size:13px;line-height:1;font-weight:700;color:var(--rd-text);white-space:nowrap;font-variant-numeric:tabular-nums}
-:root[data-redesign-theme] .kn-mc em{font-style:normal;font-size:9px;letter-spacing:-.1px;line-height:1.1;color:var(--rd-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* ккал: большая цифра за вертикальным разделителем */
-:root[data-redesign-theme] .kn-rowk{flex:none;align-self:stretch;min-width:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  padding:0 2px 0 8px;border-left:1px solid var(--rd-line);font-size:inherit}
-:root[data-redesign-theme] .kn-rowk b{display:inline-block;font-family:var(--rd-number-font);font-weight:var(--rd-number-weight);font-size:40px;line-height:.9;color:var(--rd-text);font-variant-numeric:tabular-nums;letter-spacing:-.5px;transform:scaleX(.74);transform-origin:center} /* вытянутые цифры, как на референсе */
-:root[data-redesign-theme] .kn-rowk small{font-family:var(--rd-font);font-size:11px;font-weight:400;color:var(--rd-muted)}
-/* столбик кнопок */
-:root[data-redesign-theme] .kn-rowacts{flex-direction:column;justify-content:center;gap:4px;margin:0 0 0 6px;padding-left:6px;border-left:1px solid var(--rd-line)}
-:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){background:color-mix(in srgb,var(--rd-text) 5%,transparent)}
+:root[data-redesign-theme] .kn-row{display:flex;align-items:stretch;gap:0;padding:14px 10px 14px 14px;border-radius:18px;
+  background:var(--rd-raised);box-shadow:inset 0 0 0 1px var(--rd-line)}
+:root[data-redesign-theme] .kn-rowb{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) 70px;grid-template-areas:"info k" "mc k";
+  grid-template-rows:auto 1fr;column-gap:8px;row-gap:14px;align-items:start;padding:0;border-radius:10px;background:none;text-align:left}
+/* название */
+:root[data-redesign-theme] .kn-rowi{grid-area:info;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+:root[data-redesign-theme] .kn-rowi .n{font-size:17px;line-height:1.2;font-weight:700;color:var(--rd-text);overflow-wrap:anywhere}
+:root[data-redesign-theme] .kn-rowi .s{font-size:13px;line-height:1.2;color:var(--rd-muted)}
+/* плашки: подпись над значением, по центру */
+:root[data-redesign-theme] .kn-mcs{grid-area:mc;align-self:end;display:flex;gap:5px;min-width:0}
+:root[data-redesign-theme] .kn-mcs.q{font-size:12px;color:#c98a3a}
+:root[data-redesign-theme] .kn-mc{flex:0 0 auto;min-width:56px;display:flex;align-items:center;justify-content:center;height:40px;padding:0 10px;border-radius:12px;
+  background:color-mix(in srgb,var(--rd-text) 6%,transparent)}
+:root[data-redesign-theme] .kn-mc>svg{display:none}
+:root[data-redesign-theme] .kn-mct{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+:root[data-redesign-theme] .kn-mct em{font-style:normal;font-size:10px;line-height:1;color:var(--rd-muted);white-space:nowrap}
+:root[data-redesign-theme] .kn-mct b{font-size:14px;line-height:1;font-weight:700;color:var(--rd-text);white-space:nowrap;font-variant-numeric:tabular-nums}
+/* ккал: высокая узкая цифра сверху, «ккал» снизу */
+:root[data-redesign-theme] .kn-rowk{grid-area:k;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:4px;padding:2px 0 0;min-width:0;font-size:inherit}
+:root[data-redesign-theme] .kn-rowk b{--sy:2.3;display:block;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",var(--rd-font);font-weight:600;font-size:34px;
+  line-height:.74;letter-spacing:-.5px;color:var(--rd-text);font-variant-numeric:tabular-nums;white-space:nowrap;
+  transform:scaleY(var(--sy));transform-origin:50% 0;margin:0 0 calc((var(--sy) - 1) * .74em)} /* вытягиваем по высоте; поле снизу резервирует растянутую высоту */
+:root[data-redesign-theme] .kn-rowk b.k4{font-size:21px;--sy:3.7}
+:root[data-redesign-theme] .kn-rowk small{font-family:var(--rd-font);font-size:13px;font-weight:400;line-height:1;color:var(--rd-muted)}
+/* значки */
+:root[data-redesign-theme] .kn-rowacts{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:4px;margin:-4px 0 -4px 4px;padding:0}
 :root[data-redesign-theme] .kn-row.fz-del>.kn-rowb{opacity:.4}
-:root[data-redesign-theme] .kn-rowk b.k4{font-size:30px;margin:0 -8px}
-:root[data-redesign-theme] .kn-mch b small{font-size:10px;font-weight:500;margin-left:1px;color:var(--rd-muted)}
+/* цифра ккал — SVG: растягивается на всю свободную высоту колонки, до «ккал» */
+:root[data-redesign-theme] .kn-rowk{justify-content:flex-start;gap:6px;padding-top:3px}
+:root[data-redesign-theme] .kn-kc{flex:1 1 auto;min-height:40px;height:auto;display:block;overflow:visible}
+:root[data-redesign-theme] .kn-kc text{fill:var(--rd-text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",var(--rd-font);font-weight:600}
+/* типографика легче (15.10): меньше веса и размеров, та же раскладка */
+:root[data-redesign-theme] .kn-row{padding:12px 8px 12px 14px}
+:root[data-redesign-theme] .kn-rowb{row-gap:12px;grid-template-columns:minmax(0,1fr) 56px}
+:root[data-redesign-theme] .kn-rowi{gap:3px}
+:root[data-redesign-theme] .kn-rowi .n{font-size:15px;font-weight:600;line-height:1.25}
+:root[data-redesign-theme] .kn-rowi .s{font-size:12px}
+:root[data-redesign-theme] .kn-mcs{gap:4px}
+:root[data-redesign-theme] .kn-mc{height:34px;min-width:50px;padding:0 9px;border-radius:10px;background:color-mix(in srgb,var(--rd-text) 4.5%,transparent)}
+:root[data-redesign-theme] .kn-mct{gap:3px}
+:root[data-redesign-theme] .kn-mct em{font-size:9.5px}
+:root[data-redesign-theme] .kn-mct b{font-size:12.5px;font-weight:600}
+:root[data-redesign-theme] .kn-kc text{font-weight:400}
+:root[data-redesign-theme] .kn-rowk{gap:5px;padding-top:2px}
+:root[data-redesign-theme] .kn-rowk small{font-size:11px}
+/* цифра ккал — узкий высокий шрифт Oswald (OFL, fonts/OFL-oswald.txt), ровная толщина линий, как часы iPhone */
+@font-face{font-family:RDKcal;src:url('fonts/oswald-300.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap}
+:root[data-redesign-theme] .kn-kc text{font-family:RDKcal,-apple-system,"SF Pro Display",var(--rd-font);font-weight:300;fill:color-mix(in srgb,var(--rd-text) 88%,transparent)}
+:root[data-redesign-theme] .kn-rowacts{margin:-6px 0 -6px 4px;gap:0}
+/* цифра ккал меньше — не во всю высоту: фиксированная высота, блок по центру */
+:root[data-redesign-theme] .kn-rowk{justify-content:center;gap:4px;padding-top:0}
+:root[data-redesign-theme] .kn-kc{flex:none;height:44px;min-height:0}
+/* ровные отступы (15.10): 14 px со всех сторон по видимым краям; цифра ккал ещё меньше */
+:root[data-redesign-theme] .kn-row{padding:14px 7px 14px 14px}
+:root[data-redesign-theme] .kn-rowb{grid-template-columns:minmax(0,1fr) 48px;column-gap:10px;row-gap:12px}
+:root[data-redesign-theme] .kn-rowi .n{line-height:1.2}
+:root[data-redesign-theme] .kn-kc{height:34px}
+:root[data-redesign-theme] .kn-rowk{gap:3px}
+:root[data-redesign-theme] .kn-rowk small{font-size:10.5px}
+:root[data-redesign-theme] .kn-rowacts{margin:-5px 0 -5px 6px} /* верх звезды = верх названия, низ корзины = низ плашек */
+/* ккал всегда по центру между правым краем плашки «Жиры» и значками:
+   1-я колонка = ширина плашек (название подстраивается под неё и не раздвигает колонку), 2-я — остаток, ккал в её центре */
+:root[data-redesign-theme] .kn-rowb{grid-template-columns:max-content minmax(48px,1fr);column-gap:0}
+:root[data-redesign-theme] .kn-rowi{width:0;min-width:100%}
+:root[data-redesign-theme] .kn-rowk{justify-self:center}
+:root[data-redesign-theme] .kn-rowk{margin-left:10px} /* компенсация внутреннего поля кнопок справа */

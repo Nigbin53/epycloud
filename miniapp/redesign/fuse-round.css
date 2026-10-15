@@ -45,3 +45,27 @@
 
 /* вес порции — рядом с названием, отдельно от КБЖУ */
 .kn-rowi .n .kn-rowg{font-style:normal;font-weight:400;font-size:.85em;color:var(--rd-muted,var(--muted));white-space:nowrap}
+
+/* В карточке блюда кнопки — скруглённые квадраты (как на референсе), фитиль идёт по контуру квадрата */
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:34px;height:32px;border-radius:10px;background:color-mix(in srgb,var(--rd-text) 6%,transparent)}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic)::before,:root[data-redesign-theme] .kn-rowacts .kb-fz-face{border-radius:10px}
+:root[data-redesign-theme] .kn-rowacts .kb-fz-rim{transform:none}
+.kb-fz-rim rect{x:calc(var(--fz-th)/2);y:calc(var(--fz-th)/2);width:calc(100% - var(--fz-th));height:calc(100% - var(--fz-th));rx:calc(10px - var(--fz-th)/2);
+  fill:none;stroke:var(--fz-fuse);stroke-width:var(--fz-th);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}
+.kb-fz[data-phase="armed"] .kb-fz-rim rect{animation:kbfz-burn var(--fz-ms) linear forwards;animation-delay:var(--fz-el,0ms)}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:30px;height:30px;border-radius:9px}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic)::before,:root[data-redesign-theme] .kn-rowacts .kb-fz-face{border-radius:9px}
+:root[data-redesign-theme] .kn-rowacts .kb-fz-rim rect{rx:calc(9px - var(--fz-th)/2)}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic) svg:not(.kb-fz-rim){width:16px;height:16px}
+/* отсчёт: только обводка, без бледной заливки кнопки */
+.kb-fz[data-phase="armed"]::before{opacity:0}
+.kb-fz[data-phase="armed"]:active::before{opacity:1;background:color-mix(in srgb,var(--rd-text,#888) 12%,transparent)}
+.kb-fz-rim{filter:none}
+/* макет 15.10: значки ☆ ✎ 🗑 без подложек */
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:34px;height:34px;border-radius:10px;background:none}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic)::before,:root[data-redesign-theme] .kn-rowacts .kb-fz-face{border-radius:10px}
+:root[data-redesign-theme] .kn-rowacts .kb-fz-rim rect{rx:calc(10px - var(--fz-th)/2)}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic) svg:not(.kb-fz-rim){width:20px;height:20px}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic) svg:not(.kb-fz-rim){width:18px;height:18px;stroke-width:1.8}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:32px;height:32px}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:32px;height:28px}
