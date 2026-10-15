@@ -69,3 +69,6 @@
 :root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic) svg:not(.kb-fz-rim){width:18px;height:18px;stroke-width:1.8}
 :root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:32px;height:32px}
 :root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:32px;height:28px}
+/* значки чуть крупнее */
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic){width:36px;height:32px}
+:root[data-redesign-theme] .kn-rowacts :is(.kb-fz,.kb-ic) svg:not(.kb-fz-rim){width:21px;height:21px}

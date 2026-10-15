@@ -73,3 +73,14 @@
 :root[data-redesign-theme] .kn-rowi{width:0;min-width:100%}
 :root[data-redesign-theme] .kn-rowk{justify-self:center}
 :root[data-redesign-theme] .kn-rowk{margin-left:10px} /* компенсация внутреннего поля кнопок справа */
+/* 15.10 позже: цифра ккал крупнее */
+:root[data-redesign-theme] .kn-kc{height:46px}
+:root[data-redesign-theme] .kn-rowk small{font-size:11px}
+:root[data-redesign-theme] .kn-row{padding-right:6px}
+:root[data-redesign-theme] .kn-rowacts{margin:-6px 0 -6px 6px}
+/* цифра + «ккал» — одна группа, прижата вниз: низ «ккал» = низ плашек и корзины; между цифрой и «ккал» отступ больше */
+:root[data-redesign-theme] .kn-rowk{align-self:stretch;justify-content:flex-end;gap:8px}
+:root[data-redesign-theme] .kn-rowk small{line-height:.8}
+/* «ккал» — по центру высоты серых плашек; цифра над ней */
+:root[data-redesign-theme] .kn-rowk{padding-bottom:12px}
+:root[data-redesign-theme] .kn-rowk{padding-bottom:13px}

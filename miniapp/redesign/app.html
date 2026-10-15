@@ -1710,8 +1710,8 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="white-touches.css?v=3">
 <link rel="stylesheet" href="features-r10.css?v=15">
 <link rel="stylesheet" href="lattice-loader.css?v=1">
-<link rel="stylesheet" href="fuse-round.css?v=7">
-<link rel="stylesheet" href="nutrition-rows.css?v=12">
+<link rel="stylesheet" href="fuse-round.css?v=8">
+<link rel="stylesheet" href="nutrition-rows.css?v=13">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2926,7 +2926,7 @@ function kbFzBtn(kind,e,icon,label,on){
 /* строка блюда: название / вес · время / плашки Б-У-Ж | большая цифра ккал | столбик кнопок */
 /* ккал высокой узкой цифрой (как часы на экране блокировки): SVG тянется по высоте колонки до подписи «ккал» */
 function kbKcalNum(k){
-  var t=thous(k),n=t.replace(/\s/g,"").length,dw=n<=2?13:n===3?12:10,W=Math.round(dw*n+(t.length-n)*5),f=Math.round(dw/0.48),cap=Math.round(f*0.81);
+  var t=thous(k),n=t.replace(/\s/g,"").length,dw=n<=2?17:n===3?15:12,W=Math.round(dw*n+(t.length-n)*5),f=Math.round(dw/0.48),cap=Math.round(f*0.81);
   return '<svg class="kn-kc" width="'+W+'" viewBox="0 0 '+W+' '+cap+'" preserveAspectRatio="none" aria-label="'+t+' ккал"><text x="'+(W/2)+'" y="'+cap+'" text-anchor="middle" font-size="'+f+'" textLength="'+W+'" lengthAdjust="spacingAndGlyphs">'+t+'</text></svg>';
 }
 function kbRow(e,past){
