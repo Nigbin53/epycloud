@@ -230,3 +230,13 @@
 .kwk-bju{font-size:12px;color:var(--rd-muted);font-variant-numeric:tabular-nums}
 .kwk-go{font-size:22px;line-height:1;color:var(--rd-muted);text-align:right}
 .kwk-note{margin:12px 4px 0;font-size:12px;line-height:1.4;color:var(--rd-muted);text-align:center}
+
+/* плашка «Составить план» с крестиком «скрыть» */
+:root[data-redesign-theme] .rd-workout .tg-plan-mini-wrap{position:relative;margin:12px 0 2px}
+:root[data-redesign-theme] .rd-workout .tg-plan-mini-wrap .tg-plan-mini{margin:0;padding-right:44px}
+:root[data-redesign-theme] .rd-workout .tg-plan-mini-x{position:absolute;top:50%;right:4px;transform:translateY(-50%);width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:inherit;
+  font-size:20px;line-height:1;opacity:.55;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:root[data-redesign-theme] .rd-workout .tg-plan-mini-x:active{opacity:1;background:color-mix(in srgb,var(--rd-text) 10%,transparent)}
+/* настройки: группы мышц на экране «Тренировка» */
+:root[data-redesign-theme] .settbtn.trtab .swtc{margin-left:auto}
+:root[data-redesign-theme] .setthint{margin:8px 4px 0;font-size:12px;line-height:1.4;color:var(--rd-muted)}

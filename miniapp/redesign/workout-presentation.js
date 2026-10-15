@@ -73,7 +73,8 @@ function addBlock(machines, favs) {
 
 // карточка плана дня: «Сегодня: Ноги · 5 упражнений», «2 из 5», Начать, × (пропустить только сегодня)
 function planCard(plan, items, o) {
-  if (!plan) return `<button type="button" class="tg-plan-mini" data-plan="manage">${o.anyPlans ? 'День отдыха · Мои планы ›' : '+ Составить план тренировок'}</button>`;
+  // плашку без плана можно скрыть крестиком; составить план — в Настройках → Профиль
+  if (!plan) return o.miniHidden ? '' : `<div class="tg-plan-mini-wrap"><button type="button" class="tg-plan-mini" data-plan="manage">${o.anyPlans ? 'День отдыха · Мои планы ›' : '+ Составить план тренировок'}</button><button type="button" class="tg-plan-mini-x" data-plan="hide" aria-label="Скрыть плашку">×</button></div>`;
   if (o.skipped) return `<button type="button" class="tg-plan-mini" data-plan="unskip">Сегодня по плану: ${esc(plan.name)} ›</button>`;
   const done = items.filter((m) => m.d).length;
   const word = (n) => n % 10 === 1 && n % 100 !== 11 ? 'упражнение' : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 'упражнения' : 'упражнений';
@@ -102,7 +103,8 @@ function build(state, theme) {
   const plan = typeof window.gymPlanFor === 'function' ? window.gymPlanFor(selected) : null;
   const skipped = !!plan && !past && state.planSkip === dayKey(Date.now());
   const planOn = !!plan && !skipped;
-  const tabsAll = (planOn ? ['План'] : []).concat(TABS);
+  const hiddenTabs = state.trainTabsHidden || [];
+  const tabsAll = (planOn ? ['План'] : []).concat(TABS.filter((t) => t === 'Избранное' || !hiddenTabs.includes(t)));
   const filter = tabsAll.includes(state.filter) ? state.filter : 'Избранное';
   const favs = machines.filter((m) => m.favorite);
   const doneCount = machines.filter((m) => m.d).length;
@@ -126,8 +128,9 @@ function build(state, theme) {
   const pageClass = theme === 'white' ? 'white-page white-training-overview' : 'black-training-layout black-training-cards';
   return `<div class="rd-approved-training rd-workout" data-tg-filter="${esc(filter)}"><div class="training-overview"><div class="ui-page ta-page ${pageClass}"><div class="ta-overview-content">`
     // как на утверждённом экране: в White — «Сегодня» и счётчик, в Black — только счётчик (надпись и полоса убраны в r9)
-    + `<div class="ta-today-line">${past ? text(DAY_FULL[selected], 'micro', 'tg-day-label') : theme === 'white' ? text('Сегодня', 'micro') : ''}${text(`${doneCount} из ${total} ${word}`, 'caption', 'ui-muted')}</div>`
-    + calendar + planCard(plan, planItems, { past, skipped, filter, selected, anyPlans: !!(state.plans && state.plans.length) }) + tabs + list + '</div></div></div></div>';
+    // счётчик «0 из 15 упражнений» убран по просьбе владельца (15.10); подпись дня осталась
+    + (past || theme === 'white' ? `<div class="ta-today-line">${past ? text(DAY_FULL[selected], 'micro', 'tg-day-label') : text('Сегодня', 'micro')}</div>` : '')
+    + calendar + planCard(plan, planItems, { past, skipped, filter, selected, anyPlans: !!(state.plans && state.plans.length), miniHidden: !!state.planMiniHidden }) + tabs + list + '</div></div></div></div>';
 }
 
 function apply() {
@@ -161,6 +164,7 @@ document.addEventListener('click', (event) => {
     else if (act === 'unskip') window.gymPlanSkip(false);
     else if (act === 'start') window.gymPlanStart();
     else if (act === 'manage' && window.gymOpenPlans) window.gymOpenPlans();
+    else if (act === 'hide' && window.gymSetPref) { window.gymSetPref('planMiniHidden', true); if (window.gymToast) window.gymToast('Плашка скрыта', () => window.gymSetPref('planMiniHidden', false)); }
     return;
   }
   const add = event.target.closest('[data-tg-add]');
