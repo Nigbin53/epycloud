@@ -4657,7 +4657,7 @@ function sheetRender(){
   el.innerHTML=h;
 }
 function open(id){
-  if(id===0)cur={id:0,n:"",g:GROUPS[0],w:20,st:2.5,s:3,r:10,ok:false,img:"",type:"machine"};
+  if(id===0)cur={id:0,n:"",g:GROUPS.indexOf(S.filter)>=0?S.filter:GROUPS[0],/* группа — из открытой вкладки (Спина → Спина), её можно поменять */w:20,st:2.5,s:3,r:10,ok:false,img:"",type:"machine"};
   else{var m=find(id);cur={id:id,w:m.w,st:m.st,s:m.s,r:m.r,ok:false,img:m.img||"",type:exType(m)}}
   mkRange="week";sheet();document.getElementById("ov").classList.add("on");
 }
