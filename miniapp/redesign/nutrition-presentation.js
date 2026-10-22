@@ -72,6 +72,10 @@ function present(){
  const goal=document.createElement('button');goal.type='button';goal.className='rd-nutrition-goal';goal.innerHTML=UI.icon('pencil',20);nativeButton(goal,'kbopen','kbGoals','Изменить дневную цель');header.append(goal);
  nativeButton(page.querySelector('.na-favorite-action button'),'kbopen','kbFav','Избранное');
  nativeButton(page.querySelector('.na-camera-action button'),'kbopen','kbCamera','Сфотографировать еду или штрихкод');
+ // Black: кнопка камеры — «Background Circles» (Kokonut UI): три вращающихся пульсирующих кольца. Фаза от общего времени — при перерисовке анимация не прыгает.
+ const camBtn=page.querySelector('.na-camera-action button');
+ if(camBtn&&!camBtn.querySelector('.bcx-c')){const ph='-'+((performance.now()/1000)%5).toFixed(3)+'s',st=' style="animation-delay:'+ph+','+ph+'"';
+  camBtn.insertAdjacentHTML('afterbegin',[0,1,2].map(i=>'<span class="bcx-c bcx-c'+i+'" aria-hidden="true"'+st+'></span>').join(''));}
  nativeButton(page.querySelector('.na-manual-action button'),'kbopen','kbManual','Вручную');
  // Use native real meal/favorite rows. Empty favorites remain empty, and all edit hooks are retained.
  const favorites=kn.querySelector('.kn-favs');
