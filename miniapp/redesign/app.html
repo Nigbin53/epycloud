@@ -1708,7 +1708,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="avatar-r8.css?v=equipment-library-r1">
 <link rel="stylesheet" href="../equipment/runtime.css?v=equipment-library-r1">
 <link rel="stylesheet" href="white-touches.css?v=3">
-<link rel="stylesheet" href="features-r10.css?v=21">
+<link rel="stylesheet" href="features-r10.css?v=22">
 <link rel="stylesheet" href="lattice-loader.css?v=1">
 <link rel="stylesheet" href="fuse-round.css?v=8">
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
@@ -1867,11 +1867,21 @@ if(!Array.isArray(S.kbFav))S.kbFav=(isNewUser&&!CATALOG_PREVIEW)?[]:seedFav();
 if(!S.kbGoal||typeof S.kbGoal!=="object")S.kbGoal={mode:"manual",goal:S.goalType==="gain"?2:S.goalType==="hold"?1:0,act:1,pkg:2,bonus:true,height:null,age:null};
 if(!Array.isArray(S.kbGoalLog))S.kbGoalLog=[];
 if(S.kbBotHidden==null)S.kbBotHidden=false;
+/* хранилище приложения (~5 МБ на всё, вместе с фото) переполнено:
+   1) пережимаем тяжёлые фото тренажёров / фона / аватара (без потери вида) и сохраняем снова;
+   2) если не хватило — убираем фото у старых записей еды (сначала старше 14 дней, потом старше 2) */
+var saveSqueezing=false;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));return}catch(e){}
-  /* память переполнена: убираем фото у старых записей еды (сначала старше 14 дней, потом старше 2) */
+  if(saveSqueezing)return; /* уже ужимаем — сохраним всё разом, когда закончим */
+  if(window.GymImg){saveSqueezing=true;
+    window.GymImg.compact(S).then(function(n){saveSqueezing=false;
+      if(n){try{localStorage.setItem(KEY,JSON.stringify(S));toast("Фото сжаты","","всё сохранено");return}catch(e1){}}
+      saveTrimFood()});return}
+  saveTrimFood()}
+function saveTrimFood(){
   for(var di=0;di<2;di++){var lim=Date.now()-(di?2:14)*86400000,cut=0;(S.food||[]).forEach(function(x){if(x.img&&x.t<lim){x.img="";cut++}});
     if(cut){try{localStorage.setItem(KEY,JSON.stringify(S));toast("Память почти заполнена","","убрали фото у старых записей еды");return}catch(e2){}}}
-  toast("Не удалось сохранить","","память телефона заполнена")}
+  toast("Не удалось сохранить","","хранилище приложения заполнено — удали лишние фото")}
 function f(n){return String(Math.round((+n||0)*100)/100).replace(".",",")}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function find(id){return S.m.filter(function(x){return x.id===id})[0]}
@@ -2285,6 +2295,20 @@ var IC_BELL='<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d=
 var IC_CAL='<rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M8 3v4M16 3v4M3.5 10h17"></path>';
 var IC_DL='<path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path>';
 var expDone=false;
+/* «Мои тренажёры»: всё, что добавлено пользователем (встроенные — id 1–9 из seed). Удаление — вторым нажатием, с отменой */
+var IC_TRASH='<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"></path>';
+var delOwnArm=false,delOwnT=null;
+function isOwnMachine(m){return !(m.id>=1&&m.id<=9)}
+function deleteOwnMachines(){
+  var gone=[];S.m.forEach(function(m,i){if(isOwnMachine(m))gone.push({i:i,m:m})});
+  if(!gone.length)return;
+  S.m=S.m.filter(function(m){return !isOwnMachine(m)});save();render();renderScreenView();
+  var n=gone.length;
+  toast("Удалено "+n+" "+plural(n,"тренажёр","тренажёра","тренажёров"),function(){
+    gone.forEach(function(g){if(!S.m.some(function(x){return x.id===g.m.id}))S.m.splice(Math.min(g.i,S.m.length),0,g.m)});
+    save();render();renderScreenView();toast("Тренажёры восстановлены","","вместе с фото и историей");
+  },"вместе с фото");
+}
 function screenSettings(){
   var th=S.theme||"g";
   var h='<div class="scrhead"><button class="scrback" data-a="screenback" aria-label="Назад">'+SVG_BACK+'</button><h1>Настройки</h1><span class="scrspacer"></span></div>';
@@ -2336,6 +2360,10 @@ function screenSettings(){
     +'<div class="hd">'+settIc(IC_DL)+'<span>Экспорт данных<small>тренировки, вес и питание одним файлом</small></span></div>'
     +'<div class="expfmts"><button class="expfmt'+(S.expFmt!=="json"?" on":"")+'" data-a="expfmt" data-v="csv">CSV · Excel</button><button class="expfmt'+(S.expFmt==="json"?" on":"")+'" data-a="expfmt" data-v="json">JSON</button></div>'
     +'<button class="expbtn'+(expDone?" done":"")+'" data-a="doexport">'+(expDone?"Готово — файл сохранён":"Выгрузить · "+nrec+" "+plural(nrec,"запись","записи","записей"))+'</button>'
+    +'</div>';
+  var own=S.m.filter(isOwnMachine),nOwn=own.length,nPh=own.filter(function(m){return m.img||m.cover}).length;
+  h+='<div class="settcard settdata settdel cm"><div class="hd">'+settIc(IC_TRASH)+'<span>Мои тренажёры<small>'+(nOwn?nOwn+" "+plural(nOwn,"добавлен","добавлено","добавлено")+" тобой"+(nPh?" · "+nPh+" с фото":"")+" — встроенные останутся":"своих тренажёров пока нет")+'</small></span></div>'
+    +'<button class="expbtn delown'+(delOwnArm?" arm":"")+'" data-a="delown"'+(nOwn?'':' disabled')+'>'+(delOwnArm?"Точно удалить? Нажми ещё раз":"Удалить мои тренажёры"+(nOwn?" · "+nOwn:""))+'</button>'
     +'</div></section>';
   if(window.gymChangelogHtml)h+=window.gymChangelogHtml();
   h+='<span class="settver">EpyFit · '+(window.GymChangelog&&GymChangelog[0]?'сборка '+GymChangelog[0].label:'версия 0.9')+'</span>';
@@ -4793,6 +4821,9 @@ document.addEventListener("click",function(e){
   else if(a==="wremtoggle"){S.remWeigh=!S.remWeigh;save();renderScreenView()}
   else if(a==="expfmt"){S.expFmt=v;expDone=false;save();renderScreenView()}
   else if(a==="doexport"){doExport()}
+  else if(a==="delown"){clearTimeout(delOwnT);
+    if(!delOwnArm){delOwnArm=true;renderScreenView();delOwnT=setTimeout(function(){if(delOwnArm){delOwnArm=false;var sp=document.getElementById("scrpage");if(sp&&sp.classList.contains("settscr"))renderScreenView()}},4000);return}
+    delOwnArm=false;deleteOwnMachines()}
   else if(a==="achfilter"){achFilter=v;renderScreenView()}
   else if(a==="screenback"){screenBack()}
   else if(a==="pecancel"){peState=null;screenBack()}
@@ -4870,7 +4901,7 @@ document.addEventListener("change",function(e){
       c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
       c.getContext("2d").drawImage(im,0,0,c.width,c.height);
       var png=/png|webp|gif/i.test(e.target.files[0].type||"")&&(function(){try{var d=c.getContext("2d").getImageData(0,0,c.width,c.height).data;for(var i=3;i<d.length;i+=16)if(d[i]<250)return true}catch(_){}return false})();
-      cur.img=png?c.toDataURL("image/png"):c.toDataURL("image/jpeg",.72);sheet()};im.src=r.result}; /* PNG без фона сохраняет прозрачность */
+      if(png&&window.GymImg)window.GymImg.png(c).then(function(u){cur.img=u;sheet()});else{cur.img=png?c.toDataURL("image/png"):c.toDataURL("image/jpeg",.72);sheet()}};im.src=r.result}; /* PNG без фона сохраняет прозрачность */
     r.readAsDataURL(e.target.files[0]);
   }
 });
@@ -5183,9 +5214,10 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="nutrition-kit.js?v=equipment-library-r1"></script>
 <script src="training-kit.js?v=noarc-1"></script>
 <script src="nutrition-presentation.js?v=week-2"></script>
-<script src="training-presentation.js?v=r10-6"></script>
+<script src="training-presentation.js?v=mem-1"></script>
 <script src="workout-presentation.js?v=r10-3"></script>
 <script src="lattice-loader.js?v=1"></script>
+<script src="img-pack.js?v=1"></script>
 <script src="paths-bg.js?v=2"></script>
 <script src="plans-whatsnew.js?v=11"></script>
 <script src="gestures.js?v=6"></script>

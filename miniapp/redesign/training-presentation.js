@@ -177,7 +177,7 @@ function meditCrop(file,w,h,q){return new Promise((ok,no)=>{const r=new FileRead
  const c=document.createElement('canvas'),x=c.getContext('2d');
  if(/png|webp|gif/i.test(file.type||'')&&hasAlpha(im)){
   const W=Math.round(w*.8),H=Math.round(h*.8),k=Math.min(W/im.width,H/im.height,1),dw=Math.round(im.width*k),dh=Math.round(im.height*k);
-  c.width=W;c.height=H;x.drawImage(im,Math.round((W-dw)/2),Math.round((H-dh)/2),dw,dh);ok(c.toDataURL('image/png'));return;
+  c.width=W;c.height=H;x.drawImage(im,Math.round((W-dw)/2),Math.round((H-dh)/2),dw,dh);if(window.GymImg)window.GymImg.png(c).then(ok);else ok(c.toDataURL('image/png'));return; // PNG на 256 цветов — в 4–6 раз легче
  }
  const k=Math.max(w/im.width,h/im.height),sw=w/k,sh=h/k,sx=(im.width-sw)/2,sy=(im.height-sh)/2;
  c.width=w;c.height=h;x.drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));};im.src=r.result;};r.readAsDataURL(file);});}

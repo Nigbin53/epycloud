@@ -251,3 +251,8 @@
 #scrpage.gym-has-paths{isolation:isolate}
 #scrpage>.gym-paths{position:absolute;left:0;top:0;width:100%;height:340px;z-index:-1;pointer-events:none;color:#fff;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
 :root[data-redesign-theme="white"] #scrpage>.gym-paths{color:#0f172a}
+/* Настройки · «Мои тренажёры» — удалить всё добавленное */
+:root[data-redesign-theme] .settdel .settic{color:#e0483e}
+:root[data-redesign-theme] .settdel .expbtn.delown{color:#e0483e}
+:root[data-redesign-theme] .settdel .expbtn.delown.arm{border-color:#e0483e;background:rgba(224,72,62,.12);color:#e0483e}
+:root[data-redesign-theme] .settdel .expbtn.delown:disabled{opacity:.45}
