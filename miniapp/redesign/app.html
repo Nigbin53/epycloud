@@ -5007,9 +5007,10 @@ function catalogShow(view){
   if(view==="machine"||view==="record"){
     if(!S.m.length){if(CATALOG_PREVIEW)S.m=seed();else{catalogReady=true;return;}}
     var wantedMachine=REDESIGN_QUERY.get("machine");
-    var selectedMachine=(wantedMachine&&S.m.filter(function(m){return m.n===wantedMachine;})[0])||S.m.filter(function(m){return m.n==="Жим ногами";})[0]||S.m[0];
-    open(selectedMachine.id);
-    if(view==="record"){cur.ok=true;sheet();}
+    /* после перезагрузки — тот же тренажёр, на котором был человек (раньше открывался «Жим ногами» из примеров каталога) */
+    var selectedMachine=(wantedMachine&&S.m.filter(function(m){return m.n===wantedMachine;})[0])
+      ||(!CATALOG_PREVIEW?(S.redesignLastMachine!=null?find(S.redesignLastMachine):null):(S.m.filter(function(m){return m.n==="Жим ногами";})[0]||S.m[0]));
+    if(selectedMachine){open(selectedMachine.id);if(view==="record"){cur.ok=true;sheet();}}
   }else if(view==="machine-new")open(0);
   else if(view==="weight-log"){
     logW=S.bw.length?chrono(S.bw).slice(-1)[0].w:70;logStep=.1;logDay=0;logFast=true;
@@ -5183,7 +5184,7 @@ try{
   if(new URLSearchParams(location.search).get("embed")==="1")document.documentElement.dataset.catalogEmbed="1";
   catalogShow(catalogRequestedView);
   if(redesignNeedsOnboarding){S.onboarded=false;showOnboarding();}
-  if(!CATALOG_PREVIEW)S.redesignLastView=catalogCurrentView();
+  if(!CATALOG_PREVIEW){S.redesignLastView=catalogCurrentView();S.redesignLastMachine=cur&&cur.id?cur.id:null;}
   /* Persist first-load examples once: Black and White previews of this route
      read the same model instead of independently generating random history. */
   save();isNewUser=false;
@@ -5191,10 +5192,10 @@ try{
   new MutationObserver(function(){
     clearTimeout(catalogNotifyTimer);catalogNotifyTimer=setTimeout(function(){
       redesignMarkRoute();
-      var status=catalogStatus(),signature=JSON.stringify(status);
+      var status=catalogStatus(),openId=cur&&cur.id?cur.id:null,signature=JSON.stringify(status)+"|"+openId;
       if(signature!==catalogLastStatus){
         catalogLastStatus=signature;
-        if(!CATALOG_PREVIEW){S.redesignLastView=status.view;save();}
+        if(!CATALOG_PREVIEW){S.redesignLastView=status.view;S.redesignLastMachine=openId;save();}
         catalogSend("view",{status:status});
         window.dispatchEvent(new CustomEvent("gym-redesign:view",{detail:status}));
       }
