@@ -1,0 +1,17 @@
+/* Biceps entry uses the existing Settings and sheet styles in both themes. */
+:root[data-redesign-theme] .sheet.bicepssheet{display:flex;flex-direction:column;gap:12px;padding:14px 24px 28px;max-height:calc(100% - var(--rd-safe-top))}
+:root[data-redesign-theme] .bicepssheet>*{flex-shrink:0}
+:root[data-redesign-theme] .bicepssheet .grab{margin:0 auto}
+:root[data-redesign-theme] .bicepssheet .setthint{margin:0;font-size:12px;line-height:1.6}
+:root[data-redesign-theme] .biceps-label{margin-top:6px;font-size:12px;color:var(--rd-muted)}
+:root[data-redesign-theme] .bicepssheet .biceps-input{width:100%;min-width:0;height:64px;padding:12px 16px;font:400 30px var(--rd-number-font);text-align:center;font-variant-numeric:tabular-nums}
+:root[data-redesign-theme] .biceps-input::placeholder{font-size:18px;color:var(--rd-muted);opacity:1}
+:root[data-redesign-theme] .biceps-input[aria-invalid=true]{border-color:var(--rd-error)}
+:root[data-redesign-theme] .biceps-error{min-height:16px;font-size:11px;line-height:1.5;color:var(--rd-error)}
+:root[data-redesign-theme] .bicepssheet .lwlbl{margin-top:0}
+:root[data-redesign-theme] .bicepssheet .lwdays{margin:0}
+:root[data-redesign-theme] .biceps-recent{margin-top:6px;border-top:1px solid var(--rd-line);padding-top:16px}
+:root[data-redesign-theme] .biceps-recent h3{margin:0 0 8px;font-size:12px;font-weight:500;color:var(--rd-muted)}
+:root[data-redesign-theme] .biceps-recent>div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px}
+:root[data-redesign-theme] .biceps-recent b{font-weight:500}
+:root[data-redesign-theme] .bicepssheet .lwsave{margin-top:4px}

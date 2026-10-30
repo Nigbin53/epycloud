@@ -1712,6 +1712,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="lattice-loader.css?v=1">
 <link rel="stylesheet" href="fuse-round.css?v=8">
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
+<link rel="stylesheet" href="measurements.css?v=1">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -1832,6 +1833,7 @@ if(!S.gender)S.gender="";
 if(!S.goalType)S.goalType="lose";
 if(S.goalWeight==null)S.goalWeight=null;
 if(!S.bw)S.bw=CATALOG_PREVIEW?seedBW():[];
+if(!Array.isArray(S.biceps))S.biceps=[];
 if(!S.history)S.history=[];
 if(!S.food)S.food=CATALOG_PREVIEW?seedFood():[];
 if(!S.kcalGoal)S.kcalGoal=2200;
@@ -2312,6 +2314,11 @@ function deleteOwnMachines(){
 function screenSettings(){
   var th=S.theme||"g";
   var h='<div class="scrhead"><button class="scrback" data-a="screenback" aria-label="Назад">'+SVG_BACK+'</button><h1>Настройки</h1><span class="scrspacer"></span></div>';
+  var bwLast=chrono(S.bw).slice(-1)[0],bicepsLast=chrono(S.biceps).slice(-1)[0];
+  h+='<section class="settsec"><h2>Замеры тела</h2><div class="settgroup">'
+    +'<button class="settbtn" data-a="logopen"><span>Вес</span><span class="settval">'+(bwLast?fmt1(bwLast.w)+' кг':'Записать')+SVG_CHEV+'</span></button>'
+    +'<button class="settbtn" data-a="bicepsopen"><span>Бицепс</span><span class="settval">'+(bicepsLast?fmt1(bicepsLast.cm)+' см':'Записать')+SVG_CHEV+'</span></button>'
+    +'</div></section>';
   h+='<section class="settsec"><div class="setth"><h2>Тема оформления</h2><span>'+THEMES.filter(function(t){return t[0]===th})[0][1]+'</span></div>'
     +'<div class="settthemes">'+["g","b","p","f"].map(function(k){
       var t=THEMES.filter(function(x){return x[0]===k})[0];
@@ -2355,9 +2362,9 @@ function screenSettings(){
       +'<div class="remhint">'+(S.remDays.length?"Напомним "+S.remDays.length+" раз(а) в неделю в "+S.remTime:"Выбери хотя бы один день")+'</div></div>'):"")
     +'<button class="settbtn tall bt" data-a="wremtoggle" aria-pressed="'+!!S.remWeigh+'"><span class="settlead">'+settIc(IC_CAL)+'<span class="settlbl">Взвеситься утром<small>пн и чт в 08:00</small></span></span><span class="swtc'+(S.remWeigh?" on":"")+'"><i></i></span></button>'
     +'</div></section>';
-  var nrec=S.history.length+S.bw.length+S.food.length;
+  var nrec=S.history.length+S.bw.length+S.biceps.length+S.food.length;
   h+='<section class="settsec"><h2>Данные</h2><div class="settcard settdata cm">'
-    +'<div class="hd">'+settIc(IC_DL)+'<span>Экспорт данных<small>тренировки, вес и питание одним файлом</small></span></div>'
+    +'<div class="hd">'+settIc(IC_DL)+'<span>Экспорт данных<small>тренировки, вес, замеры и питание одним файлом</small></span></div>'
     +'<div class="expfmts"><button class="expfmt'+(S.expFmt!=="json"?" on":"")+'" data-a="expfmt" data-v="csv">CSV · Excel</button><button class="expfmt'+(S.expFmt==="json"?" on":"")+'" data-a="expfmt" data-v="json">JSON</button></div>'
     +'<button class="expbtn'+(expDone?" done":"")+'" data-a="doexport">'+(expDone?"Готово — файл сохранён":"Выгрузить · "+nrec+" "+plural(nrec,"запись","записи","записей"))+'</button>'
     +'</div>';
@@ -2427,14 +2434,15 @@ function screenProfileEdit(){
 function doExport(){
   var data,filename;
   if(S.expFmt==="json"){
-    data=JSON.stringify({workouts:S.m,history:S.history,weight:S.bw,food:S.food,water:S.kbWater,favorites:S.kbFav,foodGoal:kbGoalNow()},null,2);
+    data=JSON.stringify({workouts:S.m,history:S.history,weight:S.bw,biceps:S.biceps,food:S.food,water:S.kbWater,favorites:S.kbFav,foodGoal:kbGoalNow()},null,2);
     filename="gymtracker-export.json";
   }else{
-    var rows=[["type","date","name","kcal_or_kg","protein_or_sets","fat_or_reps"]];
+    var rows=[["type","date","name","kcal_or_kg","protein_or_sets","fat_or_reps","biceps_cm"]];
     S.history.forEach(function(e){rows.push(["workout",new Date(e.t).toISOString(),e.n,e.w,e.s,e.r])});
     S.bw.forEach(function(e){rows.push(["weight",new Date(e.t).toISOString(),"",e.w,"",""])});
+    S.biceps.forEach(function(e){rows.push(["biceps",new Date(e.t).toISOString(),"Бицепс","","","",e.cm])});
     S.food.forEach(function(e){rows.push(["food",new Date(e.t).toISOString(),e.name,e.kcal,e.p,e.f])});
-    data=rows.map(function(r){return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
+    data=rows.map(function(r){while(r.length<7)r.push("");return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
     filename="gymtracker-export.csv";
   }
   if(!window.claude||typeof window.claude.use!=="function"){redesignDownloadExport(data,filename);return}
@@ -4703,6 +4711,32 @@ function sheetLog(){
   h+='<div class="lwsave"><button class="save" data-a="savelog">Сохранить</button></div>';
   var el=document.getElementById("sheet");el.className="sheet logsheet";el.innerHTML=h;
 }
+var bicepsValue="",bicepsDay=0;
+function bicepsLogTime(days){var d=new Date();d.setDate(d.getDate()-days);return d.getTime()}
+function sheetBiceps(){
+  var recent=chrono(S.biceps).slice(-5).reverse();
+  var h='<div class="grab"></div><div class="sh-title"><h2>Записать бицепс</h2><button class="x" data-a="close" aria-label="Закрыть">'+SVG_X+'</button></div>';
+  h+='<p class="setthint">Обхват бицепса в сантиметрах. Для сравнения измеряй одну и ту же руку.</p>'
+    +'<label class="biceps-label" for="bicepscm">Обхват, см</label><input id="bicepscm" class="biceps-input" type="text" inputmode="decimal" autocomplete="off" maxlength="5" placeholder="Например, 35,5" value="'+esc(bicepsValue)+'" aria-describedby="bicepserror">'
+    +'<div id="bicepserror" class="biceps-error" role="alert"></div>';
+  h+='<div class="lwlbl">Когда</div><div class="lwdays">'+['Сегодня','Вчера',dayLabel(bicepsLogTime(2))].map(function(nm,i){return '<button class="stepbtn'+(bicepsDay===i?' on':'')+'" data-a="bicepsday" data-v="'+i+'" aria-pressed="'+(bicepsDay===i)+'">'+nm+'</button>'}).join("")+'</div>';
+  if(recent.length)h+='<div class="biceps-recent"><h3>Последние замеры</h3>'+recent.map(function(e){return '<div><span>'+dayLabel(e.t)+'</span><b>'+fmt1(e.cm)+' см</b></div>'}).join("")+'</div>';
+  h+='<div class="lwsave"><button class="save" data-a="bicepssave">Сохранить</button></div>';
+  var el=document.getElementById("sheet");el.className="sheet bicepssheet";el.innerHTML=h;
+}
+function saveBiceps(){
+  var input=document.getElementById("bicepscm"),raw=input.value.trim(),cm=Number(raw.replace(",","."));
+  if(!/^\d{1,3}(?:[.,]\d)?$/.test(raw)||!Number.isFinite(cm)||cm<10||cm>100){
+    document.getElementById("bicepserror").textContent="Введи обхват от 10 до 100 см, например 35,5";
+    input.setAttribute("aria-invalid","true");input.focus();return;
+  }
+  cm=Math.round(cm*10)/10;
+  var tt=bicepsLogTime(bicepsDay),tk=dateKey(tt);
+  S.biceps=S.biceps.filter(function(e){return dateKey(e.t)!==tk});
+  S.biceps.push({t:tt,cm:cm});S.biceps.sort(function(a,b){return a.t-b.t});
+  save();close();render();if(scrStack[scrStack.length-1]==="settings")renderScreenView();
+  buzz("success");toast("Бицепс "+fmt1(cm)+" см записан");
+}
 function close(){document.getElementById("ov").classList.remove("on");document.getElementById("sheet").className="sheet";document.getElementById("sheet").dataset.cid="";cur=null;curFood=null}
 /* вибрация: в Telegram — Taptic Engine (heavy — плотный «мужской» щелчок для веса), вне Telegram — vibrate */
 function buzz(kind){try{var hf=window.Telegram&&Telegram.WebApp&&Telegram.WebApp.HapticFeedback;if(hf&&Telegram.WebApp.initData){if(kind==="success"||kind==="error"||kind==="warning")hf.notificationOccurred(kind);else hf.impactOccurred(kind||"light");return}}catch(e){}try{navigator.vibrate&&navigator.vibrate(kind==="heavy"?28:kind==="success"?[18,40,18]:12)}catch(e){}}
@@ -4770,11 +4804,14 @@ document.addEventListener("click",function(e){
   else if(a==="del"){var delId=cur.id;close();delMachine(delId)}
   else if(a==="undo"){var u=undoFn;undoFn=null;clearInterval(toastI);clearTimeout(toastT);document.getElementById("toast").classList.remove("on");if(u)u()}
   else if(a==="logopen"){logW=S.bw.length?chrono(S.bw).slice(-1)[0].w:70;logStep=0.1;logDay=0;logFast=true;sheetLog();document.getElementById("ov").classList.add("on")}
+  else if(a==="bicepsopen"){var bc=chrono(S.biceps).slice(-1)[0];bicepsValue=bc?fmt1(bc.cm):"";bicepsDay=0;sheetBiceps();document.getElementById("ov").classList.add("on")}
+  else if(a==="bicepsday"){bicepsValue=document.getElementById("bicepscm").value;bicepsDay=+v;sheetBiceps()}
+  else if(a==="bicepssave"){saveBiceps()}
   else if(a==="lw"){logW=Math.min(250,Math.max(30,Math.round((logW+(+v)*logStep)*10)/10));buzz();sheetLog()}
   else if(a==="lst"){logStep=+v;sheetLog()}
   else if(a==="ldy"){logDay=+v;sheetLog()}
   else if(a==="lfast"){logFast=!logFast;sheetLog()}
-  else if(a==="savelog"){var tt=logDay?now-logDay*DAY:now,tk=dateKey(tt);S.bw=S.bw.filter(function(x){return dateKey(x.t)!==tk});S.bw.push({t:tt,w:logW,fast:logFast});S.bw.sort(function(x,y){return x.t-y.t});save();close();render();toast("Вес "+fmt1(logW)+" кг записан")}
+  else if(a==="savelog"){var tt=logDay?now-logDay*DAY:now,tk=dateKey(tt);S.bw=S.bw.filter(function(x){return dateKey(x.t)!==tk});S.bw.push({t:tt,w:logW,fast:logFast});S.bw.sort(function(x,y){return x.t-y.t});save();close();render();if(scrStack[scrStack.length-1]==="settings")renderScreenView();toast("Вес "+fmt1(logW)+" кг записан")}
   else if(a==="hf"){histF=v;render()}
   else if(a==="hclear"){var cc=clrCounts();clrSel=histF==="all"?"all":histF;if(!cc[clrSel])clrSel="all";sheetClear();document.getElementById("ov").classList.add("on")}
   else if(a==="clrsel"){clrSel=v;sheetClear()}
@@ -4855,6 +4892,7 @@ document.addEventListener("click",function(e){
   else if(a==="obreplay"){close();kbCloseAll();showOnboarding()}
 });
 document.addEventListener("input",function(e){
+  if(e.target.id==="bicepscm"){e.target.removeAttribute("aria-invalid");document.getElementById("bicepserror").textContent=""}
   if(e.target.id==="nn"&&cur&&cur.id===0){
     cur.n=e.target.value.slice(0,32);var okN=cur.n.trim().length>1,sb=document.getElementById("addsave");
     e.target.classList.toggle("ok",okN);if(sb){sb.disabled=!okN;sb.textContent=okN?"Добавить тренажёр":"Введи название"}
@@ -4905,7 +4943,7 @@ document.addEventListener("change",function(e){
     r.readAsDataURL(e.target.files[0]);
   }
 });
-document.addEventListener("keydown",function(e){if(e.key==="Escape"&&cur)close()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&cur)close();if(e.key==="Enter"&&e.target.id==="bicepscm"){e.preventDefault();saveBiceps()}});
 /* The shared redesign adapter controls the initial route and onboarding. */
 function fit(){
   var s=Math.min(1,(innerHeight-32)/868,(innerWidth-16)/414);
@@ -5220,7 +5258,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="lattice-loader.js?v=1"></script>
 <script src="img-pack.js?v=1"></script>
 <script src="paths-bg.js?v=2"></script>
-<script src="plans-whatsnew.js?v=11"></script>
+<script src="plans-whatsnew.js?v=14"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
