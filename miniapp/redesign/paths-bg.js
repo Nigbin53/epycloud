@@ -38,6 +38,7 @@ window.GymPaths={mount};
 let cur=null;
 const mark=(el,v)=>{if(el.classList.contains('gym-has-paths')!==v)el.classList.toggle('gym-has-paths',v);};
 function sync(){
+  if(document.documentElement.hasAttribute("data-silver")){if(cur){cur.inst.destroy();mark(cur.page,false);cur=null;}return;}
   const page=document.getElementById('scrpage');
   const ov=document.getElementById('scrov');
   const on=!!(page&&page.querySelector(':scope>.prohead')&&(!ov||ov.classList.contains('on')));

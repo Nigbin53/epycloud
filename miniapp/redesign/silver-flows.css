@@ -1,0 +1,336 @@
+/* TACTILE / Silver — native History, Profile, Settings and supporting flows.
+   Geometry, content, data hooks and screen order belong to the existing app.
+   Materials are mapped from the current kit F04–F07; no showcase coordinates. */
+
+:root[data-silver][data-redesign-theme]{
+  --sl-flow-cut:#59606638;
+  --sl-flow-edge:#ffffffb3;
+  --sl-flow-engraving:0 .6px 0 #ffffffcf,0 -.3px 0 #53535324;
+  --sl-flow-line:1px 1px 0 #ffffffb3,inset 1px 1px 0 #ffffffb3;
+  --sl-flow-neutral:linear-gradient(180deg,#c6c8c7,#e2e3df);
+  --sl-flow-surface:url('silver/assets/fitness-satin-silver.svg') center/cover;
+  --sl-flow-amber:radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%);
+  --sl-flow-base:radial-gradient(ellipse at 18% 78%,#e8e8e5 0%,#cfd0cd 32%,#b2b4af 67%,#949790 100%);
+}
+
+/* Shared engraved actions retain their existing 44px target, with no medallion. */
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrback,.scrgear,.obback,.obskip,.obskip2,.proall,.pwmore,.bgremove,.rd-medit-x,.rd-plan-back,.rd-medit-rm,.rd-plan-items button,.rd-medit-cancel){
+  min-height:44px!important;min-width:44px!important;background:none!important;border:0!important;box-shadow:none!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important;filter:none!important;transform:none!important;
+}
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrback,.scrgear,.obback,.rd-medit-x,.rd-plan-back){
+  width:44px!important;height:44px!important;flex:0 0 44px!important;display:grid!important;place-items:center!important;padding:10px!important;border-radius:0!important;
+}
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrback,.scrgear,.obback,.rd-medit-x,.rd-plan-back,.proall,.pwmore)::before,
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrback,.scrgear,.obback,.rd-medit-x,.rd-plan-back,.proall,.pwmore)::after{content:none!important}
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrback,.scrgear,.obback,.proall) svg{
+  filter:drop-shadow(0 .65px 0 #ffffffcf) drop-shadow(0 -.3px 0 #53535324)!important;stroke-width:1.7!important;
+}
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrback,.scrgear,.obback,.obskip,.obskip2,.proall,.pwmore,.bgremove,.rd-medit-x,.rd-plan-back,.rd-medit-rm,.rd-plan-items button,.rd-medit-cancel):not(:disabled):active{
+  opacity:.7!important;color:#252525!important;filter:none!important;transform:none!important;
+}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov,#sheet,.rd-medit-panel) :is(h1,h2,h3,.proname,.hname,.rd-medit-head b){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov,#sheet,.rd-medit-panel) :is(.scrhead h1,.sh-title h2){font-size:24px!important;line-height:28px!important;font-weight:700!important;letter-spacing:-.6px!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov,#sheet,.rd-medit-panel) :is(button,input,select,textarea){font-family:Arial,Helvetica,sans-serif}
+
+/* F04: the existing filter, summary and chronological record list. */
+:root[data-silver][data-redesign-theme] #appcontent .hfilt{
+  padding:4px!important;gap:3px!important;border:1px solid #aaaeaa!important;border-radius:999px!important;background:var(--sl-flow-neutral)!important;box-shadow:inset 0 2px 5px #43494324,0 1px 0 #ffffffcc!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hfilt::before,
+:root[data-silver][data-redesign-theme] #appcontent .hfilt::after{content:none!important}
+:root[data-silver][data-redesign-theme] #appcontent .hfilt>.hf{
+  position:relative!important;min-height:44px!important;height:44px!important;min-width:0!important;padding:15px 3px 7px!important;border:0!important;border-radius:999px!important;background:none!important;box-shadow:none!important;color:#505050!important;font:400 10.7px/1 Arial,Helvetica,sans-serif!important;letter-spacing:.15px!important;transform:none!important;text-shadow:0 .5px 0 #ffffff99!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hfilt>.hf.on{
+  color:#f5f5ef!important;background:linear-gradient(180deg,#444a4b,#282e2f)!important;box-shadow:inset 0 1px 2px #ffffff66,0 1px 3px #292e2c66!important;text-shadow:0 -.5px 0 #00000088!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hfilt>.hf.on::after{
+  content:""!important;position:absolute!important;top:6px!important;bottom:auto!important;left:calc(50% - 2px)!important;width:4px!important;height:4px!important;border:0!important;border-radius:50%!important;background:var(--sl-flow-amber)!important;box-shadow:inset 0 .5px .5px #ffe5a0d9,inset 0 -.5px .5px #6c3100b3,0 0 0 .5px #83500c!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hfilt>.hf:not(:disabled):active{filter:brightness(.94)!important;transform:none!important}
+:root[data-silver][data-redesign-theme] #appcontent .hclr{
+  width:44px!important;height:44px!important;min-height:44px!important;border:1px solid #a6a6a6!important;border-radius:14px!important;background:radial-gradient(ellipse at 20% 80%,#e5e5e5,#cecece 85%)!important;box-shadow:inset 0 .7px 0 #ffffff99,0 .7px 0 #ffffff99!important;color:#393939!important;transition:filter 160ms!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hclr:active{transform:none!important;filter:brightness(.94)!important}
+:root[data-silver][data-redesign-theme] #appcontent .hstats{
+  gap:0!important;border-top:1px solid var(--sl-flow-cut)!important;border-bottom:1px solid var(--sl-flow-cut)!important;box-shadow:0 1px 0 var(--sl-flow-edge),inset 0 1px 0 var(--sl-flow-edge)!important;background:none!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hstats>.hstat{
+  background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:20px 10px!important;min-width:0!important;color:#252525!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hstats>.hstat:first-child{padding-left:0!important}
+:root[data-silver][data-redesign-theme] #appcontent .hstats>.hstat+.hstat{border-left:1px solid var(--sl-flow-cut)!important;box-shadow:inset 1px 0 0 var(--sl-flow-edge)!important}
+:root[data-silver][data-redesign-theme] #appcontent .hstat em{font:400 10.7px/1.2 Arial,Helvetica,sans-serif!important;letter-spacing:.3px!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #appcontent .hstat b{
+  font:700 31px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.5px!important;color:#2c2c2c!important;text-shadow:0 .6px 0 #ffffffb3!important;background:none!important;-webkit-text-fill-color:currentColor!important;font-variant-numeric:tabular-nums!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hstat b small{font:400 10.5px/1.3 Arial,Helvetica,sans-serif!important;color:#747474!important;letter-spacing:0!important}
+:root[data-silver][data-redesign-theme] #appcontent .hstat .hdelta{font:400 10.5px/1.3 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #appcontent :is(.hday,.hempty){font:400 11px/1.5 Arial,Helvetica,sans-serif!important;color:#747474!important;letter-spacing:.6px!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #appcontent .hrow{
+  background:none!important;border:1px solid var(--sl-flow-cut)!important;border-radius:15px!important;box-shadow:var(--sl-flow-line)!important;min-height:72px!important;padding:10px 12px!important;gap:10px!important;color:#252525!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hrow .hic,
+:root[data-silver][data-redesign-theme] #appcontent .hrow .hic.f,
+:root[data-silver][data-redesign-theme] #appcontent .hrow .hic.b{
+  width:40px!important;height:40px!important;min-width:40px!important;flex:0 0 40px!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:#747474!important;isolation:auto!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hrow .hic::before,
+:root[data-silver][data-redesign-theme] #appcontent .hrow .hic::after{content:none!important}
+:root[data-silver][data-redesign-theme] #appcontent .hrow .hic svg{
+  width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;filter:drop-shadow(0 .65px 0 #ffffffcf) drop-shadow(0 -.3px 0 #53535324)!important;
+}
+:root[data-silver][data-redesign-theme] #appcontent .hname{font:400 14.5px/1.2 Arial,Helvetica,sans-serif!important;letter-spacing:-.2px!important;color:#313131!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #appcontent .hsub{font:600 10.5px/1.3 Arial,Helvetica,sans-serif!important;color:#626262!important}
+:root[data-silver][data-redesign-theme] #appcontent .hwt{font:700 25px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.7px!important;color:#313131!important;font-variant-numeric:tabular-nums!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #appcontent .hwt small{font:600 10px/1 Arial,Helvetica,sans-serif!important;color:#747474!important;letter-spacing:-.3px!important}
+
+/* F05: native square weight / biceps / training cards stay exactly in place. */
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat{
+  aspect-ratio:1!important;min-width:0!important;min-height:0!important;padding:12px 10px!important;gap:7px!important;border:1px solid var(--sl-flow-cut)!important;border-radius:12px!important;background:none!important;box-shadow:var(--sl-flow-line)!important;text-align:left!important;color:#252525!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat em{font:600 11px/1.2 Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat b{display:flex!important;align-items:baseline!important;gap:4px!important;font:700 26px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.5px!important;color:#252525!important;font-variant-numeric:tabular-nums!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat b small{font:500 11px/1 Arial,Helvetica,sans-serif!important;color:#747474!important;letter-spacing:0!important}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat:first-child b{color:#9c4900!important}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat>span{font:600 10.5px/1.35 Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat>span.up{color:#9c4900!important}
+:root[data-silver][data-redesign-theme] #scrpage .prostats>button.prostat:active{filter:brightness(.96)!important;transform:none!important;background:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .proring{box-shadow:0 1px 3px #28282836!important}
+:root[data-silver][data-redesign-theme] #scrpage .proring>.inner{border:3px solid #c6c6c6!important;outline:1px solid #ffffff9c!important;background:#050505!important}
+:root[data-silver][data-redesign-theme] #scrpage .proname{font:700 25px/1.1 Arial,Helvetica,sans-serif!important;letter-spacing:-.7px!important;color:#252525!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage .prosub{font:500 13px/1.3 Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.prosection,.proworkcard,.prorec,.achtile.prog,.achtile.done,.achsum,.achrow){
+  background:none!important;border:1px solid var(--sl-flow-cut)!important;border-radius:13px!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage :is(.prosection h2,.proh h2){font:700 18px/22px Arial,Helvetica,sans-serif!important;letter-spacing:-.3px!important}
+:root[data-silver][data-redesign-theme] #scrpage .proall{font:600 12px/1.2 Arial,Helvetica,sans-serif!important;letter-spacing:0!important;padding:0 0 0 12px!important}
+:root[data-silver][data-redesign-theme] #scrpage .strikday{font:600 11px/1 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .strikday>i{
+  width:32px!important;height:32px!important;border:1.4px dashed #868686b3!important;border-radius:50%!important;background:none!important;box-shadow:none!important;color:transparent!important;font:500 12.5px/1 Arial,Helvetica,sans-serif!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage .strikday.today:not(.on)>i{border:1.5px solid #ad650b!important;color:#a56209!important;box-shadow:0 .6px 0 #ffffffc9,inset 0 .6px 0 #ffffffc9!important}
+:root[data-silver][data-redesign-theme] #scrpage .strikday.on>i{border:1px solid #9f650c!important;background:var(--sl-flow-amber)!important;color:#3e2a0b!important;box-shadow:inset 0 .5px .5px #ffe3a880!important}
+:root[data-silver][data-redesign-theme] #scrpage .strikbar>div{height:5px!important;background:#80808038!important;box-shadow:inset 0 .7px 1px #69696933,0 1px 0 #ffffffa6!important}
+:root[data-silver][data-redesign-theme] #scrpage .strikbar>div>i{height:5px!important;background:var(--sl-flow-amber)!important}
+:root[data-silver][data-redesign-theme] #scrpage .strikbar>span{font:600 12.5px/1 Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #scrpage .proplan-t{font:400 13px/1.4 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .proplan-n{font:500 11px/1.3 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .ic{background:#83838315!important;box-shadow:inset 0 .5px 1px #73737315,0 .6px 0 #ffffff91!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .tr{background:var(--sl-flow-amber)!important;color:#3e2a0b!important;border-color:#e2e4e4!important;box-shadow:inset 0 .5px .5px #ffe3a880!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .inf>b{font:700 14.5px/1.2 Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .inf>span{font:500 11.5px/1.4 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .val>div{font:700 22px/1 Arial,Helvetica,sans-serif!important;color:#9c4900!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .val>div small{font:500 11px Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .prorec .val svg{color:#a6650b!important}
+:root[data-silver][data-redesign-theme] #scrpage .prolegend{font:600 12px/1.2 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .prolegend i{background:#97979780!important;box-shadow:inset 0 .5px .5px #5c5c5c3d,0 .5px 0 #ffffffa1!important}
+:root[data-silver][data-redesign-theme] #scrpage .prolegend i.a{background:var(--sl-flow-amber)!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwg .ic{background:#83838315!important;box-shadow:inset 0 .5px 1px #73737315,0 .6px 0 #ffffff91!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwg b{font:700 12px Arial,Helvetica,sans-serif!important;letter-spacing:.5px!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.pwg>span:last-child,.pwr .l1 em){font:600 12px Arial,Helvetica,sans-serif!important;color:#9c4900!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwr .l1 b{font:700 14.5px/1.2 Arial,Helvetica,sans-serif!important;letter-spacing:-.2px!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwr .l1 span{font:700 20px/1 Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwr .bar{height:7px!important;background:#86868638!important;box-shadow:inset 0 .5px 1px #60606029,0 .6px 0 #ffffffa1!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwr .bar i{height:7px!important;background:linear-gradient(180deg,#a0a0a0,#8d8d8d)!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwr .bar i.a{background:var(--sl-flow-amber)!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwr .cap{font:500 11.5px/1.3 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .pwsep{background:var(--sl-flow-cut)!important;box-shadow:0 1px 0 var(--sl-flow-edge)!important}
+
+/* F06: translucent grouping engraved into the common body, never a new card. */
+:root[data-silver][data-redesign-theme] #scrpage :is(.settgroup,.settcard,.settdim,.settthemes){
+  background:none!important;border:1px solid var(--sl-flow-cut)!important;border-radius:15px!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage .settsec h2{font:400 10px/12px Arial,Helvetica,sans-serif!important;letter-spacing:1.5px!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage .setth>span{font:400 10px/1.3 Arial,Helvetica,sans-serif!important;letter-spacing:.4px!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .settbtn{
+  background:none!important;border:0!important;border-bottom:1px solid var(--sl-flow-cut)!important;border-radius:0!important;box-shadow:inset 0 -1px 0 var(--sl-flow-edge)!important;color:#252525!important;font:400 13px/1.3 Arial,Helvetica,sans-serif!important;text-shadow:var(--sl-flow-engraving)!important;transform:none!important;min-height:59px!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage .settbtn:last-child{border-bottom:0!important;box-shadow:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .settbtn.acc{color:#9c4900!important}
+:root[data-silver][data-redesign-theme] #scrpage .settbtn:not(:disabled):active{transform:none!important;filter:brightness(.94)!important}
+:root[data-silver][data-redesign-theme] #scrpage .settval{font:400 11.5px/1.3 Arial,Helvetica,sans-serif!important;color:#626262!important}
+:root[data-silver][data-redesign-theme] #scrpage .settval svg{color:#747474!important;stroke-width:1.7!important;filter:drop-shadow(0 .65px 0 #ffffffcf)!important}
+:root[data-silver][data-redesign-theme] #scrpage .settic{background:none!important;border:0!important;box-shadow:none!important;color:#747474!important;border-radius:0!important}
+:root[data-silver][data-redesign-theme] #scrpage .settic svg{filter:drop-shadow(0 .65px 0 #ffffffcf) drop-shadow(0 -.3px 0 #53535324)!important;stroke-width:1.7!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.setthint,.settdata .hd small,.settver){font:400 11px/1.55 Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage .settdata .hd>span+span{font:400 13px/1.4 Arial,Helvetica,sans-serif!important;color:#252525!important}
+/* Export format uses the same recessed Silver selector as the kit filters. */
+:root[data-silver][data-redesign-theme] #scrpage .expfmts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px!important;padding:3px!important;border:1px solid #aaaeaa!important;border-radius:999px!important;background:var(--sl-flow-neutral)!important;box-shadow:inset 0 2px 5px #43494324,0 1px 0 #ffffffcc!important}
+:root[data-silver][data-redesign-theme] #scrpage .expfmt{position:relative;min-height:44px!important;height:44px!important;background:none!important;border:0!important;border-radius:999px!important;box-shadow:none!important;color:#505050!important;font:400 12px/16px Arial,Helvetica,sans-serif!important;letter-spacing:0!important;transform:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .expfmt.on{background:linear-gradient(180deg,#444a4b,#282e2f)!important;box-shadow:inset 0 1px 2px #ffffff66,0 1px 3px #292e2c66!important;color:#f5f5ef!important;text-shadow:0 -.5px 0 #0008!important}
+:root[data-silver][data-redesign-theme] #scrpage .expfmt:active:not(:disabled){filter:brightness(.94);transform:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .expbtn.delown{min-height:48px!important;border:1px solid var(--sl-flow-cut)!important;border-radius:999px!important;background:transparent!important;box-shadow:0 1px 0 #ffffffb3!important;font:400 14px/20px Arial,Helvetica,sans-serif!important;letter-spacing:0!important;color:#975348!important;transform:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .expbtn.delown:disabled{color:#747474!important;opacity:.42!important;cursor:default}
+:root[data-silver][data-redesign-theme] #scrpage .expbtn.delown.arm{border-color:#a45b4f!important;background:#a45b4f0e!important}
+:root[data-silver][data-redesign-theme] #scrpage .settthemes .obthm{background:none!important;box-shadow:none!important;border:1px solid transparent!important;border-radius:12px!important}
+:root[data-silver][data-redesign-theme] #scrpage .settthemes .obthm.on{border-color:var(--sl-flow-cut)!important;box-shadow:inset 1px 1px 0 var(--sl-flow-edge)!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .obthm .rg{box-shadow:none!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .rd-theme-preview.white{
+  width:70px!important;height:70px!important;border-radius:50%!important;border:1.6px solid #a4a4a4!important;background:radial-gradient(ellipse at 20% 80%,#eaeaea,#cfcfcf)!important;box-shadow:inset 0 .7px .8px #fff,0 1px 1px #ffffffb3,0 2px 4px #68686824!important;
+}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .obthm .nm{font:400 12px/1 Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .obthm.on .nm{color:#252525!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .rd-theme-preview.white::before{border-color:#9b9b9b80!important;box-shadow:0 .7px 0 #ffffff88,inset 0 .5px 0 #ffffff54!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .rd-theme-preview.white::after{background:var(--sl-flow-amber)!important;box-shadow:inset 0 .5px .5px #ffe5a0,0 0 0 .4px #704315!important}
+:root[data-silver][data-redesign-theme] #scrpage .bgtile{border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;border-radius:14px!important}
+:root[data-silver][data-redesign-theme] #scrpage .bgtile.on{border-color:#aa6c0e!important;outline:1px solid #ad7a2a!important;outline-offset:2px!important;box-shadow:var(--sl-flow-line)!important}
+:root[data-silver][data-redesign-theme] #scrpage .bgtile .nm{background:#e2e4e4e8!important;color:#252525!important;font:400 9px/1.4 Arial,Helvetica,sans-serif!important;text-shadow:0 .5px 0 #ffffffcf!important;box-shadow:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .bgtile .ck{background:var(--sl-flow-amber)!important;color:#3e2a0b!important;box-shadow:inset 0 .5px .5px #ffe3a880!important}
+:root[data-silver][data-redesign-theme] #scrpage .bgup{background:none!important;border:1px dashed #8e93956e!important;box-shadow:0 .7px 0 #ffffffb3!important;color:#747474!important;font:400 10px/1.4 Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-sw{background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;color:#252525!important}
+
+/* F05 mechanical switch: one anchored thumb and one 26px travel.
+   Native flex-end alignment must not add another displacement. */
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .swtc,
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-track{position:relative!important;display:block!important;flex:0 0 64px!important;width:64px!important;height:30px!important;min-width:64px!important;padding:0!important;box-sizing:border-box!important;border:0!important;border-radius:999px!important;justify-content:flex-start!important;align-items:initial!important;background:linear-gradient(135deg,#585858,#ededed 45%,#b2b2b2 55%,#f1f1f1)!important;box-shadow:0 1px 1px #f4f4f4,inset 0 2px 2px #3030308c!important;isolation:isolate;transform:none!important}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .swtc::before,
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-track::before{content:'';position:absolute;inset:2px;border-radius:999px;background:linear-gradient(180deg,#242628,#4b4e50);box-shadow:inset 0 3px 7px #0009,inset 0 -1px 0 #ffffff40;pointer-events:none}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .swtc.on::before,
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-track.on::before{background:var(--sl-flow-amber);box-shadow:inset 0 3px 5px #6b2e0080,inset 0 -1px 0 #ffdc9b80}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .swtc>i,
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-track>span{position:absolute!important;display:block!important;top:2px!important;bottom:2px!important;left:2px!important;right:auto!important;float:none!important;flex:none!important;margin:0!important;width:34px!important;height:26px!important;border:0!important;border-radius:999px!important;background:radial-gradient(ellipse at 25% 10%,#e2e2e2,#bcbcbc 65%,#949494)!important;box-shadow:inset 0 .7px .8px #ffffff,inset 0 -1.5px 1px #787878,0 2px 3px #15151559!important;transform:translateX(0)!important;transition:transform 240ms cubic-bezier(.2,.7,.3,1)!important;overflow:hidden}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .swtc>i::before,
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-track>span::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--sl-grain) center/160px;mix-blend-mode:soft-light;opacity:.45;pointer-events:none}
+:root[data-silver][data-redesign-theme] :is(#scrpage,#obov) .swtc.on>i,
+:root[data-silver][data-redesign-theme] #scrpage .settdim .km-track.on>span{transform:translateX(26px)!important}
+
+/* Profile editing and achievement states use the same engraved fields. */
+:root[data-silver][data-redesign-theme] #scrpage :is(#penick,.pegcard,.pegoal,.obtarget,.obcard){background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #scrpage #penick{font:400 16px/20px Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] #scrpage .peava{border:3px solid #c6c6c6!important;box-shadow:0 0 0 1px #ffffff9c!important;background:#050505!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.pegcard.on,.pegoal.on){border-color:#ad650b!important;box-shadow:0 .6px 0 #ffffffc9,inset 0 .6px 0 #ffffffc9!important;color:#a56209!important;background:none!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.pelbl,.lblrow){font:500 10px/1.4 Arial,Helvetica,sans-serif!important;color:#747474!important;letter-spacing:.65px!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.pegrid,.pegoals,.achfilters).rd-r7-switch{background:none!important;border:0!important;box-shadow:none!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.pegrid,.pegoals,.achfilters).rd-r7-switch::before,
+:root[data-silver][data-redesign-theme] #scrpage :is(.pegrid,.pegoals,.achfilters).rd-r7-switch::after{content:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .obtarget .info b{font:700 36px/1 Arial,Helvetica,sans-serif!important;color:#9c4900!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #scrpage .obtarget .info b small{font:400 12px/1 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .achring .in{background:#e2e4e4!important;box-shadow:inset 0 .6px 1px #7c82821a,0 .6px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] #scrpage .achring .in b{font:700 34px/1 Arial,Helvetica,sans-serif!important;color:#252525!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #scrpage .achsum .tx b{font:700 18px/22px Arial,Helvetica,sans-serif!important;color:#252525!important;letter-spacing:-.3px!important}
+:root[data-silver][data-redesign-theme] #scrpage .achsum .tx span{font:400 11px/1.6 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage .achf{min-height:44px!important;background:none!important;border:1px solid var(--sl-flow-cut)!important;color:#747474!important;box-shadow:var(--sl-flow-line)!important;font:400 11px Arial,Helvetica,sans-serif!important;transform:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .achf.on{border-color:#a27c41!important;color:#252525!important;background:linear-gradient(145deg,#f1f1f1,#d2d2d2)!important;box-shadow:inset 0 1px 1px #fff,0 1px 3px #49494940!important}
+:root[data-silver][data-redesign-theme] #scrpage .achf>b{background:none!important;color:inherit!important;border:0!important;box-shadow:none!important;font:400 9px Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.achmedal,.achtile.done .md){background:var(--sl-flow-base)!important;border:1px solid #a8aca8!important;color:#4d514b!important;box-shadow:inset 0 .7px .8px #fff,0 1px 2px #15151526!important}
+:root[data-silver][data-redesign-theme] #scrpage .achmedal.lock{background:none!important;border:1px solid var(--sl-flow-cut)!important;color:#747474!important;box-shadow:var(--sl-flow-line)!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.achmedal.pring>span,.achtile.prog .md>span){background:#e2e4e4!important;color:#252525!important;font-family:Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.achtile .t,.achinfo b){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.achtile .st,.achinfo>span,.achbar span){font-family:Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.achbar div,.probar){background:#86868638!important;box-shadow:inset 0 .5px 1px #60606029,0 .6px 0 #ffffffa1!important}
+:root[data-silver][data-redesign-theme] #scrpage .achbar div i{background:var(--sl-flow-amber)!important}
+:root[data-silver][data-redesign-theme] #scrpage .achdone{color:#9c4900!important}
+
+/* First-run choices retain all three steps, source order and native validation. */
+:root[data-silver][data-redesign-theme] #obov{background:var(--rd-page-fill,var(--sl-flow-surface))!important}
+:root[data-silver][data-redesign-theme] #obov::before{content:none!important}
+:root[data-silver][data-redesign-theme] #obov .obh1{font:700 40px/1.05 Arial,Helvetica,sans-serif!important;letter-spacing:-1.2px!important;color:#252525!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #obov .obp{font:400 14px/20px Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obgcard,.obgbtn,.obcard,.obtarget,.obthemecard,.oblangcard){background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obgcard.on,.obgbtn.on){background:none!important;border-color:#ad650b!important;box-shadow:0 .6px 0 #ffffffc9,inset 0 .6px 0 #ffffffc9!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #obov .obgcard .av{border:1px solid #a8aca8!important;box-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] #obov .obgcard.on .av{border-color:#ad650b!important;box-shadow:0 0 0 4px #e2e4e4,0 0 0 5px #ad650b55!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obgcard .chk,.oblrow .ck){background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obgcard.on .chk,.oblrow.on .ck){background:var(--sl-flow-amber)!important;color:#3e2a0b!important;border-color:#985713!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obnick input,.oblang,.oblrow,.obthm){background:none!important;border-color:var(--sl-flow-cut)!important;box-shadow:none!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #obov .obnick input{font:400 16px/20px Arial,Helvetica,sans-serif!important;box-shadow:var(--sl-flow-line)!important}
+:root[data-silver][data-redesign-theme] #obov .obgbtn .ic2{background:none!important;border:0!important;box-shadow:none!important;color:#747474!important;filter:drop-shadow(0 .65px 0 #ffffffcf)!important}
+:root[data-silver][data-redesign-theme] #obov .obgbtn.on .ic2{background:none!important;color:#9c4900!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obwnum,.obtarget .info b){font-family:Arial,Helvetica,sans-serif!important;font-weight:700!important;color:#9c4900!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #obov :is(.oblrow .bd,.obthm.on){background:none!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obprog i,.obprog i.on){height:3px!important;background:#a2a6a066!important;box-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] #obov .obprog i.on{background:var(--sl-flow-amber)!important}
+:root[data-silver][data-redesign-theme] #obov :is(.obcap,.oblbl,.obtg,.obnick .lblrow,.obtarget .info em,.obtarget .info>span,.obgbtn em){color:#747474!important;font-family:Arial,Helvetica,sans-serif!important;text-shadow:var(--sl-flow-engraving)!important}
+
+/* Shared sheets, add machine, biceps entry and destructive confirmation. */
+:root[data-silver][data-redesign-theme] #sheet:is(.addsheet,.clrsheet,.bicepssheet){background:var(--rd-page-fill,var(--sl-flow-surface))!important;border-top:1px solid #ffffffcf!important;box-shadow:0 -8px 30px #25252526!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #sheet:is(.addsheet,.clrsheet,.bicepssheet) :is(.addcard,.box,.addphoto,.grpbtn,.catchip,.addsugg button,.clropt){background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #sheet:is(.addsheet,.bicepssheet) :is(.addname input,.biceps-input){background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #sheet:is(.addsheet,.bicepssheet) :is(.addname input,.biceps-input)::placeholder{color:#747474!important}
+:root[data-silver][data-redesign-theme] #sheet.addsheet :is(.grpbtn.on,.catchip.on){outline:0!important;border-color:#ad650b!important;background:var(--sl-flow-amber)!important;color:#3e2a0b!important;box-shadow:inset 0 .5px 1px #ffdb8580,inset 0 -1px 1px #6b2e0080!important}
+:root[data-silver][data-redesign-theme] #sheet.addsheet .addphoto .apic{background:var(--sl-flow-base)!important;color:#4d514b!important;border:1px solid #a8aca8!important;box-shadow:inset 0 .7px .8px #fff,0 1px 2px #15151526!important;animation:none!important}
+:root[data-silver][data-redesign-theme] #sheet.addsheet :is(.addphoto b,.addphoto em,.addlbl,.addname>span,.addcard-top span,.addcard-top em,.addfoot>span){font-family:Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #sheet.addsheet .addw .num{font-family:Arial,Helvetica,sans-serif!important;color:#9c4900!important;font-weight:700!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #sheet.bicepssheet .biceps-input{font-size:30px!important}
+:root[data-silver][data-redesign-theme] #sheet.bicepssheet :is(.biceps-label,.biceps-recent h3,.setthint,.lwlbl){font-family:Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] #sheet.bicepssheet .biceps-recent{border-top:1px solid var(--sl-flow-cut)!important;box-shadow:inset 0 1px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] #sheet.bicepssheet .biceps-recent b{font:600 13px/1.4 Arial,Helvetica,sans-serif!important;color:#252525!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver][data-redesign-theme] #sheet.bicepssheet .stepbtn{
+  min-height:44px!important;background:none!important;border:1px solid var(--sl-flow-cut)!important;border-radius:999px!important;box-shadow:var(--sl-flow-line)!important;color:#747474!important;font:400 12px/1.3 Arial,Helvetica,sans-serif!important;transform:none!important;
+}
+:root[data-silver][data-redesign-theme] #sheet.bicepssheet .stepbtn.on{background:linear-gradient(145deg,#f1f1f1,#d2d2d2)!important;box-shadow:inset 0 1px 1px #fff,0 1px 3px #49494940!important;color:#252525!important;border-color:#afafaf!important}
+:root[data-silver][data-redesign-theme] #sheet.clrsheet .clrnote{font:400 12px/1.75 Arial,Helvetica,sans-serif!important;color:#747474!important}
+:root[data-silver][data-redesign-theme] #sheet.clrsheet .clropt{font:400 14px Arial,Helvetica,sans-serif!important;transform:none!important}
+:root[data-silver][data-redesign-theme] #sheet.clrsheet .clropt.on{border-color:#b18172!important;background:#e4cfc326!important;box-shadow:var(--sl-flow-line)!important}
+:root[data-silver][data-redesign-theme] #sheet.clrsheet .clropt .rd{border:1px solid #b2a199!important;background:none!important}
+:root[data-silver][data-redesign-theme] #sheet.clrsheet .clropt.on .rd{border:6px solid #9d6651!important}
+:root[data-silver][data-redesign-theme] #sheet.clrsheet .clrgo{background:#e4cfc3!important;color:#744633!important;border:1px solid #b18172!important;box-shadow:inset 0 1px 0 #ffffff99!important;font:500 14px Arial,Helvetica,sans-serif!important;transform:none!important}
+
+/* Editor / plans / changelog: existing dialogs, without additional inner panels. */
+:root[data-silver][data-redesign-theme] body .rd-medit{background:#25252566!important;-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important}
+:root[data-silver][data-redesign-theme] body .rd-medit-panel{
+  background:var(--sl-flow-surface)!important;color:#252525!important;border:1px solid #ffffffb3!important;box-shadow:0 -10px 40px #25252533!important;font-family:Arial,Helvetica,sans-serif!important;
+}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-head>b{font:700 19px/23px Arial,Helvetica,sans-serif!important;letter-spacing:-.3px!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-lbl{font:400 10px/1.4 Arial,Helvetica,sans-serif!important;letter-spacing:.65px!important;color:#747474!important;opacity:1!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-input{background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;font:400 16px/20px Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel :is(.rd-medit-chip,.rd-plan-row,.rd-plan-tpl,.rd-plan-addbtn,.rd-medit-pick){
+  background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;font-family:Arial,Helvetica,sans-serif!important;min-height:44px!important;
+}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-chip{font-size:13px!important;font-weight:400!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-chip.on{background:var(--sl-flow-amber)!important;border:1px solid #9f650c!important;box-shadow:inset 0 .5px 1px #ffdb8580,inset 0 -1px 1px #6b2e0080!important;color:#3e2a0b!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-step{height:44px!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-step button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items>li{min-height:44px!important;border-color:var(--sl-flow-cut)!important;box-shadow:0 1px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items span{min-width:0!important;font:400 14px/1.3 Arial,Helvetica,sans-serif!important;overflow-wrap:anywhere!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items button{width:44px!important;height:44px!important;flex:0 0 44px!important;padding:0!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel :is(.rd-plan-row b,.rd-plan-tpl b){font:700 14px/1.4 Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel :is(.rd-plan-row small,.rd-plan-tpl small,.rd-plan-empty,.rd-plan-pick-g>small){font:400 11px/1.5 Arial,Helvetica,sans-serif!important;color:#747474!important;opacity:1!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-wn-badge{padding-left:0!important;background:none!important;border:0!important;color:#9c4900!important;font:400 11px/1.4 Arial,Helvetica,sans-serif!important;letter-spacing:.65px!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-wn-title{font:700 24px/28px Arial,Helvetica,sans-serif!important;letter-spacing:-.6px!important;color:#252525!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-wn-list li{font:400 14px/20px Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-wn-list li::before{background:var(--sl-flow-amber)!important;box-shadow:inset 0 .5px .5px #ffe5a0d9!important}
+:root[data-silver][data-redesign-theme] #scrpage .rd-chlog-item{border-color:var(--sl-flow-cut)!important;box-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver][data-redesign-theme] #scrpage .rd-chlog-item summary{min-height:44px!important;box-sizing:border-box!important}
+:root[data-silver][data-redesign-theme] #scrpage .rd-chlog-item summary b{font:600 14px/1.4 Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #scrpage .rd-chlog-item summary span{font:400 10px/1.3 Arial,Helvetica,sans-serif!important;color:#747474!important;opacity:1!important}
+:root[data-silver][data-redesign-theme] #scrpage .rd-chlog-item li{font:400 12px/1.5 Arial,Helvetica,sans-serif!important;color:#626262!important;opacity:1!important}
+:root[data-silver][data-redesign-theme] #scrpage .rd-chlog-item li::before{background:var(--sl-flow-amber)!important}
+
+@supports (-webkit-background-clip:text){
+  :root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat:first-child b,
+  :root[data-silver][data-redesign-theme] #scrpage .prorec .val>div,
+  :root[data-silver][data-redesign-theme] #scrpage .obtarget .info b,
+  :root[data-silver][data-redesign-theme] #obov :is(.obwnum,.obtarget .info b),
+  :root[data-silver][data-redesign-theme] #sheet.addsheet .addw .num{
+    background:var(--sl-flow-amber)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;
+  }
+  :root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat:first-child b small,
+  :root[data-silver][data-redesign-theme] #scrpage :is(.prorec .val>div,.obtarget .info b) small,
+  :root[data-silver][data-redesign-theme] #obov :is(.obwnum,.obtarget .info b) small,
+  :root[data-silver][data-redesign-theme] #sheet.addsheet .addw .num small{-webkit-text-fill-color:#747474!important}
+}
+@media(max-width:360px){
+  :root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat{padding:10px 8px!important;gap:6px!important}
+  :root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat em{font-size:10px!important}
+  :root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat b{font-size:24px!important}
+  :root[data-silver][data-redesign-theme] #scrpage .prostats>.prostat>span{font-size:9.5px!important}
+  :root[data-silver][data-redesign-theme] #appcontent .hwt{font-size:22px!important}
+  :root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items{margin-left:-4px!important;margin-right:-4px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  :root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#obov,#sheet,.rd-medit-panel) :is(.hf,.hclr,.settbtn,.swtc,.swtc>i,.km-track,.km-track>span,.prostat),
+  :root[data-silver][data-redesign-theme] body :is(.rd-medit,.rd-medit-panel){animation:none!important;transition:none!important}
+}
+
+
+/* F04 uses Amber for record values, with neutral units and summary figures. */
+:root[data-silver][data-redesign-theme] #appcontent .sl-history-number{color:#e08b08!important;text-shadow:none!important}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+ :root[data-silver][data-redesign-theme] #appcontent .sl-history-number{background:var(--sl-amber)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 .5px 0 #ffffff99)}
+}
+
+/* F06 contour engraving occupies the existing profile decoration slot. */
+:root[data-silver][data-redesign-theme] #scrpage>.prohead{position:relative;isolation:isolate}
+:root[data-silver][data-redesign-theme] #scrpage>.prohead::before{content:'';position:absolute;z-index:-1;left:calc(-1 * var(--rd-gutter));top:-40px;width:calc(100% + 2 * var(--rd-gutter));height:280px;pointer-events:none;background:url('silver/assets/profile-contours.svg') center/100% 100% no-repeat;opacity:.14}

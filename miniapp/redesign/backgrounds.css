@@ -1,0 +1,8 @@
+/* Один неподвижный фон: старый #appbg внутри прокрутки остаётся выключенным. */
+:root[data-redesign-theme][data-user-background] :is(.screen,.scrov,.sheet.msheet,.prov,.obov){background:var(--rd-user-bg)}
+:root[data-redesign-theme][data-user-background] #bgfixed{display:none}
+:root[data-redesign-theme][data-user-background] .sheet.msheet:has(.rd-approved-training){background:var(--rd-user-bg)}
+:root[data-redesign-theme][data-user-background] :is(.rd-approved-training.ui-page,.scrpage.kg,.kg-sheet){background:transparent!important}
+/* Камера сохраняет собственную подложку, чтобы видоискатель оставался читаемым. */
+:root[data-redesign-theme] .bgremove{align-self:flex-start;padding:4px 0;font-size:12px;color:var(--rd-muted);text-decoration:underline;text-underline-offset:3px}
+:root[data-redesign-theme] .bgup:focus-visible{outline:2px solid var(--rd-accent);outline-offset:3px}

@@ -1,0 +1,98 @@
+/* TACTILE / Silver. Product geometry and native actions belong to the app.
+   Materials are translated from the approved 2026-10-31 component sources. */
+@font-face{font-family:'Silver Display Mono';src:url('silver/assets/fonts/DisplayMono.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Silver Display Mono';src:url('silver/assets/fonts/DisplayMonoMedium.ttf') format('truetype');font-weight:500 700;font-display:swap}
+@font-face{font-family:'Silver Display LCD';src:url('silver/assets/fonts/DisplayLCD.ttf') format('truetype');font-weight:100 900;font-display:swap}
+:root[data-silver]{
+ --sl-text:#252525;--sl-muted:#747474;--sl-cut:#59606638;--sl-light:#ffffffb3;
+ --sl-surface:url('silver/assets/fitness-satin-silver.svg');--sl-grain:url('silver/assets/grain-fine.png');
+ --sl-metal:radial-gradient(ellipse at 18% 78%,#e8e8e5 0%,#cfd0cd 32%,#b2b4af 67%,#949790 100%);
+ --sl-amber:radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%);
+ --sl-rim:linear-gradient(140deg,#2b2b2b 2%,#141414 29%,#adadad 47%,#f5f5f5 69%,#c6c6c6 92%,#535353);
+ --sl-lathe:conic-gradient(from -18deg,#bfc1bd 0deg,#f1f2ee 48deg,#a5a8a2 112deg,#dcddd9 176deg,#b0b3ac 235deg,#f7f8f4 292deg,#bfc1bd 360deg);
+ --sl-mono:SFMono-Regular,Consolas,'Liberation Mono',monospace;--sl-display-mono:'Silver Display Mono',monospace;--sl-display-lcd:'Silver Display LCD',monospace;
+ --rd-font:Arial,Helvetica,sans-serif;--rd-number-font:Arial,Helvetica,sans-serif;
+ --rd-text:#252525;--rd-muted:#747474;--rd-subtle:#858585;--rd-bg:#e2e4e4;--rd-surface:#e2e4e4;--rd-raised:#e4e6e6;--rd-recess:#c5c8c8;
+ --rd-line:#59606638;--rd-rim:#59606638;--rd-accent:#bb760c;--rd-on-accent:#252525;--rd-accent-rgb:187,118,12;--rd-number-accent:#252525;--rd-accent-soft:#b67a1010;
+ --rd-track:#c0c3c3;--rd-error:#a54336;--rd-warning:#966815;--rd-page-fill:var(--sl-surface) center/cover;--rd-panel-fill:transparent;
+ --rd-control-fill:linear-gradient(150deg,#f2f2f26e,#d2d2d236);--rd-control-hover:linear-gradient(150deg,#f5f5f590,#dcdcdc50);--rd-control-pressed:#c6c9c980;--rd-field-fill:#ffffff13;
+ --rd-shadow:1px 1px 0 #ffffffb3;--rd-control-shadow:inset 0 1px 0 #ffffff73;--rd-overlay:#24262875;--rd-dialog-shadow:0 12px 35px #24262838;
+ --rd-led-fill:#b9770a;--rd-number-weight:700;--rd-heading-weight:700;--rd-strong-weight:700;--rd-panel-radius:12px;--rd-control-radius:5px;--rd-knob-fill:var(--sl-lathe);
+ --white-font:Arial,Helvetica,sans-serif;--white-text:#252525;--white-secondary:#747474;--white-border:#59606638;--white-accent:#bb760c;--white-accent-ink:#81550c;--white-number-accent:#252525;--white-accent-soft:#bb760c14;--white-paper:#e2e4e4;--white-recess:#c5c8c8;
+ --fit-font:Arial,Helvetica,sans-serif;--fit-text:#252525;--fit-muted:#747474;--fit-rim:#59606638;--fit-green:#bb760c;--fit-raised:transparent;
+ color-scheme:light;background:#e2e4e4!important;
+}
+:root[data-silver][data-redesign-theme] body{font:400 14px/20px Arial,Helvetica,sans-serif!important;color:var(--sl-text)!important;background:#e2e4e4!important}
+:root[data-silver][data-redesign-theme] :is(button,input,textarea,select){font-family:Arial,Helvetica,sans-serif;font-variant-numeric:tabular-nums}
+:root[data-silver][data-redesign-theme] :is(h1,h2,h3){font-family:Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] :is(.screen,.scrov,.sheet,.prov,.obov){background:var(--sl-surface) center/cover!important}
+:root[data-silver][data-redesign-theme][data-user-background] :is(.screen,.scrov,.sheet,.prov,.obov){background:var(--rd-user-bg)!important}
+:root[data-silver][data-redesign-theme] :is(#bgfixed,#appbg,.gym-paths){display:none!important}
+:root[data-silver][data-redesign-theme] .app{background:transparent!important}
+:root[data-silver][data-redesign-theme] :is(.rd-approved-training,.rd-approved-training.ui-page){background:transparent!important;font-family:Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] :is(.hi .h1,.hi .h2,.scrhead,.sec-h h3,.settsec h2,.ui-micro){text-shadow:0 .6px 0 #ffffffcf,0 -.3px 0 #53535324}
+:root[data-silver][data-redesign-theme] .hi .h1{font:400 8.3px/12px var(--sl-mono)!important;letter-spacing:1.7px;color:var(--sl-muted)!important}
+:root[data-silver][data-redesign-theme] .hi .h2{font:700 25px/28px Arial,Helvetica,sans-serif!important;letter-spacing:-.6px;color:var(--sl-text)!important}
+:root[data-silver][data-redesign-theme] :is(.hgear,.scrgear,.rd-approved-training .ui-greeting>.ui-icon-button){width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:#717171!important;filter:drop-shadow(.7px .9px 0 #ffffffcf) drop-shadow(-.25px -.3px 0 #53535324);transform:none!important}
+:root[data-silver][data-redesign-theme] :is(.hgear,.scrgear) svg{width:24px!important;height:24px!important;stroke-width:1.6}
+:root[data-silver][data-redesign-theme] :is(.scrback,.km-back,.x,.kr-x,.obback,.kc-ic){min-width:44px;min-height:44px;border:1px solid #b2b2b2!important;background:linear-gradient(150deg,#f2f2f26e,#d2d2d236)!important;box-shadow:inset 0 1px 0 #ffffff73!important;color:#6f6f6f!important;transform:none!important}
+:root[data-silver][data-redesign-theme] :is(.scrback,.km-back,.x,.kr-x,.obback,.kc-ic):active{box-shadow:inset 0 2px 3px #5e5e5e26!important}
+:root[data-silver][data-redesign-theme] :is(input:not([type=range]):not([type=file]):not([type=checkbox]):not([type=radio]),textarea,select){border-color:var(--sl-cut)!important;background:#ffffff13!important;color:var(--sl-text)!important;box-shadow:inset 0 1px 2px #7077770e,0 1px 0 #ffffffb3!important;border-radius:5px!important}
+:root[data-silver][data-redesign-theme] :is(button,[role=button],a,input,textarea,select):focus-visible{outline:2px solid #b47715!important;outline-offset:3px!important}
+:root[data-silver][data-redesign-theme] :is(.nav,.ui-bottom-nav){border:0!important;border-top:1px solid var(--sl-cut)!important;border-radius:0!important;background:#e2e4e4bd!important;box-shadow:inset 0 1px 0 var(--sl-light)!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important}
+:root[data-silver][data-redesign-theme] :is(.nav button,.ui-nav-item){color:var(--sl-muted)!important;background:transparent!important;border:0!important;box-shadow:none!important;min-height:44px;font:400 9.4px/14px Arial,Helvetica,sans-serif!important;letter-spacing:0!important;transform:none!important}
+:root[data-silver][data-redesign-theme] :is(.nav button.on,.ui-nav-item.selected){color:var(--sl-text)!important}
+:root[data-silver][data-redesign-theme] :is(.nav button svg,.ui-nav-icon){filter:drop-shadow(.5px .8px 0 #ffffffcf);stroke:currentColor!important;color:inherit!important}
+:root[data-silver][data-redesign-theme] :is(.nav button.on:before,.nav button.on:after,.ui-nav-item.selected:after){background:var(--sl-amber)!important}
+:root[data-silver][data-redesign-theme] .home-ind{background:#747474!important;opacity:.6}
+
+/* Shared physical surfaces. Empty face nodes never wrap native labels/actions. */
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round){position:relative!important;isolation:isolate;overflow:visible!important;background:var(--sl-rim)!important;border:0!important;color:#252525!important;box-shadow:0 2px 3px #0003,inset 0 1px .5px #ffffff77!important;transform:none!important;animation:none!important;transition:none!important;text-shadow:0 .6px 0 #ffffff80}
+:root[data-silver][data-redesign-theme] button.sl-metal{min-height:48px;border-radius:999px!important;padding:12px 18px;background:linear-gradient(135deg,#999,#f1f1f1 62%,#bcbcbc)!important;box-shadow:0 1px 2px #25252526,inset 0 1px .5px #ffffff77!important;font:500 14px/20px Arial,Helvetica,sans-serif!important;letter-spacing:0!important}
+:root[data-silver][data-redesign-theme] button.sl-round{min-width:44px!important;min-height:44px!important;border-radius:50%!important}
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round)::before,
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round)::after{content:none!important}
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round)>.sl-face{position:absolute!important;inset:3px!important;border-radius:inherit!important;z-index:-1;pointer-events:none;background:var(--sl-metal)!important;outline:1px solid #3a3a3a80;box-shadow:inset 0 1px 1px #ffffff7a,inset 0 -1px 2px #36363670;transition:transform 160ms ease,filter 160ms ease,box-shadow 160ms ease;transform:none;filter:none}
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round)>.sl-face::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--sl-grain) center/160px;opacity:.25;mix-blend-mode:soft-light;pointer-events:none}
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round)>.sl-face::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(ellipse at 21% 84%,#ffffff23,transparent 65%);pointer-events:none}
+:root[data-silver][data-redesign-theme] button.sl-amber>.sl-face{background:var(--sl-amber)!important;outline-color:#785315;box-shadow:inset 0 1px 1px #ffd98d99,inset 0 -1px 2px #6e3d0a80}
+/* Fitness actions use capsules. The fine rim belongs to the material; wide
+   actions do not inherit the thick, dark frame of the round metal controls. */
+:root[data-silver][data-redesign-theme] button.sl-metal>.sl-face{inset:1.5px!important;outline:0;box-shadow:inset 0 1px 1px #ffffff7a,inset 0 -1px 1px #36363638}
+:root[data-silver][data-redesign-theme] button.sl-metal.sl-amber{background:#785315!important;box-shadow:0 1px 1px #6e3d0a1a!important;color:#302510!important;text-shadow:none}
+:root[data-silver][data-redesign-theme] button.sl-metal.sl-amber>.sl-face{inset:1px!important;box-shadow:inset 0 1px 0 #ffd98d}
+:root[data-silver][data-redesign-theme] button.sl-metal.sl-amber>.sl-face::before,
+:root[data-silver][data-redesign-theme] button.sl-metal.sl-amber>.sl-face::after{content:none}
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage,#sheet,#obov,#prov) button:is(.outline,.kf-sec,.kc-words,.km-fromfav,.ks-keep,.pgho,.obskip2,.kg-npman,.km-cfr){min-height:44px;border-radius:999px!important;border:1px solid var(--sl-cut)!important;background:transparent!important;box-shadow:0 1px 0 #ffffffb3!important;font:400 14px/20px Arial,Helvetica,sans-serif!important;letter-spacing:0!important}
+:root[data-silver][data-redesign-theme] #appcontent .estate-actions>.outline{min-height:48px!important}
+:root[data-silver][data-redesign-theme] button.sl-lathe>.sl-face{background:var(--sl-lathe)!important}
+:root[data-silver][data-redesign-theme] button.sl-lathe>.sl-face::after{background:repeating-radial-gradient(circle at center,transparent 0 1px,#4e514b12 1.2px 1.65px,transparent 1.9px 2.5px)}
+@media(hover:hover){:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round):hover:not(:disabled):not([aria-disabled=true])>.sl-face{filter:brightness(1.075)}}
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round):active:not(:disabled):not([aria-disabled=true])>.sl-face{transform:translateY(1.5px);filter:brightness(.94);box-shadow:inset 0 2px 4px #36363670,inset 0 1px 1px #ffffff50}
+:root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round):is(:disabled,[aria-disabled=true]){opacity:.42!important;cursor:default}
+:root[data-silver][data-redesign-theme] button.sl-metal[aria-busy=true]{pointer-events:none;cursor:progress}
+:root[data-silver][data-redesign-theme] .sl-metal :is(svg,span:not(.sl-face)){pointer-events:none}
+:root[data-silver][data-redesign-theme] .sl-square{border-radius:5px!important}
+:root[data-silver][data-redesign-theme] :is(.rd-theme-preview.white,.rd-theme-preview.silver){background:var(--sl-surface) center/cover!important;box-shadow:inset 0 1px 1px #fff8!important}
+:root[data-silver][data-redesign-theme] .rd-theme-preview.white:after{background:var(--sl-amber)!important}
+:root[data-silver][data-redesign-theme] [data-redesign-theme-choice=black]{display:none!important}
+@media(prefers-reduced-motion:reduce){:root[data-silver] *,:root[data-silver] *::before,:root[data-silver] *::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Avatar actions retain their native anchored position and circular size. */
+:root[data-silver][data-redesign-theme] #scrpage button.proedit{position:absolute!important;width:44px!important;height:44px!important;min-height:44px!important;padding:10px!important;border-radius:50%!important;right:-6px!important;bottom:-6px!important}
+:root[data-silver][data-redesign-theme] #scrpage label.pecam{background:var(--sl-lathe)!important;border-color:#777c7c!important;color:#747474!important;box-shadow:inset 0 1px 1px #fff9,0 1px 2px #3334!important}
+
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage) :is(.kn-tip>button.sl-round,.kv-rec.sl-round){width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;padding:0!important;display:grid!important;place-items:center!important;font:400 21px/1 Arial,Helvetica,sans-serif!important}
+
+/* The fixed navigation is a continuation of the metal body, without glass blur. */
+:root[data-silver][data-redesign-theme] :is(.nav,.ui-bottom-nav){background:var(--sl-surface) center bottom/100% auto no-repeat!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+
+/* Layered important accessibility rules override the legacy important cascade. */
+@layer silver-accessibility{
+ @media(prefers-reduced-motion:reduce){
+  :root[data-silver] *,:root[data-silver] *::before,:root[data-silver] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+ }
+}
+
+/* F06 uses the wide Silver plan capsule, distinct from rectangular form submits. */
+:root[data-silver][data-redesign-theme] #scrpage .proplan-btn.sl-metal{border-radius:999px!important;font:500 14px/20px Arial,Helvetica,sans-serif!important;letter-spacing:0!important}

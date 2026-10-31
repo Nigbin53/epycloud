@@ -1,0 +1,165 @@
+/* TACTILE / Silver nutrition. Only material/type/state changes: existing product
+   geometry, block order, buttons, native field IDs and delegated actions remain. */
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn,.rd-approved-nutrition,.km,.kv,.ks,.kr,.kg,.ki,.kwk){
+  --sl-food-metal:radial-gradient(ellipse at 18% 78%,#e8e8e5 0%,#cfd0cd 32%,#b2b4af 67%,#949790 100%);
+  --sl-food-rim:linear-gradient(140deg,#2b2b2b 2%,#141414 29%,#adadad 47%,#f5f5f5 69%,#c6c6c6 92%,#535353);
+  --sl-food-amber:radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%);
+  --sl-food-cut:#59606638;--sl-food-edge:#ffffffb3;
+  color:var(--sl-text,#252525)!important;font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important;
+}
+:root[data-silver] #appcontent .rd-approved-nutrition{background:transparent!important;color:var(--sl-text,#252525)!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-header{background:transparent!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-header:before{background:var(--sl-amber,radial-gradient(ellipse at 20% 80%,#ffb321,#e08b08 45%,#9c4900))!important;box-shadow:1px 0 0 #fff8}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-header .ui-title{font-family:SFMono-Regular,Consolas,'Liberation Mono',monospace!important;font-weight:600!important;letter-spacing:3.2px!important;color:#252525!important;text-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-header .ui-caption{font-family:Arial,Helvetica,sans-serif!important;color:#858585!important;letter-spacing:.4px!important;text-shadow:0 .5px 0 #fff9!important}
+/* F—03 gauge has exactly 50 cells. There is deliberately no upper white stroke. */
+:root[data-silver] #appcontent .rd-approved-nutrition .na-rings{filter:none!important}
+:root[data-silver] #appcontent .sl-food-cells{filter:none!important}
+:root[data-silver] #appcontent .sl-food-recess{stroke:#768084;stroke-width:6.3;opacity:.55;filter:drop-shadow(0 .6px 0 #ffffffc9)}
+:root[data-silver] #appcontent .sl-food-segment{stroke-width:5.4;filter:none!important}
+:root[data-silver] #appcontent .sl-food-cut{stroke:#404a4e;stroke-width:.45;opacity:.3}
+:root[data-silver] #appcontent .sl-food-inner{filter:none!important}
+:root[data-silver] #appcontent .sl-food-inner-bevel{stroke:#ffffffa6}
+:root[data-silver] #appcontent .sl-food-sheen{pointer-events:none;opacity:0;animation:sl-food-metal-glint 14s ease-in-out infinite}
+@keyframes sl-food-metal-glint{0%{transform:translateX(-65px);opacity:0}5%{opacity:.45}17%,100%{transform:translateX(340px);opacity:0}}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-calorie-reading .ui-micro{font-family:SFMono-Regular,Consolas,'Liberation Mono',monospace!important;font-weight:400!important;color:#626262!important;text-shadow:0 .6px 0 #fff9!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-calorie-reading .ui-value{font-family:Arial,Helvetica,sans-serif!important;font-weight:700!important;color:#e08b08!important;font-variant-numeric:tabular-nums!important;text-shadow:none!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-calorie-reading .ui-micro:last-child{font-family:Arial,Helvetica,sans-serif!important}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+  :root[data-silver] #appcontent .rd-approved-nutrition .na-calorie-reading .ui-value{background:var(--sl-amber,radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%))!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 .5px 0 #ffffff99)}
+}
+/* Macro values keep their native data fields and positions. */
+:root[data-silver] #appcontent .rd-approved-nutrition .na-macros .ui-small{font-family:SFMono-Regular,Consolas,'Liberation Mono',monospace!important;font-size:8px!important;letter-spacing:1.6px!important;color:#626262!important;text-shadow:0 .5px 0 #fff9!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-macros>div:after{background:var(--sl-food-cut)!important;box-shadow:.7px 0 0 var(--sl-food-edge)}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-macro-track{background:#77777735!important;box-shadow:inset 0 .7px 1px #5553,0 .7px 0 #fff9!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-macro-track>span{min-width:0!important;background:#333!important;transition:width 180ms!important}
+:root[data-silver] #appcontent .rd-approved-nutrition :is(.white-macro-current,.na-macros .ui-caption){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .white-macro-goal{font-family:Arial,Helvetica,sans-serif!important;color:#626262!important}
+/* Original F—03 turned camera disc: exact alloy, fine machining and native size. */
+:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button,
+:root[data-silver] #scrpage.kc .kc-shoot{position:relative!important;border:0!important;background:var(--sl-food-rim,var(--sl-rim))!important;padding:3px!important;box-shadow:0 2px 5px #4c514b40,inset 0 .5px .5px #fff8!important;color:#454b43!important;isolation:isolate;overflow:visible!important;filter:none!important;transition:transform 160ms,filter 160ms!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:before,
+:root[data-silver] #scrpage.kc .kc-shoot:before{content:''!important;display:block!important;position:absolute!important;inset:3px!important;width:auto!important;height:auto!important;border-radius:inherit!important;pointer-events:none!important;z-index:-1!important;border:0!important;background:conic-gradient(from -18deg,#bfc1bd 0deg,#f1f2ee 48deg,#a5a8a2 112deg,#dcddd9 176deg,#b0b3ac 235deg,#f7f8f4 292deg,#bfc1bd 360deg)!important;box-shadow:inset 0 .6px .6px #fff9!important;transform:none!important;opacity:1!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:after,
+:root[data-silver] #scrpage.kc .kc-shoot:after{content:''!important;display:block!important;position:absolute!important;inset:3px!important;width:auto!important;height:auto!important;border-radius:inherit!important;pointer-events:none!important;z-index:0!important;border:0!important;background-image:url('silver/assets/grain-fine.png'),repeating-radial-gradient(circle at 50% 50%,#ffffff18 0 .35px,#00000010 .45px .65px,transparent .8px 1.25px)!important;background-size:160px,100% 100%!important;opacity:.42!important;mix-blend-mode:soft-light;box-shadow:none!important;transform:none!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button>.ui-icon{position:relative;z-index:1;stroke:#747474!important;stroke-width:1.8!important;filter:drop-shadow(0 .65px 0 #ffffffcf)!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-action:before{border-color:#85858545!important;border-top-color:transparent!important;border-bottom-color:transparent!important;box-shadow:.7px .7px 0 #ffffffb3}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled),
+:root[data-silver] #scrpage.kc .kc-shoot:active:not(:disabled){transform:translateY(1.5px)!important;filter:brightness(.94)!important}
+@media(hover:hover){:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:hover:not(:disabled),:root[data-silver] #scrpage.kc .kc-shoot:hover:not(:disabled){filter:brightness(1.075)!important}}
+/* Side shortcuts are the flat Silver component, with no volumetric travel. */
+:root[data-silver] #appcontent .rd-approved-nutrition .white-nutrition-shortcut{background:linear-gradient(150deg,#f2f2f26e,#d2d2d236)!important;border:1px solid #b2b2b2!important;color:#6f6f6f!important;box-shadow:inset 0 1px 0 #ffffff73!important;transform:none!important;filter:none!important;transition:background 150ms,box-shadow 150ms,color 150ms!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .white-nutrition-shortcut>.ui-icon{color:#6f6f6f!important;stroke-width:1.5!important;filter:drop-shadow(0 .65px 0 #ffffffcf)}
+:root[data-silver] #appcontent .rd-approved-nutrition .white-nutrition-shortcut:active:not(:disabled){box-shadow:inset 0 2px 3px #5e5e5e2e!important;transform:none!important;background:#d4d7ce!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-side-action>.ui-caption{font-family:Arial,Helvetica,sans-serif!important;color:#626262!important;text-shadow:0 .5px 0 #fff9!important}
+/* No separate cards are introduced. Existing panels use a transparent engraved field. */
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-card,.kn-row,.kn-ed,.kn-tip,.kn-fav,.na-water,.km-card,.km-box,.km-exact,.km-it,.km-sum,.km-confirm,.km-aifail,.km-load,.km-aibusy,.kv-row,.kv-pick,.kv-nopick,.kv-none,.kv-saved,.ks-it,.ks-pick,.ks-tot,.ks-ask,.kr-it,.kr-pick,.kr-por,.kr-ps,.kg-card,.kg-prof,.kg-res,.kg-nop,.kg-npres,.kg-info,.kg-fi,.ki-col,.ki-today,.ki-seen,.ki-out,.ki-prot,.ki-ach,.kc-nocam,.kf-si,.kwk-row){background:transparent!important;border-color:#59606638!important;box-shadow:1px 1px 0 #ffffffb3,inset 1px 1px 0 #ffffffb3!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-tip,.kv-row.sel,.kv-row.fresh,.km-card.err,.km-it.fresh,.kg-chip.on){border-color:#9c490075!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-mealh,.kn-favh,.kn-sech,.km-div,.ki-foot,.kg-row){border-color:#59606638!important}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-budget-metrics>div{border-color:#59606638!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-budget-metrics .ui-metric,.na-water-amount .ui-value,.kn-rowk,.kn-kc text,.kn-sumn,.km-itk,.km-sumt b,.kv-ptl b,.ks-tot b,.kr-pst b,.kg-mk,.kg-big,.kg-rr,.ki-stats b,.ki-tdee,.ki-ct b,.kwk-k b){font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important;color:#252525!important;fill:#252525!important}
+:root[data-silver] #appcontent .kn-mc{background:#25252509!important;box-shadow:inset 0 .6px 0 #59606620,0 .6px 0 #ffffff8a!important}
+:root[data-silver] #appcontent .kn-mct b{color:#252525!important;font-family:Arial,Helvetica,sans-serif!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-section-title,.na-water .ui-feature-title,.na-budget .ui-feature-title,.kn-h2,.kn-h3,.kn-cardh h3,.km-ih h2,.kv-sh h2,.ki-ah h3,.ki-prot h3){font-family:Arial,Helvetica,sans-serif!important;font-weight:700!important;letter-spacing:-.3px!important;color:#252525!important;text-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver] #scrpage:is(.km,.kv,.ks,.kr,.kg,.ki,.kc){color:#252525!important;font-family:Arial,Helvetica,sans-serif!important;--ink:#252525;--muted:#747474;--acc:#9c4900;--acc2:#9c4900;--warn:#973c2b;--bg:#e2e4e4;--bg2:#d6d9da;--surface:transparent;--sheet:transparent;--ktrack:#77777735;--num:Arial,Helvetica,sans-serif}
+:root[data-silver] #scrpage :is(.km-head h1,.kv-head h1){font:700 24px/28px Arial,Helvetica,sans-serif!important;letter-spacing:-.6px!important;text-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver] #scrpage :is(.kr-head h2,.kf-hd h2){font:700 18px/22px Arial,Helvetica,sans-serif!important;letter-spacing:-.3px!important;text-shadow:0 .6px 0 #ffffffb3!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.km-swt span,.km-its,.km-sumr,.km-favh,.km-scale,.km-exs,.kv-l,.kv-rs,.kv-ptr,.kv-nopick,.ks-lh,.ks-pl,.ks-iti span,.kr-itt>span,.kr-pl span,.kg-l,.kg-note,.kg-rowl span,.kg-bar>span,.ki-src,.ki-foot,.ki-stats span,.kwk-bju,.kn-rowi .s,.kn-mct em,.kn-rowk small,.na-water-limits .ui-small,.na-budget .ui-caption){font-family:Arial,Helvetica,sans-serif!important;color:#747474!important;text-shadow:0 .5px 0 #ffffffcf!important}
+/* Native form fields retain original dimensions, input modes, validation and focus. */
+:root[data-silver] #scrpage :is(.km-ta,.ks-name,.kv-search,.kr-search,.kg-g2 input,.ks-gl,.ki-wr label){background:#25252505!important;color:#252525!important;border-color:#59606638!important;box-shadow:inset 0 .7px 1.4px #59606616,0 .7px 0 #ffffffb3!important;font-family:Arial,Helvetica,sans-serif!important}
+:root[data-silver] #scrpage :is(.km-ta,.kv-search input,.kr-search input,.ks-name,.kg-g2 input){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important}
+:root[data-silver] #scrpage :is(.km-ta,.ks-name,.kg-g2 input):focus-visible{outline:2px solid #9c4900!important;outline-offset:3px!important}
+:root[data-silver] #scrpage :is(input,textarea)::placeholder{color:#747474!important;opacity:1!important}
+:root[data-silver] #scrpage :is(.km-gl input,.ks-gl input,.ki-wr input){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important;font-variant-numeric:tabular-nums!important;background:transparent!important}
+:root[data-silver] #scrpage .km-gl{border-color:#59606675!important}
+/* Recessed segmented selectors use native selection state as the permanent indicator. */
+:root[data-silver] #scrpage :is(.km-meals,.kv-meals,.kg-tabs,.ki-tabs,.kc-tabs){background:#5c626118!important;border-color:#59606638!important;box-shadow:inset 0 1px 2px #53535324,0 .7px 0 #ffffffb3!important}
+:root[data-silver] #scrpage :is(.km-meal,.kv-meal,.kg-tab,.ki-tab,.kc-tab,.km-sz,.km-exb,.km-asks button,.kg-chip){color:#747474!important;background:transparent!important;border-color:#59606638!important;box-shadow:none!important;transform:none!important;font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important}
+:root[data-silver] #scrpage :is(.km-meal.on,.kv-meal.on,.kg-tab.on,.ki-tab.on,.kc-tab.on,.km-sz.on,.km-asks button.on){background:linear-gradient(180deg,#3a3a3a,#242424)!important;color:#f1f2ee!important;border-color:#202020!important;box-shadow:inset 0 .5px 0 #595959,0 .6px 1.3px #4a4a4a66!important;transform:none!important}
+:root[data-silver] #scrpage .kg-chip.on{color:#252525!important;background:linear-gradient(150deg,#f2f2f26e,#d2d2d236)!important;box-shadow:inset 0 1px 0 #ffffff73!important}
+/* Quiet engraved actions have a full native hit area, without a pasted-on disc. */
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.rd-nutrition-goal,.km-back,.kr-x,.km-rm,.km-exx,.kv-pin,.kv-edit,.kv-del,.ks-rm,.kr-rm,.kg-pen,.kc-ic,.kb-ic,.kn-rowedit,.kn-favedit,.kn-favdel,.kn-all,.kv-setadd,.ks-del,.kc-words,.km-addh button,.ki-wshow){background:none!important;box-shadow:none!important;border-color:transparent!important;color:#747474!important;filter:none!important;transform:none!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.rd-nutrition-goal,.km-back,.kr-x,.km-rm,.kv-pin,.kv-edit,.kv-del,.ks-rm,.kr-rm,.kg-pen,.kc-ic,.kb-ic,.kn-rowedit,.kn-favedit,.kn-favdel) svg{filter:drop-shadow(0 .65px 0 #ffffffcf)!important;stroke-width:1.5!important}
+:root[data-silver] #scrpage .kv-pin.on svg{fill:#747474!important;stroke:#747474!important}
+:root[data-silver] #scrpage :is(.km-back,.kr-x,.kv-pin,.kv-edit,.kv-del,.kc-ic):active:not(:disabled){color:#252525!important;transform:none!important;background:none!important}
+:root[data-silver] #scrpage .kc-ic.on{color:#9c4900!important}
+/* Mechanical nutrition switches: amber groove, original travel and Silver slider. */
+:root[data-silver] #scrpage :is(.km-track,.kg-sw){background:#373939!important;border:1px solid #59606680!important;box-shadow:inset 0 1.4px 2.5px #1118,0 .7px 0 #ffffffb3!important;transition:background 240ms cubic-bezier(.2,.7,.3,1)!important}
+:root[data-silver] #scrpage :is(.km-track.on,.kg-sw.on){background:var(--sl-amber,radial-gradient(ellipse at 20% 80%,#ffb321,#e08b08 45%,#9c4900))!important}
+:root[data-silver] #scrpage :is(.km-track>span,.kg-sw>i){background:radial-gradient(ellipse at 18% 78%,#e8e8e5 0%,#cfd0cd 32%,#b2b4af 67%,#949790 100%)!important;border:1px solid #c4c6c1!important;box-shadow:inset 0 1px .7px #fff9,0 1px 2px #1117!important;transition:left 240ms cubic-bezier(.2,.7,.3,1),transform 240ms cubic-bezier(.2,.7,.3,1)!important}
+:root[data-silver] #scrpage :is(.km-sw,.kg-bon){transform:none!important;background:none!important;box-shadow:none!important}
+/* Meal rows keep native undo fuse. Flat icon material stays distinct from action buttons. */
+:root[data-silver] #appcontent .kb-fz-face{background:none!important;border:0!important;box-shadow:none!important;color:#747474!important;transform:none!important}
+:root[data-silver] #appcontent .kb-fz.on .kb-fz-idle{color:#9c4900!important}
+:root[data-silver] #appcontent .kb-fz-face svg{filter:drop-shadow(0 .65px 0 #ffffffcf)!important;stroke-width:1.5!important}
+/* Preserve camera preview/media positions and content; the enclosure uses Silver. */
+:root[data-silver] #scrpage.kc{background:var(--sl-surface,url('silver/assets/fitness-satin-silver.svg')) center/cover!important}
+:root[data-silver] #scrpage.kc :is(.kc-tt,.kc-hint,.kc-frame.l .t,.kc-frame.l .r){color:#626262!important;font-family:Arial,Helvetica,sans-serif!important;text-shadow:0 .5px 0 #ffffffb3!important}
+:root[data-silver] #scrpage.kc .kc-frame{border-color:#59606680!important}
+:root[data-silver] #scrpage.kc .kc-frame .c{border-color:#747474!important}
+:root[data-silver] #scrpage.kc .kc-frame .bars{background:repeating-linear-gradient(90deg,#252525 0 3px,transparent 3px 6px,#252525 6px 7px,transparent 7px 11px)!important}
+:root[data-silver] #scrpage.kc .kc-frame .scan{background:#9c4900!important;box-shadow:none!important}
+:root[data-silver] #scrpage.kc .kc-frame.l{background:#ffffff18!important}
+:root[data-silver] #scrpage.kc .kc-shoot>span{background:transparent!important;position:relative;z-index:1;border:1px solid #59606638!important;box-shadow:0 .7px 0 #ffffffb3!important}
+:root[data-silver] #scrpage.kc .kc-gal{background:linear-gradient(150deg,#f2f2f26e,#d2d2d236)!important;color:#747474!important;border-color:#b2b2b2!important;box-shadow:inset 0 1px 0 #ffffff73!important}
+:root[data-silver] #scrpage.kc .kf-blur{background:transparent!important}
+:root[data-silver] #scrpage :is(.kr-sheet,.kf-sheet,.kg-bar,.kr-bar){background:var(--sl-surface,url('silver/assets/fitness-satin-silver.svg')) center/cover!important;border-color:#59606638!important;box-shadow:0 -.7px 0 #ffffffb3!important}
+:root[data-silver] #scrpage :is(.kr-grab,.kf-grab){background:#74747455!important;box-shadow:0 .7px 0 #ffffffb3}
+/* Insights graph is the sanctioned black-glass display, without changing data geometry. */
+:root[data-silver] #scrpage .ki-chart{background:radial-gradient(ellipse at 80% 4%,#353b3d59,transparent 62%),linear-gradient(138deg,#080909 15%,#171b1c 48%,#050606 77%)!important;border-color:#141717!important;box-shadow:inset 0 1px 2px #000,0 1px 0 #ffffff99!important;color:#b0b8b4!important}
+:root[data-silver] #scrpage .ki-chart :is(.ki-leg,.ki-foot){color:#a4afaa!important;text-shadow:none!important}
+:root[data-silver] #scrpage .ki-chart .ki-foot b{color:#d8dedb!important}
+:root[data-silver] #scrpage .ki-chart text{fill:#83928b!important;font-family:SFMono-Regular,Consolas,'Liberation Mono',monospace!important}
+:root[data-silver] #scrpage .ki-chart [stroke-dasharray]{stroke:#5b6963!important}
+:root[data-silver] #scrpage .ki-chart [stroke="var(--ink)"]{stroke:#ffccd5!important}
+:root[data-silver] #scrpage :is(.ki-bar,.ki-cells i,.ki-pw i,.kwk-bar,.na-water-track){background:#77777735!important;border-color:#59606638!important;box-shadow:inset 0 .7px 1px #5553,0 .7px 0 #fff9!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.water-fill,.kwk-bar i,.ki-bar i,.ki-cells i.on){background:#747474!important}
+:root[data-silver] #scrpage :is(.ki-aic,.kn-achic){background:transparent!important;color:#747474!important;box-shadow:none!important;border-color:transparent!important}
+:root[data-silver] #scrpage :is(.ki-ok,.ki-pw .on){background:var(--sl-amber,radial-gradient(ellipse at 20% 80%,#ffb321,#e08b08 45%,#9c4900))!important;color:#252525!important}
+/* Preserve validation distinction and original disabled/loading guards. */
+:root[data-silver] #scrpage :is(.bad,[aria-invalid=true]){border-color:#973c2b!important;outline-color:#973c2b!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(button:disabled,[aria-disabled=true],.dis){filter:none!important;cursor:default!important}
+:root[data-silver] #appcontent .na-camera-button:disabled,:root[data-silver] #scrpage.kc .kc-shoot:disabled{transform:none!important;filter:none!important;opacity:.45!important}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver] #appcontent .sl-food-sheen{animation:none!important;opacity:0!important}
+ :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-macro-track>span,.na-camera-button,.white-nutrition-shortcut,.km-track,.km-track>span,.kg-sw,.kg-sw>i,.kc-shoot){transition:none!important}
+ :root[data-silver] #scrpage :is(.kc-frame .scan,.kb-spin){animation:none!important}
+}
+:root[data-silver] #appcontent .rd-approved-nutrition .na-water-track{background:#77777735!important;border-color:#59606638!important;box-shadow:inset 0 .7px 1px #5553,0 .7px 0 #fff9!important}
+:root[data-silver] #scrpage .ki-chart polyline{stroke:#ffccd5!important;filter:drop-shadow(0 0 2px #eb777b33)}
+:root[data-silver] #scrpage .ki-chart circle{fill:#fff0f1!important;stroke:#ffb7bd!important;filter:drop-shadow(0 0 3px #f6b8ba66)}
+:root[data-silver] #scrpage .ki-chart g>rect{fill:#5c6a64!important}
+
+/* Old hollow-rim masks must not cut the new turned-metal camera face. */
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:before,
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:after,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:before,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:after{-webkit-mask:none!important;mask:none!important}
+:root[data-silver][data-redesign-theme] #appcontent .kn-rowk b{font:700 25px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.7px!important;color:#252525!important}
+:root[data-silver][data-redesign-theme] #appcontent .kn-rowk>.sl-food-kcal{font:700 25px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.7px!important;color:#252525!important;font-variant-numeric:tabular-nums!important}
+
+/* Keep quiet icons visually small while giving each action its own touch area. */
+:root[data-silver][data-redesign-theme] #appcontent .rd-nutrition-week{min-height:44px!important}
+:root[data-silver][data-redesign-theme] #appcontent .kn-rowacts :is(.kb-fz,.kb-ic){width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;transform:none!important}
+:root[data-silver][data-redesign-theme] #appcontent :is(.kn-favedit,.kn-favdel,.kn-favh button){min-width:44px!important;min-height:44px!important}
+:root[data-silver][data-redesign-theme] #appcontent .kn-rowacts :is(.kb-fz,.kb-ic):active{transform:none!important}
+
+/* Turned camera: rim stays seated; the face has one native active travel. */
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot{transform:none!important;filter:none!important}
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button::before,
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button::after,
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button>.ui-icon,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot::before,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot::after,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot>span{transition:transform 160ms ease,filter 160ms ease!important}
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled)::before,
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled)::after,
+:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled)>.ui-icon,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:active:not(:disabled)::before,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:active:not(:disabled)::after,
+:root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:active:not(:disabled)>span{transform:translateY(1.5px)!important;filter:brightness(.94)!important}
+@media(hover:hover){
+ :root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:hover:not(:active):not(:disabled)::before,
+ :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:hover:not(:active):not(:disabled)::before{filter:brightness(1.075)!important}
+}

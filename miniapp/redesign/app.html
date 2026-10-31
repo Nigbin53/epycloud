@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gym Tracker — Black / White</title>
+<title>EpyFit — TACTILE / Silver</title>
+<script>if(new URLSearchParams(location.search).get("archive")!=="black")document.documentElement.setAttribute("data-silver","");</script>
 <style>
 :root{
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -1712,7 +1713,13 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="lattice-loader.css?v=1">
 <link rel="stylesheet" href="fuse-round.css?v=8">
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
+<link rel="stylesheet" href="backgrounds.css?v=1">
 <link rel="stylesheet" href="measurements.css?v=3">
+<link rel="stylesheet" href="silver-core.css?v=8">
+<link rel="stylesheet" href="silver-training.css?v=3">
+<link rel="stylesheet" href="silver-weight.css?v=2">
+<link rel="stylesheet" href="silver-nutrition.css?v=6">
+<link rel="stylesheet" href="silver-flows.css?v=6">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -1758,7 +1765,7 @@ var CATALOG_QUERY_VIEW=REDESIGN_QUERY.get("view");
 var CATALOG_VIEW=CATALOG_ROUTES.indexOf(CATALOG_QUERY_VIEW)>=0?CATALOG_QUERY_VIEW:"workout";
 var CATALOG_PREVIEW=REDESIGN_QUERY.get("catalog")==="1";
 var CATALOG_QA=CATALOG_PREVIEW&&REDESIGN_QUERY.get("qa")==="1";
-var CATALOG_QUERY_THEME=["black","white"].indexOf(REDESIGN_QUERY.get("theme"))>=0?REDESIGN_QUERY.get("theme"):null;
+var CATALOG_QUERY_THEME=REDESIGN_QUERY.get("archive")==="black"?"black":"white";
 var CATALOG_MACHINE=CATALOG_PREVIEW?REDESIGN_QUERY.get("machine"):null;
 /* Просмотр тренажёра со вкладки «Все тренажёры» хранит демо-данные отдельно, чтобы не менять превью карты экранов. */
 var KEY=CATALOG_QA?"gym_redesign_qa_v1:"+CATALOG_VIEW:CATALOG_MACHINE?"gym_redesign_machine_preview_v1:"+CATALOG_VIEW+":"+CATALOG_MACHINE:CATALOG_PREVIEW?"gym_redesign_preview_v1:"+CATALOG_VIEW:"gym_redesign_app_v1";
@@ -1853,8 +1860,6 @@ if(!S.name)S.name=CATALOG_PREVIEW?"Epy":tgName().slice(0,20);
 if(S.bgCustom==null)S.bgCustom="";
 if(!S.bgPreset||S.bgPreset==="default"||S.bgPreset==="mono")S.bgPreset=S.bgCustom?"photo":(S.bgPreset==="mono"?"plain":"aura");
 if(S.bgPreset==="photo"&&!S.bgCustom)S.bgPreset="aura";
-/* Пока в приложении один фон на тему: выбор фона и своё фото скрыты, у всех основной фон темы. */
-if(!CATALOG_PREVIEW){S.bgPreset="aura";S.bgCustom="";S.bgDimOn=false}
 if(!S.achAt||typeof S.achAt!=="object")S.achAt={};
 if(S.bgDim==null)S.bgDim=30;
 if(S.bgDimOn==null)S.bgDimOn=false;
@@ -2281,11 +2286,14 @@ function bgCss(k,th){
   if(k==="grid")return "radial-gradient(rgba(252,252,252,0.16) 1px, rgba(0,0,0,0) 1.4px) 0 0 / 12px 12px, "+bg;
   if(k==="blueprint")return "radial-gradient(circle at 88% 8%, rgba(0,0,0,0) 54px, rgba(255,255,255,0.18) 55px, rgba(0,0,0,0) 56.5px), radial-gradient(circle at 8% 62%, rgba(0,0,0,0) 42px, rgba(255,255,255,0.16) 43px, rgba(0,0,0,0) 44.5px), radial-gradient(circle at 56% 30%, "+t.acc+" 2.6px, rgba(0,0,0,0) 3.4px), radial-gradient(circle at 90% 70%, "+t.acc+" 2.6px, rgba(0,0,0,0) 3.4px), linear-gradient(rgba(255,255,255,0.07) 1px, rgba(0,0,0,0) 1px) 0 0 / 13px 13px, linear-gradient(90deg, rgba(255,255,255,0.07) 1px, rgba(0,0,0,0) 1px) 0 0 / 13px 13px, "+bg;
   if(k==="smoke")return "radial-gradient(48% 40% at 30% 28%, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0) 70%), radial-gradient(40% 34% at 76% 78%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 70%), linear-gradient(160deg, #1E1E20 0%, "+bg+" 100%)";
-  if(k==="photo"){
-    if(!S.bgCustom)return "linear-gradient(135deg, #3a3d44 0%, #1e2024 55%, #2c2f35 100%)";
-    if(!S.bgDimOn)return "url('"+S.bgCustom+"') center / cover no-repeat, "+bg;
-    var dim=(S.bgDim!=null?S.bgDim:30)/100;
-    return "linear-gradient(rgba(0,0,0,"+dim+"),rgba(0,0,0,"+Math.min(0.92,dim+0.25)+")), url('"+S.bgCustom+"') center / cover no-repeat, "+bg;
+  if(k==="silver"||k==="photo"){
+    var image=k==="silver"?"backgrounds/silver-orange.png":S.bgCustom;
+    if(!image)return bg;
+    /* Подложка зависит от темы: заголовки читаются даже на контрастном фото. */
+    var veil=th==="g"?"linear-gradient(rgba(241,241,237,.78),rgba(241,241,237,.28) 32%,rgba(241,241,237,.16))":"linear-gradient(rgba(2,3,3,.78),rgba(2,3,3,.60) 35%,rgba(2,3,3,.68))";
+    var dim=S.bgDimOn?Math.max(0,Math.min(80,+S.bgDim||0))/100:0;
+    var tint=th==="g"?"241,241,237":"0,0,0";
+    return (dim?"linear-gradient(rgba("+tint+","+dim+"),rgba("+tint+","+dim+")), ":"")+veil+", url('"+image+"') center / cover no-repeat, "+bg;
   }
   return bg;
 }
@@ -2320,16 +2328,17 @@ function screenSettings(){
       return '<button class="obthm'+(th===k?" on":"")+'" data-a="theme" data-v="'+k+'" aria-pressed="'+(th===k)+'" style="--tacc:'+OB_THEME_ACC[k]+'"><span class="rg">'+OB_THEME_SVG[k].replace(/id="([^"]+)"/g,'id="st-$1"').replace(/url\(#([^)]+)\)/g,'url(#st-$1)')+'</span><span class="nm">'+t[1]+'</span></button>';
     }).join("")+'</div></section>';
   var cur=BG_PRESETS.filter(function(p){return p[0]===S.bgPreset})[0]||BG_PRESETS[0];
-  if(CATALOG_PREVIEW)h+='<section class="settsec"><div class="setth"><h2>Фон</h2><span>'+cur[1]+'</span></div><div class="settbgs">'
+  h+='<section class="settsec"><div class="setth"><h2>Фон приложения</h2><span>'+cur[1]+'</span></div><div class="settbgs">'
     +BG_PRESETS.map(function(p){
-      var on=S.bgPreset===p[0],inner='<span class="ck">'+SVG_CHK12+'</span><span class="nm">'+p[1]+'</span>',st=' style="background:'+bgCss(p[0],th).replace(/"/g,"&quot;")+'"';
-      if(p[0]==="photo"&&!S.bgCustom)return '<label class="bgtile" aria-label="'+p[1]+'"'+st+'>'+inner+'<input type="file" class="bgfilein" accept="image/*" hidden></label>';
+      if(p[0]==="photo"&&!S.bgCustom)return "";
+      var on=S.bgPreset===p[0],inner='<span class="ck">'+SVG_CHK12+'</span><span class="nm">'+p[1]+'</span>',preview=p[0]==="aura"?"var(--rd-page-fill)":p[0]==="silver"?"url(backgrounds/silver-orange.png) center / cover":bgCss(p[0],th),st=' style="background:'+preview.replace(/"/g,"&quot;")+'"';
       return '<button class="bgtile'+(on?" on":"")+'" data-a="bgpreset" data-v="'+p[0]+'" aria-label="'+p[1]+'" aria-pressed="'+on+'"'+st+'>'+inner+'</button>';
     }).join("")
-    +'<label class="bgup">'+SVG_IMG24+'Своё фото<input type="file" id="bgfile" class="bgfilein" accept="image/*" hidden></label></div>'
-    +'<div class="settdim"><button class="km-sw" data-a="bgdimtgl" role="switch" aria-checked="'+!!S.bgDimOn+'"><span class="km-swt"><b>Затемнение фона</b><span>'+(S.bgDimOn?'Для своего фото — чтобы текст поверх оставался читаемым':'Выключено — фон как есть')+'</span></span><span class="km-track'+(S.bgDimOn?' on':'')+'" aria-hidden="true"><span></span></span></button>'
-    +(S.bgDimOn?'<div class="r"><span>Сила</span><span>'+S.bgDim+'%</span></div><input type="range" min="0" max="80" step="5" value="'+S.bgDim+'" data-a="bgdim" aria-label="Сила затемнения">':'')
-    +'</div></section>';
+    +'<label class="bgup" tabindex="0" role="button" aria-label="'+(S.bgCustom?'Заменить свой фон':'Загрузить свой фон')+'">'+SVG_IMG24+(S.bgCustom?'Заменить фото':'Свой фон')+'<input type="file" id="bgfile" class="bgfilein" accept="image/*" hidden></label></div>'
+    +(S.bgCustom?'<button class="bgremove" data-a="bgclear">Удалить своё фото</button>':'')
+    +((S.bgPreset==="silver"||S.bgPreset==="photo")?'<div class="settdim"><button class="km-sw" data-a="bgdimtgl" role="switch" aria-checked="'+!!S.bgDimOn+'"><span class="km-swt"><b>'+(th==="g"?'Осветление фона':'Затемнение фона')+'</b><span>'+(S.bgDimOn?'Дополнительно приглушить изображение':'Подложка автоматически подобрана под тему')+'</span></span><span class="km-track'+(S.bgDimOn?' on':'')+'" aria-hidden="true"><span></span></span></button>'
+    +(S.bgDimOn?'<div class="r"><span>Сила</span><span id="bgdimvalue">'+S.bgDim+'%</span></div><input type="range" min="0" max="80" step="5" value="'+S.bgDim+'" data-a="bgdim" aria-label="Сила приглушения фона">':'')
+    +'</div>':'')+'</section>';
   h+='<section class="settsec"><h2>Профиль</h2><div class="settgroup">'
     +'<button class="settbtn" data-a="profileeditopen"><span>Никнейм</span><span class="settval">'+esc(S.name)+SVG_CHEV+'</span></button>'
     +'<button class="settbtn" data-a="profileeditopen"><span>Пол</span><span class="settval">'+(S.gender==="f"?"Девушка":S.gender==="m"?"Парень":"Не указан")+SVG_CHEV+'</span></button>'
@@ -2496,7 +2505,7 @@ function applyTheme(){
   var k=S.bgPreset||"aura";if(k==="photo"&&!S.bgCustom)k="aura";
   var ly=document.getElementById("bglayer");
   var fx=document.getElementById("bgfixed");
-  if(k==="aura"){bg.style.background="";if(ly)ly.style.display="";bg.classList.remove("fixedbg","photoraw","photodim");if(fx){fx.classList.remove("on");fx.style.background=""}}
+  if(k==="aura"){bg.style.background="";if(ly)ly.style.display="";bg.classList.remove("fixedbg","photoraw","photodim");if(fx){fx.classList.remove("on");fx.style.background="";fx._css=""}}
   else{
     /* фон привязан к экрану, а не к высоте контента — не масштабируется при смене вкладок/фильтров */
     bg.style.background="";bg.classList.add("fixedbg");if(ly)ly.style.display="none";
@@ -3658,6 +3667,11 @@ document.addEventListener("input",function(e){
   if(k==="kmgr"){var v3=parseInt(val,10);if(!isNaN(v3))kmSetOne(e.target.dataset.id,v3,"exact");return}
   if(k==="kmgin"){var d2=String(val).replace(/\D/g,"").slice(0,4);if(d2!==val)e.target.value=d2;var v4=parseInt(d2,10);kmSetOne(e.target.dataset.id,isNaN(v4)?0:v4,"exact");return}
 });
+document.addEventListener("keydown",function(e){
+  if(e.target.classList&&e.target.classList.contains("bgup")&&(e.key==="Enter"||e.key===" ")){
+    e.preventDefault();var input=e.target.querySelector("input[type=file]");if(input)input.click();
+  }
+});
 document.addEventListener("change",function(e){
   var k=e.target.dataset&&e.target.dataset.k;if(!k)return;
   if(k==="kmgin"||k==="kmcalcin"){kmPaint();return}
@@ -4450,7 +4464,7 @@ function syncBgHeight(){
   if(ac&&window.ResizeObserver&&!ac._bgObs){var q=0;ac._bgObs=new ResizeObserver(function(){if(q)return;q=requestAnimationFrame(function(){q=0;syncBgHeight()})});ac._bgObs.observe(ac)}
 }
 var THEMES=[["g","Зелёная","linear-gradient(135deg,#B2EE37,#58F670)"],["p","Розовая","linear-gradient(135deg,#FF8FB8,#FFC2D6)"],["b","Clear","linear-gradient(135deg,#F2F2F2,#BDBDC2)"],["f","Огонь","linear-gradient(135deg,#F8561C,#FA844D)"]];
-var BG_PRESETS=[["aura","Аура"],["mist","Туман"],["plain","Чистый"],["grid","Точки"],["blueprint","Чертёж"],["smoke","Дым"],["photo","Моё фото"]];
+var BG_PRESETS=[["aura","Стандартный"],["silver","Серебро"],["photo","Моё фото"]];
 var peState=null;
 function confetti(n){
   var cols=["var(--acc)","var(--acc2)","color-mix(in srgb,var(--acc) 40%,white)","var(--ink)"],out="";
@@ -4904,7 +4918,7 @@ document.addEventListener("input",function(e){
   if(kk==="kbgin"){var gv0=e.target.value,gv1=gv0.replace(/\D/g,"").slice(0,4);if(gv1!==gv0)e.target.value=gv1;kbLive(+e.target.dataset.id,+gv1||0,"input");return}
   if(e.target.id==="obnick"){obState.nick=e.target.value.slice(0,20);renderOb();var el2=document.getElementById("obnick");if(el2){el2.focus();el2.selectionStart=el2.selectionEnd=el2.value.length}}
   else if(e.target.id==="penick"){peState.nick=e.target.value.slice(0,20);screenProfileEdit();var el3=document.getElementById("penick");if(el3){el3.focus();el3.selectionStart=el3.selectionEnd=el3.value.length}}
-  else if(e.target.dataset&&e.target.dataset.a==="bgdim"){S.bgDim=+e.target.value;save();applyTheme();renderScreenView()}
+  else if(e.target.dataset&&e.target.dataset.a==="bgdim"){S.bgDim=+e.target.value;save();applyTheme();var caption=document.getElementById("bgdimvalue");if(caption)caption.textContent=S.bgDim+"%"}
 });
 document.addEventListener("change",function(e){
   var kc=e.target.dataset&&e.target.dataset.k;if(kc==="kbrange"||kc==="kbgin"){render();return}
@@ -4922,12 +4936,18 @@ document.addEventListener("change",function(e){
   }
   if(e.target.id==="bgfile"||(e.target.classList&&e.target.classList.contains("bgfilein"))){
     if(!e.target.files[0])return;
+    if(!/^image\//.test(e.target.files[0].type)){toast("Выбери изображение");return}
+    var bgFail=function(){toast("Не удалось открыть фото",null,"Попробуй другое изображение")};
     var rb=new FileReader();
     rb.onload=function(){var im=new Image();im.onload=function(){
+      try{
       var k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");
       c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
       c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-      S.bgCustom=c.toDataURL("image/jpeg",.75);S.bgPreset="photo";save();applyTheme();renderScreenView()};im.src=rb.result};
+      S.bgCustom=c.toDataURL("image/jpeg",.75);S.bgPreset="photo";save();applyTheme();renderScreenView();
+      }catch(error){bgFail()}
+    };im.onerror=bgFail;im.src=rb.result};
+    rb.onerror=bgFail;
     rb.readAsDataURL(e.target.files[0]);
     return;
   }
@@ -5109,6 +5129,10 @@ function redesignApplyTheme(){
   document.body.dataset.redesignTheme=redesignTheme;
   document.body.classList.toggle("theme-white",redesignTheme==="white");
   document.body.classList.toggle("theme-black",redesignTheme==="black");
+  var root=document.documentElement,k=S.bgPreset||"aura",custom=k!=="aura"&&(k!=="photo"||!!S.bgCustom);
+  root.toggleAttribute("data-user-background",custom);
+  if(custom)root.style.setProperty("--rd-user-bg",bgCss(k,redesignTheme==="white"?"g":"b"));
+  else root.style.removeProperty("--rd-user-bg");
 }
 function redesignMarkRoute(){
   var route=catalogCurrentView();
@@ -5122,7 +5146,7 @@ function redesignThemeControls(root){
     var value=button.dataset.v;
     if(value!=="b"&&value!=="g"){button.remove();return;}
     var theme=value==="b"?"black":"white",name=button.querySelector(".nm"),preview=button.querySelector(".rg");
-    if(name)name.textContent=theme==="black"?"Black":"White";
+    if(name)name.textContent=theme==="black"?"Black":(document.documentElement.hasAttribute("data-silver")?"Silver":"White");
     if(preview)preview.innerHTML='<span class="rd-theme-preview '+theme+'" aria-hidden="true"></span>';
     button.style.removeProperty("--tacc");
     button.dataset.redesignThemeChoice=theme;
@@ -5132,7 +5156,7 @@ function redesignThemeControls(root){
   var themeCaption=root.querySelector(".settthemes");
   if(themeCaption){
     var heading=themeCaption.parentElement.querySelector(".setth span");
-    if(heading)heading.textContent=redesignTheme==="black"?"Black":"White";
+    if(heading)heading.textContent=redesignTheme==="black"?"Black":(document.documentElement.hasAttribute("data-silver")?"Silver":"White");
   }
 }
 function redesignSetTheme(theme,persist){
@@ -5258,13 +5282,17 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="workout-presentation.js?v=r10-3"></script>
 <script src="lattice-loader.js?v=1"></script>
 <script src="img-pack.js?v=1"></script>
-<script src="paths-bg.js?v=2"></script>
-<script src="plans-whatsnew.js?v=16"></script>
+<script src="paths-bg.js?v=3"></script>
+<script src="plans-whatsnew.js?v=17"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
 <script src="avatar-r8.js?v=equipment-library-r1"></script>
 <script src="../equipment/runtime.js?v=equipment-library-r1"></script>
 <script src="food-ai.js?v=1"></script>
+<script src="silver-motion.js?v=6"></script>
+<script src="silver-icons.js?v=3"></script>
+<script src="silver-weight.js?v=1"></script>
+<script src="silver-nutrition.js?v=2"></script>
 </body>
 </html>
