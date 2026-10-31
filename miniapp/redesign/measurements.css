@@ -1,4 +1,4 @@
-/* Biceps entry uses the existing Settings and sheet styles in both themes. */
+/* Body measurements in Profile and the existing entry sheets, in both themes. */
 :root[data-redesign-theme] .sheet.bicepssheet{display:flex;flex-direction:column;gap:12px;padding:14px 24px 28px;max-height:calc(100% - var(--rd-safe-top))}
 :root[data-redesign-theme] .bicepssheet>*{flex-shrink:0}
 :root[data-redesign-theme] .bicepssheet .grab{margin:0 auto}
@@ -15,3 +15,5 @@
 :root[data-redesign-theme] .biceps-recent>div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:13px}
 :root[data-redesign-theme] .biceps-recent b{font-weight:500}
 :root[data-redesign-theme] .bicepssheet .lwsave{margin-top:4px}
+
+:root[data-redesign-theme] .pro-measurements{margin-top:4px}

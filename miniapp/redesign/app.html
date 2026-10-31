@@ -1712,7 +1712,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="lattice-loader.css?v=1">
 <link rel="stylesheet" href="fuse-round.css?v=8">
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
-<link rel="stylesheet" href="measurements.css?v=1">
+<link rel="stylesheet" href="measurements.css?v=2">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2187,8 +2187,15 @@ function prSpark(vals){
   var last=pts[pts.length-1].split(",");
   return '<svg width="60" height="24" viewBox="0 0 60 24" aria-hidden="true"><path d="M2.0,24 L'+pts.join(" L")+' L58.0,24 Z" style="fill:color-mix(in srgb,var(--acc) 12%,transparent)"></path><polyline points="'+pts.join(" ")+'" fill="none" style="stroke:var(--acc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="'+last[0]+'" cy="'+last[1]+'" r="2.8" style="fill:var(--acc)"></circle></svg>';
 }
+function bodyMeasurementsHtml(){
+  var bwLast=latestBodyWeight(),bicepsLast=chrono(S.biceps).slice(-1)[0];
+  return '<section class="settsec pro-measurements"><h2>Замеры тела</h2><div class="settgroup">'
+    +'<button class="settbtn" data-a="logopen"><span>Вес</span><span class="settval">'+(bwLast?fmt1(bwLast.w)+' кг':'Записать')+SVG_CHEV+'</span></button>'
+    +'<button class="settbtn" data-a="bicepsopen"><span>Бицепс</span><span class="settval">'+(bicepsLast?fmt1(bicepsLast.cm)+' см':'Записать')+SVG_CHEV+'</span></button>'
+    +'</div></section>';
+}
 function screenProfile(){
-  var bw=S.bw.length?S.bw[S.bw.length-1].w:null;
+  var bwEntry=latestBodyWeight(),bw=bwEntry?bwEntry.w:null;
   var delta=bwChange(7);
   var initial=(S.name||"?").trim().charAt(0).toUpperCase()||"?";
   var total=totalW(),streak=weekStreak();
@@ -2202,6 +2209,7 @@ function screenProfile(){
   var h='<div class="scrhead"><button class="scrback" data-a="screenback" aria-label="Назад">'+SVG_BACK+'</button><h1>Профиль</h1><button class="scrgear" data-a="settingsopen" aria-label="Настройки">'+SVG_GEAR+'</button></div>';
   h+='<div class="prohead"><div class="proring" style="background:conic-gradient(var(--acc) 0deg '+ringDeg+'deg,color-mix(in srgb,var(--ink) 10%,transparent) '+ringDeg+'deg 360deg)"><div class="inner">'+avatarInner(S.gender,initial)+'</div><button class="proedit" data-a="profileeditopen" aria-label="Изменить профиль">'+SVG_PEN+'</button></div>'
     +'<div class="pronm"><div class="proname">'+esc(S.name)+'</div><div class="prosub">'+(S.gender==="f"?"Девушка":S.gender==="m"?"Парень":"Пол не указан")+(joinTxt?" · в зале с "+joinTxt:"")+'</div></div></div>';
+  h+=bodyMeasurementsHtml();
   h+='<div class="prostats">'
     +'<div class="prostat"><em>Текущий вес</em><b>'+(bw!=null?f(bw):"—")+'<small> кг</small></b><span class="up">'+(delta==null?"—":(delta>0?"+":delta<0?"−":"")+f(Math.abs(delta))+" за неделю")+'</span></div>'
     +'<div class="prostat hi"><em>Стрик</em><b>'+SVG_FLAME+streak+'</b><span>'+plural(streak,"неделю","недели","недель")+' подряд</span></div>'
@@ -2314,11 +2322,6 @@ function deleteOwnMachines(){
 function screenSettings(){
   var th=S.theme||"g";
   var h='<div class="scrhead"><button class="scrback" data-a="screenback" aria-label="Назад">'+SVG_BACK+'</button><h1>Настройки</h1><span class="scrspacer"></span></div>';
-  var bwLast=chrono(S.bw).slice(-1)[0],bicepsLast=chrono(S.biceps).slice(-1)[0];
-  h+='<section class="settsec"><h2>Замеры тела</h2><div class="settgroup">'
-    +'<button class="settbtn" data-a="logopen"><span>Вес</span><span class="settval">'+(bwLast?fmt1(bwLast.w)+' кг':'Записать')+SVG_CHEV+'</span></button>'
-    +'<button class="settbtn" data-a="bicepsopen"><span>Бицепс</span><span class="settval">'+(bicepsLast?fmt1(bicepsLast.cm)+' см':'Записать')+SVG_CHEV+'</span></button>'
-    +'</div></section>';
   h+='<section class="settsec"><div class="setth"><h2>Тема оформления</h2><span>'+THEMES.filter(function(t){return t[0]===th})[0][1]+'</span></div>'
     +'<div class="settthemes">'+["g","b","p","f"].map(function(k){
       var t=THEMES.filter(function(x){return x[0]===k})[0];
@@ -2404,7 +2407,7 @@ function screenAchievements(){
   var sp=document.getElementById("scrpage");sp.className="scrpage achscr";sp.innerHTML=h;
 }
 function screenProfileEdit(){
-  var bw=S.bw.length?S.bw[S.bw.length-1].w:70;
+  var bwEntry=latestBodyWeight(),bw=bwEntry?bwEntry.w:70;
   if(!peState)peState={nick:S.name||"",g:S.gender||"m",goal:S.goalType||"lose",t:S.goalWeight!=null?S.goalWeight:Math.max(30,Math.round((bw-3)*10)/10),photo:S.photo||""};
   var s=peState,initial=(s.nick||"?").trim().charAt(0).toUpperCase()||"?";
   var src=s.photo||(s.g==="f"?AVATAR_F:AVATAR_M);
@@ -2579,6 +2582,12 @@ function syncNavPill(animate){
 (function(){var n=document.getElementById("nav");if(n&&window.ResizeObserver)new ResizeObserver(function(){navPrevX=null;syncNavPill(false)}).observe(n);else window.addEventListener("resize",function(){navPrevX=null;syncNavPill(false)})})();
 
 function chrono(h){return h.slice().sort(function(a,b){return a.t-b.t})}
+/* Общая актуальная запись: профиль и вкладка веса читают один журнал по дате. */
+function latestBodyWeight(){var arr=chrono(S.bw);return arr.length?arr[arr.length-1]:null}
+function refreshMeasurementViews(){
+  render();var top=scrStack[scrStack.length-1];
+  if(top==="profile"||top==="settings"||top==="weightStats")renderScreenView();
+}
 function weekSeries(h){
   var arr=chrono(h),cutoff=now-7*DAY,r=arr.filter(function(e){return e.t>=cutoff});
   if(r.length<2)r=arr.slice(-7);
@@ -2705,7 +2714,7 @@ function viewWeight(){
     document.getElementById("appcontent").innerHTML=h;
     return;
   }
-  var bwc=chrono(S.bw),cwE=bwc.length?bwc[bwc.length-1]:null;
+  var bwc=chrono(S.bw),cwE=latestBodyWeight();
   var arr=getSeries(S.bw,bwRange);
   h+='<div class="wcard"><div class="wtop"><em>Текущий вес</em><div class="seg">'
     +'<button class="'+(bwRange==="week"?"on":"")+'" data-a="bwr" data-v="week">Неделя</button>'
@@ -4698,7 +4707,7 @@ function open(id){
   mkRange="week";sheet();document.getElementById("ov").classList.add("on");
 }
 function sheetLog(){
-  var pv=S.bw.length?chrono(S.bw).slice(-1)[0]:null;
+  var pv=latestBodyWeight();
   var d=pv?Math.round((logW-pv.w)*10)/10:0;
   var dTxt=!pv?'Первая запись':d===0?'как '+dayLabel(pv.t):(d>0?'+':'−')+fmt1(Math.abs(d))+' кг к '+dayLabel(pv.t);
   var h='<div class="grab"></div><div class="sh-title"><h2>Записать вес</h2><button class="x" data-a="close" aria-label="Закрыть">'+SVG_X+'</button></div>';
@@ -4734,7 +4743,7 @@ function saveBiceps(){
   var tt=bicepsLogTime(bicepsDay),tk=dateKey(tt);
   S.biceps=S.biceps.filter(function(e){return dateKey(e.t)!==tk});
   S.biceps.push({t:tt,cm:cm});S.biceps.sort(function(a,b){return a.t-b.t});
-  save();close();render();if(scrStack[scrStack.length-1]==="settings")renderScreenView();
+  save();close();refreshMeasurementViews();
   buzz("success");toast("Бицепс "+fmt1(cm)+" см записан");
 }
 function close(){document.getElementById("ov").classList.remove("on");document.getElementById("sheet").className="sheet";document.getElementById("sheet").dataset.cid="";cur=null;curFood=null}
@@ -4803,7 +4812,7 @@ document.addEventListener("click",function(e){
   else if(a==="prshare"){try{navigator.share&&navigator.share({title:"Новый личный рекорд",text:"Новый личный рекорд в тренировках!"})}catch(er){}}
   else if(a==="del"){var delId=cur.id;close();delMachine(delId)}
   else if(a==="undo"){var u=undoFn;undoFn=null;clearInterval(toastI);clearTimeout(toastT);document.getElementById("toast").classList.remove("on");if(u)u()}
-  else if(a==="logopen"){logW=S.bw.length?chrono(S.bw).slice(-1)[0].w:70;logStep=0.1;logDay=0;logFast=true;sheetLog();document.getElementById("ov").classList.add("on")}
+  else if(a==="logopen"){var lastWeight=latestBodyWeight();logW=lastWeight?lastWeight.w:70;logStep=0.1;logDay=0;logFast=true;sheetLog();document.getElementById("ov").classList.add("on")}
   else if(a==="bicepsopen"){var bc=chrono(S.biceps).slice(-1)[0];bicepsValue=bc?fmt1(bc.cm):"";bicepsDay=0;sheetBiceps();document.getElementById("ov").classList.add("on")}
   else if(a==="bicepsday"){bicepsValue=document.getElementById("bicepscm").value;bicepsDay=+v;sheetBiceps()}
   else if(a==="bicepssave"){saveBiceps()}
@@ -4811,7 +4820,7 @@ document.addEventListener("click",function(e){
   else if(a==="lst"){logStep=+v;sheetLog()}
   else if(a==="ldy"){logDay=+v;sheetLog()}
   else if(a==="lfast"){logFast=!logFast;sheetLog()}
-  else if(a==="savelog"){var tt=logDay?now-logDay*DAY:now,tk=dateKey(tt);S.bw=S.bw.filter(function(x){return dateKey(x.t)!==tk});S.bw.push({t:tt,w:logW,fast:logFast});S.bw.sort(function(x,y){return x.t-y.t});save();close();render();if(scrStack[scrStack.length-1]==="settings")renderScreenView();toast("Вес "+fmt1(logW)+" кг записан")}
+  else if(a==="savelog"){var tt=logDay?now-logDay*DAY:now,tk=dateKey(tt);S.bw=S.bw.filter(function(x){return dateKey(x.t)!==tk});S.bw.push({t:tt,w:logW,fast:logFast});S.bw.sort(function(x,y){return x.t-y.t});save();close();refreshMeasurementViews();toast("Вес "+fmt1(logW)+" кг записан")}
   else if(a==="hf"){histF=v;render()}
   else if(a==="hclear"){var cc=clrCounts();clrSel=histF==="all"?"all":histF;if(!cc[clrSel])clrSel="all";sheetClear();document.getElementById("ov").classList.add("on")}
   else if(a==="clrsel"){clrSel=v;sheetClear()}
@@ -4867,7 +4876,7 @@ document.addEventListener("click",function(e){
   else if(a==="profileopen"){openScreen("profile")}
   else if(a==="profileeditopen"){openScreen("profileEdit")}
   else if(a==="peg"){peState.g=v;screenProfileEdit()}
-  else if(a==="pegoal"){var bwv=S.bw.length?S.bw[S.bw.length-1].w:70;peState.goal=v;peState.t=v==="hold"?bwv:(v==="lose"?Math.min(peState.t,Math.round((bwv-3)*10)/10):Math.max(peState.t,Math.round((bwv+3)*10)/10));screenProfileEdit()}
+  else if(a==="pegoal"){var lastWeight=latestBodyWeight(),bwv=lastWeight?lastWeight.w:70;peState.goal=v;peState.t=v==="hold"?bwv:(v==="lose"?Math.min(peState.t,Math.round((bwv-3)*10)/10):Math.max(peState.t,Math.round((bwv+3)*10)/10));screenProfileEdit()}
   else if(a==="pet"){peState.t=Math.max(30,Math.min(250,Math.round((peState.t+(+v)*0.5)*10)/10));screenProfileEdit()}
   else if(a==="pesave"){
     if(peState.nick.trim())S.name=peState.nick.trim();
@@ -5258,7 +5267,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="lattice-loader.js?v=1"></script>
 <script src="img-pack.js?v=1"></script>
 <script src="paths-bg.js?v=2"></script>
-<script src="plans-whatsnew.js?v=14"></script>
+<script src="plans-whatsnew.js?v=15"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
