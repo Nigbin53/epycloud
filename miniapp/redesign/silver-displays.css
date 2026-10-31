@@ -1,0 +1,55 @@
+/* FIELD / 01 display material. Native content, chart geometry and controls stay
+   in place. The restored machine detail suspends the Silver cascade as before. */
+:root[data-silver]{
+ --sl-display-radius:14px;
+ --sl-display-bezel:linear-gradient(135deg,#777874 0%,#41423f 14%,#252624 38%,#a5a6a1 60%,#f5f5f0 78%,#d3d4ce 100%);
+ --sl-display-glass:linear-gradient(180deg,#0b0b0b 0%,#060606 45%,#050505 100%);
+ --sl-display-reflection:linear-gradient(118deg,transparent 0% 33%,#ffffff0c 33.15%,#ffffff04 64%,transparent 64.2%),linear-gradient(180deg,#ffffff05,transparent 45%);
+}
+
+/* A fine machined bevel catches light at the lower/right edge. The black face
+   starts inside this edge instead of painting a dark outline on the housing. */
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage) .wchart,
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart,
+:root[data-silver][data-redesign-theme] #appcontent .rd-workout .wt-exercise-image{
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ border:2px solid transparent!important;border-color:transparent!important;
+ border-radius:var(--sl-display-radius)!important;
+ background:var(--sl-display-glass) padding-box,var(--sl-display-bezel) border-box!important;
+ box-shadow:0 -1px 3px #282a2852,0 1px 1px #ffffffb3,inset 0 1px 2px #000000cc,inset 0 -1px .5px #ffffff0a!important;
+ outline:none!important;
+}
+/* FIELD glass reflects a broad, quiet diagonal strip. This is an independent
+   optical layer, shared by the graphs and equipment preview. */
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage) .wchart::before,
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart::before,
+:root[data-silver][data-redesign-theme] #appcontent .rd-workout .wt-exercise-image::before{content:none!important}
+:root[data-silver][data-redesign-theme] :is(#appcontent,#scrpage) .wchart::after,
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart::after,
+:root[data-silver][data-redesign-theme] #appcontent .rd-workout .wt-exercise-image::after{
+ content:''!important;display:block!important;position:absolute!important;inset:0!important;
+ width:auto!important;height:auto!important;border:0!important;
+ border-radius:calc(var(--sl-display-radius) - 2px)!important;
+ background:var(--sl-display-reflection)!important;
+ box-shadow:inset 0 1px 1px #ffffff06,inset 0 0 2px 1px #00000099!important;
+ z-index:2!important;pointer-events:none!important;opacity:1!important;
+ clip-path:none!important;-webkit-mask:none!important;mask:none!important;transform:none!important;
+}
+/* The shorter preview uses the kit's mobile corner radius. */
+:root[data-silver][data-redesign-theme] #appcontent .rd-workout .wt-exercise-image{--sl-display-radius:10px}
+/* Legend swatches share the plotted colors. */
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart{
+ --rd-insights-weight:#eeece6;--rd-insights-bar:#747771;--rd-insights-goal:#5b6963;
+}
+/* On-glass labels use the bundled display face, with no engraving shadow. */
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart :is(.ki-leg,.ki-foot){
+ color:#a6a7a3!important;font:400 9px/1.5 var(--sl-display-mono)!important;text-shadow:none!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart .ki-foot b{color:#f0f0eb!important;font-weight:500!important}
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart svg text{
+ fill:#a6a7a3!important;font-family:var(--sl-display-mono)!important;text-shadow:none!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart :is(polyline,circle){filter:none!important}
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart polyline{stroke:#eeece6!important}
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart circle{fill:#f4f3ee!important;stroke:#a5a6a0!important}
+:root[data-silver][data-redesign-theme] #scrpage .ki-chart g>rect{fill:#747771!important}
