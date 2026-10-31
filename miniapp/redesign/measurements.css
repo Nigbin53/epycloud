@@ -16,4 +16,12 @@
 :root[data-redesign-theme] .biceps-recent b{font-weight:500}
 :root[data-redesign-theme] .bicepssheet .lwsave{margin-top:4px}
 
-:root[data-redesign-theme] .pro-measurements{margin-top:4px}
+/* Compact Profile summary; measurement cards keep the native entry actions. */
+:root[data-redesign-theme] .prostats>.prostat{aspect-ratio:1;box-sizing:border-box;min-width:0;min-height:0;padding:10px;gap:5px;justify-content:flex-start;align-items:flex-start;text-align:left;font-family:var(--rd-font)}
+:root[data-redesign-theme] .prostats>.prostat em{font-size:10px;line-height:1.25}
+:root[data-redesign-theme] .prostats>.prostat b{font-size:clamp(22px,6.5vw,28px);line-height:1.05;letter-spacing:-.4px}
+:root[data-redesign-theme] .prostats>.prostat b small{font-size:11px;letter-spacing:0}
+:root[data-redesign-theme] .prostats>.prostat>span{font-size:10px;line-height:1.35;overflow-wrap:anywhere}
+:root[data-redesign-theme] .prostats>button.prostat{appearance:none;-webkit-appearance:none;cursor:pointer;color:var(--rd-text)}
+:root[data-redesign-theme] .prostats>button.prostat:active{background:var(--rd-recess)}
+:root[data-redesign-theme] .prostats>button.prostat:focus-visible{outline:2px solid var(--rd-accent);outline-offset:3px}

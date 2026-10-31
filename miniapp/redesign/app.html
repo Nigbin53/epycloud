@@ -1712,7 +1712,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="lattice-loader.css?v=1">
 <link rel="stylesheet" href="fuse-round.css?v=8">
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
-<link rel="stylesheet" href="measurements.css?v=2">
+<link rel="stylesheet" href="measurements.css?v=3">
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -2187,18 +2187,11 @@ function prSpark(vals){
   var last=pts[pts.length-1].split(",");
   return '<svg width="60" height="24" viewBox="0 0 60 24" aria-hidden="true"><path d="M2.0,24 L'+pts.join(" L")+' L58.0,24 Z" style="fill:color-mix(in srgb,var(--acc) 12%,transparent)"></path><polyline points="'+pts.join(" ")+'" fill="none" style="stroke:var(--acc)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline><circle cx="'+last[0]+'" cy="'+last[1]+'" r="2.8" style="fill:var(--acc)"></circle></svg>';
 }
-function bodyMeasurementsHtml(){
-  var bwLast=latestBodyWeight(),bicepsLast=chrono(S.biceps).slice(-1)[0];
-  return '<section class="settsec pro-measurements"><h2>Замеры тела</h2><div class="settgroup">'
-    +'<button class="settbtn" data-a="logopen"><span>Вес</span><span class="settval">'+(bwLast?fmt1(bwLast.w)+' кг':'Записать')+SVG_CHEV+'</span></button>'
-    +'<button class="settbtn" data-a="bicepsopen"><span>Бицепс</span><span class="settval">'+(bicepsLast?fmt1(bicepsLast.cm)+' см':'Записать')+SVG_CHEV+'</span></button>'
-    +'</div></section>';
-}
 function screenProfile(){
   var bwEntry=latestBodyWeight(),bw=bwEntry?bwEntry.w:null;
   var delta=bwChange(7);
   var initial=(S.name||"?").trim().charAt(0).toUpperCase()||"?";
-  var total=totalW(),streak=weekStreak();
+  var total=totalW(),bicepsEntry=chrono(S.biceps).slice(-1)[0];
   var first=S.history.length?new Date(Math.min.apply(null,S.history.map(function(e){return e.t}))):null;
   var joinTxt=first?first.getDate()+" "+MONG[first.getMonth()]:null;
   var all=achList().map(function(a){var c=a.cur(),m=a.max();return{a:a,c:c,m:m,done:c>=m}});
@@ -2209,10 +2202,9 @@ function screenProfile(){
   var h='<div class="scrhead"><button class="scrback" data-a="screenback" aria-label="Назад">'+SVG_BACK+'</button><h1>Профиль</h1><button class="scrgear" data-a="settingsopen" aria-label="Настройки">'+SVG_GEAR+'</button></div>';
   h+='<div class="prohead"><div class="proring" style="background:conic-gradient(var(--acc) 0deg '+ringDeg+'deg,color-mix(in srgb,var(--ink) 10%,transparent) '+ringDeg+'deg 360deg)"><div class="inner">'+avatarInner(S.gender,initial)+'</div><button class="proedit" data-a="profileeditopen" aria-label="Изменить профиль">'+SVG_PEN+'</button></div>'
     +'<div class="pronm"><div class="proname">'+esc(S.name)+'</div><div class="prosub">'+(S.gender==="f"?"Девушка":S.gender==="m"?"Парень":"Пол не указан")+(joinTxt?" · в зале с "+joinTxt:"")+'</div></div></div>';
-  h+=bodyMeasurementsHtml();
   h+='<div class="prostats">'
-    +'<div class="prostat"><em>Текущий вес</em><b>'+(bw!=null?f(bw):"—")+'<small> кг</small></b><span class="up">'+(delta==null?"—":(delta>0?"+":delta<0?"−":"")+f(Math.abs(delta))+" за неделю")+'</span></div>'
-    +'<div class="prostat hi"><em>Стрик</em><b>'+SVG_FLAME+streak+'</b><span>'+plural(streak,"неделю","недели","недель")+' подряд</span></div>'
+    +'<button type="button" class="prostat" data-a="logopen" aria-label="Записать вес'+(bw!=null?' · '+fmt1(bw)+' кг':'')+'"><em>Текущий вес</em><b>'+(bw!=null?f(bw):"—")+'<small> кг</small></b><span class="'+(delta!=null?'up':'')+'">'+(bw==null?"Записать":delta==null?dayLabel(bwEntry.t):(delta>0?"+":delta<0?"−":"")+f(Math.abs(delta))+" за неделю")+'</span></button>'
+    +'<button type="button" class="prostat" data-a="bicepsopen" aria-label="Записать бицепс'+(bicepsEntry?' · '+fmt1(bicepsEntry.cm)+' см':'')+'"><em>Бицепс</em><b>'+(bicepsEntry?f(bicepsEntry.cm):"—")+'<small> см</small></b><span>'+(bicepsEntry?dayLabel(bicepsEntry.t):'Записать')+'</span></button>'
     +'<div class="prostat"><em>Тренировок</em><b>'+total+'</b><span>за всё время</span></div>'
     +'</div>';
   var wkDone=0;
@@ -5267,7 +5259,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="lattice-loader.js?v=1"></script>
 <script src="img-pack.js?v=1"></script>
 <script src="paths-bg.js?v=2"></script>
-<script src="plans-whatsnew.js?v=15"></script>
+<script src="plans-whatsnew.js?v=16"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
