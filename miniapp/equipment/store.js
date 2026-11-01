@@ -44,15 +44,15 @@
     const path = current(key)?.url || catalog.slots.find(slot => slot.key === key)?.defaultUrl;
     return path ? absolute(path) : null;
   }
-  /* Тренажёр приложения (по названию) → свой слот фото, если фото есть; иначе прежний общий слот. */
-  function slugFor(name) {
-    const wanted = String(name || '').trim().toLowerCase();
-    return wanted ? machines.find(item => String(item.name).trim().toLowerCase() === wanted)?.slug || null : null;
+  /* Display names never resolve photos. Personal records need explicit catalog provenance. */
+  function slugFor(reference) {
+    const id = typeof reference === 'string' && reference.startsWith('equipment:')
+      ? reference : window.GymMachineLibrary?.equipmentFor(reference)?.id;
+    return id ? machines.find(item => item.id === id)?.slug || null : null;
   }
   function hasPhoto(key) { return !!(current(key) || catalog.slots.find(slot => slot.key === key)?.defaultUrl); }
-  /* Собственное фото тренажёра для экрана или null — без подмены фото другого тренажёра. */
-  function ownKey(name, screen, theme) {
-    const slug = slugFor(name);
+  function ownKey(reference, screen, theme) {
+    const slug = slugFor(reference);
     const key = slug ? slug + '/' + screen + '/' + theme : null;
     return key && hasPhoto(key) ? key : null;
   }
@@ -63,11 +63,7 @@
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="260" fill="url(#g)"/><g transform="translate(134 110)" fill="${ink}" opacity="${white ? '.85' : '.55'}"><rect x="28" y="17" width="76" height="6" rx="3"/><rect x="12" y="0" width="14" height="40" rx="4"/><rect x="106" y="0" width="14" height="40" rx="4"/><rect x="0" y="8" width="10" height="24" rx="3"/><rect x="122" y="8" width="10" height="24" rx="3"/></g></svg>`;
     return 'data:image/svg+xml,' + encodeURIComponent(svg);
   }
-  function photoKey(name, fallback, screen, theme) {
-    const slug = slugFor(name);
-    const own = slug ? slug + '/' + screen + '/' + theme : null;
-    return own && hasPhoto(own) ? own : fallback + '/' + screen + '/' + theme;
-  }
+  function photoKey(reference, fallback, screen, theme) { return ownKey(reference, screen, theme); }
   async function write(action, body) {
     let response;
     try { response = await fetch(absolute('equipment/api/' + action), {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)}); }

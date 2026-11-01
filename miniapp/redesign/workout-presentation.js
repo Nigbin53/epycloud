@@ -30,9 +30,9 @@ function photo(m, theme) {
   const mine = m.cover || m.img;
   if (mine) return `<img class="ui-photo ta-exercise-photo" data-equipment-personal="true" src="${esc(mine)}" alt="">`;
   const store = window.GymEquipment;
-  const own = store && store.ownKey ? store.ownKey(m.n, 'overview', theme) : null;
+  const own = store && store.ownKey ? store.ownKey(m, 'overview', theme) : null;
   const src = own ? store.resolve(own) : (store && store.placeholder ? store.placeholder(theme) : '');
-  return `<img class="ui-photo ta-exercise-photo rd-equipment" data-equipment-machine="${m.g === 'Ноги' ? 'leg-press' : 'lat-pulldown'}" data-equipment-name="${esc(m.n)}" src="${esc(src)}" alt="">`;
+  return `<img class="ui-photo ta-exercise-photo rd-equipment" data-equipment-ref="${esc(window.GymMachineLibrary.equipmentFor(m)?.id || '')}" data-equipment-name="${esc(m.n)}" src="${esc(src)}" alt="">`;
 }
 
 function card(m, index, theme) {
@@ -54,7 +54,7 @@ function card(m, index, theme) {
   const done = `<button type="button" class="tg-done${m.d ? ' on' : ''}" data-a="done" data-v="${m.id}" aria-pressed="${!!m.d}" aria-label="${m.d ? 'Снять отметку' : 'Отметить выполненным'}">${check(small)}</button>`;
   const fav = `<button type="button" class="tg-star${m.favorite ? ' on' : ''}" data-a="mfav" data-v="${m.id}" aria-pressed="${!!m.favorite}" aria-label="${m.favorite ? 'Убрать из избранного' : 'Добавить в избранное'}">${star(!!m.favorite, small)}</button>`;
   return `<section class="ta-exercise${m.d ? ' tg-is-done' : ''}" data-${white ? 'white' : 'dark'}-ordinal="${String(index + 1).padStart(2, '0')}">`
-    + `<div class="ta-exercise-heading"><div class="ta-exercise-copy">${text(esc(m.g), 'caption', 'ui-muted ta-category')}${text(esc(m.n), 'feature-title', 'ta-exercise-title')}</div>${metrics}</div>`
+    + `<div class="ta-exercise-heading"><div class="ta-exercise-copy">${text(esc(m.g), 'caption', 'ui-muted ta-category')}${text(esc(m.n), 'feature-title', 'ta-exercise-title')}<span class="eq-instance-label">${esc(m.origin === 'custom' ? 'Свой тренажёр' : 'Из каталога')}${m.location ? ' · ' + esc(m.location) : ''}</span></div>${metrics}</div>`
     + load + hint + frame + `<div class="ta-record tg-record-host">${record}${done}${fav}</div></section>`;
 }
 

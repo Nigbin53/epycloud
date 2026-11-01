@@ -8,32 +8,29 @@ function present(){
  scheduled=false;
  const white=document.documentElement.dataset.redesignTheme==='white';
  const shell=document.querySelector('.screen');if(!shell)return;
+ const store=window.GymEquipment,theme=white?'white':'black';
+ const placeholder=()=>store?.placeholder?.(theme)||'';
  shell.querySelectorAll('.phg').forEach(el=>{
   if(el.querySelector('img'))return;
-  const machine=el.closest('.mtile');
-  const title=machine?.textContent||'';
-  const legs=/Ноги|ног|бедр/.test(title);
-  const src=white?(legs?'../white/assets/light-legpress.png':'../white/assets/light-pulldown.png'):(legs?'../assets/training-leg-photo.png':'../assets/training-lat-graphite.png');
-  const photo=image(src,'rd-equipment');photo.dataset.equipmentMachine=legs?'leg-press':'lat-pulldown';
-  photo.dataset.equipmentName=machine?.querySelector('.mname')?.textContent||'';
+  const tile=el.closest('.mtile'),state=window.GymRedesignCatalog?.snapshot();
+  const record=state?.m.find(m=>m.id===Number(tile?.querySelector('[data-a="open"]')?.dataset.v));
+  const reference=window.GymMachineLibrary.equipmentFor(record)?.id||'';
+  const key=store?.ownKey(reference,'overview',theme);
+  const photo=image(key?store.resolve(key):placeholder(),'rd-equipment');photo.dataset.equipmentRef=reference;
   el.replaceChildren(photo);el.classList.add('rd-equipment-frame');
  });
  const hero=shell.querySelector('.mhero-ph');
  if(hero&&!hero.querySelector('img')){
-  const legs=/ног|Ноги|бедр/.test(shell.querySelector('.mhero-info')?.textContent||'');
-  const src=white?(legs?'../white/assets/light-legpress.png':'../white/assets/light-pulldown.png'):(legs?'../assets/training-leg-photo.png':'../assets/training-lat-graphite.png');
-  const photo=image(src,'rd-equipment');photo.dataset.equipmentMachine=legs?'leg-press':'lat-pulldown';
-  hero.replaceChildren(photo);hero.classList.add('rd-equipment-frame');
+  const record=window.GymRedesignCatalog?.machineData()?.machine;
+  const reference=window.GymMachineLibrary.equipmentFor(record)?.id||'';
+  const key=store?.ownKey(reference,'detail',theme);
+  const photo=image(key?store.resolve(key):placeholder(),'rd-equipment');photo.dataset.equipmentRef=reference;
+  el.replaceChildren(photo);hero.classList.add('rd-equipment-frame');
  }
- // Switch illustrative assets when the material changes; custom uploaded photos are retained.
+ // Explicit catalog references only. Personal uploads never enter this binding.
  shell.querySelectorAll('img.rd-equipment').forEach(el=>{
-  const legs=el.dataset.equipmentMachine==='leg-press';
-  const src=white?(legs?'../white/assets/light-legpress.png':'../white/assets/light-pulldown.png'):(legs?'../assets/training-leg-photo.png':'../assets/training-lat-graphite.png');
-  el.dataset.equipmentOriginal=new URL(src,document.baseURI).href;
-  const store=window.GymEquipment,theme=white?'white':'black';
-  // своё фото тренажёра; если его нет — заглушка, а не фото другого тренажёра
-  const own=store?.ownKey?store.ownKey(el.dataset.equipmentName,'overview',theme):null;
-  const resolved=own?store.resolve(own):(store?.placeholder?store.placeholder(theme):el.dataset.equipmentOriginal);
+  const key=store?.ownKey(el.dataset.equipmentRef,'overview',theme);
+  const resolved=key?store.resolve(key):placeholder();
   if(el.src!==resolved)el.src=resolved;
  });
  // Видоискатель камеры: аккуратная рамка с уголками и значком тарелки вместо демонстрационного фото.

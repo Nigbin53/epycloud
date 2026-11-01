@@ -1,0 +1,1752 @@
+{
+  "schema": 1,
+  "revision": 1,
+  "equipment": [
+    {
+      "id": "equipment:butterfly",
+      "slug": "butterfly",
+      "name": "Бабочка",
+      "group": "Грудь",
+      "loadMode": "stack",
+      "aliases": [
+        "Пек-дек",
+        "Pec deck",
+        "Pectoral fly"
+      ],
+      "muscles": [
+        "Грудные мышцы"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:butterfly",
+        "exercise:reverse-fly"
+      ]
+    },
+    {
+      "id": "equipment:chest-press",
+      "slug": "chest-press",
+      "name": "Жим в тренажёре",
+      "group": "Грудь",
+      "loadMode": "stack",
+      "aliases": [
+        "Жим сидя",
+        "Chest press"
+      ],
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:chest-press"
+      ]
+    },
+    {
+      "id": "equipment:incline-chest-press",
+      "slug": "incline-chest-press",
+      "name": "Наклонный жим",
+      "group": "Грудь",
+      "loadMode": "plates",
+      "aliases": [
+        "Жим вверх",
+        "Incline press"
+      ],
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:incline-chest-press"
+      ]
+    },
+    {
+      "id": "equipment:plate-chest-press",
+      "slug": "plate-chest-press",
+      "name": "Рычажный жим",
+      "group": "Грудь",
+      "loadMode": "plates",
+      "aliases": [
+        "Хаммер на грудь",
+        "Hammer chest press"
+      ],
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:plate-chest-press"
+      ]
+    },
+    {
+      "id": "equipment:lat-pulldown",
+      "slug": "lat-pulldown",
+      "name": "Тяга верхнего блока",
+      "group": "Спина",
+      "loadMode": "stack",
+      "aliases": [
+        "Вертикальная тяга",
+        "Lat pulldown",
+        "Верхний блок"
+      ],
+      "muscles": [
+        "Широчайшие",
+        "Бицепс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:lat-pulldown"
+      ]
+    },
+    {
+      "id": "equipment:seated-row",
+      "slug": "seated-row",
+      "name": "Гребная тяга",
+      "group": "Спина",
+      "loadMode": "stack",
+      "aliases": [
+        "Горизонтальная тяга",
+        "Нижний блок",
+        "Seated row"
+      ],
+      "muscles": [
+        "Широчайшие",
+        "Ромбовидные",
+        "Бицепс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:seated-row"
+      ]
+    },
+    {
+      "id": "equipment:plate-row",
+      "slug": "plate-row",
+      "name": "Рычажная тяга",
+      "group": "Спина",
+      "loadMode": "plates",
+      "aliases": [
+        "Хаммер на спину",
+        "Тяга с упором в грудь",
+        "Plate loaded row"
+      ],
+      "muscles": [
+        "Широчайшие",
+        "Ромбовидные",
+        "Бицепс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:plate-row"
+      ]
+    },
+    {
+      "id": "equipment:pullover",
+      "slug": "pullover",
+      "name": "Пуловер",
+      "group": "Спина",
+      "loadMode": "stack",
+      "aliases": [
+        "Пуловер-машина",
+        "Pullover"
+      ],
+      "muscles": [
+        "Широчайшие"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:pullover"
+      ]
+    },
+    {
+      "id": "equipment:back-extension",
+      "slug": "back-extension",
+      "name": "Гиперэкстензия",
+      "group": "Спина",
+      "loadMode": "additional",
+      "aliases": [
+        "Римский стул",
+        "Back extension"
+      ],
+      "muscles": [
+        "Разгибатели спины",
+        "Задняя поверхность бедра",
+        "Ягодичные"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:back-extension"
+      ]
+    },
+    {
+      "id": "equipment:leg-press",
+      "slug": "leg-press",
+      "name": "Жим ногами",
+      "group": "Ноги",
+      "loadMode": "plates",
+      "aliases": [
+        "Жим ногами 45°",
+        "Наклонный жим ногами",
+        "Leg press"
+      ],
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:leg-press"
+      ]
+    },
+    {
+      "id": "equipment:seated-leg-press",
+      "slug": "seated-leg-press",
+      "name": "Горизонтальный жим ногами",
+      "group": "Ноги",
+      "loadMode": "stack",
+      "aliases": [
+        "Жим ногами сидя",
+        "Seated leg press"
+      ],
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:seated-leg-press"
+      ]
+    },
+    {
+      "id": "equipment:hack-squat",
+      "slug": "hack-squat",
+      "name": "Гакк-присед",
+      "group": "Ноги",
+      "loadMode": "plates",
+      "aliases": [
+        "Гаккеншмидт",
+        "Гак машина",
+        "Hack squat"
+      ],
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:hack-squat"
+      ]
+    },
+    {
+      "id": "equipment:leg-extension",
+      "slug": "leg-extension",
+      "name": "Разгибание ног",
+      "group": "Ноги",
+      "loadMode": "stack",
+      "aliases": [
+        "Разгибания ног сидя",
+        "Leg extension"
+      ],
+      "muscles": [
+        "Квадрицепсы"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:leg-extension"
+      ]
+    },
+    {
+      "id": "equipment:lying-leg-curl",
+      "slug": "lying-leg-curl",
+      "name": "Сгибание ног лёжа",
+      "group": "Ноги",
+      "loadMode": "stack",
+      "aliases": [
+        "Сгибания ног лежа",
+        "Lying leg curl"
+      ],
+      "muscles": [
+        "Задняя поверхность бедра"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:lying-leg-curl"
+      ]
+    },
+    {
+      "id": "equipment:seated-leg-curl",
+      "slug": "seated-leg-curl",
+      "name": "Сгибание ног сидя",
+      "group": "Ноги",
+      "loadMode": "stack",
+      "aliases": [
+        "Сгибания ног сидя",
+        "Seated leg curl"
+      ],
+      "muscles": [
+        "Задняя поверхность бедра"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:seated-leg-curl"
+      ]
+    },
+    {
+      "id": "equipment:standing-calf",
+      "slug": "standing-calf",
+      "name": "Икры стоя",
+      "group": "Ноги",
+      "loadMode": "stack",
+      "aliases": [
+        "Подъём на носки стоя",
+        "Standing calf raise"
+      ],
+      "muscles": [
+        "Икроножные"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:standing-calf"
+      ]
+    },
+    {
+      "id": "equipment:seated-calf",
+      "slug": "seated-calf",
+      "name": "Икры сидя",
+      "group": "Ноги",
+      "loadMode": "plates",
+      "aliases": [
+        "Подъём на носки сидя",
+        "Seated calf raise"
+      ],
+      "muscles": [
+        "Камбаловидные",
+        "Икроножные"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:seated-calf"
+      ]
+    },
+    {
+      "id": "equipment:shoulder-press",
+      "slug": "shoulder-press",
+      "name": "Жим на плечи",
+      "group": "Плечи",
+      "loadMode": "stack",
+      "aliases": [
+        "Жим вверх сидя",
+        "Shoulder press"
+      ],
+      "muscles": [
+        "Дельтовидные",
+        "Трицепс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:shoulder-press"
+      ]
+    },
+    {
+      "id": "equipment:lateral-raise",
+      "slug": "lateral-raise",
+      "name": "Махи в стороны в тренажёре",
+      "group": "Плечи",
+      "loadMode": "stack",
+      "aliases": [
+        "Отведение плеча",
+        "Средняя дельта",
+        "Lateral raise"
+      ],
+      "muscles": [
+        "Средняя дельта"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:lateral-raise"
+      ]
+    },
+    {
+      "id": "equipment:biceps-curl",
+      "slug": "biceps-curl",
+      "name": "Сгибание на бицепс",
+      "group": "Руки",
+      "loadMode": "stack",
+      "aliases": [
+        "Бицепс-машина",
+        "Biceps curl"
+      ],
+      "muscles": [
+        "Бицепс",
+        "Плечевая мышца"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:biceps-curl"
+      ]
+    },
+    {
+      "id": "equipment:preacher-bench",
+      "slug": "preacher-bench",
+      "name": "Скамья Скотта",
+      "group": "Руки",
+      "loadMode": "total",
+      "aliases": [
+        "Парта Скотта",
+        "Preacher bench",
+        "Preacher curl"
+      ],
+      "muscles": [
+        "Бицепс",
+        "Плечевая мышца"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:preacher-curl"
+      ]
+    },
+    {
+      "id": "equipment:triceps-extension",
+      "slug": "triceps-extension",
+      "name": "Разгибание на трицепс",
+      "group": "Руки",
+      "loadMode": "stack",
+      "aliases": [
+        "Трицепс-машина",
+        "Triceps extension"
+      ],
+      "muscles": [
+        "Трицепс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:triceps-extension"
+      ]
+    },
+    {
+      "id": "equipment:abdominal-crunch",
+      "slug": "abdominal-crunch",
+      "name": "Скручивания в тренажёре",
+      "group": "Пресс",
+      "loadMode": "stack",
+      "aliases": [
+        "Пресс-машина",
+        "Abdominal crunch"
+      ],
+      "muscles": [
+        "Прямая мышца живота"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:abdominal-crunch"
+      ]
+    },
+    {
+      "id": "equipment:knee-raise-station",
+      "slug": "knee-raise-station",
+      "name": "Упор для подъёма ног и брусья",
+      "group": "Пресс",
+      "loadMode": "additional",
+      "aliases": [
+        "Подъём коленей",
+        "Брусья",
+        "Капитанское кресло",
+        "Vertical knee raise",
+        "Dip station"
+      ],
+      "muscles": [
+        "Пресс",
+        "Трицепс",
+        "Грудные мышцы"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:knee-raise",
+        "exercise:dips"
+      ]
+    },
+    {
+      "id": "equipment:smith",
+      "slug": "smith",
+      "name": "Машина Смита",
+      "group": "Универсальное",
+      "loadMode": "total",
+      "aliases": [
+        "Смит",
+        "Smith machine"
+      ],
+      "muscles": [
+        "Грудь",
+        "Спина",
+        "Ноги",
+        "Плечи"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:smith-bench",
+        "exercise:smith-incline",
+        "exercise:smith-squat",
+        "exercise:smith-shoulder"
+      ]
+    },
+    {
+      "id": "equipment:cable-crossover",
+      "slug": "cable-crossover",
+      "name": "Кроссовер",
+      "group": "Универсальное",
+      "loadMode": "stack",
+      "aliases": [
+        "Блочная рама",
+        "Кабельный тренажёр",
+        "Cable crossover"
+      ],
+      "muscles": [
+        "Грудь",
+        "Спина",
+        "Руки",
+        "Плечи",
+        "Пресс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:cable-fly",
+        "exercise:cable-triceps",
+        "exercise:cable-biceps",
+        "exercise:cable-face-pull",
+        "exercise:cable-crunch"
+      ]
+    },
+    {
+      "id": "equipment:power-rack",
+      "slug": "power-rack",
+      "name": "Силовая рама",
+      "group": "Универсальное",
+      "loadMode": "total",
+      "aliases": [
+        "Стойка для приседаний",
+        "Турник",
+        "Power rack"
+      ],
+      "muscles": [
+        "Грудь",
+        "Спина",
+        "Ноги",
+        "Плечи"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:barbell-bench",
+        "exercise:barbell-row",
+        "exercise:deadlift",
+        "exercise:barbell-squat",
+        "exercise:romanian-deadlift",
+        "exercise:barbell-curl",
+        "exercise:overhead-press",
+        "exercise:pull-up",
+        "exercise:hanging-leg-raise",
+        "exercise:dead-hang"
+      ]
+    },
+    {
+      "id": "equipment:adjustable-bench",
+      "slug": "adjustable-bench",
+      "name": "Регулируемая скамья",
+      "group": "Универсальное",
+      "loadMode": "per-dumbbell",
+      "aliases": [
+        "Наклонная скамья",
+        "Скамья для жима",
+        "Adjustable bench"
+      ],
+      "muscles": [
+        "Грудь",
+        "Спина",
+        "Плечи",
+        "Руки"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:dumbbell-bench",
+        "exercise:dumbbell-fly",
+        "exercise:dumbbell-row",
+        "exercise:french-press",
+        "exercise:dumbbell-shoulder"
+      ]
+    },
+    {
+      "id": "equipment:dumbbells",
+      "slug": "dumbbells",
+      "name": "Гантели",
+      "group": "Универсальное",
+      "loadMode": "per-dumbbell",
+      "aliases": [
+        "Свободный вес",
+        "Dumbbell"
+      ],
+      "muscles": [
+        "Грудь",
+        "Спина",
+        "Ноги",
+        "Плечи",
+        "Руки"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:dumbbell-lunge",
+        "exercise:hammer-curl",
+        "exercise:dumbbell-lateral"
+      ]
+    },
+    {
+      "id": "equipment:floor",
+      "slug": "floor",
+      "name": "Коврик и упражнения без оборудования",
+      "group": "Универсальное",
+      "loadMode": "additional",
+      "aliases": [
+        "Без тренажёра",
+        "Свой вес",
+        "Планка",
+        "Коврик",
+        "Bodyweight"
+      ],
+      "muscles": [
+        "Грудь",
+        "Ноги",
+        "Пресс"
+      ],
+      "imageKind": "illustration",
+      "exerciseIds": [
+        "exercise:push-up",
+        "exercise:body-squat",
+        "exercise:body-lunge",
+        "exercise:crunch",
+        "exercise:plank",
+        "exercise:side-plank",
+        "exercise:wall-sit"
+      ]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exercise:butterfly",
+      "name": "Бабочка",
+      "group": "Грудь",
+      "equipmentId": "equipment:butterfly",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Pectoral fly",
+        "Pec deck"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы"
+      ],
+      "legacySeedId": 1
+    },
+    {
+      "id": "exercise:reverse-fly",
+      "name": "Обратная бабочка",
+      "group": "Плечи",
+      "equipmentId": "equipment:butterfly",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Задняя дельта",
+        "Reverse fly",
+        "Rear delt fly"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Задняя дельта",
+        "Ромбовидные"
+      ]
+    },
+    {
+      "id": "exercise:chest-press",
+      "name": "Жим в тренажёре",
+      "group": "Грудь",
+      "equipmentId": "equipment:chest-press",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Жим сидя",
+        "Chest press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ],
+      "legacySeedId": 2
+    },
+    {
+      "id": "exercise:incline-chest-press",
+      "name": "Наклонный жим в тренажёре",
+      "group": "Грудь",
+      "equipmentId": "equipment:incline-chest-press",
+      "loadMode": "plates",
+      "type": "machine",
+      "aliases": [
+        "Incline chest press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:plate-chest-press",
+      "name": "Рычажный жим на грудь",
+      "group": "Грудь",
+      "equipmentId": "equipment:plate-chest-press",
+      "loadMode": "plates",
+      "type": "machine",
+      "aliases": [
+        "Plate loaded chest press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:lat-pulldown",
+      "name": "Тяга верхнего блока",
+      "group": "Спина",
+      "equipmentId": "equipment:lat-pulldown",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Вертикальная тяга",
+        "Lat pulldown"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие",
+        "Бицепс"
+      ],
+      "legacySeedId": 3
+    },
+    {
+      "id": "exercise:seated-row",
+      "name": "Гребная тяга",
+      "group": "Спина",
+      "equipmentId": "equipment:seated-row",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Горизонтальная тяга",
+        "Нижний блок",
+        "Seated row",
+        "Low row"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие",
+        "Ромбовидные",
+        "Бицепс"
+      ],
+      "legacySeedId": 4
+    },
+    {
+      "id": "exercise:plate-row",
+      "name": "Рычажная тяга",
+      "group": "Спина",
+      "equipmentId": "equipment:plate-row",
+      "loadMode": "plates",
+      "type": "machine",
+      "aliases": [
+        "Plate loaded row"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие",
+        "Ромбовидные",
+        "Бицепс"
+      ]
+    },
+    {
+      "id": "exercise:pullover",
+      "name": "Пуловер в тренажёре",
+      "group": "Спина",
+      "equipmentId": "equipment:pullover",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Pullover machine"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие"
+      ]
+    },
+    {
+      "id": "exercise:back-extension",
+      "name": "Гиперэкстензия",
+      "group": "Спина",
+      "equipmentId": "equipment:back-extension",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Back extension",
+        "Hyperextension"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Разгибатели спины",
+        "Задняя поверхность бедра",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:leg-press",
+      "name": "Жим ногами",
+      "group": "Ноги",
+      "equipmentId": "equipment:leg-press",
+      "loadMode": "plates",
+      "type": "machine",
+      "aliases": [
+        "45 degree leg press"
+      ],
+      "step": 10,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ],
+      "legacySeedId": 5
+    },
+    {
+      "id": "exercise:seated-leg-press",
+      "name": "Горизонтальный жим ногами",
+      "group": "Ноги",
+      "equipmentId": "equipment:seated-leg-press",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Seated leg press",
+        "Horizontal leg press"
+      ],
+      "step": 5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:hack-squat",
+      "name": "Гакк-присед",
+      "group": "Ноги",
+      "equipmentId": "equipment:hack-squat",
+      "loadMode": "plates",
+      "type": "machine",
+      "aliases": [
+        "Hack squat"
+      ],
+      "step": 5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:leg-extension",
+      "name": "Разгибание ног",
+      "group": "Ноги",
+      "equipmentId": "equipment:leg-extension",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Leg extension"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы"
+      ],
+      "legacySeedId": 6
+    },
+    {
+      "id": "exercise:lying-leg-curl",
+      "name": "Сгибание ног лёжа",
+      "group": "Ноги",
+      "equipmentId": "equipment:lying-leg-curl",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Lying leg curl"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Задняя поверхность бедра"
+      ]
+    },
+    {
+      "id": "exercise:seated-leg-curl",
+      "name": "Сгибание ног сидя",
+      "group": "Ноги",
+      "equipmentId": "equipment:seated-leg-curl",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Seated leg curl"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Задняя поверхность бедра"
+      ]
+    },
+    {
+      "id": "exercise:standing-calf",
+      "name": "Подъём на носки стоя",
+      "group": "Ноги",
+      "equipmentId": "equipment:standing-calf",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Standing calf raise"
+      ],
+      "step": 2.5,
+      "reps": 15,
+      "sets": 3,
+      "muscles": [
+        "Икроножные"
+      ]
+    },
+    {
+      "id": "exercise:seated-calf",
+      "name": "Подъём на носки сидя",
+      "group": "Ноги",
+      "equipmentId": "equipment:seated-calf",
+      "loadMode": "plates",
+      "type": "machine",
+      "aliases": [
+        "Seated calf raise"
+      ],
+      "step": 2.5,
+      "reps": 15,
+      "sets": 3,
+      "muscles": [
+        "Камбаловидные",
+        "Икроножные"
+      ]
+    },
+    {
+      "id": "exercise:shoulder-press",
+      "name": "Жим на плечи",
+      "group": "Плечи",
+      "equipmentId": "equipment:shoulder-press",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Shoulder press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Дельтовидные",
+        "Трицепс"
+      ],
+      "legacySeedId": 9
+    },
+    {
+      "id": "exercise:lateral-raise",
+      "name": "Махи в стороны в тренажёре",
+      "group": "Плечи",
+      "equipmentId": "equipment:lateral-raise",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Machine lateral raise"
+      ],
+      "step": 1,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Средняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:biceps-curl",
+      "name": "Сгибание на бицепс",
+      "group": "Руки",
+      "equipmentId": "equipment:biceps-curl",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Biceps curl machine"
+      ],
+      "step": 1,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Бицепс",
+        "Плечевая мышца"
+      ],
+      "legacySeedId": 7
+    },
+    {
+      "id": "exercise:preacher-curl",
+      "name": "Сгибание на скамье Скотта",
+      "group": "Руки",
+      "equipmentId": "equipment:preacher-bench",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Preacher curl"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Бицепс",
+        "Плечевая мышца"
+      ]
+    },
+    {
+      "id": "exercise:triceps-extension",
+      "name": "Разгибание на трицепс",
+      "group": "Руки",
+      "equipmentId": "equipment:triceps-extension",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Triceps extension machine"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Трицепс"
+      ],
+      "legacySeedId": 8
+    },
+    {
+      "id": "exercise:abdominal-crunch",
+      "name": "Скручивания в тренажёре",
+      "group": "Пресс",
+      "equipmentId": "equipment:abdominal-crunch",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Abdominal crunch machine"
+      ],
+      "step": 2.5,
+      "reps": 15,
+      "sets": 3,
+      "muscles": [
+        "Прямая мышца живота"
+      ]
+    },
+    {
+      "id": "exercise:knee-raise",
+      "name": "Подъём ног в упоре",
+      "group": "Пресс",
+      "equipmentId": "equipment:knee-raise-station",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Vertical knee raise"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Мышцы живота",
+        "Сгибатели бедра"
+      ]
+    },
+    {
+      "id": "exercise:dips",
+      "name": "Отжимания на брусьях",
+      "group": "Руки",
+      "equipmentId": "equipment:knee-raise-station",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Dips"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Трицепс",
+        "Грудные мышцы",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:smith-bench",
+      "name": "Жим лёжа в Смите",
+      "group": "Грудь",
+      "equipmentId": "equipment:smith",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Smith bench press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:smith-incline",
+      "name": "Наклонный жим в Смите",
+      "group": "Грудь",
+      "equipmentId": "equipment:smith",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Smith incline press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:smith-squat",
+      "name": "Приседания в Смите",
+      "group": "Ноги",
+      "equipmentId": "equipment:smith",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Smith squat"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:smith-shoulder",
+      "name": "Жим на плечи в Смите",
+      "group": "Плечи",
+      "equipmentId": "equipment:smith",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Smith shoulder press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Дельтовидные",
+        "Трицепс"
+      ]
+    },
+    {
+      "id": "exercise:cable-fly",
+      "name": "Сведение рук в кроссовере",
+      "group": "Грудь",
+      "equipmentId": "equipment:cable-crossover",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Cable fly",
+        "Cable crossover"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы"
+      ]
+    },
+    {
+      "id": "exercise:cable-triceps",
+      "name": "Разгибание рук на блоке",
+      "group": "Руки",
+      "equipmentId": "equipment:cable-crossover",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Triceps pushdown"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Трицепс"
+      ]
+    },
+    {
+      "id": "exercise:cable-biceps",
+      "name": "Сгибание рук на блоке",
+      "group": "Руки",
+      "equipmentId": "equipment:cable-crossover",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Cable curl"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Бицепс",
+        "Плечевая мышца"
+      ]
+    },
+    {
+      "id": "exercise:cable-face-pull",
+      "name": "Тяга каната к лицу",
+      "group": "Плечи",
+      "equipmentId": "equipment:cable-crossover",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Face pull"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Задняя дельта",
+        "Ромбовидные",
+        "Трапециевидные"
+      ]
+    },
+    {
+      "id": "exercise:cable-crunch",
+      "name": "Скручивания на блоке",
+      "group": "Пресс",
+      "equipmentId": "equipment:cable-crossover",
+      "loadMode": "stack",
+      "type": "machine",
+      "aliases": [
+        "Cable crunch"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Мышцы живота"
+      ]
+    },
+    {
+      "id": "exercise:barbell-bench",
+      "name": "Жим штанги лёжа",
+      "group": "Грудь",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Barbell bench press"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:barbell-row",
+      "name": "Тяга штанги в наклоне",
+      "group": "Спина",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Bent over row",
+        "Barbell row"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие",
+        "Ромбовидные",
+        "Бицепс"
+      ]
+    },
+    {
+      "id": "exercise:deadlift",
+      "name": "Становая тяга",
+      "group": "Спина",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Deadlift"
+      ],
+      "step": 2.5,
+      "reps": 8,
+      "sets": 3,
+      "muscles": [
+        "Ягодичные",
+        "Задняя поверхность бедра",
+        "Разгибатели спины"
+      ]
+    },
+    {
+      "id": "exercise:barbell-squat",
+      "name": "Приседания со штангой",
+      "group": "Ноги",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Barbell squat"
+      ],
+      "step": 2.5,
+      "reps": 8,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:romanian-deadlift",
+      "name": "Румынская тяга",
+      "group": "Ноги",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Romanian deadlift",
+        "RDL"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Задняя поверхность бедра",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:barbell-curl",
+      "name": "Подъём штанги на бицепс",
+      "group": "Руки",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Barbell curl"
+      ],
+      "step": 2.5,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Бицепс",
+        "Плечевая мышца"
+      ]
+    },
+    {
+      "id": "exercise:overhead-press",
+      "name": "Армейский жим",
+      "group": "Плечи",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "Overhead press",
+        "Military press"
+      ],
+      "step": 2.5,
+      "reps": 8,
+      "sets": 3,
+      "muscles": [
+        "Дельтовидные",
+        "Трицепс"
+      ]
+    },
+    {
+      "id": "exercise:pull-up",
+      "name": "Подтягивания",
+      "group": "Спина",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Pull up",
+        "Chin up"
+      ],
+      "step": 2.5,
+      "reps": 8,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие",
+        "Бицепс"
+      ]
+    },
+    {
+      "id": "exercise:dumbbell-bench",
+      "name": "Жим гантелей лёжа",
+      "group": "Грудь",
+      "equipmentId": "equipment:adjustable-bench",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Dumbbell bench press"
+      ],
+      "step": 2,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:dumbbell-fly",
+      "name": "Разводка гантелей",
+      "group": "Грудь",
+      "equipmentId": "equipment:adjustable-bench",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Dumbbell fly"
+      ],
+      "step": 1,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы"
+      ]
+    },
+    {
+      "id": "exercise:dumbbell-row",
+      "name": "Тяга гантели одной рукой",
+      "group": "Спина",
+      "equipmentId": "equipment:adjustable-bench",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Dumbbell row"
+      ],
+      "step": 2,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Широчайшие",
+        "Ромбовидные",
+        "Бицепс"
+      ]
+    },
+    {
+      "id": "exercise:french-press",
+      "name": "Французский жим",
+      "group": "Руки",
+      "equipmentId": "equipment:adjustable-bench",
+      "loadMode": "total",
+      "type": "free",
+      "aliases": [
+        "French press",
+        "Lying triceps extension"
+      ],
+      "step": 2,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Трицепс"
+      ]
+    },
+    {
+      "id": "exercise:dumbbell-shoulder",
+      "name": "Жим гантелей сидя",
+      "group": "Плечи",
+      "equipmentId": "equipment:adjustable-bench",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Dumbbell shoulder press"
+      ],
+      "step": 2,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Дельтовидные",
+        "Трицепс"
+      ]
+    },
+    {
+      "id": "exercise:dumbbell-lunge",
+      "name": "Выпады с гантелями",
+      "group": "Ноги",
+      "equipmentId": "equipment:dumbbells",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Dumbbell lunge"
+      ],
+      "step": 2,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:hammer-curl",
+      "name": "Молотки с гантелями",
+      "group": "Руки",
+      "equipmentId": "equipment:dumbbells",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Hammer curl"
+      ],
+      "step": 1,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Плечевая мышца",
+        "Плечелучевая мышца",
+        "Бицепс"
+      ]
+    },
+    {
+      "id": "exercise:dumbbell-lateral",
+      "name": "Махи гантелями в стороны",
+      "group": "Плечи",
+      "equipmentId": "equipment:dumbbells",
+      "loadMode": "per-dumbbell",
+      "type": "free",
+      "aliases": [
+        "Dumbbell lateral raise"
+      ],
+      "step": 1,
+      "reps": 10,
+      "sets": 3,
+      "muscles": [
+        "Средняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:push-up",
+      "name": "Отжимания",
+      "group": "Грудь",
+      "equipmentId": "equipment:floor",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Push up"
+      ],
+      "step": 2.5,
+      "reps": 15,
+      "sets": 3,
+      "muscles": [
+        "Грудные мышцы",
+        "Трицепс",
+        "Передняя дельта"
+      ]
+    },
+    {
+      "id": "exercise:body-squat",
+      "name": "Приседания",
+      "group": "Ноги",
+      "equipmentId": "equipment:floor",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Bodyweight squat"
+      ],
+      "step": 2.5,
+      "reps": 20,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:body-lunge",
+      "name": "Выпады",
+      "group": "Ноги",
+      "equipmentId": "equipment:floor",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Bodyweight lunge"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    },
+    {
+      "id": "exercise:crunch",
+      "name": "Скручивания",
+      "group": "Пресс",
+      "equipmentId": "equipment:floor",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Crunch"
+      ],
+      "step": 2.5,
+      "reps": 20,
+      "sets": 3,
+      "muscles": [
+        "Мышцы живота"
+      ]
+    },
+    {
+      "id": "exercise:hanging-leg-raise",
+      "name": "Подъём ног в висе",
+      "group": "Пресс",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "additional",
+      "type": "body",
+      "aliases": [
+        "Hanging leg raise"
+      ],
+      "step": 2.5,
+      "reps": 12,
+      "sets": 3,
+      "muscles": [
+        "Мышцы живота",
+        "Сгибатели бедра"
+      ]
+    },
+    {
+      "id": "exercise:plank",
+      "name": "Планка",
+      "group": "Пресс",
+      "equipmentId": "equipment:floor",
+      "loadMode": "none",
+      "type": "time",
+      "aliases": [
+        "Plank"
+      ],
+      "step": 1,
+      "reps": 45,
+      "sets": 3,
+      "muscles": [
+        "Мышцы живота",
+        "Мышцы корпуса"
+      ]
+    },
+    {
+      "id": "exercise:side-plank",
+      "name": "Боковая планка",
+      "group": "Пресс",
+      "equipmentId": "equipment:floor",
+      "loadMode": "none",
+      "type": "time",
+      "aliases": [
+        "Side plank"
+      ],
+      "step": 1,
+      "reps": 30,
+      "sets": 3,
+      "muscles": [
+        "Косые мышцы живота",
+        "Мышцы корпуса"
+      ]
+    },
+    {
+      "id": "exercise:dead-hang",
+      "name": "Вис на турнике",
+      "group": "Спина",
+      "equipmentId": "equipment:power-rack",
+      "loadMode": "none",
+      "type": "time",
+      "aliases": [
+        "Dead hang"
+      ],
+      "step": 1,
+      "reps": 30,
+      "sets": 3,
+      "muscles": [
+        "Мышцы предплечий",
+        "Мышцы спины"
+      ]
+    },
+    {
+      "id": "exercise:wall-sit",
+      "name": "Стульчик у стены",
+      "group": "Ноги",
+      "equipmentId": "equipment:floor",
+      "loadMode": "none",
+      "type": "time",
+      "aliases": [
+        "Wall sit"
+      ],
+      "step": 1,
+      "reps": 45,
+      "sets": 3,
+      "muscles": [
+        "Квадрицепсы",
+        "Ягодичные"
+      ]
+    }
+  ],
+  "references": [
+    {
+      "title": "Hammer Strength Select",
+      "url": "https://www.lifefitness.com/en-us/catalog/strength-training/selectorized/hammer-strength-select"
+    },
+    {
+      "title": "Life Fitness Plate Loaded",
+      "url": "https://www.lifefitness.com/en-us/catalog/strength-training/plate-loaded"
+    }
+  ]
+}

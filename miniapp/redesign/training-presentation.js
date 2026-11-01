@@ -42,10 +42,17 @@ function present(){
   muscles.querySelector('img').src='../assets/anatomy-groups/'+theme+'/'+(groups[data.machine.g]?groups[data.machine.g]+'-upper':'front-thighs')+'.png'; // обрезано по зоне мышц, как у ног
   muscles.querySelector('.ta-muscle-labels').replaceChildren();const row=document.createElement('div');row.innerHTML='<span class="ta-muscle-dot" aria-hidden="true"></span>';const label=document.createElement('span');label.className='ui-list-title';label.textContent=data.machine.g;row.append(label);muscles.querySelector('.ta-muscle-labels').append(row);
  }
+ const template=window.GymMachineLibrary.equipmentFor(data.machine)?window.GymMachineLibrary.getExercise(data.machine.catalogId):null;
+ const muscleNames=template?template.muscles:[data.machine.g];
+ const labels=muscles.querySelector('.ta-muscle-labels');labels.replaceChildren();
+ muscleNames.forEach(name=>{const row=document.createElement('div');row.innerHTML='<span class="ta-muscle-dot" aria-hidden="true"></span>';const label=document.createElement('span');label.className='ui-list-title';label.textContent=name;row.append(label);labels.append(row);});
  const approvedChart=page.querySelector('.ta-chart-section');approvedChart.classList.add('rd-training-chart');approvedChart.replaceChildren(nativeChart);
  const summary=page.querySelector('.ta-leg-summary');summary.children[2].querySelector('.ui-triplet').textContent=data.logs;
  summary.querySelectorAll('.ui-trend').forEach(el=>el.remove());
- page.dataset.equipmentMachine=data.machine.g==='Ноги'?'leg-press':'lat-pulldown';
+ const equipment=window.GymMachineLibrary.equipmentFor(data.machine);
+ page.dataset.equipmentMachine=equipment?.slug||'';
+ page.dataset.equipmentRef=equipment?.id||'';
+ page.dataset.equipmentOrigin=data.machine.origin||'custom';
  page.dataset.equipmentName=data.machine.n;
  if(data.working.img){const photo=page.querySelector('.ta-detail-hero');photo.dataset.equipmentPersonal='true';photo.src=data.working.img;page.querySelector('.ta-detail-hero-back').hidden=true;}
  else if(data.machine.g!=='Ноги'){
@@ -63,6 +70,8 @@ function present(){
   edit.addEventListener('click',()=>openEditor(data.machine,theme));
   star.before(edit);
  }
+ const modeNote=document.createElement('p');modeNote.className='eq-load-note eq-detail-load-note';modeNote.textContent=window.GymMachineLibrary.modeFor(data.machine).hint;
+ const loadControls=page.querySelector('.ta-load');if(loadControls)loadControls.append(modeNote);
  trialMachine(page,data,theme); // подходы, подсказка, типы упражнений
  // при +/− страница пересобирается: фото и анатомию берём прежними узлами — без перезагрузки картинки и мелькания
  const layersNew=page.querySelector('.ta-detail-photo-layers');
@@ -140,7 +149,7 @@ function trialMachine(page,data,theme){
  const past=typeof window.gymSelPastT==='function'&&window.gymSelPastT();
  const sec=document.createElement('section');sec.className='rd-sets';
  const head=(past?'Подходы · '+shortDay(past):'Подходы сегодня');
- const dumb=type==='free'&&/гантел/i.test(m.n);
+ const dumb=m.loadMode==='per-dumbbell';
  let html='<div class="rd-sets-head"><span>'+head+(dumb?' <small>вес одной гантели</small>':'')+'</span><em>'+sets.length+' из '+w.s+'</em></div>';
  if(sets.length){
   html+='<ol class="rd-sets-list">'+sets.map((x,i)=>'<li class="rd-set"><b>'+(i+1)+'</b><span>'+setText(type,x)+'</span><button type="button" class="rd-set-x" data-setdel="'+i+'" aria-label="Удалить подход '+(i+1)+'">×</button></li>').join('')+'</ol>';
@@ -183,7 +192,7 @@ function meditCrop(file,w,h,q){return new Promise((ok,no)=>{const r=new FileRead
  c.width=w;c.height=h;x.drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));};im.src=r.result;};r.readAsDataURL(file);});}
 function openEditor(machine,theme){
  const old=document.querySelector('.rd-medit');if(old)old.remove();
- const st={n:machine.n,g:machine.g,img:machine.img||'',cover:machine.cover||'',type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5};
+ const st={n:machine.n,g:machine.g,img:machine.img||'',cover:machine.cover||'',type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5,loadMode:machine.loadMode||(exTypeOf(machine)==='body'?'additional':'total'),location:machine.location||''};
  const box=document.createElement('div');box.className='rd-medit';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Редактировать тренажёр');
  const close=()=>{box.classList.remove('on');setTimeout(()=>box.remove(),220);};
  function draw(){
@@ -196,7 +205,9 @@ function openEditor(machine,theme){
    +'<div class="rd-medit-lbl">Тип</div><div class="rd-medit-groups" role="group" aria-label="Тип упражнения">'
    +MEDIT_TYPES.map(t=>'<button type="button" class="rd-medit-chip'+(t[0]===st.type?' on':'')+'" data-m="type" data-t="'+t[0]+'" aria-pressed="'+(t[0]===st.type)+'">'+t[1]+'</button>').join('')+'</div>'
    +'<div class="rd-medit-row2"><div><div class="rd-medit-lbl">Подходов</div><div class="rd-medit-step" role="group" aria-label="Подходов"><button type="button" data-m="sets" data-d="-1" aria-label="Меньше подходов">−</button><b>'+st.s+'</b><button type="button" data-m="sets" data-d="1" aria-label="Больше подходов">+</button></div></div>'
-   +(st.type==='time'?'':'<div><div class="rd-medit-lbl">Шаг веса, кг</div><div class="rd-medit-groups rd-medit-steps" role="group" aria-label="Шаг веса">'+[1,2.5,5,10].map(v=>'<button type="button" class="rd-medit-chip'+(v===st.step?' on':'')+'" data-m="wstep" data-v="'+v+'" aria-pressed="'+(v===st.step)+'">'+String(v).replace('.',',')+'</button>').join('')+'</div></div>')+'</div>'
+   +(st.type==='time'?'':'<div><div class="rd-medit-lbl">Шаг веса, кг</div><div class="rd-medit-groups rd-medit-steps" role="group" aria-label="Шаг веса">'+[1,2,2.5,5,10].map(v=>'<button type="button" class="rd-medit-chip'+(v===st.step?' on':'')+'" data-m="wstep" data-v="'+v+'" aria-pressed="'+(v===st.step)+'">'+String(v).replace('.',',')+'</button>').join('')+'</div></div>')+'</div>'
+   +'<label class="rd-medit-lbl" for="rd-medit-location">Где стоит / пометка</label><input id="rd-medit-location" class="rd-medit-input" maxlength="40" placeholder="Например, зал на первом этаже" value="'+meditEsc(st.location)+'">'
+   +(st.type==='time'?'':'<div class="rd-medit-lbl">Как учитывать вес</div><div class="rd-medit-groups" role="group" aria-label="Учёт веса">'+Object.entries(window.GymMachineLibrary.modes).filter(([k])=>k!=='none').map(([k,m])=>'<button type="button" class="rd-medit-chip'+(k===st.loadMode?' on':'')+'" data-m="loadmode" data-v="'+k+'" aria-pressed="'+(k===st.loadMode)+'">'+m.name+'</button>').join('')+'</div><p class="eq-load-note">'+window.GymMachineLibrary.modeFor({type:st.type,loadMode:st.loadMode}).hint+'</p>')
    +'<div class="rd-medit-photos">'
    +'<div class="rd-medit-ph"><div class="rd-medit-lbl">Фото тренажёра<small>на странице тренажёра</small></div>'
    +'<label class="rd-medit-pick ph">'+(st.img?'<img alt="" src="'+st.img+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="img" hidden></label>'
@@ -210,14 +221,15 @@ function openEditor(machine,theme){
    +'</div>';
  }
  draw();
- box.addEventListener('input',e=>{if(e.target.id==='rd-medit-name')st.n=e.target.value;});
+ box.addEventListener('input',e=>{if(e.target.id==='rd-medit-name')st.n=e.target.value;if(e.target.id==='rd-medit-location')st.location=e.target.value;});
  box.addEventListener('click',e=>{
   if(e.target===box){close();return;}
   const t=e.target.closest('[data-m]');if(!t||t.tagName==='INPUT')return;
   const m=t.dataset.m;
   if(m==='close')close();
   else if(m==='group'){st.g=t.dataset.g;draw();}
-  else if(m==='type'){st.type=t.dataset.t;draw();}
+  else if(m==='type'){st.type=t.dataset.t;st.loadMode=st.type==='body'?'additional':st.type==='time'?'none':st.type==='free'?'total':'stack';draw();}
+  else if(m==='loadmode'){st.loadMode=t.dataset.v;draw();}
   else if(m==='sets'){st.s=Math.min(12,Math.max(1,st.s+(+t.dataset.d)));draw();}
   else if(m==='wstep'){st.step=+t.dataset.v;draw();}
   else if(m==='rmimg'){st.img='';draw();}
@@ -225,7 +237,7 @@ function openEditor(machine,theme){
   else if(m==='save'){
    const n=String(st.n||'').trim();
    if(n.length<2){box.querySelector('.rd-medit-err').textContent='Название — минимум 2 символа';box.querySelector('#rd-medit-name').focus();return;}
-   const ok=window.gymMachineEdit(machine.id,{n:n,g:st.g,img:st.img,cover:st.cover,type:st.type,s:st.s,st:st.step});
+   const ok=window.gymMachineEdit(machine.id,{n:n,g:st.g,img:st.img,cover:st.cover,type:st.type,s:st.s,st:st.step,loadMode:st.loadMode,location:st.location});
    if(ok)close();else box.querySelector('.rd-medit-err').textContent='Не получилось сохранить';
   }
  });

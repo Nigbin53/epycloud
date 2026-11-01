@@ -1,15 +1,186 @@
 {
   "schema": 1,
-  "note": "Список тренажёров из исходного приложения (seed в technical/source.html). Поле slug связывает тренажёр со слотами фото в catalog.json (поле machine).",
+  "note": "Идентификаторы оборудования связаны с каталогом library.json. Название не определяет принадлежность личной записи.",
   "machines": [
-    {"slug": "butterfly", "name": "Бабочка", "group": "Грудь"},
-    {"slug": "chest-press", "name": "Жим в тренажёре", "group": "Грудь"},
-    {"slug": "lat-pulldown", "name": "Тяга верхнего блока", "group": "Спина"},
-    {"slug": "seated-row", "name": "Гребная тяга", "group": "Спина"},
-    {"slug": "leg-press", "name": "Жим ногами", "group": "Ноги"},
-    {"slug": "leg-extension", "name": "Разгибание ног", "group": "Ноги"},
-    {"slug": "biceps-curl", "name": "Сгибание на бицепс", "group": "Руки"},
-    {"slug": "triceps-extension", "name": "Разгибание на трицепс", "group": "Руки"},
-    {"slug": "shoulder-press", "name": "Жим на плечи", "group": "Плечи"}
+    {
+      "slug": "butterfly",
+      "id": "equipment:butterfly",
+      "name": "Бабочка",
+      "group": "Грудь"
+    },
+    {
+      "slug": "chest-press",
+      "id": "equipment:chest-press",
+      "name": "Жим в тренажёре",
+      "group": "Грудь"
+    },
+    {
+      "slug": "incline-chest-press",
+      "id": "equipment:incline-chest-press",
+      "name": "Наклонный жим",
+      "group": "Грудь"
+    },
+    {
+      "slug": "plate-chest-press",
+      "id": "equipment:plate-chest-press",
+      "name": "Рычажный жим",
+      "group": "Грудь"
+    },
+    {
+      "slug": "lat-pulldown",
+      "id": "equipment:lat-pulldown",
+      "name": "Тяга верхнего блока",
+      "group": "Спина"
+    },
+    {
+      "slug": "seated-row",
+      "id": "equipment:seated-row",
+      "name": "Гребная тяга",
+      "group": "Спина"
+    },
+    {
+      "slug": "plate-row",
+      "id": "equipment:plate-row",
+      "name": "Рычажная тяга",
+      "group": "Спина"
+    },
+    {
+      "slug": "pullover",
+      "id": "equipment:pullover",
+      "name": "Пуловер",
+      "group": "Спина"
+    },
+    {
+      "slug": "back-extension",
+      "id": "equipment:back-extension",
+      "name": "Гиперэкстензия",
+      "group": "Спина"
+    },
+    {
+      "slug": "leg-press",
+      "id": "equipment:leg-press",
+      "name": "Жим ногами",
+      "group": "Ноги"
+    },
+    {
+      "slug": "seated-leg-press",
+      "id": "equipment:seated-leg-press",
+      "name": "Горизонтальный жим ногами",
+      "group": "Ноги"
+    },
+    {
+      "slug": "hack-squat",
+      "id": "equipment:hack-squat",
+      "name": "Гакк-присед",
+      "group": "Ноги"
+    },
+    {
+      "slug": "leg-extension",
+      "id": "equipment:leg-extension",
+      "name": "Разгибание ног",
+      "group": "Ноги"
+    },
+    {
+      "slug": "lying-leg-curl",
+      "id": "equipment:lying-leg-curl",
+      "name": "Сгибание ног лёжа",
+      "group": "Ноги"
+    },
+    {
+      "slug": "seated-leg-curl",
+      "id": "equipment:seated-leg-curl",
+      "name": "Сгибание ног сидя",
+      "group": "Ноги"
+    },
+    {
+      "slug": "standing-calf",
+      "id": "equipment:standing-calf",
+      "name": "Икры стоя",
+      "group": "Ноги"
+    },
+    {
+      "slug": "seated-calf",
+      "id": "equipment:seated-calf",
+      "name": "Икры сидя",
+      "group": "Ноги"
+    },
+    {
+      "slug": "shoulder-press",
+      "id": "equipment:shoulder-press",
+      "name": "Жим на плечи",
+      "group": "Плечи"
+    },
+    {
+      "slug": "lateral-raise",
+      "id": "equipment:lateral-raise",
+      "name": "Махи в стороны в тренажёре",
+      "group": "Плечи"
+    },
+    {
+      "slug": "biceps-curl",
+      "id": "equipment:biceps-curl",
+      "name": "Сгибание на бицепс",
+      "group": "Руки"
+    },
+    {
+      "slug": "preacher-bench",
+      "id": "equipment:preacher-bench",
+      "name": "Скамья Скотта",
+      "group": "Руки"
+    },
+    {
+      "slug": "triceps-extension",
+      "id": "equipment:triceps-extension",
+      "name": "Разгибание на трицепс",
+      "group": "Руки"
+    },
+    {
+      "slug": "abdominal-crunch",
+      "id": "equipment:abdominal-crunch",
+      "name": "Скручивания в тренажёре",
+      "group": "Пресс"
+    },
+    {
+      "slug": "knee-raise-station",
+      "id": "equipment:knee-raise-station",
+      "name": "Упор для подъёма ног и брусья",
+      "group": "Пресс"
+    },
+    {
+      "slug": "smith",
+      "id": "equipment:smith",
+      "name": "Машина Смита",
+      "group": "Универсальное"
+    },
+    {
+      "slug": "cable-crossover",
+      "id": "equipment:cable-crossover",
+      "name": "Кроссовер",
+      "group": "Универсальное"
+    },
+    {
+      "slug": "power-rack",
+      "id": "equipment:power-rack",
+      "name": "Силовая рама",
+      "group": "Универсальное"
+    },
+    {
+      "slug": "adjustable-bench",
+      "id": "equipment:adjustable-bench",
+      "name": "Регулируемая скамья",
+      "group": "Универсальное"
+    },
+    {
+      "slug": "dumbbells",
+      "id": "equipment:dumbbells",
+      "name": "Гантели",
+      "group": "Универсальное"
+    },
+    {
+      "slug": "floor",
+      "id": "equipment:floor",
+      "name": "Коврик и упражнения без оборудования",
+      "group": "Универсальное"
+    }
   ]
 }

@@ -21,17 +21,18 @@
     img.classList.remove('equipment-replaced');
     img.dataset.equipmentPlaceholder = 'true';
   }
-  const keyFor = (name, fallback, screen, theme) => store.photoKey ? store.photoKey(name, fallback, screen, theme) : fallback + '/' + screen + '/' + theme;
+  const keyFor = (reference, fallback, screen, theme) => store.ownKey(reference, screen, theme);
   function present() {
     scheduled = false;
     const theme = white() ? 'white' : 'black';
     document.querySelectorAll('.ta-exercise').forEach((card, index) => {
+      if (card.closest('.rd-workout')) return;
       const machine = card.classList.contains('ta-second-exercise') ? 'leg-press' : 'lat-pulldown';
       bind(card.querySelector('.ta-exercise-photo'), machine + '/overview/' + theme);
     });
-    document.querySelectorAll('img.rd-equipment[data-equipment-machine]').forEach(img => {
-      if (!store.ownKey) { bind(img, keyFor(img.dataset.equipmentName, img.dataset.equipmentMachine, 'overview', theme)); return; }
-      const own = store.ownKey(img.dataset.equipmentName, 'overview', theme);
+    document.querySelectorAll('img.rd-equipment[data-equipment-ref]').forEach(img => {
+      if (!store.ownKey) { bind(img, keyFor(img.dataset.equipmentRef, img.dataset.equipmentMachine, 'overview', theme)); return; }
+      const own = store.ownKey(img.dataset.equipmentRef, 'overview', theme);
       if (own) bind(img, own);
       else placeholder(img, theme);
     });
@@ -41,14 +42,14 @@
       const rear = layers.querySelector('.ta-detail-hero-back');
       const machine = page?.dataset.equipmentMachine || 'leg-press';
       if (!hero || hero.dataset.equipmentPersonal === 'true') return;
-      if (page && store.ownKey && !store.ownKey(page.dataset.equipmentName, 'detail', theme)) {
+      if (page && store.ownKey && !store.ownKey(page.dataset.equipmentRef, 'detail', theme)) {
         // у тренажёра пока нет своего фото — заглушка одним слоем
         placeholder(hero, theme);
         layers.classList.add('equipment-single-image');
         if (rear) rear.hidden = true;
         return;
       }
-      const key = keyFor(page?.dataset.equipmentName, machine, 'detail', theme);
+      const key = keyFor(page?.dataset.equipmentRef, machine, 'detail', theme);
       bind(hero, key);
       // Своё фото тренажёра (не общий слот) показывается одним слоем, без фона жима ногами.
       // Двухслойная композиция (фото + фон) есть только у утверждённого жима ногами в Black.

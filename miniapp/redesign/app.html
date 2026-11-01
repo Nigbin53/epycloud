@@ -1720,6 +1720,9 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="silver-nutrition.css?v=6">
 <link rel="stylesheet" href="silver-flows.css?v=6">
 <link rel="stylesheet" href="silver-displays.css?v=4">
+<link rel="stylesheet" href="equipment-browser.css?v=1">
+<script src="../equipment/library-data.js?v=1"></script>
+<script src="../equipment/library.js?v=1"></script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="../config.js"></script><script src="../tg-sync.js"></script>
 </head>
 <body data-redesign-theme="black">
@@ -1863,6 +1866,8 @@ if(S.bgPreset==="silver"||(S.bgPreset==="photo"&&!S.bgCustom))S.bgPreset="aura";
 if(!S.achAt||typeof S.achAt!=="object")S.achAt={};
 if(S.bgDim==null)S.bgDim=30;
 if(S.bgDimOn==null)S.bgDimOn=false;
+/* Metadata only: personal names, IDs, photos, history and plans are retained. */
+window.GymMachineLibrary.migrate(S);
 S.unit="kg";
 if(S.remWorkout==null)S.remWorkout=false;
 if(!S.remDays)S.remDays=[0,2,4];
@@ -1901,7 +1906,9 @@ window.gymMachineEdit=function(id,p){
   if(p.cover!==undefined)m.cover=p.cover||"";
   if(p.type&&EX_TYPES[p.type]){m.type=p.type;if(p.type==="time"){m.w=0;if(m.r<5)m.r=45}}
   if(p.s!=null&&+p.s>=1&&+p.s<=12)m.s=Math.round(+p.s);
-  if(p.st!=null&&[1,2.5,5,10].indexOf(+p.st)>=0)m.st=+p.st;
+  if(p.st!=null&&[1,2,2.5,5,10].indexOf(+p.st)>=0)m.st=+p.st;
+  if(p.loadMode&&window.GymMachineLibrary.modes[p.loadMode])m.loadMode=p.loadMode;
+  if(p.location!==undefined)m.location=String(p.location||"").trim().slice(0,40);
   S.history.forEach(function(e){if(e.mid===m.id){e.n=m.n;e.g=m.g}});
   if(cur&&cur.id===m.id){cur.n=m.n;cur.g=m.g;cur.img=m.img;cur.cover=m.cover;cur.type=exType(m);cur.s=m.s;cur.st=m.st;if(cur.type==="time"){cur.w=0;cur.r=m.r}}
   save();render();if(cur&&cur.id===m.id)sheet();
@@ -1909,22 +1916,7 @@ window.gymMachineEdit=function(id,p){
 };
 /* ===================== r10: подходы, подсказка прибавки, типы упражнений, планы ===================== */
 var EX_TYPES={machine:"Тренажёр",free:"Свободный вес",body:"Свой вес",time:"На время"};
-/* каталог упражнений без тренажёров: [название, группа, стартовый вес/доп.вес, шаг, повторы (для «на время» — секунды)] */
-var CATALOG_EX={
-  free:[["Жим штанги лёжа","Грудь",40,2.5,10],["Жим гантелей лёжа","Грудь",16,2,10],["Разводка гантелей","Грудь",10,1,12],
-        ["Тяга штанги в наклоне","Спина",40,2.5,10],["Тяга гантели одной рукой","Спина",18,2,10],["Становая тяга","Спина",60,5,8],
-        ["Приседания со штангой","Ноги",50,5,8],["Выпады с гантелями","Ноги",12,2,10],["Румынская тяга","Ноги",40,5,10],
-        ["Подъём штанги на бицепс","Руки",20,2.5,10],["Молотки с гантелями","Руки",10,1,12],["Французский жим","Руки",20,2.5,10],
-        ["Жим гантелей сидя","Плечи",14,2,10],["Махи гантелями в стороны","Плечи",6,1,12],["Армейский жим","Плечи",30,2.5,8]],
-  body:[["Отжимания","Грудь",0,2.5,15],["Подтягивания","Спина",0,2.5,8],["Отжимания на брусьях","Руки",0,2.5,10],
-        ["Приседания","Ноги",0,2.5,20],["Выпады","Ноги",0,2.5,12],["Скручивания","Пресс",0,2.5,20],["Подъём ног в висе","Пресс",0,2.5,12]],
-  time:[["Планка","Пресс",0,1,45],["Боковая планка","Пресс",0,1,30],["Вис на турнике","Спина",0,1,30],["Стульчик у стены","Ноги",0,1,45]]
-};
 function exType(m){return m&&EX_TYPES[m.type]?m.type:"machine"}
-function exFromCatalog(name){
-  var t,i,c;for(t in CATALOG_EX){for(i=0;i<CATALOG_EX[t].length;i++){c=CATALOG_EX[t][i];if(c[0]===name)return {n:c[0],g:c[1],w:c[2],st:c[3],s:3,r:c[4],h:[],d:0,type:t}}}
-  return null;
-}
 function setDayT(){return selPastT()||Date.now()}
 function dayEntry(mid,t,create){
   var k=dateKey(t);for(var i=0;i<S.history.length;i++){var e=S.history[i];if(e.mid===mid&&dateKey(e.t)===k)return e}
@@ -2014,12 +2006,16 @@ window.gymPlanDelete=function(id){S.plans=S.plans.filter(function(x){return x.id
 window.gymSetPref=function(k,v){S[k]=v;save();render()};
 window.gymPlanSkip=function(on){S.planSkip=on?todayKeyNow():null;if(on&&S.filter==="План")S.filter="Избранное";save();render()};
 window.gymPlanStart=function(){S.filter="План";save();render()};
-/* добавить упражнение из каталога (тренажёры или без тренажёров) */
-window.gymAddFromCatalog=function(name){
-  if(S.m.some(function(x){return x.n===name}))return false;
-  var cs=seed().filter(function(x){return x.n===name})[0];if(cs){cs.h=[];cs.d=0;cs.type="machine"}else cs=exFromCatalog(name);
-  if(!cs)return false;cs.id=Date.now()+Math.floor(Math.random()*1000);S.m.push(cs);save();render();return cs.id;
+/* Catalog identity is explicit; an equal personal name never blocks or replaces it. */
+window.gymLibraryAdd=function(templateId,options){
+  var result=window.GymMachineLibrary.create(S,templateId,options||{});
+  if(!result)return null;
+  if(result.added){S.filter=result.machine.g;save();render();}
+  return JSON.parse(JSON.stringify(result));
 };
+window.gymAddFromCatalog=function(templateId){var result=window.gymLibraryAdd(templateId);return result&&result.added?result.machine.id:false;};
+window.gymOpenPersonalMachine=function(id){if(find(id))open(id);};
+window.gymOpenCustomMachine=function(){open(0);};
 /* window.toast занято элементом #toast (именованный доступ), поэтому отдельное имя */
 window.gymToast=function(msg,undo,sub){toast(msg,undo,sub)};
 window.gymSelPastT=function(){return selPastT()};
@@ -2305,10 +2301,10 @@ var IC_BELL='<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d=
 var IC_CAL='<rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M8 3v4M16 3v4M3.5 10h17"></path>';
 var IC_DL='<path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path>';
 var expDone=false;
-/* «Мои тренажёры»: всё, что добавлено пользователем (встроенные — id 1–9 из seed). Удаление — вторым нажатием, с отменой */
+/* Массовое удаление касается только личных записей, не выбранных шаблонов каталога. */
 var IC_TRASH='<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"></path>';
 var delOwnArm=false,delOwnT=null;
-function isOwnMachine(m){return !(m.id>=1&&m.id<=9)}
+function isOwnMachine(m){return m.origin==="custom"}
 function deleteOwnMachines(){
   var gone=[];S.m.forEach(function(m,i){if(isOwnMachine(m))gone.push({i:i,m:m})});
   if(!gone.length)return;
@@ -2644,7 +2640,6 @@ function emptyState(iconPath,title,desc){
     +'<h2>'+title+'</h2><p>'+desc+'</p></div>';
 }
 function starIcon(sz,on){return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" fill="'+(on?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3.6l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.7l1-5.8L3.5 9.8l5.9-.8z"></path></svg>'}
-var CATALOG_LIST=[["Бабочка","Грудь"],["Жим в тренажёре","Грудь"],["Тяга верхнего блока","Спина"],["Гребная тяга","Спина"],["Жим ногами","Ноги"],["Разгибание ног","Ноги"],["Сгибание на бицепс","Руки"],["Разгибание на трицепс","Руки"],["Жим на плечи","Плечи"]];
 function viewWorkout(){
   if(!S.m.length){
     var h0=header();
@@ -4314,7 +4309,7 @@ function histItems(){
 }
 function histRow(it){
   var e=it.e,ic,name,sub,val,unit,cls="",attrs="";
-  if(it.k==="w"){ic="workout";name=esc(e.n);var em=find(e.mid),et=exType(em);sub=esc(e.g)+' · '+(e.sets&&e.sets.length?e.sets.map(function(x){return et==="time"?x.r+' сек':(et==="body"&&!x.w?'':f(x.w)+'×')+x.r}).join(' · '):e.s+'×'+e.r)+' · '+timeLabel(e.t);val=et==="time"?(e.r||0):f(e.w);unit=et==="time"?"сек":"кг"}
+  if(it.k==="w"){ic="workout";var em=find(e.mid),et=exType(em);name=esc(em?window.GymMachineLibrary.labelFor(em,S.m):e.n);sub=esc(e.g)+' · '+(e.sets&&e.sets.length?e.sets.map(function(x){return et==="time"?x.r+' сек':(et==="body"&&!x.w?'':f(x.w)+'×')+x.r}).join(' · '):e.s+'×'+e.r)+' · '+timeLabel(e.t);val=et==="time"?(e.r||0):f(e.w);unit=et==="time"?"сек":"кг"}
   else if(it.k==="f"){ic="kbju";cls=" ink";name=esc(e.name||"Без названия");sub=esc(e.meal||"")+' · Б '+f(numv(e.p))+' · Ж '+f(numv(e.f))+' · У '+f(numv(e.c));val=thous(numv(e.kcal));unit="ккал";attrs=' data-a="foodopen" data-v="'+e.id+'" role="button" tabindex="0" style="cursor:pointer"'}
   else{ic="weight";cls=" ink";name="Вес тела";var dd=it.prev?Math.round((e.w-it.prev.w)*10)/10:null;
     sub=(e.fast===false?'Взвешивание':'Утром, натощак')+(dd?' · '+(dd>0?'+':'−')+fmt1(Math.abs(dd))+' кг':'');val=fmt1(e.w);unit="кг"}
@@ -4668,12 +4663,8 @@ function sheetRender(){
     h='<div class="grab"></div><div class="sh-title"><h2>Новый тренажёр</h2><button class="x" data-a="close" aria-label="Закрыть">'+SVG_X+'</button></div>';
     h+='<label class="addphoto">'+(cur.img?'<img class="apimg" alt="" src="'+cur.img+'">':'')+'<input type="file" id="pf" accept="image/*" hidden><span class="apic">'+SVG_CAM(24)+'</span><b>'+(cur.img?'Заменить фото':'Добавить фото тренажёра')+'</b><em>необязательно · поможет найти в зале</em></label>';
     h+='<span class="addlbl">Тип</span><div class="addsugg extypes" role="group" aria-label="Тип упражнения">'+Object.keys(EX_TYPES).map(function(t){return '<button class="catchip'+((cur.type||"machine")===t?' on':'')+'" data-a="extype" data-v="'+t+'" aria-pressed="'+((cur.type||"machine")===t)+'">'+EX_TYPES[t]+'</button>'}).join('')+'</div>';
-    /* «Из каталога» — выезжающий список: свёрнут, раскрывается по нажатию (состояние — window.gymCatOpen) */
-    var catList=(cur.type||"machine")==="machine"?CATALOG_LIST:CATALOG_EX[cur.type].map(function(c){return [c[0],c[1]]});
-    var catFree=catList.filter(function(c){return !S.m.some(function(x){return x.n===c[0]})}).length,catOpen=!!window.gymCatOpen;
-    h+='<button type="button" class="addlbl addcat-toggle'+(catOpen?' open':'')+'" data-cat-toggle aria-expanded="'+catOpen+'"><span>Из каталога</span><em>'+(catFree?catFree+' '+plural(catFree,"доступно","доступно","доступно"):"всё добавлено")+'</em><i aria-hidden="true"></i></button>'
-      +'<div class="addcat-wrap'+(catOpen?' open':'')+'"><div class="addcat-in"><div class="addsugg catpick" role="group" aria-label="Каталог упражнений">'+catList.map(function(c){var has=S.m.some(function(x){return x.n===c[0]});return '<button class="catchip'+(has?' has':'')+'" data-a="catadd" data-v="'+esc(c[0])+'"'+(has?' disabled':'')+'>'+(has?'✓ ':'')+esc(c[0])+'<small>'+esc(c[1])+'</small></button>'}).join("")+'</div></div></div>';
-    h+='<label class="addname"><span>Название</span><input id="nn" class="'+(ok?'ok':'')+'" value="'+esc(cur.n)+'" maxlength="32" placeholder="Например, Жим в тренажёре" autocomplete="off"></label>';
+    h+='<button type="button" class="addlbl addcat-toggle" data-library-open><span>Выбрать из каталога</span><em>'+window.GymMachineLibrary.equipment().length+' типов оборудования</em></button>';
+    h+='<label class="addname"><span>Название</span><input id="nn" class="'+(ok?'ok':'')+'" value="'+esc(cur.n)+'" maxlength="40" placeholder="Например, Жим в тренажёре" autocomplete="off"></label>';
     h+='<div class="addsugg">'+ADD_SUGG.map(function(t){return '<button data-a="sugg" data-v="'+esc(t)+'">'+esc(t)+'</button>'}).join("")+'</div>';
     h+='<span class="addlbl">Группа мышц</span><div class="addgrp" role="group" aria-label="Группа мышц">'+GROUPS.map(function(g){
       return '<button class="grpbtn'+(cur.g===g?' on':'')+'" data-a="grp" data-v="'+g+'" aria-pressed="'+(cur.g===g)+'">'+muscleIcon(g,false)+'<span>'+g+'</span></button>'}).join("")+'</div>';
@@ -4681,6 +4672,7 @@ function sheetRender(){
       +'<button class="round alt" data-a="dw" data-v="-1" aria-label="Меньше веса">−</button>'
       +'<div class="num">'+f(cur.w)+'<small> кг</small></div>'
       +'<button class="round" data-a="dw" data-v="1" aria-label="Больше веса">+</button></div></div>';
+    if(cur.type!=="time")h+='<span class="addlbl">Как учитывать вес</span><div class="addsugg" role="group" aria-label="Учёт веса">'+Object.keys(window.GymMachineLibrary.modes).filter(function(k){return k!=="none"}).map(function(k){return '<button type="button" data-a="loadmode" data-v="'+k+'" aria-pressed="'+(cur.loadMode===k)+'">'+window.GymMachineLibrary.modes[k].name+'</button>'}).join('')+'</div><p class="eq-load-note">'+window.GymMachineLibrary.modeFor(cur).hint+'</p>';
     h+=boxes(true);
     h+='<div class="addfoot"><button class="save" id="addsave" data-a="save"'+(ok?'':' disabled')+'>'+(ok?'Добавить тренажёр':'Введи название')+'</button><span>Фото и вес можно поменять потом в карточке</span></div>';
     el.innerHTML=h;return;
@@ -4708,7 +4700,7 @@ function sheetRender(){
   el.innerHTML=h;
 }
 function open(id){
-  if(id===0)cur={id:0,n:"",g:GROUPS.indexOf(S.filter)>=0?S.filter:GROUPS[0],/* группа — из открытой вкладки (Спина → Спина), её можно поменять */w:20,st:2.5,s:3,r:10,ok:false,img:"",type:"machine"};
+  if(id===0)cur={id:0,n:"",g:GROUPS.indexOf(S.filter)>=0?S.filter:GROUPS[0],/* группа — из открытой вкладки (Спина → Спина), её можно поменять */w:0,st:2.5,s:3,r:10,ok:false,img:"",type:"machine",loadMode:"stack"};
   else{var m=find(id);cur={id:id,w:m.w,st:m.st,s:m.s,r:m.r,ok:false,img:m.img||"",type:exType(m)}}
   mkRange="week";sheet();document.getElementById("ov").classList.add("on");
 }
@@ -4788,7 +4780,8 @@ document.addEventListener("click",function(e){
   else if(a==="st"){cur.st=+v;sheet()}
   else if(a==="ds"){cur.s=Math.min(12,Math.max(1,cur.s+(+v)));sheet()}
   else if(a==="grp"){cur.g=v;sheet()}
-  else if(a==="extype"){cur.type=v;if(v==="time"){cur.r=45}else if(cur.r>50)cur.r=10;sheet()}
+  else if(a==="extype"){cur.type=v;cur.loadMode=v==="body"?"additional":v==="free"?"total":v==="time"?"none":"stack";if(v==="time"){cur.r=45}else if(cur.r>50)cur.r=10;sheet()}
+  else if(a==="loadmode"){if(window.GymMachineLibrary.modes[v])cur.loadMode=v;sheet()}
   else if(a==="sugg"){cur.n=v;sheet()}
   else if(a==="dr"){var tm=cur.type==="time",r0=cur.r;cur.r=Math.min(tm?600:50,Math.max(tm?5:1,cur.r+(+v)*(tm?5:1)));if(cur.r!==r0)buzz("light");sheet()}
   else if(a==="ok"){cur.ok=!cur.ok;sheet()}
@@ -4799,7 +4792,7 @@ document.addEventListener("click",function(e){
   else if(a==="save"){
     if(cur.id===0){
       var n=(cur.n||"").trim();if(n.length<2){document.getElementById("nn").focus();return}
-      S.m.push({id:Date.now(),n:n,g:cur.g,w:cur.type==="time"?0:cur.w,st:cur.st,s:cur.s,r:cur.r,h:[],d:0,img:cur.img,type:cur.type||"machine"});
+      S.m.push({id:window.GymMachineLibrary.nextId(S),origin:"custom",n:n,g:cur.g,w:cur.type==="time"?0:cur.w,st:cur.st,s:cur.s,r:cur.r,h:[],d:0,img:cur.img,type:cur.type||"machine",loadMode:cur.type==="time"?"none":cur.type==="body"?"additional":cur.loadMode||"stack"});
       save();close();render();
     }else{
       /* «Записать» = подход за выбранный день (сегодня или прошедший); рекорд считается сам */
@@ -5206,8 +5199,8 @@ document.addEventListener("click",function(event){
     event.stopPropagation();return;
   }
   if(button.dataset.a==="catadd"){
-    var cn=button.dataset.v;
-    if(window.gymAddFromCatalog(cn)){close();render();toast("Добавлено из каталога","","«"+cn+"»");}
+    var cn=button.dataset.v,ct=window.GymMachineLibrary.getExercise(cn);
+    if(ct&&window.gymAddFromCatalog(cn)){close();render();toast("Добавлено из каталога","","«"+ct.name+"»");}
     event.stopPropagation();return;
   }
   if(button.dataset.a==="rdmachinenav"){
@@ -5277,28 +5270,29 @@ try{
 /* Тумблер «Неделя / Месяц» (White): нажатие на саму дорожку переключает на другой вариант */
 document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classList||!sg.classList.contains("seg"))return;var off=sg.querySelector("button:not(.on)");if(off)off.click()});
 </script>
-<script src="../equipment/store.js?v=equipment-library-r1"></script>
-<script src="presentation.js?v=equipment-library-r1"></script>
+<script src="../equipment/store.js?v=equipment-library-r2"></script>
+<script src="presentation.js?v=equipment-library-r2"></script>
 <script src="anatomy.js?v=equipment-library-r1"></script>
 <script src="insights.js?v=equipment-library-r1"></script>
 <script src="nutrition-kit.js?v=equipment-library-r1"></script>
 <script src="training-kit.js?v=noarc-1"></script>
 <script src="nutrition-presentation.js?v=week-2"></script>
-<script src="training-presentation.js?v=mem-1"></script>
-<script src="workout-presentation.js?v=r10-3"></script>
+<script src="training-presentation.js?v=library-1"></script>
+<script src="workout-presentation.js?v=library-1"></script>
 <script src="lattice-loader.js?v=1"></script>
 <script src="img-pack.js?v=1"></script>
 <script src="paths-bg.js?v=3"></script>
-<script src="plans-whatsnew.js?v=17"></script>
+<script src="plans-whatsnew.js?v=18"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=equipment-library-r1"></script>
 <script src="avatar-r8.js?v=equipment-library-r1"></script>
-<script src="../equipment/runtime.js?v=equipment-library-r1"></script>
+<script src="../equipment/runtime.js?v=equipment-library-r2"></script>
 <script src="food-ai.js?v=1"></script>
 <script src="silver-motion.js?v=7"></script>
 <script src="silver-icons.js?v=4"></script>
 <script src="silver-weight.js?v=1"></script>
 <script src="silver-nutrition.js?v=2"></script>
+<script src="equipment-browser.js?v=1"></script>
 </body>
 </html>

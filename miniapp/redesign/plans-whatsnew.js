@@ -40,7 +40,7 @@ window.gymOpenPlans = open;
 function draw() {
   if (!box) return;
   const all = machines(), plans = window.gymPlans();
-  const name = (id) => { const m = all.find((x) => x.id === id); return m ? m.n : null; };
+  const name = (id) => { const m = all.find((x) => x.id === id); return m ? window.GymMachineLibrary.labelFor(m, all) : null; };
   let h = '<div class="rd-medit-panel rd-plans-panel">';
   if (view === 'list') {
     h += '<div class="rd-medit-head"><b>Мои планы</b><button type="button" class="rd-medit-x" data-p="close" aria-label="Закрыть">×</button></div>';
@@ -59,7 +59,7 @@ function draw() {
       : '<p class="rd-plan-empty">Добавь упражнения — они пойдут в этом порядке.</p>';
     if (picking) {
       const rest = all.filter((m) => !d.items.includes(m.id));
-      h += '<div class="rd-plan-pick">' + GROUPS.map((g) => { const gm = rest.filter((m) => m.g === g); return gm.length ? '<div class="rd-plan-pick-g"><small>' + g + '</small>' + gm.map((m) => '<button type="button" class="rd-medit-chip" data-p="add" data-id="' + m.id + '">+ ' + esc(m.n) + '</button>').join('') + '</div>' : ''; }).join('') + (rest.length ? '' : '<p class="rd-plan-empty">Все упражнения уже в плане.</p>') + '</div>';
+      h += '<div class="rd-plan-pick">' + GROUPS.map((g) => { const gm = rest.filter((m) => m.g === g); return gm.length ? '<div class="rd-plan-pick-g"><small>' + g + '</small>' + gm.map((m) => '<button type="button" class="rd-medit-chip" data-p="add" data-id="' + m.id + '">+ ' + esc(window.GymMachineLibrary.labelFor(m, all)) + '</button>').join('') + '</div>' : ''; }).join('') + (rest.length ? '' : '<p class="rd-plan-empty">Все упражнения уже в плане.</p>') + '</div>';
     } else h += '<button type="button" class="rd-plan-addbtn" data-p="pick">+ Добавить упражнение</button>';
     h += '<div class="rd-medit-err" role="alert"></div>';
     h += '<div class="rd-medit-actions">' + (d.id ? '<button type="button" class="rd-medit-cancel rd-plan-del" data-p="del">Удалить</button>' : '<button type="button" class="rd-medit-cancel" data-p="back">Отмена</button>') + '<button type="button" class="rd-medit-save" data-p="save">Сохранить</button></div>';
