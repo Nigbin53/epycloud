@@ -12,7 +12,7 @@
   let screen = null, wasInert = false;
   function picture(equipment) {
     const key = window.GymEquipment?.ownKey(equipment.id, 'overview', theme());
-    return key ? window.GymEquipment.resolve(key) : new URL('equipment/illustrations/' + equipment.slug + '-' + theme() + '.svg', base).href;
+    return key ? window.GymEquipment.resolve(key) : new URL('equipment/illustrations/' + equipment.slug + '-' + theme() + '.svg?v=2', base).href;
   }
   function source(machine, all) { return library.sourceFor(machine, all); }
   function close() {

@@ -13,3 +13,7 @@ body .ta-detail-photo-layers.equipment-single-image:not(:has(img[data-equipment-
   mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%)!important;
 }
 body .ta-detail-photo-layers.equipment-single-image .ta-detail-hero-back {display:none!important}
+
+/* Scheme backgrounds fill their frame; the nested SVG preserves equipment proportions. */
+:root[data-redesign-theme] #appcontent .rd-workout .ta-exercise :is(.wt-exercise-image,.bt-exercise-photo-frame)>img[src*="/equipment/illustrations/"],
+:root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers.equipment-single-image .ta-detail-hero[src*="/equipment/illustrations/"]{object-fit:fill!important}
