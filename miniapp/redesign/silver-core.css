@@ -75,7 +75,6 @@
 :root[data-silver][data-redesign-theme] .sl-square{border-radius:5px!important}
 :root[data-silver][data-redesign-theme] :is(.rd-theme-preview.white,.rd-theme-preview.silver){background:var(--sl-surface) center/cover!important;box-shadow:inset 0 1px 1px #fff8!important}
 :root[data-silver][data-redesign-theme] .rd-theme-preview.white:after{background:var(--sl-amber)!important}
-:root[data-silver][data-redesign-theme] [data-redesign-theme-choice=black]{display:none!important}
 @media(prefers-reduced-motion:reduce){:root[data-silver] *,:root[data-silver] *::before,:root[data-silver] *::after{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 /* Avatar actions retain their native anchored position and circular size. */
@@ -96,3 +95,10 @@
 
 /* F06 uses the wide Silver plan capsule, distinct from rectangular form submits. */
 :root[data-silver][data-redesign-theme] #scrpage .proplan-btn.sl-metal{border-radius:999px!important;font:500 14px/20px Arial,Helvetica,sans-serif!important;letter-spacing:0!important}
+
+/* The Silver option is available inside the untouched Black theme as well. */
+:root[data-redesign-theme="black"] [data-redesign-theme-choice="white"] .rd-theme-preview{
+ background:url('silver/assets/fitness-satin-silver.svg') center/cover!important;
+ box-shadow:inset 0 1px 1px #fff8!important;
+}
+:root[data-redesign-theme="black"] [data-redesign-theme-choice="white"] .rd-theme-preview::after{background:#b9770a!important}

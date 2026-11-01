@@ -2,7 +2,6 @@
    controls, hit areas, accessible labels and delegated actions are retained. */
 (() => {
  'use strict';
- if(!document.documentElement.hasAttribute('data-silver'))return;
  const paths={
   gear:'<path d="m10 3-.6 2.2-2 .9-2.1-.7L3.5 8.5l1.6 1.6v2.3l-1.6 1.5 1.8 3.2 2.1-.6 2 .9.6 2.2h3.6l.6-2.2 2-.9 2.1.6 1.8-3.2-1.6-1.5v-2.3l1.6-1.6-1.8-3.1-2.1.7-2-.9-.6-2.2H10Z"/><circle cx="11.8" cy="11.3" r="3"/>',
   back:'<path d="m15 5-7 7 7 7"/>',
@@ -27,6 +26,7 @@
  let pending=false;
  function present(){
   pending=false;
+  if(!document.documentElement.hasAttribute('data-silver'))return;
   Object.entries(selectors).forEach(([name,selector])=>document.querySelectorAll(selector).forEach(svg=>{
    if(svg.closest('#sheet.msheet')||svg.dataset.silverIcon===name)return;
    svg.innerHTML=paths[name];svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');
