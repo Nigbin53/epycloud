@@ -1716,7 +1716,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="measurements.css?v=3">
 <link rel="stylesheet" href="silver-core.css?v=9">
 <link rel="stylesheet" href="silver-training.css?v=3">
-<link rel="stylesheet" href="silver-weight.css?v=4">
+<link rel="stylesheet" href="silver-weight.css?v=5">
 <link rel="stylesheet" href="silver-nutrition.css?v=9">
 <link rel="stylesheet" href="silver-flows.css?v=6">
 <link rel="stylesheet" href="silver-displays.css?v=4">
@@ -4818,7 +4818,10 @@ document.addEventListener("click",function(e){
   else if(a==="prshare"){try{navigator.share&&navigator.share({title:"Новый личный рекорд",text:"Новый личный рекорд в тренировках!"})}catch(er){}}
   else if(a==="del"){var delId=cur.id;close();delMachine(delId)}
   else if(a==="undo"){var u=undoFn;undoFn=null;clearInterval(toastI);clearTimeout(toastT);document.getElementById("toast").classList.remove("on");if(u)u()}
-  else if(a==="logopen"){var lastWeight=latestBodyWeight();logW=lastWeight?lastWeight.w:70;logStep=0.1;logDay=0;logFast=true;sheetLog();document.getElementById("ov").classList.add("on")}
+  else if(a==="logopen"){
+    var openLog=function(){var lastWeight=latestBodyWeight();logW=lastWeight?lastWeight.w:70;logStep=0.1;logDay=0;logFast=true;sheetLog();document.getElementById("ov").classList.add("on")};
+    if(!window.GymSilverWeight||!window.GymSilverWeight.afterPress(t,openLog))openLog();
+  }
   else if(a==="bicepsopen"){var bc=chrono(S.biceps).slice(-1)[0];bicepsValue=bc?fmt1(bc.cm):"";bicepsDay=0;sheetBiceps();document.getElementById("ov").classList.add("on")}
   else if(a==="bicepsday"){bicepsValue=document.getElementById("bicepscm").value;bicepsDay=+v;sheetBiceps()}
   else if(a==="bicepssave"){saveBiceps()}
@@ -5298,7 +5301,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="food-ai.js?v=1"></script>
 <script src="silver-motion.js?v=12"></script>
 <script src="silver-icons.js?v=4"></script>
-<script src="silver-weight.js?v=2"></script>
+<script src="silver-weight.js?v=3"></script>
 <script src="silver-nutrition.js?v=3"></script>
 <script src="equipment-browser.js?v=2"></script>
 </body>
