@@ -1,5 +1,5 @@
 /* 06.2: native measurements and axis geometry, finished with the existing material kit. */
-:root[data-redesign-theme] .wsscr .wchart {
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference) {
  --rd-ws-stroke:var(--rd-text);
  --rd-ws-point:var(--rd-accent);
  --rd-ws-grid:var(--rd-line);
@@ -8,49 +8,49 @@
  padding:14px 0 4px;
  border-top:1px solid var(--rd-line);
 }
-:root[data-redesign-theme='black'] .wsscr .wchart {
+:root[data-redesign-theme='black'] .wsscr .wchart:not(.sl-weight-reference) {
  --rd-ws-stroke:#d6e0e8;
  --rd-ws-point:#f0f4f7;
  --rd-ws-grid:rgba(186,208,224,.15);
  border-top-color:rgba(200,220,235,.18);
  background:linear-gradient(180deg,rgba(183,204,223,.025),transparent 75%);
 }
-:root[data-redesign-theme='white'] .wsscr .wchart {
+:root[data-redesign-theme='white'] .wsscr .wchart:not(.sl-weight-reference) {
  --rd-ws-stroke:#3d464a;
  --rd-ws-point:#ff510c;
  --rd-ws-grid:rgba(55,66,72,.14);
  background:linear-gradient(180deg,rgba(255,255,255,.16),transparent 75%);
 }
-:root[data-redesign-theme] .wsscr .wchart > svg {
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference) > svg {
  display:block;
  width:100%;
  height:auto;
  aspect-ratio:2/1;
  overflow:visible;
 }
-:root[data-redesign-theme] .wsscr .wchart > svg > line {
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference) > svg > line {
  stroke:var(--rd-ws-grid);
  stroke-width:.7;
 }
-:root[data-redesign-theme] .wsscr .wchart > svg > path {
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference) > svg > path {
  fill:none;
  stroke:var(--rd-ws-stroke);
  stroke-width:1.9;
  stroke-linecap:round;
  stroke-linejoin:round;
 }
-:root[data-redesign-theme] .wsscr .wchart > svg > circle {
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference) > svg > circle {
  fill:var(--rd-ws-point);
  stroke:var(--rd-surface);
  stroke-width:1.6;
 }
-:root[data-redesign-theme] .wsscr .wchart > svg > text {
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference) > svg > text {
  fill:var(--rd-muted);
  font-family:var(--rd-font);
  font-weight:400;
  font-size:9px;
 }
-:root[data-redesign-theme] .wsscr .wchart[data-rd-chart-state='single'] > svg > path { opacity:.7; }
+:root[data-redesign-theme] .wsscr .wchart:not(.sl-weight-reference)[data-rd-chart-state='single'] > svg > path { opacity:.7; }
 
 /* The graph period keeps its native buttons and switches in one recessed rail. */
 :root[data-redesign-theme] .wsscr .wtop { gap:12px;flex-wrap:wrap; }

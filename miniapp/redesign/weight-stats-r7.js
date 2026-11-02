@@ -4,7 +4,7 @@
  let pending=false;
  function present(){
   pending=false;
-  document.querySelectorAll('.wsscr .wchart').forEach(chart=>{
+  document.querySelectorAll('.wsscr .wchart:not(.sl-weight-reference)').forEach(chart=>{
    const svg=chart.querySelector(':scope > svg');
    if(!svg)return;
    chart.dataset.rdChartKind='weight-native';
