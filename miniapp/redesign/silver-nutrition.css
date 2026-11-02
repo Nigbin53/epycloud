@@ -53,11 +53,11 @@
 :root[data-silver] #appcontent .rd-approved-nutrition .white-nutrition-shortcut:active:not(:disabled){box-shadow:inset 0 2px 3px #5e5e5e2e!important;transform:none!important;background:#d4d7ce!important}
 :root[data-silver] #appcontent .rd-approved-nutrition .na-side-action>.ui-caption{font-family:Arial,Helvetica,sans-serif!important;color:#626262!important;text-shadow:0 .5px 0 #fff9!important}
 /* No separate cards are introduced. Existing panels use a transparent engraved field. */
-:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-card,.kn-row,.kn-ed,.kn-tip,.kn-fav,.na-water,.km-card,.km-box,.km-exact,.km-it,.km-sum,.km-confirm,.km-aifail,.km-load,.km-aibusy,.kv-row,.kv-pick,.kv-nopick,.kv-none,.kv-saved,.ks-it,.ks-pick,.ks-tot,.ks-ask,.kr-it,.kr-pick,.kr-por,.kr-ps,.kg-card,.kg-prof,.kg-res,.kg-nop,.kg-npres,.kg-info,.kg-fi,.ki-col,.ki-today,.ki-seen,.ki-out,.ki-prot,.ki-ach,.kc-nocam,.kf-si,.kwk-row){background:transparent!important;border-color:#59606638!important;box-shadow:1px 1px 0 #ffffffb3,inset 1px 1px 0 #ffffffb3!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-card,.kn-ed,.kn-tip,.kn-fav,.na-water,.km-card,.km-box,.km-exact,.km-it,.km-sum,.km-confirm,.km-aifail,.km-load,.km-aibusy,.kv-row,.kv-pick,.kv-nopick,.kv-none,.kv-saved,.ks-it,.ks-pick,.ks-tot,.ks-ask,.kr-it,.kr-pick,.kr-por,.kr-ps,.kg-card,.kg-prof,.kg-res,.kg-nop,.kg-npres,.kg-info,.kg-fi,.ki-col,.ki-today,.ki-seen,.ki-out,.ki-prot,.ki-ach,.kc-nocam,.kf-si,.kwk-row){background:transparent!important;border-color:#59606638!important;box-shadow:1px 1px 0 #ffffffb3,inset 1px 1px 0 #ffffffb3!important}
 :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-tip,.kv-row.sel,.kv-row.fresh,.km-card.err,.km-it.fresh,.kg-chip.on){border-color:#9c490075!important}
 :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-mealh,.kn-favh,.kn-sech,.km-div,.ki-foot,.kg-row){border-color:#59606638!important}
 :root[data-silver] #appcontent .rd-approved-nutrition .na-budget-metrics>div{border-color:#59606638!important}
-:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-budget-metrics .ui-metric,.na-water-amount .ui-value,.kn-rowk,.kn-kc text,.kn-sumn,.km-itk,.km-sumt b,.kv-ptl b,.ks-tot b,.kr-pst b,.kg-mk,.kg-big,.kg-rr,.ki-stats b,.ki-tdee,.ki-ct b,.kwk-k b){font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important;color:#252525!important;fill:#252525!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-budget-metrics .ui-metric,.na-water-amount .ui-value,.kn-sumn,.km-itk,.km-sumt b,.kv-ptl b,.ks-tot b,.kr-pst b,.kg-mk,.kg-big,.kg-rr,.ki-stats b,.ki-tdee,.ki-ct b,.kwk-k b){font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important;color:#252525!important;fill:#252525!important}
 :root[data-silver] #appcontent .kn-mc{background:#25252509!important;box-shadow:inset 0 .6px 0 #59606620,0 .6px 0 #ffffff8a!important}
 :root[data-silver] #appcontent .kn-mct b{color:#252525!important;font-family:Arial,Helvetica,sans-serif!important}
 :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-section-title,.na-water .ui-feature-title,.na-budget .ui-feature-title,.kn-h2,.kn-h3,.kn-cardh h3,.km-ih h2,.kv-sh h2,.ki-ah h3,.ki-prot h3){font-family:Arial,Helvetica,sans-serif!important;font-weight:700!important;letter-spacing:-.3px!important;color:#252525!important;text-shadow:0 .6px 0 #ffffffb3!important}
@@ -73,7 +73,7 @@
 :root[data-silver] #scrpage :is(.km-gl input,.ks-gl input,.ki-wr input){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important;font-variant-numeric:tabular-nums!important;background:transparent!important}
 :root[data-silver] #scrpage .km-gl{border-color:#59606675!important}
 /* Recessed segmented selectors use native selection state as the permanent indicator. */
-:root[data-silver] #scrpage :is(.km-meals,.kv-meals,.kg-tabs,.ki-tabs,.kc-tabs){background:#5c626118!important;border-color:#59606638!important;box-shadow:inset 0 1px 2px #53535324,0 .7px 0 #ffffffb3!important}
+:root[data-silver] #scrpage :is(.kg-tabs,.ki-tabs,.kc-tabs){background:#5c626118!important;border-color:#59606638!important;box-shadow:inset 0 1px 2px #53535324,0 .7px 0 #ffffffb3!important}
 :root[data-silver] #scrpage :is(.km-meal,.kv-meal,.kg-tab,.ki-tab,.kc-tab,.km-sz,.km-exb,.km-asks button,.kg-chip){color:#747474!important;background:transparent!important;border-color:#59606638!important;box-shadow:none!important;transform:none!important;font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important}
 :root[data-silver] #scrpage :is(.km-meal.on,.kv-meal.on,.kg-tab.on,.ki-tab.on,.kc-tab.on,.km-sz.on,.km-asks button.on){background:linear-gradient(180deg,#3a3a3a,#242424)!important;color:#f1f2ee!important;border-color:#202020!important;box-shadow:inset 0 .5px 0 #595959,0 .6px 1.3px #4a4a4a66!important;transform:none!important}
 :root[data-silver] #scrpage .kg-chip.on{color:#252525!important;background:linear-gradient(150deg,#f2f2f26e,#d2d2d236)!important;box-shadow:inset 0 1px 0 #ffffff73!important}
@@ -135,14 +135,10 @@
 :root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:after,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:before,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:after{-webkit-mask:none!important;mask:none!important}
-:root[data-silver][data-redesign-theme] #appcontent .kn-rowk b{font:700 25px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.7px!important;color:#252525!important}
-:root[data-silver][data-redesign-theme] #appcontent .kn-rowk>.sl-food-kcal{font:700 25px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.7px!important;color:#252525!important;font-variant-numeric:tabular-nums!important}
 
 /* Keep quiet icons visually small while giving each action its own touch area. */
 :root[data-silver][data-redesign-theme] #appcontent .rd-nutrition-week{min-height:44px!important}
-:root[data-silver][data-redesign-theme] #appcontent .kn-rowacts :is(.kb-fz,.kb-ic){width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;transform:none!important}
 :root[data-silver][data-redesign-theme] #appcontent :is(.kn-favedit,.kn-favdel,.kn-favh button){min-width:44px!important;min-height:44px!important}
-:root[data-silver][data-redesign-theme] #appcontent .kn-rowacts :is(.kb-fz,.kb-ic):active{transform:none!important}
 
 /* Turned camera: rim stays seated; the face has one native active travel. */
 :root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button,
@@ -163,3 +159,37 @@
  :root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:hover:not(:active):not(:disabled)::before,
  :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:hover:not(:active):not(:disabled)::before{filter:brightness(1.075)!important}
 }
+
+/* Meal choices are individual capsules; there is no enclosing rectangular rail. */
+:root[data-silver][data-redesign-theme] #scrpage :is(.km-meals,.kv-meals){
+ background:none!important;border:0!important;box-shadow:none!important;outline:none!important;
+ padding:0!important;border-radius:0!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage :is(.km-meals,.kv-meals)::before,
+:root[data-silver][data-redesign-theme] #scrpage :is(.km-meals,.kv-meals)::after{content:none!important}
+:root[data-silver][data-redesign-theme] #scrpage :is(.km-meal,.kv-meal){
+ transition:transform 160ms,filter 160ms,box-shadow 160ms!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage :is(.km-meal,.kv-meal):active:not(:disabled){
+ transform:translateY(1.5px)!important;filter:brightness(.94)!important;
+ box-shadow:inset 0 2px 3px #5e5e5e2e!important;
+}
+/* The add action uses the round component, including equal fixed dimensions. */
+:root[data-silver][data-redesign-theme] :is(#scrpage.kv .kv-add,#appcontent .kn-favadd).sl-round{
+ width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+ max-width:44px!important;max-height:44px!important;flex:0 0 44px!important;
+ aspect-ratio:1!important;padding:0!important;border-radius:50%!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage.kv :is(.kv-pin,.kv-edit,.kv-del,.kv-setadd)>svg{
+ transform-origin:center;transition:transform 160ms!important;
+}
+:root[data-silver][data-redesign-theme] #scrpage.kv :is(.kv-pin,.kv-edit,.kv-del,.kv-setadd):active:not(:disabled)>svg{
+ transform:translateY(1.5px);opacity:.8;
+}
+/* Meal entries use the original compact grid and 36 x 32 action column from
+   nutrition-rows.css / fuse-round.css, including the original RDKcal SVG. */
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver][data-redesign-theme] #scrpage :is(.km-meal,.kv-meal,.kv-pin>svg,.kv-edit>svg,.kv-del>svg,.kv-setadd>svg){transition:none!important}
+}
+
+.sl-favorite-label{display:inline-block;pointer-events:none}

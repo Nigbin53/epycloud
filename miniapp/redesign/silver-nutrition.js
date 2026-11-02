@@ -39,14 +39,6 @@
   function present() {
     queued = false;
     if (!document.documentElement.hasAttribute('data-silver')) return;
-    // The old condensed SVG uses textLength to squeeze glyphs. Retain its
-    // native number and accessible label while applying the kit's Arial role.
-    document.querySelectorAll('#appcontent .kn-rowk>svg.kn-kc').forEach(svg=>{
-      const value=document.createElement('span');value.className='sl-food-kcal';
-      value.textContent=svg.textContent;
-      if(svg.hasAttribute('aria-label'))value.setAttribute('aria-label',svg.getAttribute('aria-label'));
-      svg.replaceWith(value);
-    });
     const page = document.querySelector('#appcontent .rd-approved-nutrition');
     const gauge = page?.querySelector('.na-rings');
     if (!gauge || !window.GymRedesignCatalog?.nutritionData) return;
