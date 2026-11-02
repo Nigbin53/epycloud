@@ -58,14 +58,18 @@
      current.append(target);
     }
    }
-   tapEffects.get(target)?.cancel();
-   const effect=target.animate([
+   const glyph=current.querySelector(':scope>svg');
+   const surfaces=target.classList.contains('sl-face')&&glyph?[target,glyph]:[target];
+   surfaces.forEach(surface=>{
+    tapEffects.get(surface)?.cancel();
+   const effect=surface.animate([
     {transform:'translateY(1.5px) scale(.975)',offset:0},
     {transform:'translateY(-.35px) scale(1.004)',offset:.72},
     {transform:'translateY(0) scale(1)',offset:1}
    ],{duration:230,easing:'cubic-bezier(.2,.7,.3,1)'});
-   tapEffects.set(target,effect);
-   effect.onfinish=effect.oncancel=()=>{if(tapEffects.get(target)===effect)tapEffects.delete(target);};
+   tapEffects.set(surface,effect);
+   effect.onfinish=effect.oncancel=()=>{if(tapEffects.get(surface)===effect)tapEffects.delete(surface);};
+   });
   });
  },true);
  syncMachineStyles();decorate();

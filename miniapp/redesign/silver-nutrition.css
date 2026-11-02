@@ -193,3 +193,12 @@
 }
 
 .sl-favorite-label{display:inline-block;pointer-events:none}
+
+/* The plus glyph travels with the face, as it does inside the kit's component. */
+:root[data-silver][data-redesign-theme] :is(#scrpage.kv .kv-add,#appcontent .kn-favadd).sl-round>svg{
+ transform-origin:center;transition:transform 160ms!important;
+}
+:root[data-silver][data-redesign-theme] :is(#scrpage.kv .kv-add,#appcontent .kn-favadd).sl-round:active:not(:disabled)>svg{transform:translateY(1.5px)}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver][data-redesign-theme] :is(#scrpage.kv .kv-add,#appcontent .kn-favadd).sl-round>svg{transition:none!important}
+}
