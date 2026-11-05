@@ -65,10 +65,10 @@
  opacity:.84!important;filter:brightness(.94) saturate(.9)!important;
  border:0!important;outline:none!important;box-shadow:none!important;z-index:0!important;
 }
-/* Personal uploads keep their original exposure and colors. The display rim
-   stays, but neither the dark substrate nor the glass reflection tints them. */
+/* Personal uploads keep their original exposure and colors, filling the frame
+   without letterboxing. The display rim stays; the glass does not tint them. */
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .wt-exercise-image>img:is([data-equipment-personal="true"],.equipment-replaced){
- opacity:1!important;filter:none!important;
+ opacity:1!important;filter:none!important;object-fit:cover!important;
 }
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .wt-exercise-image:has(>img:is([data-equipment-personal="true"],.equipment-replaced))::after{
  content:none!important;
