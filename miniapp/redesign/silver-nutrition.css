@@ -35,18 +35,13 @@
 :root[data-silver] #appcontent .rd-approved-nutrition .na-macro-track>span{min-width:0!important;background:#333!important;transition:width 180ms!important}
 :root[data-silver] #appcontent .rd-approved-nutrition :is(.white-macro-current,.na-macros .ui-caption){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important}
 :root[data-silver] #appcontent .rd-approved-nutrition .white-macro-goal{font-family:Arial,Helvetica,sans-serif!important;color:#626262!important}
-/* Original F—03 turned camera disc: exact alloy, fine machining and native size. */
-:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button,
+/* The capture-screen shutter keeps the Silver alloy. The nutrition-home camera
+   uses its original photographic steel disc and side arcs from nutrition-kit.css. */
 :root[data-silver] #scrpage.kc .kc-shoot{position:relative!important;border:0!important;background:var(--sl-food-rim,var(--sl-rim))!important;padding:3px!important;box-shadow:0 2px 5px #4c514b40,inset 0 .5px .5px #fff8!important;color:#454b43!important;isolation:isolate;overflow:visible!important;filter:none!important;transition:transform 160ms,filter 160ms!important}
-:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:before,
 :root[data-silver] #scrpage.kc .kc-shoot:before{content:''!important;display:block!important;position:absolute!important;inset:3px!important;width:auto!important;height:auto!important;border-radius:inherit!important;pointer-events:none!important;z-index:-1!important;border:0!important;background:conic-gradient(from -18deg,#bfc1bd 0deg,#f1f2ee 48deg,#a5a8a2 112deg,#dcddd9 176deg,#b0b3ac 235deg,#f7f8f4 292deg,#bfc1bd 360deg)!important;box-shadow:inset 0 .6px .6px #fff9!important;transform:none!important;opacity:1!important}
-:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:after,
 :root[data-silver] #scrpage.kc .kc-shoot:after{content:''!important;display:block!important;position:absolute!important;inset:3px!important;width:auto!important;height:auto!important;border-radius:inherit!important;pointer-events:none!important;z-index:0!important;border:0!important;background-image:url('silver/assets/grain-fine.png'),repeating-radial-gradient(circle at 50% 50%,#ffffff18 0 .35px,#00000010 .45px .65px,transparent .8px 1.25px)!important;background-size:160px,100% 100%!important;opacity:.42!important;mix-blend-mode:soft-light;box-shadow:none!important;transform:none!important}
-:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button>.ui-icon{position:relative;z-index:1;stroke:#747474!important;stroke-width:1.8!important;filter:drop-shadow(0 .65px 0 #ffffffcf)!important}
-:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-action:before{border-color:#85858545!important;border-top-color:transparent!important;border-bottom-color:transparent!important;box-shadow:.7px .7px 0 #ffffffb3}
-:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled),
 :root[data-silver] #scrpage.kc .kc-shoot:active:not(:disabled){transform:translateY(1.5px)!important;filter:brightness(.94)!important}
-@media(hover:hover){:root[data-silver] #appcontent .rd-approved-nutrition .na-camera-button:hover:not(:disabled),:root[data-silver] #scrpage.kc .kc-shoot:hover:not(:disabled){filter:brightness(1.075)!important}}
+@media(hover:hover){:root[data-silver] #scrpage.kc .kc-shoot:hover:not(:disabled){filter:brightness(1.075)!important}}
 /* Side shortcuts are the flat Silver component, with no volumetric travel. */
 :root[data-silver] #appcontent .rd-approved-nutrition .white-nutrition-shortcut{background:linear-gradient(150deg,#f2f2f26e,#d2d2d236)!important;border:1px solid #b2b2b2!important;color:#6f6f6f!important;box-shadow:inset 0 1px 0 #ffffff73!important;transform:none!important;filter:none!important;transition:background 150ms,box-shadow 150ms,color 150ms!important}
 :root[data-silver] #appcontent .rd-approved-nutrition .white-nutrition-shortcut>.ui-icon{color:#6f6f6f!important;stroke-width:1.5!important;filter:drop-shadow(0 .65px 0 #ffffffcf)}
@@ -131,8 +126,6 @@
 :root[data-silver] #scrpage .ki-chart g>rect{fill:#5c6a64!important}
 
 /* Old hollow-rim masks must not cut the new turned-metal camera face. */
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:before,
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:after,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:before,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:after{-webkit-mask:none!important;mask:none!important}
 
@@ -140,23 +133,15 @@
 :root[data-silver][data-redesign-theme] #appcontent .rd-nutrition-week{min-height:44px!important}
 :root[data-silver][data-redesign-theme] #appcontent :is(.kn-favedit,.kn-favdel,.kn-favh button){min-width:44px!important;min-height:44px!important}
 
-/* Turned camera: rim stays seated; the face has one native active travel. */
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button,
+/* Capture-screen shutter: rim stays seated; the face has one native active travel. */
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot{transform:none!important;filter:none!important}
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button::before,
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button::after,
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button>.ui-icon,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot::before,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot::after,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot>span{transition:transform 160ms ease,filter 160ms ease!important}
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled)::before,
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled)::after,
-:root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:active:not(:disabled)>.ui-icon,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:active:not(:disabled)::before,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:active:not(:disabled)::after,
 :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:active:not(:disabled)>span{transform:translateY(1.5px)!important;filter:brightness(.94)!important}
 @media(hover:hover){
- :root[data-silver][data-redesign-theme] #appcontent .rd-approved-nutrition .na-camera-button:hover:not(:active):not(:disabled)::before,
  :root[data-silver][data-redesign-theme] #scrpage.kc .kc-shoot:hover:not(:active):not(:disabled)::before{filter:brightness(1.075)!important}
 }
 
