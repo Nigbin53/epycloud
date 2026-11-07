@@ -32,10 +32,6 @@
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .tg-record-host :is(.tg-done,.tg-star):active{box-shadow:inset 0 2px 3px #5e5e5e26!important}
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout :is(.tg-head,.tg-empty,.tg-pick){color:#252525!important;font-family:Arial,Helvetica,sans-serif!important}
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout :is(.tg-add,.tg-picker){border-color:var(--sl-cut)!important;border-radius:5px!important;background:transparent!important}
-:root[data-silver][data-redesign-theme] :is(#appcontent,#sheet) :is(.wt-load-summary>.ui-compact-value,.wt-current-load .ui-triplet,.ta-load-reading>.ui-number){color:#b97a11!important;text-shadow:none!important}
-@supports ((background-clip:text) or (-webkit-background-clip:text)){
-:root[data-silver][data-redesign-theme] :is(#appcontent,#sheet) :is(.wt-load-summary>.ui-compact-value,.wt-current-load .ui-triplet,.ta-load-reading>.ui-number){background:var(--sl-amber)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
-}
 :root[data-silver][data-redesign-theme] #sheet .rd-approved-training :is(.ta-detail-title,.ta-section-title){font-family:Arial,Helvetica,sans-serif!important;color:#252525!important}
 :root[data-silver][data-redesign-theme] #sheet .rd-approved-training :is(.ui-micro,.ui-unit,.ta-detail-category,.ui-note){color:#747474!important;font-family:var(--sl-mono)!important;text-shadow:0 .6px 0 #ffffffcf,0 -.3px 0 #53535324}
 :root[data-silver][data-redesign-theme] #sheet .rd-approved-training :is(.ta-leg-summary,.ta-muscles,.ta-chart-section,.rd-training-success){background:none!important;border-color:var(--sl-cut)!important;box-shadow:0 1px 0 #ffffffb3!important}

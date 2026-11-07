@@ -5,9 +5,8 @@
 @font-face{font-family:'Silver Display LCD';src:url('silver/assets/fonts/DisplayLCD.ttf') format('truetype');font-weight:100 900;font-display:swap}
 :root[data-silver]{
  --sl-text:#252525;--sl-muted:#747474;--sl-cut:#59606638;--sl-light:#ffffffb3;
- --sl-surface:url('silver/assets/fitness-satin-silver.svg');--sl-grain:url('silver/assets/grain-fine.png');
+ --sl-grain:url('silver/assets/grain-fine.png');
  --sl-metal:radial-gradient(ellipse at 18% 78%,#e8e8e5 0%,#cfd0cd 32%,#b2b4af 67%,#949790 100%);
- --sl-amber:radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%);
  --sl-rim:linear-gradient(140deg,#2b2b2b 2%,#141414 29%,#adadad 47%,#f5f5f5 69%,#c6c6c6 92%,#535353);
  --sl-lathe:conic-gradient(from -18deg,#bfc1bd 0deg,#f1f2ee 48deg,#a5a8a2 112deg,#dcddd9 176deg,#b0b3ac 235deg,#f7f8f4 292deg,#bfc1bd 360deg);
  --sl-mono:SFMono-Regular,Consolas,'Liberation Mono',monospace;--sl-display-mono:'Silver Display Mono',monospace;--sl-display-lcd:'Silver Display LCD',monospace;

@@ -1,3 +1,22 @@
+/* The list and the machine detail share materials even with legacy detail controls. */
+:root[data-silver]{
+ --sl-surface:url('silver/assets/fitness-satin-silver.svg');
+ --sl-amber:radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%);
+}
+:root[data-silver][data-redesign-theme]:not([data-user-background]) #sheet.msheet:has(.rd-approved-training){background:var(--sl-surface) center/cover no-repeat}
+:root[data-silver][data-redesign-theme] #sheet.msheet .rd-approved-training.ui-page{background:transparent}
+:root[data-silver][data-redesign-theme] #sheet.msheet .ui-bottom-nav{background:var(--sl-surface) center bottom/100% auto no-repeat;backdrop-filter:none;-webkit-backdrop-filter:none}
+
+:root[data-silver][data-redesign-theme] :is(#appcontent .wt-load-summary>.ui-compact-value,#sheet.msheet .wt-current-load [data-white-current="load"]){color:#b97a11!important;text-shadow:none!important}
+@supports ((background-clip:text) or (-webkit-background-clip:text)){
+ :root[data-silver][data-redesign-theme] :is(#appcontent .wt-load-summary>.ui-compact-value,#sheet.msheet .wt-current-load [data-white-current="load"]){
+  background:var(--sl-amber)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+ }
+}
+
 /* Один неподвижный фон: старый #appbg внутри прокрутки остаётся выключенным. */
 :root[data-redesign-theme][data-user-background] :is(.screen,.scrov,.sheet.msheet,.prov,.obov){background:var(--rd-user-bg)}
 :root[data-redesign-theme][data-user-background] #bgfixed{display:none}
