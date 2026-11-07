@@ -75,6 +75,28 @@
     const template = exercises.get(machine.catalogId);
     return template && template.equipmentId === machine.equipmentId ? equipment.get(template.equipmentId) || null : null;
   }
+  function photosFor(machine, theme) {
+    return machine.photosShared !== false || machine.photoTheme === theme ? machine : machine.otherPhotos || {};
+  }
+  function setPhoto(machine, theme, key, value) {
+    if (machine.photosShared !== false || machine.photoTheme === theme) machine[key] = value;
+    else (machine.otherPhotos ||= {})[key] = value;
+  }
+  function setPhotosShared(machine, theme, shared) {
+    if (shared) {
+      // The current theme becomes the common source. Keep the other pair for the next split.
+      if (machine.photosShared === false && machine.photoTheme !== theme) {
+        const other = machine.otherPhotos || {};
+        machine.otherPhotos = {img: machine.img, cover: machine.cover};
+        machine.img = other.img;
+        machine.cover = other.cover;
+        machine.photoTheme = theme;
+      }
+    } else {
+      machine.photoTheme ||= theme;
+    }
+    machine.photosShared = shared;
+  }
   function modeFor(machine) {
     if (machine?.type === 'time') return modes.none;
     if (machine?.type === 'body') return modes.additional;
@@ -103,6 +125,7 @@
   }
   window.GymMachineLibrary = Object.freeze({
     revision: data.revision, modes, migrate, nextId, create, instances, equipmentFor, modeFor, sourceFor, labelFor, search, normalize,
+    photosFor, setPhoto, setPhotosShared,
     equipment: () => copy(data.equipment), exercises: () => copy(data.exercises),
     getEquipment: id => equipment.has(id) ? copy(equipment.get(id)) : null,
     getExercise: id => exercises.has(id) ? copy(exercises.get(id)) : null,
