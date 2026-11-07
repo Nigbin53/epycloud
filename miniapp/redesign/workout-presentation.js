@@ -27,7 +27,8 @@ function week() {
 
 function photo(m, theme) {
   // своя заставка (широкая) или, если её нет, своё квадратное фото
-  const mine = m.cover || m.img;
+  const {cover, img} = window.GymMachineLibrary.photosFor(m, theme);
+  const mine = cover || img;
   if (mine) return `<img class="ui-photo ta-exercise-photo" data-equipment-personal="true" src="${esc(mine)}" alt="">`;
   const store = window.GymEquipment;
   const own = store && store.ownKey ? store.ownKey(m, 'overview', theme) : null;

@@ -94,7 +94,8 @@
       });
       host.innerHTML = '<p class="eq-count">В моём списке: ' + matches.length + '</p>' + matches.map(machine => {
         const equipment = library.equipmentFor(machine);
-        const src = machine.cover || machine.img || (equipment ? picture(equipment) : window.GymEquipment?.placeholder(theme()));
+        const {cover, img} = library.photosFor(machine, theme());
+        const src = cover || img || (equipment ? picture(equipment) : window.GymEquipment?.placeholder(theme()));
         return '<button type="button" class="eq-catalog-row" data-e="personal" data-id="' + machine.id + '"><img src="' + esc(src || '') + '" alt="" loading="lazy"><span class="eq-row-copy"><small>' + esc(machine.g) + '</small><b>' + esc(machine.n) + '</b><span>' + esc(source(machine, state.m)) + '</span></span><span class="eq-chevron" aria-hidden="true">›</span></button>';
       }).join('') + (!matches.length ? '<div class="eq-empty"><b>Здесь пока пусто</b><p>Добавь оборудование из каталога или создай свою запись.</p></div>' : '');
     }

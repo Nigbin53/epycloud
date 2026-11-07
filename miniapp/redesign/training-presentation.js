@@ -76,8 +76,8 @@ function present(){
  // при +/− страница пересобирается: фото и анатомию берём прежними узлами — без перезагрузки картинки и мелькания
  const layersNew=page.querySelector('.ta-detail-photo-layers');
  if(layersNew){
-  const wi=data.working.img||'',pkey=[theme,data.machine.id,data.machine.n,data.machine.g,wi.length,wi.slice(-48)].join('|');
-  if(keptPhoto&&keptPhoto.key===pkey)layersNew.replaceWith(keptPhoto.node);else keptPhoto={key:pkey,node:layersNew};
+  const wi=data.working.img||'',pkey=[theme,data.machine.id,data.machine.n,data.machine.g].join('|');
+  if(keptPhoto&&keptPhoto.key===pkey&&keptPhoto.url===wi)layersNew.replaceWith(keptPhoto.node);else keptPhoto={key:pkey,url:wi,node:layersNew};
  }
  const mimg=page.querySelector('.ta-muscles img');
  if(mimg){
@@ -183,19 +183,31 @@ function hasAlpha(im){try{const c=document.createElement('canvas');c.width=64;c.
 // фото с телефона → под пропорции рамки. Обычное фото: обрезка по центру, JPEG.
 // PNG с прозрачным фоном: вписываем целиком, прозрачность сохраняется (PNG), — тренажёр без фона, как встроенные.
 function meditCrop(file,w,h,q){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const im=new Image();im.onerror=no;im.onload=()=>{
+ try{
  const c=document.createElement('canvas'),x=c.getContext('2d');
  if(/png|webp|gif/i.test(file.type||'')&&hasAlpha(im)){
   const W=Math.round(w*.8),H=Math.round(h*.8),k=Math.min(W/im.width,H/im.height,1),dw=Math.round(im.width*k),dh=Math.round(im.height*k);
-  c.width=W;c.height=H;x.drawImage(im,Math.round((W-dw)/2),Math.round((H-dh)/2),dw,dh);if(window.GymImg)window.GymImg.png(c).then(ok);else ok(c.toDataURL('image/png'));return; // PNG на 256 цветов — в 4–6 раз легче
+  c.width=W;c.height=H;x.drawImage(im,Math.round((W-dw)/2),Math.round((H-dh)/2),dw,dh);if(window.GymImg)window.GymImg.png(c).then(ok,no);else ok(c.toDataURL('image/png'));return; // PNG на 256 цветов — в 4–6 раз легче
  }
  const k=Math.max(w/im.width,h/im.height),sw=w/k,sh=h/k,sx=(im.width-sw)/2,sy=(im.height-sh)/2;
- c.width=w;c.height=h;x.drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));};im.src=r.result;};r.readAsDataURL(file);});}
+ c.width=w;c.height=h;x.drawImage(im,sx,sy,sw,sh,0,0,w,h);ok(c.toDataURL('image/jpeg',q));
+ }catch(error){no(error);}
+ };im.src=r.result;};r.readAsDataURL(file);});}
 function openEditor(machine,theme){
  const old=document.querySelector('.rd-medit');if(old)old.remove();
- const st={n:machine.n,g:machine.g,img:machine.img||'',cover:machine.cover||'',type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5,loadMode:machine.loadMode||(exTypeOf(machine)==='body'?'additional':'total'),location:machine.location||''};
+ const library=window.GymMachineLibrary;
+ const photos={img:machine.img,cover:machine.cover,photosShared:machine.photosShared,photoTheme:machine.photoTheme,otherPhotos:machine.otherPhotos?{...machine.otherPhotos}:undefined};
+ const st={n:machine.n,g:machine.g,type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5,loadMode:machine.loadMode||(exTypeOf(machine)==='body'?'additional':'total'),location:machine.location||''};
+ const photoJobs=new Map();
+ let photosChanged=false,closed=false,photoError='';
  const box=document.createElement('div');box.className='rd-medit';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Редактировать тренажёр');
- const close=()=>{box.classList.remove('on');setTimeout(()=>box.remove(),220);};
+ const close=()=>{closed=true;box.classList.remove('on');setTimeout(()=>box.remove(),220);};
  function draw(){
+  const scrollTop=box.firstElementChild?.scrollTop||0;
+  const {img,cover}=library.photosFor(photos,theme);
+  const shared=photos.photosShared!==false;
+  const busy=photoJobs.size>0;
+  const disabled=busy?' disabled':'';
   box.innerHTML='<div class="rd-medit-panel">'
    +'<div class="rd-medit-head"><b>Редактировать</b><button type="button" class="rd-medit-x" data-m="close" aria-label="Закрыть">×</button></div>'
    +'<label class="rd-medit-lbl" for="rd-medit-name">Название</label>'
@@ -208,21 +220,26 @@ function openEditor(machine,theme){
    +(st.type==='time'?'':'<div><div class="rd-medit-lbl">Шаг веса, кг</div><div class="rd-medit-groups rd-medit-steps" role="group" aria-label="Шаг веса">'+[1,2,2.5,5,10].map(v=>'<button type="button" class="rd-medit-chip'+(v===st.step?' on':'')+'" data-m="wstep" data-v="'+v+'" aria-pressed="'+(v===st.step)+'">'+String(v).replace('.',',')+'</button>').join('')+'</div></div>')+'</div>'
    +'<label class="rd-medit-lbl" for="rd-medit-location">Где стоит / пометка</label><input id="rd-medit-location" class="rd-medit-input" maxlength="40" placeholder="Например, зал на первом этаже" value="'+meditEsc(st.location)+'">'
    +(st.type==='time'?'':'<div class="rd-medit-lbl">Как учитывать вес</div><div class="rd-medit-groups" role="group" aria-label="Учёт веса">'+Object.entries(window.GymMachineLibrary.modes).filter(([k])=>k!=='none').map(([k,m])=>'<button type="button" class="rd-medit-chip'+(k===st.loadMode?' on':'')+'" data-m="loadmode" data-v="'+k+'" aria-pressed="'+(k===st.loadMode)+'">'+m.name+'</button>').join('')+'</div><p class="eq-load-note">'+window.GymMachineLibrary.modeFor({type:st.type,loadMode:st.loadMode}).hint+'</p>')
+   +'<button type="button" class="rd-medit-sharing" data-m="photosShared" role="switch" aria-label="Общие фото для Silver и Black" aria-checked="'+shared+'" aria-describedby="rd-medit-sharing-note"'+disabled+'>'
+   +'<span>Общие фото для Silver и Black<small id="rd-medit-sharing-note">'+(shared?'Фото и заставка общие. При отключении текущий набор закрепляется за своей темой.':'Сейчас редактируется '+(theme==='white'?'Silver':'Black')+'. При включении этот набор станет общим.')+'</small></span>'
+   +'<span class="swtc'+(shared?' on':'')+'" aria-hidden="true"><i></i></span></button>'
    +'<div class="rd-medit-photos">'
    +'<div class="rd-medit-ph"><div class="rd-medit-lbl">Фото тренажёра<small>на странице тренажёра</small></div>'
-   +'<label class="rd-medit-pick ph">'+(st.img?'<img alt="" src="'+st.img+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="img" hidden></label>'
-   +(st.img?'<button type="button" class="rd-medit-rm" data-m="rmimg">Убрать</button>':'')+'</div>'
+   +'<label class="rd-medit-pick ph">'+(img?'<img alt="" src="'+meditEsc(img)+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="img" hidden></label>'
+   +(img?'<button type="button" class="rd-medit-rm" data-m="rmimg">Убрать</button>':'')+'</div>'
    +'<div class="rd-medit-ph wide"><div class="rd-medit-lbl">Заставка<small>широкая, в списке тренировок</small></div>'
-   +'<label class="rd-medit-pick wd">'+(st.cover?'<img alt="" src="'+st.cover+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="cover" hidden></label>'
-   +(st.cover?'<button type="button" class="rd-medit-rm" data-m="rmcover">Убрать</button>':'')+'</div>'
+   +'<label class="rd-medit-pick wd">'+(cover?'<img alt="" src="'+meditEsc(cover)+'">':'<span>+ Выбрать</span>')+'<input type="file" accept="image/*" data-m="cover" hidden></label>'
+   +(cover?'<button type="button" class="rd-medit-rm" data-m="rmcover">Убрать</button>':'')+'</div>'
    +'</div>'
-   +'<div class="rd-medit-err" role="alert"></div>'
-   +'<div class="rd-medit-actions"><button type="button" class="rd-medit-cancel" data-m="close">Отмена</button><button type="button" class="rd-medit-save" data-m="save">Сохранить</button></div>'
+   +'<div class="rd-medit-err" role="alert">'+(busy?'Обрабатываем фото…':photoError)+'</div>'
+   +'<div class="rd-medit-actions"><button type="button" class="rd-medit-cancel" data-m="close">Отмена</button><button type="button" class="rd-medit-save" data-m="save"'+disabled+'>Сохранить</button></div>'
    +'</div>';
+  box.firstElementChild.scrollTop=scrollTop;
  }
  draw();
  box.addEventListener('input',e=>{if(e.target.id==='rd-medit-name')st.n=e.target.value;if(e.target.id==='rd-medit-location')st.location=e.target.value;});
  box.addEventListener('click',e=>{
+  if(closed)return;
   if(e.target===box){close();return;}
   const t=e.target.closest('[data-m]');if(!t||t.tagName==='INPUT')return;
   const m=t.dataset.m;
@@ -232,20 +249,35 @@ function openEditor(machine,theme){
   else if(m==='loadmode'){st.loadMode=t.dataset.v;draw();}
   else if(m==='sets'){st.s=Math.min(12,Math.max(1,st.s+(+t.dataset.d)));draw();}
   else if(m==='wstep'){st.step=+t.dataset.v;draw();}
-  else if(m==='rmimg'){st.img='';draw();}
-  else if(m==='rmcover'){st.cover='';draw();}
+  else if(m==='photosShared'){
+   library.setPhotosShared(photos,theme,photos.photosShared===false);photosChanged=true;draw();
+   box.querySelector('[data-m="photosShared"]').focus({preventScroll:true});
+  }
+  else if(m==='rmimg'||m==='rmcover'){
+   const kind=m.slice(2);
+   photoJobs.delete(kind);photoError='';
+   library.setPhoto(photos,theme,kind,'');photosChanged=true;draw();
+  }
   else if(m==='save'){
    const n=String(st.n||'').trim();
    if(n.length<2){box.querySelector('.rd-medit-err').textContent='Название — минимум 2 символа';box.querySelector('#rd-medit-name').focus();return;}
-   const ok=window.gymMachineEdit(machine.id,{n:n,g:st.g,img:st.img,cover:st.cover,type:st.type,s:st.s,st:st.step,loadMode:st.loadMode,location:st.location});
+   const ok=window.gymMachineEdit(machine.id,{n:n,g:st.g,photos:photosChanged?photos:undefined,type:st.type,s:st.s,st:st.step,loadMode:st.loadMode,location:st.location});
    if(ok)close();else box.querySelector('.rd-medit-err').textContent='Не получилось сохранить';
   }
  });
  box.addEventListener('change',e=>{
-  const t=e.target;if(!t.files||!t.files[0])return;
+  const t=e.target;if(closed||!t.files?.[0])return;
   const kind=t.dataset.m;
   const job=kind==='img'?meditCrop(t.files[0],900,600,.8):meditCrop(t.files[0],900,405,.76);
-  job.then(url=>{st[kind]=url;draw();}).catch(()=>{const er=box.querySelector('.rd-medit-err');if(er)er.textContent='Не удалось открыть фото';});
+  photoJobs.set(kind,job);photoError='';draw();
+  function finish(url){
+   if(closed||!box.isConnected||photoJobs.get(kind)!==job)return;
+   photoJobs.delete(kind);
+   if(url){library.setPhoto(photos,theme,kind,url);photosChanged=true;}
+   else photoError='Не удалось открыть фото';
+   draw();
+  }
+  job.then(finish,()=>finish(null));
  });
  document.body.append(box);
  requestAnimationFrame(()=>box.classList.add('on'));

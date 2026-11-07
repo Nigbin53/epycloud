@@ -34,7 +34,12 @@ function shrink(url){
 // ужать фото тренажёров, своего фона и аватара прямо в состоянии
 function compact(S){
   const jobs=[];
-  (S.m||[]).forEach(m=>['img','cover'].forEach(k=>jobs.push(shrink(m[k]).then(u=>{if(u){m[k]=u;return 1}return 0}))));
+  (S.m||[]).forEach(m=>[m,m.otherPhotos].filter(Boolean).forEach(photos=>{
+    ['img','cover'].forEach(k=>{
+      const original=photos[k];
+      jobs.push(shrink(original).then(u=>{if(u&&photos[k]===original){photos[k]=u;return 1}return 0}));
+    });
+  }));
   ['bgCustom','photo'].forEach(k=>jobs.push(shrink(S[k]).then(u=>{if(u){S[k]=u;return 1}return 0})));
   return Promise.all(jobs).then(r=>r.reduce((a,b)=>a+b,0));
 }

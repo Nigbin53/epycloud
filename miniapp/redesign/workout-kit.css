@@ -135,6 +135,14 @@
 .rd-medit-groups{display:flex;flex-wrap:wrap;gap:8px}
 .rd-medit-chip{height:36px;padding:0 14px;border-radius:18px;font:inherit;font-size:14px;cursor:pointer}
 .rd-medit-photos{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:start}
+.rd-medit-sharing{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;margin:12px 0 2px;padding:6px 0;border:0;background:none;color:inherit;text-align:left;font:500 13px/1.4 var(--rd-font);cursor:pointer}
+.rd-medit-sharing small{display:block;margin-top:3px;font-size:11px;font-weight:400;opacity:.72}
+.rd-medit-sharing:focus-visible{outline:2px solid var(--rd-accent);outline-offset:3px;border-radius:5px}
+.rd-medit-sharing:disabled,.rd-medit-actions button:disabled{opacity:.6;cursor:default}
+:root[data-silver] .rd-medit-sharing .swtc{position:relative;display:block;width:64px!important;height:30px!important;padding:0!important;border:2px solid transparent;border-radius:999px!important;background:var(--sl-switch-recess) padding-box,var(--sl-switch-rim) border-box!important;box-shadow:inset 0 3px 7px #0009,0 1px 1px #fff8!important}
+:root[data-silver] .rd-medit-sharing .swtc.on{background:var(--sl-amber) padding-box,var(--sl-switch-rim) border-box!important;box-shadow:inset 0 3px 5px #6b2e0080,0 1px 1px #fff8!important}
+:root[data-silver] .rd-medit-sharing .swtc i{position:absolute;top:0;left:0;width:34px!important;height:26px!important;border-radius:999px!important;background:var(--sl-switch-thumb)!important;box-shadow:var(--sl-switch-thumb-shadow)!important}
+:root[data-silver] .rd-medit-sharing .swtc.on i{transform:translateX(26px)}
 .rd-medit-pick{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;border-radius:16px;font-size:13px;font-weight:600}
 .rd-medit-pick.ph{width:120px;aspect-ratio:3/2}
 .rd-medit-pick.wd{width:100%;aspect-ratio:20/9}
