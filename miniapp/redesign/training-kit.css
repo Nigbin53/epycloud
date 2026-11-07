@@ -588,6 +588,13 @@
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-adjustment>.ui-icon-button{width:52px;height:52px;min-width:52px;min-height:52px;border-radius:50%;color:var(--white-secondary)}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-reading{position:relative;flex:0 0 104px;width:104px;height:104px;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1px solid var(--wt-metal-rim);border-radius:50%;overflow:hidden;background:url('../white/assets/steel-dial.png') center/125% no-repeat;box-shadow:var(--wt-metal-shadow)}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-reading:before{content:'';position:absolute;top:7px;left:calc(50% - 1px);width:1.5px;height:13px;background:var(--white-accent)}
+:root[data-silver][data-redesign-theme="white"] .rd-approved-training.ta-detail-page.white-leg-detail .ta-load-reading::before{
+ left:50%;
+ transform:translateX(-50%);
+ border-radius:999px;
+ background:linear-gradient(180deg,#181818,#555 .65px,#f4f4f4 1.4px,#fff 2px);
+ box-shadow:-.3px -.35px .55px #292929a6,0 .45px .9px #fffe;
+}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-adjustment>.ta-load-reading>.ui-number{flex:0 0 auto;width:2ch;max-width:80%;height:36px;min-height:0;font:700 31px/1 var(--white-font);letter-spacing:-1px;text-align:center;color:var(--white-text)}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-load-reading>.ui-unit{margin:0;font:500 8px/1.2 var(--white-font);letter-spacing:.9px;color:var(--white-text)}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-sets-reps{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;padding:9px 12px 12px;border:1px solid var(--white-line);border-radius:14px;margin-bottom:16px;background:linear-gradient(145deg,#ffffff12,#d4d7d21a);box-shadow:inset 0 1px 1px #ffffff30}
