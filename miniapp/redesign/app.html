@@ -4700,8 +4700,8 @@ function sheetRender(){
   h+=boxes(false);
   h+='<button class="donerow'+(cur.ok?' on':'')+'" data-a="ok" aria-pressed="'+(!!cur.ok)+'"><span class="donebox">'+SVG_CHECK(16,3)+'</span><span class="donetxt"><b>Все подходы выполнены</b><em>'+(cur.ok?'В следующий раз предложим +'+f(cur.st)+' кг':'Отметь — подскажем, когда прибавить')+'</em></span></button>';
   h+='<div class="chart"><div class="wtop"><em>'+(m.h.length?'Динамика'+(gain?' · <b>'+(gain>0?'+':'−')+f(Math.abs(gain))+' кг</b>':''):'Истории пока нет')+'</em><div class="seg" role="group" aria-label="Период">'
-    +'<button class="'+(mkRange==="week"?"on":"")+'" data-a="mkr" data-v="week">Неделя</button>'
-    +'<button class="'+(mkRange==="month"?"on":"")+'" data-a="mkr" data-v="month">Месяц</button></div></div>'
+    +'<button class="'+(mkRange==="week"?"on":"")+'" data-a="mkr" data-v="week" aria-pressed="'+(mkRange==="week")+'">Неделя</button>'
+    +'<button class="'+(mkRange==="month"?"on":"")+'" data-a="mkr" data-v="month" aria-pressed="'+(mkRange==="month")+'">Месяц</button></div></div>'
     +spark(m)+'</div>';
   h+='<div class="msfoot"><button class="save" data-a="save">Сохранить</button><button class="delbtn" data-a="del">'+SVG_TRASH+'Удалить тренажёр</button></div></div>';
   el.innerHTML=h;
@@ -4793,7 +4793,18 @@ document.addEventListener("click",function(e){
   else if(a==="dr"){var tm=cur.type==="time",r0=cur.r;cur.r=Math.min(tm?600:50,Math.max(tm?5:1,cur.r+(+v)*(tm?5:1)));if(cur.r!==r0)buzz("light");sheet()}
   else if(a==="ok"){cur.ok=!cur.ok;sheet()}
   else if(a==="rmimg"){cur.img="";sheet()}
-  else if(a==="mkr"){mkRange=v;sheet()}
+  else if(a==="mkr"){
+    if(v===mkRange)return;
+    var periodChart=t.closest(".chart"),plot=periodChart?.querySelector(":scope > svg"),machine=cur&&find(cur.id);
+    if(!plot||!machine)return;
+    mkRange=v;
+    plot.outerHTML=spark(machine);
+    periodChart.querySelectorAll('[data-a="mkr"]').forEach(function(button){
+      var selected=button.dataset.v===mkRange;
+      button.classList.toggle("on",selected);
+      button.setAttribute("aria-pressed",String(selected));
+    });
+  }
   else if(a==="bwr"){bwRange=v;render()}
   else if(a==="up"){cur.w=Math.round((cur.w+cur.st)*100)/100;cur.ok=false;buzz();sheet()}
   else if(a==="save"){
