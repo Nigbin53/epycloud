@@ -629,7 +629,7 @@
  box-shadow:0 .7px 1px #ffffffb3,inset 0 .7px 2.5px #3d3d3d66,inset 0 -.7px 1px #ffffff66;
 }
 :root[data-silver] #sheet .wt-save-face{
- position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;gap:10px;
+ position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;
  width:100%;height:100%;border-radius:inherit;overflow:hidden;pointer-events:none;
  background:radial-gradient(ellipse at 25% 10%,#f1f1f1 0%,#c6c6c6 50%,#949494 100%);
  box-shadow:inset 0 .8px 1px #fff,inset 0 -1.2px 1px #73737378,1.2px 1.8px 2.5px #27272738,.4px .7px 1px #2a2a2a5c;
@@ -640,7 +640,7 @@
 :root[data-silver] #sheet .wt-save-face::before{background:url('silver/assets/grain-fine.png') center/160px;mix-blend-mode:soft-light;opacity:.45}
 :root[data-silver] #sheet .wt-save-face::after{background:radial-gradient(ellipse at 28% 16%,#ffffff14,transparent 65%)}
 :root[data-silver] #sheet .wt-save-face>.button-label{flex:none;width:auto}
-:root[data-silver] #sheet .wt-save-indicator{display:grid;place-items:center;flex:0 0 19px}
+:root[data-silver] #sheet .wt-save-indicator{position:absolute;top:calc(50% + 10px);left:50%;display:grid;place-items:center;transform:translateX(-50%)}
 :root[data-silver] #sheet .wt-save-indicator::before{content:'';width:4px;height:4px;border-radius:50%;background:#747872;opacity:.32;box-shadow:inset 0 .5px 1px #3334}
 @media(hover:hover){
  :root[data-silver] #sheet .wt-save-button:not(:disabled):hover .wt-save-face{filter:brightness(1.025)}
