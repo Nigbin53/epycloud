@@ -617,6 +617,51 @@
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .wt-save-button>.button-label{flex:0 0 auto;width:auto}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-detail-content>.wt-save-button:hover:not(:disabled){background:linear-gradient(135deg,#fafaf5cc,#e1e3decc);box-shadow:inset 0 1px 1px #fff,inset 0 -1px 1px #646a6940,0 0 0 2px #ffffff70,0 0 0 3px #6f74734d,0 5px 9px #242a292e}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-detail-content>.wt-save-button:active:not(:disabled){background:#d8dbd8;box-shadow:inset 0 2px 4px #252e3124,0 0 0 2px #ffffff52,0 0 0 3px #6f747346,0 2px 4px #242a2926;transform:translateY(1px)}
+/* TACTILE Buttons: the Silver record cap travels inside a fixed capsule seat. */
+:root[data-silver] #sheet .wt-save-button{
+ isolation:isolate;overflow:visible;padding:1.5px;border:0;
+ background:linear-gradient(140deg,#868686 0%,#a5a5a5 38%,#d7d7d7 73%,#b5b5b5 100%);
+ box-shadow:none;transform:none;color:#1b1b1b;font:500 13px/1.4 Arial,Helvetica,sans-serif;
+}
+:root[data-silver] #sheet .wt-save-button::before{
+ position:absolute;inset:-.375px;z-index:-1;width:auto;height:auto;border-radius:inherit;pointer-events:none;
+ background:radial-gradient(ellipse at 18% 8%,#44444438,transparent 68%),linear-gradient(180deg,#7d7d7d 0%,#adadad 28%,#cdcdcd 56%,#e9e9e9 88%,#c7c7c7 100%);
+ box-shadow:0 .7px 1px #ffffffb3,inset 0 .7px 2.5px #3d3d3d66,inset 0 -.7px 1px #ffffff66;
+}
+:root[data-silver] #sheet .wt-save-face{
+ position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;gap:10px;
+ width:100%;height:100%;border-radius:inherit;overflow:hidden;pointer-events:none;
+ background:radial-gradient(ellipse at 25% 10%,#f1f1f1 0%,#c6c6c6 50%,#949494 100%);
+ box-shadow:inset 0 .8px 1px #fff,inset 0 -1.2px 1px #73737378,1.2px 1.8px 2.5px #27272738,.4px .7px 1px #2a2a2a5c;
+ transition:transform 160ms,box-shadow 160ms,filter 160ms;
+}
+:root[data-silver] #sheet .wt-save-face::before,
+:root[data-silver] #sheet .wt-save-face::after{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit}
+:root[data-silver] #sheet .wt-save-face::before{background:url('silver/assets/grain-fine.png') center/160px;mix-blend-mode:soft-light;opacity:.45}
+:root[data-silver] #sheet .wt-save-face::after{background:radial-gradient(ellipse at 28% 16%,#ffffff14,transparent 65%)}
+:root[data-silver] #sheet .wt-save-face>.button-label{flex:none;width:auto}
+:root[data-silver] #sheet .wt-save-indicator{display:grid;place-items:center;flex:0 0 19px}
+:root[data-silver] #sheet .wt-save-indicator::before{content:'';width:4px;height:4px;border-radius:50%;background:#747872;opacity:.32;box-shadow:inset 0 .5px 1px #3334}
+@media(hover:hover){
+ :root[data-silver] #sheet .wt-save-button:not(:disabled):hover .wt-save-face{filter:brightness(1.025)}
+}
+:root[data-silver] #sheet .wt-save-button:not(:disabled):active .wt-save-face{
+ transform:translateY(1.5px);filter:brightness(.98);
+ box-shadow:inset 0 2px 4px #30303073,inset 0 -.7px 1px #ffffffb3;
+}
+:root[data-silver] #sheet .wt-save-button:not(:disabled):active .wt-save-indicator::before{background:#d18b2b;opacity:.8;box-shadow:inset 0 .5px .5px #ffdfa266}
+:root[data-silver] #sheet .wt-save-face.wt-save-release{animation:wt-save-release 230ms cubic-bezier(.2,.7,.3,1)}
+@keyframes wt-save-release{
+ 0%{transform:translateY(1.5px) scale(.975)}
+ 72%{transform:translateY(-.35px) scale(1.004)}
+ 100%{transform:none}
+}
+@media(pointer:coarse){:root[data-silver] #sheet .wt-save-face.wt-save-release{animation-duration:180ms}}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver] #sheet .wt-save-face.wt-save-release{animation:none}
+ :root[data-silver] #sheet .wt-save-face,
+ :root[data-silver] #sheet .wt-save-button:not(:disabled):active .wt-save-face{transition:none;transform:none}
+}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-muscles{gap:20px;margin:24px 0 16px}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-muscles-photo{width:116px;height:144px;flex-basis:116px;margin-left:-14px;object-fit:contain;filter:none}
 :root[data-redesign-theme="white"] .rd-approved-training.ta-detail-page.rd-approved-training.white-leg-detail .ta-muscle-labels .ui-list-title{font:500 11px/1.4 var(--white-font)}

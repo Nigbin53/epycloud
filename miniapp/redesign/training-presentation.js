@@ -1,6 +1,6 @@
 /* Approved02 presentation over the original native machine model and actions. */
 (() => {
-'use strict';let scheduled=false;
+'use strict';let scheduled=false,pressedSaveId=null;
 const fmt=n=>Number(n).toLocaleString('ru-RU').replace(/\u00a0/g,' ');
 function hook(button,action,value,label){button.removeAttribute('data-action');button.dataset.a=action;if(value!==undefined)button.dataset.v=String(value);if(label)button.setAttribute('aria-label',label);}
 function present(){
@@ -26,7 +26,8 @@ function present(){
  hook(page.querySelector('[data-action="back"]'),'close',undefined,'Назад');
  const star=page.querySelector('[data-action="star"]');hook(star,'rdmachinefav',undefined,'Избранное');star.setAttribute('aria-pressed',String(!!data.machine.favorite));star.classList.toggle('filled',!!data.machine.favorite);
  page.querySelectorAll('[data-action^="step:"]').forEach(button=>{const [_,key,delta]=button.dataset.action.split(':');hook(button,{load:'dw',sets:'ds',reps:'dr'}[key],Number(delta)<0?-1:1,({load:'веса',sets:'подходов',reps:'повторов'}[key]+' '+(Number(delta)<0?'меньше':'больше')));});
- hook(page.querySelector('[data-action="save"]'),'save',undefined,'Записать подход');
+ const saveButton=page.querySelector('[data-action="save"]');
+ hook(saveButton,'save',undefined,'Записать подход');
  const nav={dumbbell:'workout',weight:'weight',fork:'kbju',history:'history'};page.querySelectorAll('[data-action^="nav:"]').forEach(button=>hook(button,'rdmachinenav',nav[button.dataset.action.split(':')[1]]));
  const content=page.querySelector('.ta-detail-content');
  if(data.working.ok){nativeDone.className='rd-training-success';nativeDone.setAttribute('role','status');nativeDone.innerHTML=UI.icon('check',18)+'<span>Все подходы выполнены</span>';content.querySelector('[data-a="save"]').before(nativeDone);}
@@ -73,6 +74,18 @@ function present(){
  const modeNote=document.createElement('p');modeNote.className='eq-load-note eq-detail-load-note';modeNote.textContent=window.GymMachineLibrary.modeFor(data.machine).hint;
  const loadControls=page.querySelector('.ta-load');if(loadControls)loadControls.append(modeNote);
  trialMachine(page,data,theme); // подходы, подсказка, типы упражнений
+ if(theme==='white'){
+  const face=document.createElement('span');
+  face.className='wt-save-face';
+  const indicator=document.createElement('span');
+  indicator.className='wt-save-indicator';
+  indicator.setAttribute('aria-hidden','true');
+  face.append(indicator,...saveButton.childNodes);
+  saveButton.append(face);
+  saveButton.addEventListener('click',()=>{pressedSaveId=data.machine.id;});
+  if(pressedSaveId===data.machine.id)face.classList.add('wt-save-release');
+ }
+ pressedSaveId=null;
  // при +/− страница пересобирается: фото и анатомию берём прежними узлами — без перезагрузки картинки и мелькания
  const layersNew=page.querySelector('.ta-detail-photo-layers');
  if(layersNew){
