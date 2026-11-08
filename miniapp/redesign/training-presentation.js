@@ -139,7 +139,7 @@ function bindLoadInput(page,button,input,id){
  button.setAttribute('aria-label','Изменить вес, '+button.textContent+' кг');
  // The original field's demo handler must not change the live readout before commit.
  input.removeAttribute('data-value');
- input.classList.add('rd-load-input');
+ input.classList.add('rd-training-value','rd-load-input');
  input.setAttribute('aria-label','Вес в килограммах');
  input.autocomplete='off';
  input.enterKeyHint='done';

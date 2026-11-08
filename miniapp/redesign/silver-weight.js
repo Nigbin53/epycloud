@@ -54,7 +54,7 @@
    content.classList.toggle('sl-weight-empty',home&&!content.querySelector('.wval'));
   }
   document.querySelectorAll('#appcontent .wval,#scrpage.wsscr .wval,#sheet.logsheet .num').forEach(readout);
-  document.querySelectorAll('#appcontent .wlog,#appcontent .wsicon,#sheet.logsheet .round').forEach(face);
+  document.querySelectorAll('#appcontent .wlog,#sheet.logsheet .round').forEach(face);
  }
  function schedule(){if(!pending){pending=true;requestAnimationFrame(present);}}
  const shell=document.querySelector('.screen');

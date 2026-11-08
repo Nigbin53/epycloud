@@ -123,7 +123,7 @@
 /* Inline keyboard entry on the machine weight readout. */
 #sheet .leg-detail .ta-load-reading>.rd-load-trigger{appearance:none;cursor:text;min-width:44px}
 #sheet .leg-detail .ta-load-reading>.rd-load-input{
- width:100%;max-width:100%;padding:0 4px;font-size:24px;
+ width:100%;max-width:100%;margin:0;padding:0 4px;
  border:0;outline:none;background:transparent;box-shadow:none;caret-color:currentColor;
 }
 
@@ -154,8 +154,8 @@
 :root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-load-adjustment{gap:var(--bt-detail-control-gap)}
 :root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-load-adjustment>.ui-icon-button{width:52px;height:52px;min-width:52px;min-height:52px}
 #sheet .black-leg-layout .ta-load-reading{position:relative}
-#sheet .black-leg-layout .ta-load-reading>.rd-load-trigger{height:52px}
-#sheet .black-leg-layout .ta-load-reading>.rd-load-input{height:44px;margin-block:0}
+#sheet .black-leg-layout .ta-load-reading>:is(.rd-load-trigger,.rd-load-input){height:52px}
+#sheet .black-leg-layout .ta-load-reading>.rd-load-input{width:calc(100% + 2 * var(--bt-detail-control-gap) - 8px);max-width:none}
 #sheet .black-leg-layout .ta-load-reading>.ui-unit{
  position:absolute;top:calc(50% + clamp(22px,6vw,37px));left:50%;transform:translateX(-50%);white-space:nowrap;
 }
