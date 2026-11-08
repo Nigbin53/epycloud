@@ -113,13 +113,58 @@
 :root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers .ta-detail-hero[data-equipment-personal="true"],:root[data-redesign-theme] .rd-approved-training .ta-detail-photo-layers .ta-detail-hero[data-equipment-placeholder="true"]{left:0!important;right:auto!important;top:50%!important;bottom:auto!important;width:100%!important;height:auto!important;max-width:none!important;aspect-ratio:3/2;transform:translateY(-50%)!important;object-fit:cover!important;object-position:center center!important;border-radius:0!important;box-shadow:none!important}
 /* карандаш рядом с избранным */
 :root[data-redesign-theme="white"] .rd-approved-training.white-leg-detail .ta-detail-content>.ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 38px 38px!important}
-:root[data-redesign-theme="black"] .rd-approved-training.black-leg-layout .ta-detail-content>.ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 36px 44px!important;column-gap:4px!important;height:auto!important;min-height:76px}
 :root[data-redesign-theme="white"] .rd-approved-training .ui-header>.rd-medit-open{box-sizing:border-box;width:38px;height:38px;min-width:38px;min-height:38px;border:1px solid var(--white-border)!important;border-radius:50%;justify-self:end}
 :root[data-redesign-theme="black"] .rd-approved-training .ui-header>.rd-medit-open{justify-self:end}
 /* без рабочего веса «подходы × повторы» по левому краю названия */
 :root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-column,.bt-current-column){align-items:flex-start!important;text-align:left}
 :root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-sets,.bt-current-values){padding-left:0!important}
 :root[data-redesign-theme] .rd-approved-training.rd-noload :is(.wt-current-values,.bt-current-values){grid-template-columns:auto auto auto!important;column-gap:14px!important}
+
+/* Match the Silver layout on the Black machine screen. */
+:root[data-redesign-theme="black"] #sheet .black-leg-layout{
+ --bt-detail-gutter:20px;
+ --bt-detail-control-gap:20px;
+ --bt-detail-header-gap:12px;
+}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-content{padding:8px var(--bt-detail-gutter) 24px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-header{
+ width:100%;height:76px;margin:0;padding:0 0 0 18px;
+ grid-template-columns:minmax(0,1fr) 38px;column-gap:var(--bt-detail-header-gap);
+}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-header:has(>.rd-medit-open){grid-template-columns:minmax(0,1fr) 38px 38px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-header>[data-a="close"]{left:-16px;width:28px;min-width:28px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-header>[data-a="close"]>.ui-icon{width:16px;height:16px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-header>:is(.rd-medit-open,[data-a="rdmachinefav"]){width:38px;height:38px;min-width:38px;min-height:38px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .bt-detail-current{width:100%;margin:0;padding:0 18px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-detail-photo-layers{
+ width:calc(100% + 40px);height:292px;margin:0 -20px;margin-top:0!important;
+}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout.rd-noload .ta-detail-photo-layers{margin-top:8px!important}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-detail-hero:is([data-equipment-personal="true"],[data-equipment-placeholder="true"]){
+ top:1px!important;transform:none!important;
+}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-load{width:100%;margin:-13px 0 16px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-load-adjustment{gap:var(--bt-detail-control-gap)}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-load-adjustment>.ui-icon-button{width:52px;height:52px;min-width:52px;min-height:52px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .rd-reps-only .ta-small-metric{row-gap:0}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .rd-reps-only .ta-small-adjustment{gap:0}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .rd-reps-only .ta-small-number{height:25px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-detail-content>[data-a="save"]{width:168px;height:52px;margin:0 auto;border-radius:999px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-muscles{margin-bottom:16px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ta-leg-summary{min-height:95px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-bottom-nav{width:100%;padding-top:10px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-nav-item{gap:5px}
+
+/* Keep the Black segmented control in the same space as the Silver switch. */
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .rd-training-chart .seg{width:149px;min-height:44px}
+:root[data-redesign-theme="black"] #sheet .black-leg-layout .rd-training-chart .seg>button{flex:1;min-width:0;padding-inline:4px}
+@media(max-width:360px){
+ :root[data-redesign-theme="black"] #sheet .black-leg-layout{--bt-detail-gutter:16px;--bt-detail-control-gap:16px;--bt-detail-header-gap:8px}
+ :root[data-redesign-theme="black"] #sheet .black-leg-layout .ui-bottom-nav{padding-inline:8px}
+}
+@media(max-width:329px){
+ :root[data-redesign-theme="black"] #sheet .black-leg-layout .rd-sets-empty{min-height:54.6px}
+}
 
 /* ---------- редактор тренажёра ---------- */
 .rd-medit{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,12,14,.45);opacity:0;transition:opacity .2s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
