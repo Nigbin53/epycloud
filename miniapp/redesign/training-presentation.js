@@ -17,7 +17,14 @@ function present(){
  const used=!!(data.machine.used||(data.machine.h&&data.machine.h.length)||data.logs>0);
  page.classList.toggle('rd-noload',!used); // без записей шапка без блока веса
  for(const key of ['load','sets','reps']){
-  const input=page.querySelector('[data-value="'+key+'"]');const value=document.createElement('span');value.className=input.className+' rd-training-value';value.dataset.value=key;value.textContent=fmt(values[key]);input.replaceWith(value);
+  const input=page.querySelector('[data-value="'+key+'"]');
+  const editable=key==='load'&&data.machine.type!=='time';
+  const value=document.createElement(editable?'button':'span');
+  value.className=input.className+' rd-training-value';
+  value.dataset.value=key;
+  value.textContent=fmt(values[key]);
+  input.replaceWith(value);
+  if(editable)bindLoadInput(page,value,input,data.machine.id);
   // до первой записи у тренажёра нет рабочего веса — в шапке «—», значение на регуляторе лишь подсказка
   page.querySelectorAll('[data-white-current="'+key+'"],[data-dark-current="'+key+'"],[data-training-summary="'+key+'"]').forEach(el=>el.textContent=(key==='load'&&!used)?'—':fmt(values[key]));
  }
@@ -106,27 +113,88 @@ function present(){
  sheet.replaceChildren(page);
 }
 let keptPhoto=null,keptMuscle=null,lastVals=null;
-/* +/− веса и повторов: меняем только цифры на месте, без пересборки страницы — ничего не мерцает */
-function stepInPlace(e){
+function putTrainingValue(page,selector,text,direction=0){
+ page.querySelectorAll(selector).forEach(el=>{
+  if(el.textContent===text)return;
+  el.textContent=text;
+  if(el.classList.contains('rd-load-trigger'))el.setAttribute('aria-label','Изменить вес, '+text+' кг');
+  if(direction&&el.classList.contains('rd-training-value')){
+   el.classList.remove('rd-roll-up','rd-roll-down');
+   void el.offsetWidth;
+   el.classList.add(direction>0?'rd-roll-up':'rd-roll-down');
+  }
+ });
+}
+function updateLoad(page,weight,direction=0){
+ const text=fmt(weight);
+ putTrainingValue(page,'.rd-training-value[data-value="load"]',text,direction);
+ if(!page.classList.contains('rd-noload')){
+  putTrainingValue(page,'[data-white-current="load"],[data-dark-current="load"],[data-training-summary="load"]',text);
+ }
+ if(lastVals)lastVals.load=weight;
+}
+function bindLoadInput(page,button,input,id){
+ button.type='button';
+ button.classList.add('rd-load-trigger');
+ button.setAttribute('aria-label','Изменить вес, '+button.textContent+' кг');
+ // The original field's demo handler must not change the live readout before commit.
+ input.removeAttribute('data-value');
+ input.classList.add('rd-load-input');
+ input.setAttribute('aria-label','Вес в килограммах');
+ input.autocomplete='off';
+ input.enterKeyHint='done';
+ let editing=false;
+ const finish=(cancel=false)=>{
+  if(!editing)return;
+  editing=false;
+  input.replaceWith(button);
+  if(cancel)return;
+  const text=input.value.trim().replace(/[ \u00a0\u202f]/g,'');
+  if(!text)return;
+  const parsed=/^(?:\d+(?:[.,]\d{0,2})?|[.,]\d{1,2})$/.test(text)?Number(text.replace(',','.')):NaN;
+  const weight=window.gymCurSetWeight(id,parsed);
+  if(weight===null){
+   window.gymToast('Некорректный вес',null,'Введите вес с точностью до сотых, например 47,5');
+   return;
+  }
+  updateLoad(page,weight);
+ };
+ button.addEventListener('click',()=>{
+  input.value=button.textContent;
+  editing=true;
+  button.replaceWith(input);
+  input.focus();
+  input.select();
+ });
+ input.addEventListener('blur',()=>finish());
+ input.addEventListener('keydown',e=>{
+  if(e.isComposing||(e.key!=='Enter'&&e.key!=='Escape'))return;
+  e.preventDefault();
+  e.stopPropagation();
+  finish(e.key==='Escape');
+  button.focus({preventScroll:true});
+ });
+}
+/* Обновляем показания на месте, без пересборки страницы. */
+function handleTrainingClick(e){
+ const input=document.activeElement;
+ if(input?.classList.contains('rd-load-input')&&e.target!==input)input.blur();
  const b=e.target.closest&&e.target.closest('#sheet .rd-approved-training [data-a="dw"], #sheet .rd-approved-training [data-a="dr"]');
  if(!b||typeof window.gymCurStep!=='function')return;
  e.stopImmediatePropagation();e.preventDefault();
  if(e.isTrusted&&window.gymHoldSwallowUntil>performance.now()){window.gymHoldSwallowUntil=0;return;} // отпускание после удержания — без лишнего шага
  const res=window.gymCurStep(b.dataset.a,+b.dataset.v);if(!res)return;
  const page=b.closest('.rd-approved-training');
- const put=(sel,txt,dir)=>page.querySelectorAll(sel).forEach(el=>{if(el.textContent===txt)return;el.textContent=txt;
-  if(dir&&el.classList.contains('rd-training-value')){el.classList.remove('rd-roll-up','rd-roll-down');void el.offsetWidth;el.classList.add(dir>0?'rd-roll-up':'rd-roll-down');}});
  if(b.dataset.a==='dw'){
-  put('.rd-training-value[data-value="load"]',fmt(res.w),res.w-(lastVals?lastVals.load:res.w));
-  if(!page.classList.contains('rd-noload'))put('[data-white-current="load"],[data-dark-current="load"],[data-training-summary="load"]',fmt(res.w));
+  updateLoad(page,res.w,res.w-(lastVals?lastVals.load:res.w));
  }else{
-  put('.rd-training-value[data-value="reps"]',fmt(res.r),res.r-(lastVals?lastVals.reps:res.r));
-  put('[data-white-reps]',String(res.r));
-  put('[data-white-current="reps"],[data-dark-current="reps"],[data-training-summary="reps"]',fmt(res.r));
+  putTrainingValue(page,'.rd-training-value[data-value="reps"]',fmt(res.r),res.r-(lastVals?lastVals.reps:res.r));
+  putTrainingValue(page,'[data-white-reps]',String(res.r));
+  putTrainingValue(page,'[data-white-current="reps"],[data-dark-current="reps"],[data-training-summary="reps"]',fmt(res.r));
+  if(lastVals)lastVals.reps=res.r;
  }
- if(lastVals){lastVals.load=+res.w;lastVals.reps=+res.r;}
 }
-document.addEventListener('click',stepInPlace,true);
+document.addEventListener('click',handleTrainingClick,true);
 /* ---------- r10: подходы, подсказка «пора прибавить», типы упражнений ---------- */
 const exTypeOf=m=>['free','body','time'].includes(m&&m.type)?m.type:'machine';
 function setText(type,x){
