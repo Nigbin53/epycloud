@@ -80,9 +80,10 @@ function present(){
  const meals=kn.querySelector('.kn-meals');
  if(meals&&!meals.querySelector('.kn-empty')){meals.classList.add('rd-native-meals');page.querySelector('.na-actions').after(meals);}
  const water=page.querySelector('.na-water');
- const minus=water.querySelector('[data-action="water:minus"]');nativeButton(minus,'kbw',-1,'Убрать стакан');minus.disabled=data.water===0;
- nativeButton(water.querySelector('[data-action="water:add"]'),'kbw',1,'Добавить стакан 250 мл');
- const portion=water.querySelector('[data-action="water:portion"]');const portionLabel=document.createElement('span');portionLabel.className=portion.className;portionLabel.innerHTML=portion.innerHTML;portionLabel.querySelector('.ui-button-icon')?.remove();portion.replaceWith(portionLabel);
+ const minus=water.querySelector('[data-action="water:minus"]');
+ const plus=water.querySelector('[data-action="water:add"]');
+ nativeButton(minus,'kbw',-1,'Убрать стакан');
+ nativeButton(plus,'kbw',1,'Добавить стакан 250 мл');
  nativeButton(page.querySelector('.na-budget-heading button'),'kbopen','kbInsights','Расчёт бюджета недели');
  update(page,data,white);
  kn.replaceChildren(page);

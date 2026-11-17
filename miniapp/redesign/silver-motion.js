@@ -5,7 +5,7 @@
  const root=document.documentElement;
  const primary='.save:not(.wlog),.addbtn,.expbtn,.obnext,.rd-medit-save,.rd-plan-new,.rd-plan-start,.proplan-btn,.pgo,.logbtn,.mstart,.factbtn,.kn-main,.km-parse,.km-rec,.km-retry,.km-cfa,.kv-rec,.kv-own,.ks-save,.ks-addb,.kr-save,.kr-rec,.kr-done,.kg-save,.kg-cta,.kg-done,.ki-apply,.ki-wsave,.ki-wbtn,.kc-set,.kf-main,.kn-tip>button,.rd-approved-training [data-a="save"]';
  const round='.kv-add,.kn-favadd,.proedit,.rd-medit-open,.kn-tip>button,.kv-rec,.round,.mini,.obwbtn,.obtarget>button,.rd-medit-step button,.ui-adjust-button,.ui-adjustment-button,.ui-adjust-button,.rd-approved-training [data-a="dw"],.rd-approved-training [data-a="ds"],.rd-approved-training [data-a="dr"],.pecam';
- const excluded='.delown,.wlog,.wsicon,.logsheet .round,.na-camera-button,.kc-shoot,.white-nutrition-shortcut,.rd-nutrition-goal,.kb-ic,.kv-pin,.kv-edit,.kv-del,.kn-rowedit,.wt-record-button,.tg-star,.tg-done';
+ const excluded='.na-water-controls>.ui-adjust-button,.delown,.wlog,.wsicon,.logsheet .round,.na-camera-button,.kc-shoot,.white-nutrition-shortcut,.rd-nutrition-goal,.kb-ic,.kv-pin,.kv-edit,.kv-del,.kn-rowedit,.wt-record-button,.tg-star,.tg-done';
  // The full-screen machine page keeps the original White presentation.
  // Suspending the Silver cascade restores its original tokens as well as controls.
  const silverStyles=[...document.querySelectorAll('link[rel="stylesheet"][href^="silver-"]')];

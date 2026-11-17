@@ -121,6 +121,23 @@
  :root[data-silver] #scrpage :is(.kc-frame .scan,.kb-spin){animation:none!important}
 }
 :root[data-silver] #appcontent .rd-approved-nutrition .na-water-track{background:#77777735!important;border-color:#59606638!important;box-shadow:inset 0 .7px 1px #5553,0 .7px 0 #fff9!important}
+:root[data-silver][data-redesign-theme] #appcontent .na-water-controls>.ui-adjust-button{
+ border:1px solid #59595342;
+ border-radius:50%;
+ background:transparent;
+ color:#86570f;
+ box-shadow:none;
+ transition:background-color 140ms ease;
+}
+@media(hover:hover){
+ :root[data-silver][data-redesign-theme] #appcontent .na-water-controls>.ui-adjust-button:hover:not(:disabled){background:#ffffff45}
+}
+:root[data-silver][data-redesign-theme] #appcontent .na-water-controls>.ui-adjust-button:active:not(:disabled){
+ background:#bb760c16;transform:none;
+}
+:root[data-silver][data-redesign-theme] #appcontent .na-water-controls>.ui-adjust-button:disabled{
+ color:var(--sl-muted);background:transparent;opacity:.55;
+}
 :root[data-silver] #scrpage .ki-chart polyline{stroke:#ffccd5!important;filter:drop-shadow(0 0 2px #eb777b33)}
 :root[data-silver] #scrpage .ki-chart circle{fill:#fff0f1!important;stroke:#ffb7bd!important;filter:drop-shadow(0 0 3px #f6b8ba66)}
 :root[data-silver] #scrpage .ki-chart g>rect{fill:#5c6a64!important}
