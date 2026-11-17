@@ -72,6 +72,10 @@
 /* Black: дни без горизонтальной линии, как на экране 01 */
 :root[data-redesign-theme="black"] .rd-workout .ui-calendar{border-bottom:0}
 :root[data-redesign-theme] .rd-workout{margin-top:22px}
+:root[data-redesign-theme] #appcontent .rd-workout .ta-overview-content > .ta-exercise{
+ width:auto;
+ margin-inline:calc(14px - var(--rd-gutter));
+}
 :root[data-redesign-theme] .rd-workout .training-overview,:root[data-redesign-theme] .rd-workout .ui-page{background:transparent!important;box-shadow:none!important;min-height:0!important;height:auto!important;overflow:visible!important}
 :root[data-redesign-theme] .rd-approved-training.rd-workout{background:transparent!important}
 :root[data-redesign-theme="black"] .rd-workout .ta-today-line{display:flex;justify-content:flex-end}
