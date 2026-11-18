@@ -58,6 +58,7 @@
 :root[data-redesign-theme] .hi .h1{font:500 8px/1.4 var(--rd-font);letter-spacing:1.4px;text-transform:uppercase;color:var(--rd-muted)}
 :root[data-redesign-theme] .hi .h2{margin-top:4px;font:var(--rd-heading-weight) 26px/1.1 var(--rd-font);letter-spacing:-.6px}
 :root[data-redesign-theme] .top .hgear{width:44px;height:44px;border-color:var(--rd-rim);box-shadow:none;background:transparent}
+:root[data-redesign-theme='black'] .scrgear[data-a='settingsopen']{border:0;background:transparent;box-shadow:none}
 :root[data-redesign-theme] .obthm{gap:10px;padding:4px;color:var(--rd-text)}
 :root[data-redesign-theme] .obthm .rg{width:72px;height:72px;border-radius:50%;opacity:.85;box-shadow:none;background:none}
 :root[data-redesign-theme] .obthm.on .rg{opacity:1;box-shadow:0 0 0 3px var(--rd-bg),0 0 0 4px var(--rd-accent)}
