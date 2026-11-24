@@ -1,6 +1,10 @@
 /* Экран «Тренировка» в рабочем приложении: утверждённый вид экрана 01.
    Правила tg-* перенесены из components/training-groups.css (Карта экранов). */
-/* Экран 01: заголовки разделов, звезда избранного */
+/* Экран 01: фильтры групп, заголовки разделов, звезда избранного */
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters{display:flex!important;grid-template-columns:none!important;justify-content:flex-start!important;gap:4px;overflow-x:auto!important;overflow-y:hidden;scrollbar-width:none;margin-right:-24px;padding-right:24px}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters::-webkit-scrollbar{display:none}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button{flex:none!important;width:auto!important;min-width:0!important;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button svg{flex:none}
 :root[data-redesign-theme] .rd-workout .ta-page .tg-hidden{display:none!important}
 :root[data-redesign-theme] .rd-workout .ta-page .tg-head{display:flex;align-items:center;justify-content:space-between;margin:18px 2px 10px;color:var(--fit-text,#fff)}
 :root[data-redesign-theme] .rd-workout .ta-page .tg-head-title{display:inline-flex;align-items:center;gap:8px;font:400 17px/1.2 Manrope,sans-serif;letter-spacing:-.2px}
@@ -10,6 +14,8 @@
 :root[data-redesign-theme] .rd-workout .ta-page .tg-empty{display:flex;flex-direction:column;gap:6px;margin:12px 0;padding:28px 20px;border:1px dashed var(--fit-rim,rgba(255,255,255,.2));border-radius:16px;text-align:center;color:var(--fit-text,#fff);font:400 15px/1.3 Manrope,sans-serif}
 :root[data-redesign-theme] .rd-workout .ta-page .tg-empty span{color:var(--fit-muted,#888);font-size:13px;line-height:1.4}
 /* White */
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters{gap:6px}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button{padding:0 12px}
 :root[data-redesign-theme="white"] .rd-workout .ta-page .tg-head{color:var(--white-text)}
 :root[data-redesign-theme="white"] .rd-workout .ta-page .tg-head-title{font:700 12px/1.2 var(--white-font);letter-spacing:1.5px;text-transform:uppercase}
 :root[data-redesign-theme="white"] .rd-workout .ta-page .tg-head-title svg{color:var(--white-accent)}
@@ -71,32 +77,10 @@
  margin-inline:calc(14px - var(--rd-gutter));
 }
 :root[data-redesign-theme] #appcontent .rd-workout .ta-overview-content > .tg-filters{
- display:flex;
- justify-content:space-between;
- gap:0;
- width:100%;
  height:auto;
  min-height:44px;
- margin:12px 0;
- padding:0;
- overflow-x:auto;
- overflow-y:hidden;
- scrollbar-width:none;
+ margin-block:12px;
 }
-:root[data-redesign-theme] #appcontent .rd-workout .tg-filters::-webkit-scrollbar{display:none}
-:root[data-redesign-theme] #appcontent .rd-workout .tg-filters>button{
- display:inline-flex;
- flex:none;
- align-items:center;
- justify-content:center;
- min-width:0;
- min-height:44px;
- padding:0 clamp(3px,1.5vw,8px);
- gap:5px;
- white-space:nowrap;
-}
-:root[data-redesign-theme] #appcontent .rd-workout .tg-filters>button svg{flex:none}
-:root[data-redesign-theme] #appcontent .rd-workout .tg-filters>button:focus-visible{outline-offset:-3px!important}
 :root[data-redesign-theme] #appcontent .rd-workout .ta-overview-content > .ui-calendar + .tg-filters{
  margin-block-start:8px;
 }
@@ -104,6 +88,10 @@
 :root[data-redesign-theme] .rd-approved-training.rd-workout{background:transparent!important}
 :root[data-redesign-theme="black"] .rd-workout .ta-today-line{display:flex;justify-content:flex-end}
 
+/* Вкладки групп помещаются в ширину экрана: без горизонтальной прокрутки, поэтому при переключении ряд не «бегает». */
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters{overflow:visible!important;margin-right:0!important;gap:0!important;justify-content:space-between!important}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button{flex:0 1 auto!important;padding:0 8px!important;gap:5px}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button{padding:0 9px!important;letter-spacing:1px!important}
 /* Дни недели: каждая ячейка строго в своей колонке — обводки не наезжают друг на друга. */
 :root[data-redesign-theme] .rd-workout .ui-calendar>.ui-day{width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;box-sizing:border-box}
 :root[data-redesign-theme="black"] .rd-workout .ui-calendar>.ui-day{border-radius:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
@@ -112,6 +100,12 @@
 :root[data-redesign-theme] .rd-workout .tg-noload{display:none!important}
 /* без блока веса фото не прилипает к названию */
 :root[data-redesign-theme] .rd-workout .tg-noload+:is(.wt-exercise-image,.bt-exercise-photo-frame){margin-top:22px}
+/* Вкладки групп занимают всю ширину блока до правого края карточек */
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters{width:100%!important;max-width:none!important;box-sizing:border-box;padding-left:0!important;padding-right:0!important}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:first-child{padding-left:0!important}
+:root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:last-child{padding-right:0!important}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button.selected:first-child{padding-left:12px!important}
+:root[data-redesign-theme="white"] .rd-workout .ta-page .ta-filters.tg-filters>button.selected:last-child{padding-right:12px!important}
 :root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"]{
  border-bottom-color:transparent;
 }

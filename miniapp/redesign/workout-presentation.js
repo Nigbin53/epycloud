@@ -9,7 +9,6 @@ const DAY_NAMES = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const DAY_FULL = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 let pickerOpen = false;
 let scheduled = false;
-let tabScrollLeft = null;
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fmt = (n) => String(Math.round(Number(n) * 100) / 100).replace('.', ',');
@@ -143,27 +142,20 @@ function apply() {
   const theme = document.documentElement.dataset.redesignTheme === 'white' ? 'white' : 'black';
   const state = catalog.snapshot();
   const header = content.querySelector('.top');
+  const scrollTabs = content.querySelector('.tg-filters');
+  const keepScroll = scrollTabs ? scrollTabs.scrollLeft : null;
   const holder = document.createElement('div');
   holder.innerHTML = build(state, theme);
   content.replaceChildren(...(header ? [header] : []), holder.firstElementChild);
   const tabs = content.querySelector('.tg-filters');
   if (tabs) {
     const active = tabs.querySelector('.selected');
-    if (tabScrollLeft !== null) tabs.scrollLeft = tabScrollLeft;
-    else if (active) tabs.scrollLeft = active.getBoundingClientRect().right - tabs.getBoundingClientRect().right;
-    tabScrollLeft = tabs.scrollLeft;
+    if (keepScroll != null) tabs.scrollLeft = keepScroll;
+    else if (active) tabs.scrollLeft = Math.max(0, active.offsetLeft - 16);
   }
   window.dispatchEvent(new Event('gym-equipment:change')); // подтянуть свои фото тренажёров
 }
 function schedule() { if (scheduled) return; scheduled = true; requestAnimationFrame(apply); }
-
-// The native render replaces the tabs after a click. Capture their position first.
-function rememberTabScroll(event) {
-  const tabs = event.target.closest?.('.rd-workout .tg-filters');
-  if (tabs) tabScrollLeft = tabs.scrollLeft;
-}
-document.addEventListener('scroll', rememberTabScroll, true);
-document.addEventListener('click', rememberTabScroll, true);
 
 document.addEventListener('click', (event) => {
   const pb = event.target.closest('[data-plan]');
