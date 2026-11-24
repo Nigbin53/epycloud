@@ -933,6 +933,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 .kn-tip b{font-size:14px;font-weight:700}
 .kn-tip em{font-style:normal;font-size:12px;color:var(--muted)}
 .kn-tip button{width:44px;height:44px;flex-shrink:0;border-radius:22px;background:var(--acc2);color:var(--bg);display:flex;align-items:center;justify-content:center}
+.kn-tip-add-face{display:none}
 .kn-sech{display:flex;justify-content:space-between;align-items:baseline}
 .kn-sech h2,.kn-h2{margin:0;font-size:20px;font-weight:800}
 .kn-sech span{font-size:13px;color:var(--muted)}
@@ -1714,10 +1715,10 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
 <link rel="stylesheet" href="backgrounds.css?v=5">
 <link rel="stylesheet" href="measurements.css?v=3">
-<link rel="stylesheet" href="silver-core.css?v=11">
+<link rel="stylesheet" href="silver-core.css?v=12">
 <link rel="stylesheet" href="silver-training.css?v=5">
 <link rel="stylesheet" href="silver-weight.css?v=9">
-<link rel="stylesheet" href="silver-nutrition.css?v=12">
+<link rel="stylesheet" href="silver-nutrition.css?v=15">
 <link rel="stylesheet" href="silver-flows.css?v=7">
 <link rel="stylesheet" href="silver-displays.css?v=6">
 <link rel="stylesheet" href="equipment-browser.css?v=1">
@@ -3111,7 +3112,12 @@ function kbMainHtml(){
     h+='<div class="kn-mic" id="kn-mic" data-live="1">'+mic.map(function(x){var v=Math.round(x[1]*10)/10;return '<div><div class="h"><span>'+x[0]+'</span><b>'+(x[2]<10?kbFmt1(v):Math.round(v))+'/'+x[2]+'</b></div><div class="bar"><i style="width:'+Math.min(100,x[1]/x[2]*100).toFixed(0)+'%"></i></div></div>'}).join("")+'</div>'}
   h+='</section>';
   h+='<section class="kn-meals" aria-label="Приёмы пищи">';
-  if(rp>20)h+='<div class="kn-tip"><div><span class="t">Добери белок</span><b>'+esc(KB_TIP.name)+'</b><em>+'+KB_TIP.p+' г белка · '+KB_TIP.kcal+' ккал → '+MEAL_IN[NOW]+'</em></div><button data-a="kbtip" aria-label="Добавить творог">'+kic("plus",20,2.4)+'</button></div>';
+  if(rp>20)h+='<div class="kn-tip"><div><span class="t">Добери белок</span><b>'+esc(KB_TIP.name)+'</b><em>+'+KB_TIP.p+' г белка · '+KB_TIP.kcal+' ккал → '+MEAL_IN[NOW]+'</em></div>'
+    +'<button type="button" data-a="kbtip" aria-label="Добавить творог">'+kic("plus",20,2.4)
+    +'<span class="kn-tip-add-face" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">'
+    +'<defs><linearGradient id="kn-tip-amber-plus" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0" stop-color="#9c4900"/><stop offset=".4" stop-color="#e08b08"/><stop offset=".5" stop-color="#ffd36a"/><stop offset=".6" stop-color="#ffb321"/><stop offset="1" stop-color="#9c4900"/></linearGradient></defs>'
+    +'<path d="M20 8v24M8 20h24" fill="none" stroke="#713600" stroke-width="3.2" stroke-linecap="round"/><path d="M20 8v24M8 20h24" fill="none" stroke="url(#kn-tip-amber-plus)" stroke-width="2.4" stroke-linecap="round"/>'
+    +'</svg></span></button></div>';
   h+='<div class="kn-sech"><h2>Приёмы пищи</h2><span id="kn-cnt" data-live="1">'+T.n+' '+plural(T.n,"запись","записи","записей")+' · '+thous(T.k)+' ккал</span></div>';
   h+=kbUndoHtml("main")+kbMealsFor(key,false)+'</section>';
   var ff=kbFavFilter||NOW,favs=kbFavAll().filter(function(f){return (f.when||[]).indexOf(ff)>=0}).slice(0,3);
@@ -4889,7 +4895,16 @@ document.addEventListener("click",function(e){
   else if(a==="kbfzundo"){kbFzUndo(v)}
   else if(a==="kbundo"){kbRestore()}
   else if(a==="kbstar"){kbToggleMealSet(kbjuSel,v)}
-  else if(a==="kbtip"){var tm=mealForNow();kbAddedToast(addEntries([KB_TIP],tm,kbToday(),"tip"),tm,KB_TIP.name);buzz();render()}
+  else if(a==="kbtip"){
+    if(t.disabled)return;
+    var feedback=window.gymSilverProteinTipFeedback?.(t),tm=mealForNow();
+    kbAddedToast(addEntries([KB_TIP],tm,kbToday(),"tip"),tm,KB_TIP.name);buzz();
+    if(!feedback){render();return}
+    // The suggestion can disappear after adding the portion. Let the face finish first.
+    t.disabled=true;
+    var refreshTip=function(){if(t.isConnected)render()};
+    feedback.finished.then(refreshTip,refreshTip);
+  }
   else if(a==="kbrepeat"){var yl=mealItems(keyShift(kbjuSel,-1),v).map(function(x){return {name:x.name,g:x.g,kcal:x.kcal,p:x.p,c:x.c,f:x.f,fib:x.fib,sug:x.sug,salt:x.salt,items:x.items}});if(yl.length){kbAddedToast(addEntries(yl,v,kbjuSel,"repeat"),v,"вчерашний "+MEAL_IN[v]);render()}}
   else if(a==="kbmenu"){kbMenuOpen=!kbMenuOpen;render()}
   else if(a==="kbff"){kbFavFilter=v;kbMenuOpen=false;render()}
@@ -5335,7 +5350,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="avatar-r8.js?v=equipment-library-r1"></script>
 <script src="../equipment/runtime.js?v=equipment-library-r2"></script>
 <script src="food-ai.js?v=1"></script>
-<script src="silver-motion.js?v=13"></script>
+<script src="silver-motion.js?v=15"></script>
 <script src="silver-icons.js?v=5"></script>
 <script src="silver-weight.js?v=4"></script>
 <script src="silver-nutrition.js?v=3"></script>

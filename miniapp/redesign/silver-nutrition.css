@@ -49,7 +49,56 @@
 :root[data-silver] #appcontent .rd-approved-nutrition .na-side-action>.ui-caption{font-family:Arial,Helvetica,sans-serif!important;color:#626262!important;text-shadow:0 .5px 0 #fff9!important}
 /* No separate cards are introduced. Existing panels use a transparent engraved field. */
 :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-card,.kn-ed,.kn-tip,.kn-fav,.na-water,.km-card,.km-box,.km-exact,.km-it,.km-sum,.km-confirm,.km-aifail,.km-load,.km-aibusy,.kv-row,.kv-pick,.kv-nopick,.kv-none,.kv-saved,.ks-it,.ks-pick,.ks-tot,.ks-ask,.kr-it,.kr-pick,.kr-por,.kr-ps,.kg-card,.kg-prof,.kg-res,.kg-nop,.kg-npres,.kg-info,.kg-fi,.ki-col,.ki-today,.ki-seen,.ki-out,.ki-prot,.ki-ach,.kc-nocam,.kf-si,.kwk-row){background:transparent!important;border-color:#59606638!important;box-shadow:1px 1px 0 #ffffffb3,inset 1px 1px 0 #ffffffb3!important}
-:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-tip,.kv-row.sel,.kv-row.fresh,.km-card.err,.km-it.fresh,.kg-chip.on){border-color:#9c490075!important}
+:root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kv-row.sel,.kv-row.fresh,.km-card.err,.km-it.fresh,.kg-chip.on){border-color:#9c490075!important}
+:root[data-silver] #appcontent .kn-tip>button{
+ position:relative;
+ isolation:isolate;
+ padding:0;
+ border:0;
+ border-radius:50%;
+ background:var(--sl-rim);
+ box-shadow:0 .46px .46px #f8f8f8b3,0 -.46px .46px #2d2d2d66;
+}
+:root[data-silver] #appcontent .kn-tip>button::before{
+ content:'';
+ position:absolute;
+ inset:-.17px;
+ z-index:-1;
+ border-radius:inherit;
+ background:linear-gradient(140deg,#626262,#e7e7e7 70%,#9a9a9a);
+ box-shadow:0 .32px .46px #ffffffb3,inset 0 .32px 1.15px #3d3d3d66,inset 0 -.32px .46px #ffffff66;
+ pointer-events:none;
+}
+:root[data-silver] #appcontent .kn-tip>button>svg{display:none}
+:root[data-silver] #appcontent .kn-tip-add-face{
+ position:absolute;
+ inset:1.03px;
+ isolation:isolate;
+ display:grid;
+ place-items:center;
+ border-radius:inherit;
+ overflow:hidden;
+ background:var(--sl-metal);
+ box-shadow:inset 0 .37px .46px #fff,inset 0 -.55px .46px #73737378,.55px .83px 1.15px #27272738,.18px .32px .46px #2a2a2a5c;
+ transition:box-shadow 160ms,filter 160ms,transform 160ms;
+ pointer-events:none;
+}
+:root[data-silver] #appcontent .kn-tip-add-face::before,
+:root[data-silver] #appcontent .kn-tip-add-face::after{content:'';position:absolute;inset:0;border-radius:inherit}
+:root[data-silver] #appcontent .kn-tip-add-face::before{z-index:-1;background:var(--sl-grain) center/73px;mix-blend-mode:soft-light;opacity:.45}
+:root[data-silver] #appcontent .kn-tip-add-face::after{background:radial-gradient(ellipse at 21% 84%,#ffffff23,transparent 58%)}
+:root[data-silver] #appcontent .kn-tip-add-face>svg{z-index:1;display:block;width:38%;height:38%;filter:drop-shadow(0 .46px 0 #ffffff5c)}
+@media(hover:hover){
+ :root[data-silver] #appcontent .kn-tip>button:not(:disabled):hover .kn-tip-add-face{filter:brightness(1.075)}
+}
+:root[data-silver] #appcontent .kn-tip>button:not(:disabled):active .kn-tip-add-face{
+ transform:translateY(1.5px);
+ box-shadow:inset 0 1.38px 3.2px #1d1d1d69,inset 0 -.46px .46px #ffffff66;
+ filter:brightness(.94);
+}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver] #appcontent .kn-tip>button:not(:disabled):active .kn-tip-add-face{transform:none}
+}
 :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.kn-mealh,.kn-favh,.kn-sech,.km-div,.ki-foot,.kg-row){border-color:#59606638!important}
 :root[data-silver] #appcontent .rd-approved-nutrition .na-budget-metrics>div{border-color:#59606638!important}
 :root[data-silver] :is(#appcontent,#scrpage,#sheet) :is(.na-budget-metrics .ui-metric,.na-water-amount .ui-value,.kn-sumn,.km-itk,.km-sumt b,.kv-ptl b,.ks-tot b,.kr-pst b,.kg-mk,.kg-big,.kg-rr,.ki-stats b,.ki-tdee,.ki-ct b,.kwk-k b){font-family:Arial,Helvetica,sans-serif!important;font-variant-numeric:tabular-nums!important;color:#252525!important;fill:#252525!important}
