@@ -110,6 +110,7 @@
 :root[data-redesign-theme] .rd-workout .tg-noload{display:none!important}
 /* без блока веса фото не прилипает к названию */
 :root[data-redesign-theme] .rd-workout .tg-noload+:is(.wt-exercise-image,.bt-exercise-photo-frame){margin-top:22px}
+:root[data-redesign-theme] .rd-workout button.tg-machine-photo{display:block;width:100%;padding:0;touch-action:manipulation}
 :root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"]{
  border-bottom-color:transparent;
 }

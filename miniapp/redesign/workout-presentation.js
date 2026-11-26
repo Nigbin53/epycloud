@@ -49,7 +49,7 @@ function card(m, index, theme) {
   const load = `<div class="${white ? 'wt' : 'bt'}-load-summary${noLoad ? ' tg-noload' : ''}${type === 'body' && !(m.w > 0) ? ' tg-bodyweight' : ''}">${text(noLoad ? '—' : loadValue, 'compact-value')}${text(loadUnit, 'micro', 'ui-muted')}</div>`;
   const tip = null; // подсказки «прибавить / остаться» убраны по просьбе пользователя
   const hint = tip ? `<button type="button" class="tg-hint tg-hint-${tip.kind}" data-a="open" data-v="${m.id}">${tip.kind === 'up' ? '↑ ' : tip.kind === 'down' ? '↓ ' : '• '}${esc(tip.text)}</button>` : '';
-  const frame = `<div class="${white ? 'wt-exercise-image' : 'bt-exercise-photo-frame'}">${photo(m, theme)}</div>`;
+  const frame = `<button type="button" class="tg-machine-photo ${white ? 'wt-exercise-image' : 'bt-exercise-photo-frame'}" data-a="open" data-v="${m.id}" aria-label="Открыть тренажёр: ${esc(m.n)}">${photo(m, theme)}</button>`;
   const record = white
     ? `<button type="button" class="ui-button ui-button-outline wt-record-button" data-a="open" data-v="${m.id}" aria-label="Записать: ${esc(m.n)}"><span class="button-label">ЗАПИСАТЬ</span></button>`
     : `<button type="button" class="ui-button ui-button-outline" data-a="open" data-v="${m.id}" aria-label="Записать: ${esc(m.n)}"><span class="button-label">ЗАПИСАТЬ</span><span class="ui-button-icon">${UI.icon('arrow', 19)}</span></button>`;
