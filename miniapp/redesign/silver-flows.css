@@ -3,12 +3,8 @@
    Materials are mapped from the current kit F04–F07; no showcase coordinates. */
 
 :root[data-silver][data-redesign-theme]{
-  --sl-flow-cut:#59606638;
   --sl-flow-edge:#ffffffb3;
-  --sl-flow-engraving:0 .6px 0 #ffffffcf,0 -.3px 0 #53535324;
-  --sl-flow-line:1px 1px 0 #ffffffb3,inset 1px 1px 0 #ffffffb3;
   --sl-flow-neutral:linear-gradient(180deg,#c6c8c7,#e2e3df);
-  --sl-flow-surface:url('silver/assets/fitness-satin-silver.svg') center/cover;
   --sl-flow-amber:radial-gradient(ellipse at 20% 80%,#ffb321 0%,#e08b08 45%,#9c4900 100%);
   --sl-flow-base:radial-gradient(ellipse at 18% 78%,#e8e8e5 0%,#cfd0cd 32%,#b2b4af 67%,#949790 100%);
 }
@@ -267,21 +263,10 @@
 :root[data-silver][data-redesign-theme] #sheet.clrsheet .clropt.on .rd{border:6px solid #9d6651!important}
 :root[data-silver][data-redesign-theme] #sheet.clrsheet .clrgo{background:#e4cfc3!important;color:#744633!important;border:1px solid #b18172!important;box-shadow:inset 0 1px 0 #ffffff99!important;font:500 14px Arial,Helvetica,sans-serif!important;transform:none!important}
 
-/* Editor / plans / changelog: existing dialogs, without additional inner panels. */
-:root[data-silver][data-redesign-theme] body .rd-medit{background:#25252566!important;-webkit-backdrop-filter:blur(4px)!important;backdrop-filter:blur(4px)!important}
-:root[data-silver][data-redesign-theme] body .rd-medit-panel{
-  background:var(--sl-flow-surface)!important;color:#252525!important;border:1px solid #ffffffb3!important;box-shadow:0 -10px 40px #25252533!important;font-family:Arial,Helvetica,sans-serif!important;
-}
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-head>b{font:700 19px/23px Arial,Helvetica,sans-serif!important;letter-spacing:-.3px!important;text-shadow:var(--sl-flow-engraving)!important}
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-lbl{font:400 10px/1.4 Arial,Helvetica,sans-serif!important;letter-spacing:.65px!important;color:#747474!important;opacity:1!important;text-shadow:var(--sl-flow-engraving)!important}
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-input{background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;font:400 16px/20px Arial,Helvetica,sans-serif!important}
-:root[data-silver][data-redesign-theme] .rd-medit-panel :is(.rd-medit-chip,.rd-plan-row,.rd-plan-tpl,.rd-plan-addbtn,.rd-medit-pick){
+/* Plans and changelog dialogs. */
+:root[data-silver][data-redesign-theme] .rd-medit-panel :is(.rd-plan-row,.rd-plan-tpl,.rd-plan-addbtn){
   background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;font-family:Arial,Helvetica,sans-serif!important;min-height:44px!important;
 }
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-chip{font-size:13px!important;font-weight:400!important}
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-chip.on{background:var(--sl-flow-amber)!important;border:1px solid #9f650c!important;box-shadow:inset 0 .5px 1px #ffdb8580,inset 0 -1px 1px #6b2e0080!important;color:#3e2a0b!important}
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-step{height:44px!important}
-:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-step button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}
 :root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items>li{min-height:44px!important;border-color:var(--sl-flow-cut)!important;box-shadow:0 1px 0 #ffffffb3!important}
 :root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items span{min-width:0!important;font:400 14px/1.3 Arial,Helvetica,sans-serif!important;overflow-wrap:anywhere!important}
 :root[data-silver][data-redesign-theme] .rd-medit-panel .rd-plan-items button{width:44px!important;height:44px!important;flex:0 0 44px!important;padding:0!important}

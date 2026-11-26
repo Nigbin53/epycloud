@@ -256,5 +256,60 @@
 :root[data-redesign-theme="black"] .rd-medit-cancel{background:transparent;border:1px solid rgba(255,255,255,.18);color:#f2f2f2}
 :root[data-redesign-theme="black"] .rd-medit-save{background:#f2f2f2;border:0;color:#111}
 
+/* Dialogs keep their Silver materials while the machine page uses its own styles. */
+:root[data-silver][data-redesign-theme] body .rd-medit{background:#25252566!important}
+:root[data-silver][data-redesign-theme] body .rd-medit-panel{
+ background:var(--sl-flow-surface)!important;color:#252525!important;border:1px solid #ffffffb3!important;
+ box-shadow:0 -10px 40px #25252533!important;font-family:Arial,Helvetica,sans-serif!important;
+}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-head>b{font:700 19px/23px Arial,Helvetica,sans-serif!important;letter-spacing:-.3px!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-lbl{font:400 10px/1.4 Arial,Helvetica,sans-serif!important;letter-spacing:.65px!important;color:#747474!important;opacity:1!important;text-shadow:var(--sl-flow-engraving)!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-input{background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;font:400 16px/20px Arial,Helvetica,sans-serif!important}
+:root[data-silver][data-redesign-theme] .rd-medit-panel :is(.rd-medit-chip,.rd-medit-pick){
+ background:none!important;border:1px solid var(--sl-flow-cut)!important;box-shadow:var(--sl-flow-line)!important;color:#252525!important;
+ font-family:Arial,Helvetica,sans-serif!important;min-height:44px!important;
+}
+:root[data-silver][data-redesign-theme] .rd-medit-panel .rd-medit-chip{font-size:13px!important;font-weight:400!important}
+:root[data-silver][data-redesign-theme] :is(.rd-medit-panel .rd-medit-chip.on,.rd-machine-editor .rd-medit-save){
+ background:var(--sl-amber)!important;border:1px solid #9f650c!important;
+ box-shadow:inset 0 .5px 1px #ffdb8580,inset 0 -1px 1px #6b2e0080!important;color:#3e2a0b!important;
+}
+:root[data-silver][data-redesign-theme] .rd-machine-editor .rd-medit-input{border-radius:5px}
+:root[data-silver][data-redesign-theme] .rd-machine-editor .rd-medit-chip{border-radius:999px}
+:root[data-silver][data-redesign-theme] .rd-machine-editor .rd-medit-step{height:44px}
+:root[data-silver][data-redesign-theme] .rd-machine-editor .rd-medit-step button{width:44px;height:44px}
+:root[data-silver][data-redesign-theme] .rd-machine-editor .rd-medit-x{width:44px;height:44px}
+:root[data-silver][data-redesign-theme] .rd-machine-editor :is(.rd-medit-x,.rd-medit-rm,.rd-medit-cancel){
+ background:transparent;border:0;color:#656565;text-shadow:var(--sl-flow-engraving);
+}
+:root[data-silver][data-redesign-theme] .rd-machine-editor .rd-medit-save:active:not(:disabled){filter:brightness(.94)}
+:root[data-silver][data-redesign-theme] .rd-machine-editor :focus-visible{outline-color:#b47715}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver] :is(.rd-machine-editor,.rd-machine-editor .rd-medit-panel,.rd-machine-editor .rd-medit-sharing .swtc i){transition:none}
+}
+
+/* Lightweight step buttons in the Silver add and edit forms. */
+:root[data-silver][data-redesign-theme] button.sl-step-simple{
+ display:grid;
+ place-items:center;
+ padding:0;
+ border:0;
+ border-radius:50%;
+ background:transparent;
+ box-shadow:none;
+ color:#565a58;
+ text-shadow:none;
+ transform:none;
+ touch-action:manipulation;
+ transition:background-color 140ms ease;
+}
+@media(hover:hover){
+ :root[data-silver][data-redesign-theme] button.sl-step-simple:hover:not(:disabled){background:#2525250a}
+}
+:root[data-silver][data-redesign-theme] button.sl-step-simple:active:not(:disabled){background:#25252517;transform:none}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver][data-redesign-theme] button.sl-step-simple{transition:none}
+}
+
 /* текст в чипах каталога и типа — по центру кнопки */
 :root[data-redesign-theme] .addsheet .catchip{align-items:center!important;justify-content:center}

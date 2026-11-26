@@ -281,7 +281,11 @@ function openEditor(machine,theme){
  const st={n:machine.n,g:machine.g,type:exTypeOf(machine),s:machine.s||3,step:machine.st||2.5,loadMode:machine.loadMode||(exTypeOf(machine)==='body'?'additional':'total'),location:machine.location||''};
  const photoJobs=new Map();
  let photosChanged=false,closed=false,photoError='';
- const box=document.createElement('div');box.className='rd-medit';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Редактировать тренажёр');
+ const box=document.createElement('div');box.className='rd-medit rd-machine-editor';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','Редактировать тренажёр');
+ const silver=document.documentElement.hasAttribute('data-silver');
+ const stepClass=silver?' class="sl-step-simple"':'';
+ const minus=silver&&window.UI?UI.icon('minus',18):'−';
+ const plus=silver&&window.UI?UI.icon('plus',18):'+';
  const close=()=>{closed=true;box.classList.remove('on');setTimeout(()=>box.remove(),220);};
  function draw(){
   const scrollTop=box.firstElementChild?.scrollTop||0;
@@ -297,7 +301,7 @@ function openEditor(machine,theme){
    +MEDIT_GROUPS.map(g=>'<button type="button" class="rd-medit-chip'+(g===st.g?' on':'')+'" data-m="group" data-g="'+g+'" aria-pressed="'+(g===st.g)+'">'+g+'</button>').join('')+'</div>'
    +'<div class="rd-medit-lbl">Тип</div><div class="rd-medit-groups" role="group" aria-label="Тип упражнения">'
    +MEDIT_TYPES.map(t=>'<button type="button" class="rd-medit-chip'+(t[0]===st.type?' on':'')+'" data-m="type" data-t="'+t[0]+'" aria-pressed="'+(t[0]===st.type)+'">'+t[1]+'</button>').join('')+'</div>'
-   +'<div class="rd-medit-row2"><div><div class="rd-medit-lbl">Подходов</div><div class="rd-medit-step" role="group" aria-label="Подходов"><button type="button" data-m="sets" data-d="-1" aria-label="Меньше подходов">−</button><b>'+st.s+'</b><button type="button" data-m="sets" data-d="1" aria-label="Больше подходов">+</button></div></div>'
+   +'<div class="rd-medit-row2"><div><div class="rd-medit-lbl">Подходов</div><div class="rd-medit-step" role="group" aria-label="Подходов"><button type="button"'+stepClass+' data-m="sets" data-d="-1" aria-label="Меньше подходов">'+minus+'</button><b>'+st.s+'</b><button type="button"'+stepClass+' data-m="sets" data-d="1" aria-label="Больше подходов">'+plus+'</button></div></div>'
    +(st.type==='time'?'':'<div><div class="rd-medit-lbl">Шаг веса, кг</div><div class="rd-medit-groups rd-medit-steps" role="group" aria-label="Шаг веса">'+[1,2,2.5,5,10].map(v=>'<button type="button" class="rd-medit-chip'+(v===st.step?' on':'')+'" data-m="wstep" data-v="'+v+'" aria-pressed="'+(v===st.step)+'">'+String(v).replace('.',',')+'</button>').join('')+'</div></div>')+'</div>'
    +'<label class="rd-medit-lbl" for="rd-medit-location">Где стоит / пометка</label><input id="rd-medit-location" class="rd-medit-input" maxlength="40" placeholder="Например, зал на первом этаже" value="'+meditEsc(st.location)+'">'
    +(st.type==='time'?'':'<div class="rd-medit-lbl">Как учитывать вес</div><div class="rd-medit-groups" role="group" aria-label="Учёт веса">'+Object.entries(window.GymMachineLibrary.modes).filter(([k])=>k!=='none').map(([k,m])=>'<button type="button" class="rd-medit-chip'+(k===st.loadMode?' on':'')+'" data-m="loadmode" data-v="'+k+'" aria-pressed="'+(k===st.loadMode)+'">'+m.name+'</button>').join('')+'</div><p class="eq-load-note">'+window.GymMachineLibrary.modeFor({type:st.type,loadMode:st.loadMode}).hint+'</p>')
@@ -328,7 +332,7 @@ function openEditor(machine,theme){
   else if(m==='group'){st.g=t.dataset.g;draw();}
   else if(m==='type'){st.type=t.dataset.t;st.loadMode=st.type==='body'?'additional':st.type==='time'?'none':st.type==='free'?'total':'stack';draw();}
   else if(m==='loadmode'){st.loadMode=t.dataset.v;draw();}
-  else if(m==='sets'){st.s=Math.min(12,Math.max(1,st.s+(+t.dataset.d)));draw();}
+  else if(m==='sets'){st.s=Math.min(12,Math.max(1,st.s+(+t.dataset.d)));t.parentElement.querySelector('b').textContent=st.s;}
   else if(m==='wstep'){st.step=+t.dataset.v;draw();}
   else if(m==='photosShared'){
    library.setPhotosShared(photos,theme,photos.photosShared===false);photosChanged=true;draw();
