@@ -9,6 +9,7 @@ const DAY_NAMES = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 const DAY_FULL = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 let pickerOpen = false;
 let scheduled = false;
+let groupScrollLeft = 0;
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fmt = (n) => String(Math.round(Number(n) * 100) / 100).replace('.', ',');
@@ -112,7 +113,7 @@ function build(state, theme) {
   const total = machines.length;
   const word = total % 10 === 1 && total % 100 !== 11 ? 'упражнения' : 'упражнений';
   const calendar = `<div class="ui-calendar calendar">${week().map((d, i) => `<button type="button" class="ui-day day ${selected === i ? 'selected' : ''}${i < today ? ' tg-past' : ''}${i > today ? ' tg-future' : ''}" data-a="day"${i > today ? ' aria-disabled="true"' : ''} data-v="${i}" aria-pressed="${selected === i}" aria-label="${DAY_NAMES[i]} ${d.getDate()}"${i === today ? ' aria-current="date"' : ''}><small>${DAY_NAMES[i]}</small><strong>${d.getDate()}</strong></button>`).join('')}</div>`;
-  const tabs = `<div class="ui-tabs ta-filters tg-filters${planOn ? ' has-plan' : ''}" role="tablist" aria-label="Группа упражнений">${tabsAll.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></button>`).join('')}</div>`;
+  const tabs = `<div class="ui-tabs ta-filters tg-filters" role="tablist" aria-label="Группа упражнений">${tabsAll.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></button>`).join('')}</div>`;
   let list = '';
   const planItems = plan ? plan.items.map((id) => machines.find((m) => m.id === id)).filter(Boolean) : [];
   if (filter === 'План') {
@@ -143,15 +144,24 @@ function apply() {
   const state = catalog.snapshot();
   const header = content.querySelector('.top');
   const scrollTabs = content.querySelector('.tg-filters');
-  const keepScroll = scrollTabs ? scrollTabs.scrollLeft : null;
+  const keepScroll = scrollTabs?.scrollLeft ?? groupScrollLeft;
   const holder = document.createElement('div');
   holder.innerHTML = build(state, theme);
   content.replaceChildren(...(header ? [header] : []), holder.firstElementChild);
   const tabs = content.querySelector('.tg-filters');
   if (tabs) {
+    tabs.scrollLeft = keepScroll;
     const active = tabs.querySelector('.selected');
-    if (keepScroll != null) tabs.scrollLeft = keepScroll;
-    else if (active) tabs.scrollLeft = Math.max(0, active.offsetLeft - 16);
+    if (active && tabs.scrollWidth > tabs.clientWidth) {
+      const strip = tabs.getBoundingClientRect();
+      const button = active.getBoundingClientRect();
+      if (button.left < strip.left) tabs.scrollLeft -= strip.left - button.left;
+      else if (button.right > strip.right) tabs.scrollLeft += button.right - strip.right;
+    }
+    groupScrollLeft = tabs.scrollLeft;
+    tabs.addEventListener('scroll', () => {
+      if (tabs.isConnected) groupScrollLeft = tabs.scrollLeft;
+    }, { passive: true });
   }
   window.dispatchEvent(new Event('gym-equipment:change')); // подтянуть свои фото тренажёров
 }
