@@ -1702,7 +1702,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="anatomy.css?v=equipment-library-r1">
 <link rel="stylesheet" href="insights.css?v=equipment-library-r1">
 <link rel="stylesheet" href="training-kit.css?v=noarc-4">
-<link rel="stylesheet" href="workout-kit.css?v=40">
+<link rel="stylesheet" href="workout-kit.css?v=41">
 <link rel="stylesheet" href="controls-r7.css?v=equipment-library-r1">
 <link rel="stylesheet" href="weight-stats-r7.css?v=weight-reference-r1">
 <link rel="stylesheet" href="clear-r7.css?v=equipment-library-r1">
@@ -2001,18 +2001,75 @@ window.gymCurSetWeight=function(id,weight){
   return cur.w;
 };
 /* планы тренировок: один план на день недели; пропуск плана — только на сегодня */
-if(!S.plans)S.plans=[];
+var PUSH_ARMS = /трицепс|француз|брусь/i;
+
+/* готовые шаблоны: план = название + дни + группы мышц (берём упражнения из списка пользователя) */
+var TRAINING_PLAN_TEMPLATES = [
+  { name: 'Фулбади 3 раза в неделю', hint: 'Всё тело за тренировку · Пн, Ср, Пт',
+    plans: [{ name: 'Всё тело', days: [0, 2, 4], perGroup: 1 }] },
+  { name: 'Верх / низ', hint: '4 дня · Пн, Чт — верх · Вт, Пт — низ',
+    plans: [{ name: 'Верх', days: [0, 3], groups: ['Грудь', 'Спина', 'Плечи', 'Руки'] },
+            { name: 'Низ', days: [1, 4], groups: ['Ноги', 'Пресс'] }] },
+  { name: 'Тяни / толкай / ноги', hint: '3 дня · Пн — толкай · Ср — тяни · Пт — ноги',
+    plans: [{ name: 'Толкай', days: [0], test: (m) => m.g === 'Грудь' || m.g === 'Плечи' || (m.g === 'Руки' && PUSH_ARMS.test(m.n)) },
+            { name: 'Тяни', days: [2], test: (m) => m.g === 'Спина' || (m.g === 'Руки' && !PUSH_ARMS.test(m.n)) },
+            { name: 'Ноги', days: [4], groups: ['Ноги', 'Пресс'] }] },
+];
+function planTemplateItems(p, list) {
+  if (p.perGroup) return GROUPS.map((g) => list.find((m) => m.g === g)).filter(Boolean).map((m) => m.id);
+  if (p.test) return list.filter(p.test).map((m) => m.id);
+  return list.filter((m) => p.groups.includes(m.g)).map((m) => m.id);
+}
+
+if(!Array.isArray(S.plans))S.plans=[];
+// The old template picker saved on the first tap. Keep matching legacy
+// templates as drafts until the user decides whether to schedule them.
+S.plans.forEach(function(plan){
+  if(typeof plan.needsReview==="boolean")return;
+  plan.needsReview=TRAINING_PLAN_TEMPLATES.some(function(template){
+    return template.plans.some(function(p){
+      if(p.name!==plan.name||p.days.length!==plan.days.length||!p.days.every(d=>plan.days.includes(d)))return false;
+      var items=planTemplateItems(p,S.m);
+      // New machines are appended to the list, so a saved group template
+      // can be shorter than the current template without having been edited.
+      var sameLength=items.length===plan.items.length;
+      var machinesAdded=!p.perGroup&&plan.items.length>=2&&plan.items.length<items.length;
+      return (sameLength||machinesAdded)&&plan.items.every((id,index)=>id===items[index]);
+    });
+  });
+});
 window.gymPlans=function(){return JSON.parse(JSON.stringify(S.plans))};
-window.gymPlanFor=function(dayIdx){for(var i=0;i<S.plans.length;i++)if(S.plans[i].days.indexOf(dayIdx)>=0)return JSON.parse(JSON.stringify(S.plans[i]));return null};
-window.gymPlanSave=function(p){
+window.gymPlanFor=function(dayIdx){
+  var plan=S.plans.find(function(p){return !p.needsReview&&p.days.includes(dayIdx)});
+  return plan?JSON.parse(JSON.stringify(plan)):null;
+};
+window.gymPlanTemplates=TRAINING_PLAN_TEMPLATES.map(function(t){return {name:t.name,hint:t.hint}});
+window.gymPlanTemplateDrafts=function(index){
+  var template=TRAINING_PLAN_TEMPLATES[index];
+  return template?template.plans.map(function(p){return {name:p.name,days:p.days.slice(),items:planTemplateItems(p,S.m)}}):[];
+};
+function writePlan(p){
   var name=String(p.name||"").replace(/\s+/g," ").trim().slice(0,30);if(name.length<2)return false;
   var days=(p.days||[]).filter(function(d){return d>=0&&d<=6}).filter(function(d,i,a){return a.indexOf(d)===i});
   var items=(p.items||[]).filter(function(id){return !!find(id)});
-  var id=p.id||Date.now();
-  S.plans.forEach(function(x){if(x.id!==id)x.days=x.days.filter(function(d){return days.indexOf(d)<0})});
-  var ex=S.plans.filter(function(x){return x.id===id})[0];
-  if(ex){ex.name=name;ex.days=days;ex.items=items}else S.plans.push({id:id,name:name,days:days,items:items});
-  save();render();return id;
+  if(!items.length)return false;
+  var ex=p.id&&S.plans.find(function(x){return x.id===p.id});
+  var id=ex?ex.id:Date.now();
+  if(!ex)while(S.plans.some(function(x){return x.id===id}))id++;
+  S.plans.forEach(function(x){if(x.id!==id&&!x.needsReview)x.days=x.days.filter(function(d){return days.indexOf(d)<0})});
+  var updated={id:id,name:name,days:days,items:items,needsReview:false};
+  if(ex)Object.assign(ex,updated);else S.plans.push(updated);
+  return id;
+}
+window.gymPlanSave=function(p){
+  var id=writePlan(p);
+  if(id){save();render();}
+  return id;
+};
+window.gymPlanAddTemplate=function(index){
+  var added=window.gymPlanTemplateDrafts(index).map(writePlan).filter(Boolean);
+  if(added.length){save();render();}
+  return added.length;
 };
 window.gymPlanDelete=function(id){S.plans=S.plans.filter(function(x){return x.id!==id});if(S.filter==="План"&&!window.gymPlanFor(S.day))S.filter="Избранное";save();render()};
 /* простая настройка из слоёв оформления (скрыть плашку плана и т.п.) */
@@ -2231,9 +2288,9 @@ function screenProfile(){
     +'<div class="strikgrid">'+days+'</div>'
     +'<div class="strikbar"><div><i style="width:'+Math.min(100,Math.round(wkDone/3*100))+'%"></i></div><span>'+wkDone+' из 3</span></div></div>';
   /* план тренировок — здесь, в Профиле (плашку на экране «Тренировка» можно скрыть крестиком) */
-  var npl=(S.plans||[]).length,tp=npl?window.gymPlanFor(todayIdx):null;
+  var npl=S.plans.length,tp=window.gymPlanFor(todayIdx),activePlans=S.plans.some(function(p){return !p.needsReview});
   h+='<div class="prosection proplan"><div class="prosecrow"><h2>План тренировок</h2>'+(npl?'<span class="proplan-n">'+npl+' '+plural(npl,"план","плана","планов")+'</span>':'')+'</div>'
-    +'<p class="proplan-t">'+(npl?(tp?'Сегодня: <b>'+esc(tp.name)+'</b> · '+tp.items.length+' '+plural(tp.items.length,"упражнение","упражнения","упражнений"):'Сегодня по плану отдых'):'Составь план — в свой день наверху экрана «Тренировка» появится карточка с упражнениями по порядку.')+'</p>'
+    +'<p class="proplan-t">'+(tp?'Сегодня: <b>'+esc(tp.name)+'</b> · '+tp.items.length+' '+plural(tp.items.length,"упражнение","упражнения","упражнений"):activePlans?'Сегодня по плану отдых':npl?'Проверь черновики в «Моих планах»':'Составь план — в свой день наверху экрана «Тренировка» появится карточка с упражнениями по порядку.')+'</p>'
     +'<button class="proplan-btn" data-a="plansopen">'+(npl?'Мои планы':'+ Составить план')+'</button></div>';
   // achievements strip: earned first (newest first), then closest in progress
   var earned=all.filter(function(x){return x.done}).reverse();
@@ -5363,11 +5420,11 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="training-kit.js?v=noarc-1"></script>
 <script src="nutrition-presentation.js?v=water-portion-2"></script>
 <script src="training-presentation.js?v=library-10"></script>
-<script src="workout-presentation.js?v=library-4"></script>
+<script src="workout-presentation.js?v=library-5"></script>
 <script src="lattice-loader.js?v=1"></script>
 <script src="img-pack.js?v=2"></script>
 <script src="paths-bg.js?v=3"></script>
-<script src="plans-whatsnew.js?v=18"></script>
+<script src="plans-whatsnew.js?v=19"></script>
 <script src="gestures.js?v=6"></script>
 <script src="controls-r7.js?v=equipment-library-r1"></script>
 <script src="weight-stats-r7.js?v=weight-reference-r1"></script>

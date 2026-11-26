@@ -6,27 +6,8 @@ const GROUPS = ['Грудь', 'Спина', 'Ноги', 'Руки', 'Плечи'
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const machines = () => (window.GymRedesignCatalog ? window.GymRedesignCatalog.snapshot().m : []) || [];
 const word = (n) => n % 10 === 1 && n % 100 !== 11 ? 'упражнение' : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 'упражнения' : 'упражнений';
-const PUSH_ARMS = /трицепс|француз|брусь/i;
-
-/* готовые шаблоны: план = название + дни + группы мышц (берём упражнения из списка пользователя) */
-const TEMPLATES = [
-  { name: 'Фулбади 3 раза в неделю', hint: 'Всё тело за тренировку · Пн, Ср, Пт',
-    plans: [{ name: 'Всё тело', days: [0, 2, 4], pick: (m) => m, perGroup: 1 }] },
-  { name: 'Верх / низ', hint: '4 дня · Пн, Чт — верх · Вт, Пт — низ',
-    plans: [{ name: 'Верх', days: [0, 3], groups: ['Грудь', 'Спина', 'Плечи', 'Руки'] },
-            { name: 'Низ', days: [1, 4], groups: ['Ноги', 'Пресс'] }] },
-  { name: 'Тяни / толкай / ноги', hint: '3 дня · Пн — толкай · Ср — тяни · Пт — ноги',
-    plans: [{ name: 'Толкай', days: [0], test: (m) => m.g === 'Грудь' || m.g === 'Плечи' || (m.g === 'Руки' && PUSH_ARMS.test(m.n)) },
-            { name: 'Тяни', days: [2], test: (m) => m.g === 'Спина' || (m.g === 'Руки' && !PUSH_ARMS.test(m.n)) },
-            { name: 'Ноги', days: [4], groups: ['Ноги', 'Пресс'] }] },
-];
-function templateItems(p, list) {
-  if (p.perGroup) return GROUPS.map((g) => list.find((m) => m.g === g)).filter(Boolean).map((m) => m.id);
-  if (p.test) return list.filter(p.test).map((m) => m.id);
-  return list.filter((m) => p.groups.includes(m.g)).map((m) => m.id);
-}
-
-let box = null, view = 'list', draft = null, picking = false;
+const templates = window.gymPlanTemplates;
+let box = null, view = 'list', draft = null, picking = false, templateIndex = -1;
 function close() { if (!box) return; const b = box; box = null; b.classList.remove('on'); setTimeout(() => b.remove(), 220); }
 function open() {
   if (box) box.remove();
@@ -44,15 +25,25 @@ function draw() {
   let h = '<div class="rd-medit-panel rd-plans-panel">';
   if (view === 'list') {
     h += '<div class="rd-medit-head"><b>Мои планы</b><button type="button" class="rd-medit-x" data-p="close" aria-label="Закрыть">×</button></div>';
-    h += plans.length ? '<div class="rd-plan-rows">' + plans.map((p) => '<button type="button" class="rd-plan-row" data-p="edit" data-id="' + p.id + '"><span><b>' + esc(p.name) + '</b><small>' + (p.days.length ? p.days.slice().sort().map((d) => DAYS[d]).join(' · ') : 'без дня недели') + ' · ' + p.items.length + ' ' + word(p.items.length) + '</small></span><i>›</i></button>').join('') + '</div>'
+    h += plans.length ? '<div class="rd-plan-rows">' + plans.map((p) => '<button type="button" class="rd-plan-row" data-p="edit" data-id="' + p.id + '"><span><b>' + esc(p.name) + '</b><small>' + (p.needsReview ? 'Черновик' : p.days.length ? p.days.slice().sort().map((d) => DAYS[d]).join(' · ') : 'без дня недели') + ' · ' + p.items.length + ' ' + word(p.items.length) + '</small></span><i>›</i></button>').join('') + '</div>'
       : '<p class="rd-plan-empty">Плана пока нет. Составь свой или возьми готовый шаблон — в свой день наверху экрана «Тренировки» появится карточка с упражнениями по порядку.</p>';
     h += '<button type="button" class="rd-medit-save rd-plan-new" data-p="new">+ Новый план</button>';
-    h += '<div class="rd-medit-lbl">Готовые шаблоны</div><div class="rd-plan-tpls">' + TEMPLATES.map((t, i) => '<button type="button" class="rd-plan-tpl" data-p="tpl" data-i="' + i + '"><b>' + t.name + '</b><small>' + t.hint + '</small></button>').join('') + '</div>';
+    h += '<div class="rd-medit-lbl">Готовые шаблоны</div><div class="rd-plan-tpls">' + templates.map((t, i) => '<button type="button" class="rd-plan-tpl" data-p="tpl" data-i="' + i + '"><b>' + t.name + '</b><small>' + t.hint + '</small></button>').join('') + '</div>';
+  } else if (view === 'template') {
+    const proposed = window.gymPlanTemplateDrafts(templateIndex).filter(p => p.items.length);
+    const days = new Set(proposed.flatMap(p => p.days));
+    const overlaps = plans.filter(p => !p.needsReview && p.days.some(d => days.has(d)));
+    h += '<div class="rd-medit-head"><b>' + esc(templates[templateIndex].name) + '</b><button type="button" class="rd-medit-x" data-p="close" aria-label="Закрыть">×</button></div>';
+    h += proposed.length ? '<ul>' + proposed.map(p => '<li><b>' + esc(p.name) + '</b> · ' + p.days.map(d => DAYS[d]).join(', ') + ' · ' + p.items.length + ' ' + word(p.items.length) + '</li>').join('') + '</ul>'
+      : '<p class="rd-plan-empty">Сначала добавь подходящие упражнения на экране «Тренировка».</p>';
+    if (overlaps.length) h += '<p class="rd-plan-empty">Шаблон займёт пересекающиеся дни в планах ' + overlaps.map(p => '«' + esc(p.name) + '»').join(', ') + '.</p>';
+    h += '<div class="rd-medit-actions"><button type="button" class="rd-medit-cancel" data-p="back">Отмена</button><button type="button" class="rd-medit-save" data-p="confirm-template"' + (proposed.length ? '' : ' disabled') + '>Добавить шаблон</button></div>';
   } else {
     const d = draft, taken = {};
-    plans.forEach((p) => { if (p.id !== d.id) p.days.forEach((x) => { taken[x] = p.name; }); });
+    plans.forEach((p) => { if (p.id !== d.id && !p.needsReview) p.days.forEach((x) => { taken[x] = p.name; }); });
     h += '<div class="rd-medit-head"><button type="button" class="rd-plan-back" data-p="back" aria-label="Назад">‹</button><b>' + (d.id ? 'План' : 'Новый план') + '</b><button type="button" class="rd-medit-x" data-p="close" aria-label="Закрыть">×</button></div>';
     h += '<label class="rd-medit-lbl" for="rd-plan-name">Название</label><input id="rd-plan-name" class="rd-medit-input" maxlength="30" placeholder="Например, Ноги" autocomplete="off" value="' + esc(d.name) + '">';
+    if (d.needsReview) h += '<p class="rd-plan-empty">Черновик. Выбери дни и сохрани план, чтобы добавить его в расписание.</p>';
     h += '<div class="rd-medit-lbl">Дни недели</div><div class="rd-plan-days" role="group" aria-label="Дни недели">' + DAYS.map((nm, i) => '<button type="button" class="rd-medit-chip rd-day-chip' + (d.days.includes(i) ? ' on' : '') + '" data-p="day" data-d="' + i + '" aria-pressed="' + d.days.includes(i) + '">' + nm + (taken[i] && !d.days.includes(i) ? '<small>' + esc(taken[i]) + '</small>' : '') + '</button>').join('') + '</div>';
     h += '<div class="rd-medit-lbl">Упражнения по порядку</div>';
     h += d.items.length ? '<ol class="rd-plan-items">' + d.items.map((id, i) => '<li><b>' + (i + 1) + '</b><span>' + esc(name(id) || '—') + '</span><button type="button" data-p="up" data-i="' + i + '" aria-label="Выше"' + (i ? '' : ' disabled') + '>↑</button><button type="button" data-p="down" data-i="' + i + '" aria-label="Ниже"' + (i < d.items.length - 1 ? '' : ' disabled') + '>↓</button><button type="button" data-p="rm" data-i="' + i + '" aria-label="Убрать">×</button></li>').join('') + '</ol>'
@@ -84,14 +75,16 @@ function onClick(e) {
     const err = box.querySelector('.rd-medit-err');
     if (String(draft.name || '').trim().length < 2) { err.textContent = 'Название — минимум 2 символа'; return; }
     if (!draft.items.length) { err.textContent = 'Добавь хотя бы одно упражнение'; return; }
-    window.gymPlanSave(draft); view = 'list'; draft = null; draw();
+    if (!window.gymPlanSave(draft)) { err.textContent = 'Добавь хотя бы одно упражнение'; return; }
+    view = 'list'; draft = null; draw();
     if (window.gymToast) window.gymToast('План сохранён');
   }
   else if (a === 'del') { const id = draft.id, nm = draft.name; window.gymPlanDelete(id); view = 'list'; draft = null; draw(); if (window.gymToast) window.gymToast('План удалён', '', '«' + nm + '»'); }
-  else if (a === 'tpl') {
-    const tp = TEMPLATES[i], list = machines();
-    tp.plans.forEach((p) => window.gymPlanSave({ id: 0, name: p.name, days: p.days, items: templateItems(p, list) }));
-    draw(); if (window.gymToast) window.gymToast('Шаблон добавлен', '', '«' + tp.name + '» — можно поправить под себя');
+  else if (a === 'tpl') { templateIndex = i; view = 'template'; draw(); }
+  else if (a === 'confirm-template' && view === 'template') {
+    if (!window.gymPlanAddTemplate(templateIndex)) { draw(); return; }
+    view = 'list'; draw();
+    if (window.gymToast) window.gymToast('Шаблон добавлен', '', '«' + templates[templateIndex].name + '»');
   }
 }
 

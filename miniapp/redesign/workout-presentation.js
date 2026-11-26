@@ -81,13 +81,13 @@ function planCard(plan, items, o) {
   const word = (n) => n % 10 === 1 && n % 100 !== 11 ? 'упражнение' : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 'упражнения' : 'упражнений';
   const when = o.past ? DAY_FULL[o.selected] : 'Сегодня';
   const pct = items.length ? Math.round(done / items.length * 100) : 0;
-  return `<section class="tg-plan${o.filter === 'План' ? ' is-open' : ''}${done && done === items.length ? ' is-done' : ''}" aria-label="План на день">`
+  return `<section class="tg-plan${done && done === items.length ? ' is-done' : ''}" aria-label="План на день">`
     + `<div class="tg-plan-top"><div class="tg-plan-copy"><small>${when}${o.past ? '' : ' по плану'}</small><b>${esc(plan.name)} · ${items.length} ${word(items.length)}</b></div>`
     + (o.past ? '' : `<button type="button" class="tg-plan-x" data-plan="skip" aria-label="Пропустить план на сегодня">×</button>`) + `</div>`
     + `<div class="tg-plan-bar" aria-hidden="true"><i style="width:${pct}%"></i></div>`
     + `<div class="tg-plan-bottom"><span>${done} из ${items.length}${done && done === items.length ? ' · готово 💪' : ''}</span>`
     + `<span class="tg-plan-acts"><button type="button" class="tg-plan-link" data-plan="manage">Планы</button>`
-    + (o.filter === 'План' ? '' : `<button type="button" class="tg-plan-start" data-plan="start">${done ? 'Продолжить' : 'Начать'}</button>`) + `</span></div></section>`;
+    + `<button type="button" class="tg-plan-start" data-plan="start">${done ? 'Продолжить' : 'Начать'}</button></span></div></section>`;
 }
 
 function build(state, theme) {
@@ -112,7 +112,7 @@ function build(state, theme) {
   const total = machines.length;
   const word = total % 10 === 1 && total % 100 !== 11 ? 'упражнения' : 'упражнений';
   const calendar = `<div class="ui-calendar calendar">${week().map((d, i) => `<button type="button" class="ui-day day ${selected === i ? 'selected' : ''}${i < today ? ' tg-past' : ''}${i > today ? ' tg-future' : ''}" data-a="day"${i > today ? ' aria-disabled="true"' : ''} data-v="${i}" aria-pressed="${selected === i}" aria-label="${DAY_NAMES[i]} ${d.getDate()}"${i === today ? ' aria-current="date"' : ''}><small>${DAY_NAMES[i]}</small><strong>${d.getDate()}</strong></button>`).join('')}</div>`;
-  const tabs = `<div class="ui-tabs ta-filters tg-filters" role="tablist" aria-label="Группа упражнений">${tabsAll.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></button>`).join('')}</div>`;
+  const tabs = `<div class="ui-tabs ta-filters tg-filters${planOn ? ' has-plan' : ''}" role="tablist" aria-label="Группа упражнений">${tabsAll.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></button>`).join('')}</div>`;
   let list = '';
   const planItems = plan ? plan.items.map((id) => machines.find((m) => m.id === id)).filter(Boolean) : [];
   if (filter === 'План') {
@@ -131,7 +131,7 @@ function build(state, theme) {
     // как на утверждённом экране: в White — «Сегодня» и счётчик, в Black — только счётчик (надпись и полоса убраны в r9)
     // счётчик «0 из 15 упражнений» убран по просьбе владельца (15.10); подпись дня осталась
     + (past || theme === 'white' ? `<div class="ta-today-line">${past ? text(DAY_FULL[selected], 'micro', 'tg-day-label') : text('Сегодня', 'micro')}</div>` : '')
-    + calendar + planCard(plan, planItems, { past, skipped, filter, selected, anyPlans: !!(state.plans && state.plans.length), miniHidden: !!state.planMiniHidden }) + tabs + list + '</div></div></div></div>';
+    + calendar + planCard(plan, planItems, { past, skipped, selected, anyPlans: state.plans?.some(p => !p.needsReview), miniHidden: !!state.planMiniHidden }) + tabs + list + '</div></div></div></div>';
 }
 
 function apply() {
@@ -163,7 +163,11 @@ document.addEventListener('click', (event) => {
     const act = pb.dataset.plan;
     if (act === 'skip') { window.gymPlanSkip(true); if (window.gymToast) window.gymToast('План пропущен', () => window.gymPlanSkip(false)); }
     else if (act === 'unskip') window.gymPlanSkip(false);
-    else if (act === 'start') window.gymPlanStart();
+    else if (act === 'start') {
+      const workout = pb.closest('.rd-workout');
+      if (workout.dataset.tgFilter === 'План') workout.querySelector('.ta-exercise, .tg-empty')?.scrollIntoView({ block: 'start' });
+      else window.gymPlanStart();
+    }
     else if (act === 'manage' && window.gymOpenPlans) window.gymOpenPlans();
     else if (act === 'hide' && window.gymSetPref) { window.gymSetPref('planMiniHidden', true); if (window.gymToast) window.gymToast('Плашка скрыта', () => window.gymSetPref('planMiniHidden', false)); }
     return;
