@@ -45,6 +45,107 @@
 :root[data-silver][data-redesign-theme] :is(.nav button.on:before,.nav button.on:after,.ui-nav-item.selected:after){background:var(--sl-amber)!important}
 :root[data-silver][data-redesign-theme] .home-ind{background:#747474!important;opacity:.6}
 
+/* Tactile Buttons silver action and stepper, scaled to the app's 44/48px targets. */
+:root[data-silver][data-redesign-theme] button.sl-tactile-button{
+ --sl-tactile-unit:.458333px;
+ position:relative;
+ isolation:isolate;
+ padding:0;
+ border:0;
+ border-radius:50%;
+ background:var(--sl-rim);
+ box-shadow:0 var(--sl-tactile-unit) var(--sl-tactile-unit) #f8f8f8b3,0 calc(-1 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #2d2d2d66;
+ touch-action:manipulation;
+}
+:root[data-silver][data-redesign-theme] .addw>.sl-tactile-button{--sl-tactile-unit:.5px}
+:root[data-silver][data-redesign-theme] button.sl-tactile-button::before{
+ content:'';
+ position:absolute;
+ inset:calc(-.375 * var(--sl-tactile-unit));
+ z-index:-1;
+ border-radius:inherit;
+ background:linear-gradient(140deg,#626262,#e7e7e7 70%,#9a9a9a);
+ box-shadow:0 calc(.7 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #ffffffb3,
+   inset 0 calc(.7 * var(--sl-tactile-unit)) calc(2.5 * var(--sl-tactile-unit)) #3d3d3d66,
+   inset 0 calc(-.7 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #ffffff66;
+ pointer-events:none;
+}
+:root[data-silver][data-redesign-theme] button.sl-tactile-button>svg{display:none}
+:root[data-silver][data-redesign-theme] .sl-tactile-face{
+ position:absolute;
+ inset:calc(2.25 * var(--sl-tactile-unit));
+ isolation:isolate;
+ display:grid;
+ place-items:center;
+ border-radius:inherit;
+ overflow:hidden;
+ background:var(--sl-metal);
+ box-shadow:inset 0 calc(.8 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #fff,
+   inset 0 calc(-1.2 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #73737378,
+   calc(1.2 * var(--sl-tactile-unit)) calc(1.8 * var(--sl-tactile-unit)) calc(2.5 * var(--sl-tactile-unit)) #27272738,
+   calc(.4 * var(--sl-tactile-unit)) calc(.7 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #2a2a2a5c;
+ transition:box-shadow 160ms,filter 160ms,transform 160ms;
+ pointer-events:none;
+}
+:root[data-silver][data-redesign-theme] .sl-tactile-face::before,
+:root[data-silver][data-redesign-theme] .sl-tactile-face::after{
+ content:'';
+ position:absolute;
+ inset:0;
+ border-radius:inherit;
+}
+:root[data-silver][data-redesign-theme] .sl-tactile-face::before{
+ z-index:-1;
+ background:var(--sl-grain) center/calc(160 * var(--sl-tactile-unit));
+ mix-blend-mode:soft-light;
+ opacity:.45;
+}
+:root[data-silver][data-redesign-theme] .sl-tactile-face::after{
+ background:radial-gradient(ellipse at 21% 84%,#ffffff23,transparent 58%);
+}
+:root[data-silver][data-redesign-theme] .sl-tactile-face>svg{
+ z-index:1;
+ display:block;
+ width:38%;
+ height:38%;
+ filter:drop-shadow(0 var(--sl-tactile-unit) 0 #ffffff5c);
+}
+@media(hover:hover){
+ :root[data-silver][data-redesign-theme] button.sl-tactile-button:hover:not(:disabled)>.sl-tactile-face{filter:brightness(1.075)}
+}
+:root[data-silver][data-redesign-theme] button.sl-tactile-button:active:not(:disabled){
+ background:var(--sl-rim);
+ transform:none;
+}
+:root[data-silver][data-redesign-theme] button.sl-tactile-button:active:not(:disabled)>.sl-tactile-face{
+ transform:translateY(1.5px);
+ box-shadow:inset 0 calc(3 * var(--sl-tactile-unit)) calc(7 * var(--sl-tactile-unit)) #1d1d1d69,
+   inset 0 calc(-1 * var(--sl-tactile-unit)) var(--sl-tactile-unit) #ffffff66;
+ filter:brightness(.94);
+}
+@media(prefers-reduced-motion:reduce){
+ :root[data-silver][data-redesign-theme] button.sl-tactile-button:active:not(:disabled)>.sl-tactile-face{transform:none}
+}
+
+:root[data-silver][data-redesign-theme] #sheet.addsheet .sl-step-simple{
+ display:grid;
+ place-items:center;
+ padding:0;
+ border:0;
+ border-radius:50%;
+ background:transparent;
+ box-shadow:none;
+ color:#565a58;
+ text-shadow:none;
+ transform:none;
+ touch-action:manipulation;
+ transition:background-color 140ms ease;
+}
+@media(hover:hover){
+ :root[data-silver][data-redesign-theme] #sheet.addsheet .sl-step-simple:hover:not(:disabled){background:#2525250a}
+}
+:root[data-silver][data-redesign-theme] #sheet.addsheet .sl-step-simple:active:not(:disabled){background:#25252517}
+
 /* Shared physical surfaces. Empty face nodes never wrap native labels/actions. */
 :root[data-silver][data-redesign-theme] :is(button.sl-metal,button.sl-round){position:relative!important;isolation:isolate;overflow:visible!important;background:var(--sl-rim)!important;border:0!important;color:#252525!important;box-shadow:0 2px 3px #0003,inset 0 1px .5px #ffffff77!important;transform:none!important;animation:none!important;transition:none!important;text-shadow:0 .6px 0 #ffffff80}
 :root[data-silver][data-redesign-theme] button.sl-metal{min-height:48px;border-radius:999px!important;padding:12px 18px;background:linear-gradient(135deg,#999,#f1f1f1 62%,#bcbcbc)!important;box-shadow:0 1px 2px #25252526,inset 0 1px .5px #ffffff77!important;font:500 14px/20px Arial,Helvetica,sans-serif!important;letter-spacing:0!important}

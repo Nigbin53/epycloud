@@ -933,7 +933,7 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 .kn-tip b{font-size:14px;font-weight:700}
 .kn-tip em{font-style:normal;font-size:12px;color:var(--muted)}
 .kn-tip button{width:44px;height:44px;flex-shrink:0;border-radius:22px;background:var(--acc2);color:var(--bg);display:flex;align-items:center;justify-content:center}
-.kn-tip-add-face{display:none}
+.sl-tactile-face{display:none}
 .kn-sech{display:flex;justify-content:space-between;align-items:baseline}
 .kn-sech h2,.kn-h2{margin:0;font-size:20px;font-weight:800}
 .kn-sech span{font-size:13px;color:var(--muted)}
@@ -1715,10 +1715,10 @@ input,select{width:100%;padding:13px 16px;border-radius:16px;border:1px solid va
 <link rel="stylesheet" href="nutrition-rows.css?v=15">
 <link rel="stylesheet" href="backgrounds.css?v=5">
 <link rel="stylesheet" href="measurements.css?v=3">
-<link rel="stylesheet" href="silver-core.css?v=12">
+<link rel="stylesheet" href="silver-core.css?v=15">
 <link rel="stylesheet" href="silver-training.css?v=5">
 <link rel="stylesheet" href="silver-weight.css?v=9">
-<link rel="stylesheet" href="silver-nutrition.css?v=15">
+<link rel="stylesheet" href="silver-nutrition.css?v=17">
 <link rel="stylesheet" href="silver-flows.css?v=7">
 <link rel="stylesheet" href="silver-displays.css?v=6">
 <link rel="stylesheet" href="equipment-browser.css?v=1">
@@ -3113,11 +3113,8 @@ function kbMainHtml(){
   h+='</section>';
   h+='<section class="kn-meals" aria-label="Приёмы пищи">';
   if(rp>20)h+='<div class="kn-tip"><div><span class="t">Добери белок</span><b>'+esc(KB_TIP.name)+'</b><em>+'+KB_TIP.p+' г белка · '+KB_TIP.kcal+' ккал → '+MEAL_IN[NOW]+'</em></div>'
-    +'<button type="button" data-a="kbtip" aria-label="Добавить творог">'+kic("plus",20,2.4)
-    +'<span class="kn-tip-add-face" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">'
-    +'<defs><linearGradient id="kn-tip-amber-plus" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0" stop-color="#9c4900"/><stop offset=".4" stop-color="#e08b08"/><stop offset=".5" stop-color="#ffd36a"/><stop offset=".6" stop-color="#ffb321"/><stop offset="1" stop-color="#9c4900"/></linearGradient></defs>'
-    +'<path d="M20 8v24M8 20h24" fill="none" stroke="#713600" stroke-width="3.2" stroke-linecap="round"/><path d="M20 8v24M8 20h24" fill="none" stroke="url(#kn-tip-amber-plus)" stroke-width="2.4" stroke-linecap="round"/>'
-    +'</svg></span></button></div>';
+    +'<button type="button" class="sl-tactile-button" data-a="kbtip" aria-label="Добавить творог">'+kic("plus",20,2.4)
+    +silverTactileFace("protein-tip",true)+'</button></div>';
   h+='<div class="kn-sech"><h2>Приёмы пищи</h2><span id="kn-cnt" data-live="1">'+T.n+' '+plural(T.n,"запись","записи","записей")+' · '+thous(T.k)+' ккал</span></div>';
   h+=kbUndoHtml("main")+kbMealsFor(key,false)+'</section>';
   var ff=kbFavFilter||NOW,favs=kbFavAll().filter(function(f){return (f.when||[]).indexOf(ff)>=0}).slice(0,3);
@@ -4676,10 +4673,37 @@ function spark(m){
   var dates=arr.map(function(e){return e.t});dates.push(now);
   return axisChart(vals,dates,"var(--acc)",mkRange==="month"?monthLabel:dayLabel);
 }
+function silverTactileFace(key, plus){
+  var path=plus?"M20 8v24M8 20h24":"M8 20h24";
+  var gradient="sl-tactile-amber-"+key;
+  return '<span class="sl-tactile-face" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false">'
+    +'<defs><linearGradient id="'+gradient+'" gradientUnits="userSpaceOnUse" x1="8" y1="32" x2="32" y2="8"><stop offset="0" stop-color="#9c4900"/><stop offset=".4" stop-color="#e08b08"/><stop offset=".5" stop-color="#ffd36a"/><stop offset=".6" stop-color="#ffb321"/><stop offset="1" stop-color="#9c4900"/></linearGradient></defs>'
+    +'<path d="'+path+'" fill="none" stroke="#713600" stroke-width="3.2" stroke-linecap="round"/><path d="'+path+'" fill="none" stroke="url(#'+gradient+')" stroke-width="2.4" stroke-linecap="round"/></svg></span>';
+}
+function machineStepButton(action, delta, label, classes, custom){
+  var plus=delta>0;
+  var icon=plus?"+":"−";
+  if(custom&&document.documentElement.hasAttribute("data-silver")){
+    if(action==="dw"){
+      classes+=" sl-tactile-button";
+      icon=silverTactileFace(action+(plus?"-plus":"-minus"),plus);
+    }else{
+      classes+=" sl-step-simple";
+      if(window.UI)icon=UI.icon(plus?"plus":"minus",18);
+    }
+  }
+  return '<button type="button" class="'+classes+'" data-a="'+action+'" data-v="'+delta+'" aria-label="'+label+'">'+icon+'</button>';
+}
+function updateMachineStep(button, value){
+  if(!button.matches(".sl-tactile-button,.sl-step-simple")){sheet();return}
+  var readout=button.parentElement.querySelector(".num,b");
+  readout.firstChild.nodeValue=f(value);
+  if(button.classList.contains("sl-tactile-button"))window.gymSilverTactileFeedback?.(button);
+}
 function boxes(extra){
   return '<div class="row2'+(extra?' addrow':'')+'">'
-    +'<div class="box'+(extra?' cm':'')+'"><em>Подходы</em><div class="ctl"><button class="mini" data-a="ds" data-v="-1" aria-label="Меньше подходов">−</button><b>'+cur.s+'</b><button class="mini" data-a="ds" data-v="1" aria-label="Больше подходов">+</button></div></div>'
-    +'<div class="box'+(extra?' cm':'')+'"><em>Повторы</em><div class="ctl"><button class="mini" data-a="dr" data-v="-1" aria-label="Меньше повторов">−</button><b>'+cur.r+'</b><button class="mini" data-a="dr" data-v="1" aria-label="Больше повторов">+</button></div></div></div>';
+    +'<div class="box'+(extra?' cm':'')+'"><em>Подходы</em><div class="ctl">'+machineStepButton("ds",-1,"Меньше подходов","mini",extra)+'<b>'+cur.s+'</b>'+machineStepButton("ds",1,"Больше подходов","mini",extra)+'</div></div>'
+    +'<div class="box'+(extra?' cm':'')+'"><em>Повторы</em><div class="ctl">'+machineStepButton("dr",-1,"Меньше повторов","mini",extra)+'<b>'+cur.r+'</b>'+machineStepButton("dr",1,"Больше повторов","mini",extra)+'</div></div></div>';
 }
 var ADD_SUGG=["Жим в тренажёре","Тяга верхнего блока","Разгибание ног"];
 function sheet(){
@@ -4704,9 +4728,9 @@ function sheetRender(){
     h+='<span class="addlbl">Группа мышц</span><div class="addgrp" role="group" aria-label="Группа мышц">'+GROUPS.map(function(g){
       return '<button class="grpbtn'+(cur.g===g?' on':'')+'" data-a="grp" data-v="'+g+'" aria-pressed="'+(cur.g===g)+'">'+muscleIcon(g,false)+'<span>'+g+'</span></button>'}).join("")+'</div>';
     h+='<div class="addcard cm"><div class="addcard-top"><span>Стартовый вес</span><em>шаг '+f(cur.st)+' кг</em></div><div class="addw">'
-      +'<button class="round alt" data-a="dw" data-v="-1" aria-label="Меньше веса">−</button>'
+      +machineStepButton("dw",-1,"Меньше веса","round alt",true)
       +'<div class="num">'+f(cur.w)+'<small> кг</small></div>'
-      +'<button class="round" data-a="dw" data-v="1" aria-label="Больше веса">+</button></div></div>';
+      +machineStepButton("dw",1,"Больше веса","round",true)+'</div></div>';
     if(cur.type!=="time")h+='<span class="addlbl">Как учитывать вес</span><div class="addsugg" role="group" aria-label="Учёт веса">'+Object.keys(window.GymMachineLibrary.modes).filter(function(k){return k!=="none"}).map(function(k){return '<button type="button" data-a="loadmode" data-v="'+k+'" aria-pressed="'+(cur.loadMode===k)+'">'+window.GymMachineLibrary.modes[k].name+'</button>'}).join('')+'</div><p class="eq-load-note">'+window.GymMachineLibrary.modeFor(cur).hint+'</p>';
     h+=boxes(true);
     h+='<div class="addfoot"><button class="save" id="addsave" data-a="save"'+(ok?'':' disabled')+'>'+(ok?'Добавить тренажёр':'Введи название')+'</button><span>Фото и вес можно поменять потом в карточке</span></div>';
@@ -4812,14 +4836,14 @@ document.addEventListener("click",function(e){
     buzz();save();render();
   }
   else if(a==="close")close();
-  else if(a==="dw"){var w0=cur.w;cur.w=Math.max(0,Math.round((cur.w+(+v)*cur.st)*100)/100);if(cur.w!==w0)buzz("heavy");sheet()}
+  else if(a==="dw"){var w0=cur.w;cur.w=Math.max(0,Math.round((cur.w+(+v)*cur.st)*100)/100);if(cur.w!==w0)buzz("heavy");updateMachineStep(t,cur.w)}
   else if(a==="st"){cur.st=+v;sheet()}
-  else if(a==="ds"){cur.s=Math.min(12,Math.max(1,cur.s+(+v)));sheet()}
+  else if(a==="ds"){cur.s=Math.min(12,Math.max(1,cur.s+(+v)));updateMachineStep(t,cur.s)}
   else if(a==="grp"){cur.g=v;sheet()}
   else if(a==="extype"){cur.type=v;cur.loadMode=v==="body"?"additional":v==="free"?"total":v==="time"?"none":"stack";if(v==="time"){cur.r=45}else if(cur.r>50)cur.r=10;sheet()}
   else if(a==="loadmode"){if(window.GymMachineLibrary.modes[v])cur.loadMode=v;sheet()}
   else if(a==="sugg"){cur.n=v;sheet()}
-  else if(a==="dr"){var tm=cur.type==="time",r0=cur.r;cur.r=Math.min(tm?600:50,Math.max(tm?5:1,cur.r+(+v)*(tm?5:1)));if(cur.r!==r0)buzz("light");sheet()}
+  else if(a==="dr"){var tm=cur.type==="time",r0=cur.r;cur.r=Math.min(tm?600:50,Math.max(tm?5:1,cur.r+(+v)*(tm?5:1)));if(cur.r!==r0)buzz("light");updateMachineStep(t,cur.r)}
   else if(a==="ok"){cur.ok=!cur.ok;sheet()}
   else if(a==="rmimg"){cur.img="";sheet()}
   else if(a==="mkr"){
@@ -4897,7 +4921,7 @@ document.addEventListener("click",function(e){
   else if(a==="kbstar"){kbToggleMealSet(kbjuSel,v)}
   else if(a==="kbtip"){
     if(t.disabled)return;
-    var feedback=window.gymSilverProteinTipFeedback?.(t),tm=mealForNow();
+    var feedback=window.gymSilverTactileFeedback?.(t),tm=mealForNow();
     kbAddedToast(addEntries([KB_TIP],tm,kbToday(),"tip"),tm,KB_TIP.name);buzz();
     if(!feedback){render();return}
     // The suggestion can disappear after adding the portion. Let the face finish first.
@@ -5350,7 +5374,7 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="avatar-r8.js?v=equipment-library-r1"></script>
 <script src="../equipment/runtime.js?v=equipment-library-r2"></script>
 <script src="food-ai.js?v=1"></script>
-<script src="silver-motion.js?v=15"></script>
+<script src="silver-motion.js?v=18"></script>
 <script src="silver-icons.js?v=5"></script>
 <script src="silver-weight.js?v=4"></script>
 <script src="silver-nutrition.js?v=3"></script>
