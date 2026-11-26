@@ -34,11 +34,11 @@
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   }
-  function open(startTab = 'catalog') {
+  function open(startTab = 'catalog', startGroup = 'Все') {
     if (box) return;
     trigger = document.activeElement;
     window.gymClose();
-    tab = startTab; query = ''; group = 'Все'; chosen = null; draft = null;
+    tab = startTab; query = ''; group = groups.includes(startGroup) ? startGroup : 'Все'; chosen = null; draft = null;
     box = document.createElement('div'); box.className = 'rd-medit eq-browser on';
     box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', 'Каталог и мои тренажёры');
     panel = document.createElement('div'); panel.className = 'rd-medit-panel eq-panel'; box.append(panel);
@@ -70,6 +70,10 @@
       + '<button type="button" class="eq-custom-short" data-e="custom">+ Создать свой тренажёр</button>'
       + '<div class="eq-results" aria-live="polite"></div>'
       + '<div class="eq-bottom"><button type="button" class="rd-medit-save" data-e="custom">+ Создать свой тренажёр</button></div>';
+    const filters = panel.querySelector('.eq-filters');
+    const activeFilter = filters.querySelector('[aria-pressed="true"]');
+    const overflow = activeFilter.getBoundingClientRect().right - filters.getBoundingClientRect().right;
+    if (overflow > 0) filters.scrollLeft = overflow + 8;
     list();
   }
   function list() {
@@ -164,7 +168,8 @@
   document.addEventListener('click', event => {
     const add = event.target.closest('[data-a="open"][data-v="0"],[data-library-open]');
     if (!add) return;
-    event.preventDefault(); event.stopPropagation(); open();
+    const workoutGroup = add.closest('[data-tg-filter]')?.dataset.tgFilter;
+    event.preventDefault(); event.stopPropagation(); open('catalog', workoutGroup);
   }, true);
   window.gymOpenEquipmentLibrary = open;
 })();

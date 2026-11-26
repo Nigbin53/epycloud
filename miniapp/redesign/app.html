@@ -2716,7 +2716,7 @@ function viewWorkout(){
   }else{
     listHtml+=S.m.filter(function(m){return m.g===S.filter}).map(tileHtml).join("");
   }
-  h+='<div class="mlist">'+listHtml+'<button class="addm" data-a="open" data-v="0">+ Добавить тренажёр</button></div>';
+  h+='<div class="mlist" data-tg-filter="'+esc(S.filter)+'">'+listHtml+'<button class="addm" data-a="open" data-v="0">+ Добавить тренажёр</button></div>';
   document.getElementById("appcontent").innerHTML=h;
 }
 
@@ -5354,6 +5354,6 @@ document.addEventListener("click",function(e){var sg=e.target;if(!sg||!sg.classL
 <script src="silver-icons.js?v=5"></script>
 <script src="silver-weight.js?v=4"></script>
 <script src="silver-nutrition.js?v=3"></script>
-<script src="equipment-browser.js?v=3"></script>
+<script src="equipment-browser.js?v=4"></script>
 </body>
 </html>
