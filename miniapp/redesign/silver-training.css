@@ -27,7 +27,7 @@
 }
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .tg-plan-start:active{filter:brightness(.94)}
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .ta-filters.tg-filters>button{min-height:44px!important;position:relative;isolation:isolate;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#252525!important;font:400 8.2px/12px var(--sl-mono)!important;letter-spacing:1px!important;text-transform:uppercase;transform:none!important}
-:root[data-silver][data-redesign-theme] #appcontent .rd-workout .ta-filters.tg-filters>button.selected::before{content:'';position:absolute;inset:8px 0;z-index:-1;border-radius:999px;background:var(--sl-amber);box-shadow:inset 0 1px .7px #ffd98da6,0 .5px 1px #73450040;border:1px solid #9a6c27}
+:root[data-silver][data-redesign-theme] #appcontent .rd-workout .tg-filters>button.selected>.tg-tab-label::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:999px;background:var(--sl-amber);box-shadow:inset 0 1px .7px #ffd98da6,0 .5px 1px #73450040;border:1px solid #9a6c27}
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .ta-filters.tg-filters>button:active{opacity:.7}
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .ta-exercise{border:1px solid var(--sl-cut)!important;border-radius:5px!important;background:transparent!important;box-shadow:1px 1px 0 var(--sl-light)!important;color:#252525!important}
 :root[data-silver][data-redesign-theme] #appcontent .rd-workout .ta-exercise::before{color:#747474!important;font:400 8px/12px var(--sl-mono)!important}

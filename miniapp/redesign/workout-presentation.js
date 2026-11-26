@@ -113,7 +113,7 @@ function build(state, theme) {
   const total = machines.length;
   const word = total % 10 === 1 && total % 100 !== 11 ? 'упражнения' : 'упражнений';
   const calendar = `<div class="ui-calendar calendar">${week().map((d, i) => `<button type="button" class="ui-day day ${selected === i ? 'selected' : ''}${i < today ? ' tg-past' : ''}${i > today ? ' tg-future' : ''}" data-a="day"${i > today ? ' aria-disabled="true"' : ''} data-v="${i}" aria-pressed="${selected === i}" aria-label="${DAY_NAMES[i]} ${d.getDate()}"${i === today ? ' aria-current="date"' : ''}><small>${DAY_NAMES[i]}</small><strong>${d.getDate()}</strong></button>`).join('')}</div>`;
-  const tabs = `<div class="ui-tabs ta-filters tg-filters" role="tablist" aria-label="Группа упражнений">${tabsAll.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></button>`).join('')}</div>`;
+  const tabs = `<div class="ui-tabs ta-filters tg-filters" role="tablist" aria-label="Группа упражнений">${tabsAll.map((t) => `<button type="button" role="tab" class="${t === filter ? 'selected' : ''}" aria-selected="${t === filter}" data-a="filter" data-v="${t}"><span class="tg-tab-label">${t === 'Избранное' ? star(true, 11) : ''}<span>${t}</span></span></button>`).join('')}</div>`;
   let list = '';
   const planItems = plan ? plan.items.map((id) => machines.find((m) => m.id === id)).filter(Boolean) : [];
   if (filter === 'План') {

@@ -10,9 +10,15 @@
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters:has(> :nth-child(7)){--tg-tab-padding:7px;gap:2px}
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters::-webkit-scrollbar{display:none}
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button{
- flex:none;width:auto;min-width:44px;min-height:44px;padding:0 var(--tg-tab-padding);
- display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;
+ flex:1 0 auto;width:auto;min-width:44px;min-height:44px;padding:0;
+ display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;
 }
+:root[data-redesign-theme] .rd-workout .tg-tab-label{
+ position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;
+ min-height:28px;gap:5px;padding-inline:var(--tg-tab-padding);
+}
+:root[data-redesign-theme] .rd-workout .tg-filters:has(> :nth-child(4))>button:first-child{justify-content:flex-start}
+:root[data-redesign-theme] .rd-workout .tg-filters:has(> :nth-child(4))>button:last-child{justify-content:flex-end}
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button:focus-visible{outline-offset:-2px!important}
 :root[data-redesign-theme] .rd-workout .ta-page .ta-filters.tg-filters>button svg{flex:none}
 :root[data-redesign-theme] .rd-workout .ta-page .tg-hidden{display:none!important}
@@ -107,10 +113,10 @@
 :root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"]{
  border-bottom-color:transparent;
 }
-:root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"] > span{
+:root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"] .tg-tab-label > span{
  position:relative;
 }
-:root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"] > span::after{
+:root[data-redesign-theme="black"] .rd-workout .tg-filters > button[aria-selected="true"] .tg-tab-label > span::after{
  content:'';
  position:absolute;
  inset-block-start:calc(100% + 4px);
