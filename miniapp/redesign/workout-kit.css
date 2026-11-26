@@ -90,6 +90,12 @@
  width:auto;
  margin-inline:calc(14px - var(--rd-gutter));
 }
+:root[data-redesign-theme="black"] #appcontent .rd-workout .ta-overview-content > .ta-exercise{
+ border:0;
+ border-radius:0;
+ padding:17px;
+ background:transparent;
+}
 :root[data-redesign-theme] #appcontent .rd-workout .ta-overview-content > .tg-filters{
  height:auto;
  min-height:44px;
